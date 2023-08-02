@@ -7,5 +7,6 @@ export const environment = {
 
   // accessPrivilegeUrl: `http://localhost:8090/accessprivilege/uhpocms`,
 
-  companyUrL: `http://localhost:8090/company/ttsms/company`
+  companyUrL: `http://localhost:8090/company/ttsms/company`,
+  countryUrl: `http://localhost:8090/country/ttsms/country`
 };
