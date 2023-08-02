@@ -6,7 +6,12 @@ import { UpdateCompanyComponent } from './company/components/update-company/upda
 import { CountryComponent } from './country/components/country/country.component';
 import { AddCountryComponent } from './country/components/add-country/add-country.component';
 import { UpdateCountryComponent } from './country/components/update-country/update-country.component';
+import { LoginComponent } from './login/components/login/login.component';
+import { DashboardComponent } from './dashboard/components/dashboard/dashboard.component';
+
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'company', component: CompanyComponent },
   { path: 'addCompany', component: AddCompanyComponent },
   { path: 'update', component: UpdateCompanyComponent },

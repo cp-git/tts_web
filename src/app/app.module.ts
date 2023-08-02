@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { CompanyModule } from './company/company.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CountryModule } from './country/country.module';
+import { LoginModule } from './login/login.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { CountryModule } from './country/country.module';
     AppRoutingModule,
     HttpClientModule,
     CompanyModule,
-    CountryModule
+    CountryModule,
+    LoginModule,
+    DashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
