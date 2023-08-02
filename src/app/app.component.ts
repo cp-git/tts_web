@@ -16,4 +16,8 @@ export class AppComponent {
   RedirectToCompany() {
     this.route.navigate(['company'])
   }
+
+  RedirectToCountry() {
+    this.route.navigate(['country'])
+  }
 }

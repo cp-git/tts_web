@@ -34,7 +34,7 @@ export class CountryService {
     return this.http.delete<any>(this.countryUrl + '/' + countryCode);
   }
 
-  updateCountryByCountryCode(countryCode: string, country: Country): Observable<Object> {
+  updateCountryByCountryCode(countryCode: number, country: Country): Observable<Object> {
     return this.http.put<any>(`${this.countryUrl}/` + countryCode, country);
   }
 
