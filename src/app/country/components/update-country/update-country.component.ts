@@ -27,7 +27,7 @@ export class UpdateCountryComponent {
 
   // Function to update the country details.
   updateCountry(updatedCountry: Country) {
-    alert(JSON.stringify(updatedCountry));
+    //  alert(JSON.stringify(updatedCountry));
     // Call the service to update the country data based on the country code.
     this.countrySerice.updateCountryByCountryCode(updatedCountry.countryCode, updatedCountry).subscribe(
       response => {

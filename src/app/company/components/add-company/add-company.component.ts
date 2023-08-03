@@ -25,7 +25,7 @@ export class AddCompanyComponent implements OnInit {
 
   // Function to add a new company
   addCompany(company: Company) {
-    alert(JSON.stringify(company)); // Show the company object as an alert (for debugging)
+    // alert(JSON.stringify(company)); // Show the company object as an alert (for debugging)
     this.companyService.addCompany(company).subscribe(
       (data) => {
         // On successful addition, show a success alert

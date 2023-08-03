@@ -14,7 +14,7 @@ export class CompanyService {
 
   constructor(private http: HttpClient) {
 
-    this.companyUrl = `${environment.companyUrL}`
+    this.companyUrl = `${environment.companyUrl}`
     this.countryUrl = `http://localhost:8090/country/ttsms/country`
   }
 
