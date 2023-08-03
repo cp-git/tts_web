@@ -1,5 +1,9 @@
 <div class="container">
-    <h2>Add Employee</h2>
+    <div class="d-flex justify-content-between align-items-center w-100">
+        <h2>Add Employee</h2>
+        <span (click)=" RedirectToEmployee()" class="fa-solid fa-circle-arrow-left fa-lg"
+            style="font-size: 23px; color: rgb(20, 18, 18); cursor: pointer;"></span>
+    </div>
     <!-- Form for adding a new employee -->
     <div class="row">
         <!-- Input field for the first name -->
@@ -17,8 +21,7 @@
         <!-- Dropdown to select the country -->
         <div class="col-md-4">
             <label class="label" for="countryId"><strong>Country:</strong></label>
-            <select id="countryId" name="countryId" [(ngModel)]="employeeData.countryId" required
-                class="form-control">
+            <select id="countryId" name="countryId" [(ngModel)]="employeeData.countryId" required class="form-control">
                 <option value="undefined" selected>Select a country</option>
                 <!-- Loop through the 'countries' array and display each country as an option -->
                 <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
@@ -29,8 +32,7 @@
         <!-- Dropdown to select the company -->
         <div class="col-md-4">
             <label class="label" for="companyId"><strong>Company:</strong></label>
-            <select id="companyId" name="companyId" [(ngModel)]="employeeData.companyId" required
-                class="form-control">
+            <select id="companyId" name="companyId" [(ngModel)]="employeeData.companyId" required class="form-control">
                 <option value="undefined" selected>Select a company</option>
                 <!-- Loop through the 'companies' array and display each company as an option -->
                 <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyName }}</option>
@@ -45,8 +47,8 @@
         <!-- Input field for the employee's email -->
         <div class="col-md-4">
             <label for="employeeEmail"><strong>Email:</strong></label>
-            <input type="email" id="employeeEmail" name="employeeEmail" [(ngModel)]="employeeData.employeeEmail" required
-                class="form-control">
+            <input type="email" id="employeeEmail" name="employeeEmail" [(ngModel)]="employeeData.employeeEmail"
+                required class="form-control">
         </div>
     </div>
     <!-- Additional row for username and password inputs -->
@@ -54,14 +56,14 @@
         <!-- Input field for the employee's username -->
         <div class="col-md-4">
             <label for="username"><strong>UserName:</strong></label>
-            <input type="text" id="username" name="username" [(ngModel)]="employeeData.username"
-                required class="form-control">
+            <input type="text" id="username" name="username" [(ngModel)]="employeeData.username" required
+                class="form-control">
         </div>
         <!-- Input field for the employee's password -->
         <div class="col-md-4">
             <label for="password"><strong>Password:</strong></label>
-            <input type="text" id="password" name="password" [(ngModel)]="employeeData.password"
-                required class="form-control">
+            <input type="text" id="password" name="password" [(ngModel)]="employeeData.password" required
+                class="form-control">
         </div>
     </div>
     <!-- Submit button to add the new employee -->

@@ -1,5 +1,10 @@
 <div class="container">
-    <h2>Update Employee</h2>
+
+    <div class="d-flex justify-content-between align-items-center w-100">
+        <h2>Update Employee</h2>
+        <span (click)=" RedirectToEmployee()" class="fa-solid fa-circle-arrow-left fa-lg"
+            style="font-size: 23px; color: rgb(20, 18, 18); cursor: pointer;"></span>
+    </div>
     <div class="row">
         <!-- First Name -->
         <div class="col-md-4">
@@ -16,8 +21,7 @@
         <!-- Country -->
         <div class="col-md-4">
             <label class="label" for="countryId"><strong>Country:</strong></label>
-            <select id="countryId" name="countryId" [(ngModel)]="employee.countryId" required
-                class="form-control">
+            <select id="countryId" name="countryId" [(ngModel)]="employee.countryId" required class="form-control">
                 <option value="">Select a country</option>
                 <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
             </select>
@@ -27,8 +31,7 @@
         <!-- Company -->
         <div class="col-md-4">
             <label class="label" for="companyId"><strong>Company:</strong></label>
-            <select id="companyId" name="companyId" [(ngModel)]="employee.companyId" required
-                class="form-control">
+            <select id="companyId" name="companyId" [(ngModel)]="employee.companyId" required class="form-control">
                 <option value="">Select a company</option>
                 <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyName }}</option>
             </select>

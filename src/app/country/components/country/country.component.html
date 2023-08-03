@@ -1,11 +1,15 @@
 <div class="container">
     <!-- Add button at the top right corner -->
-    <button class="btn btn-primary float-end mt-1" style="border-radius: 50px;" (click)="RedirectToAdd()">Add</button>
+
+    <span (click)="RedirectToAdd()" class="fa-solid fa-circle-plus"
+        style='font-size:30px;color: rgb(22, 27, 91); margin-top: 10px;'></span>
+
+
 
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Country ID</th>
+                <!-- <th>Country ID</th> -->
                 <th>Country Name</th>
                 <th>Country Code</th>
                 <th>Actions</th>
@@ -13,17 +17,19 @@
         </thead>
         <tbody>
             <tr *ngFor="let country of countries">
-                <td>{{ country.countryId }}</td>
+                <!-- <td>{{ country.countryId }}</td> -->
                 <td>{{ country.countryName }}</td>
                 <td>{{ country.countryCode }}</td>
                 <td>
-                    <!-- Update Button -->
-                    <button class="btn btn-primary me-3" style="border-radius: 50px;"
-                        (click)="redirectToUpdate(country)">Update</button>
-                    <!-- Delete Button -->
 
-                    <button class="btn btn-danger me-3" style="border-radius: 50px;"
-                        (click)="deleteCountry(country.countryCode)">Delete</button>
+                    <!-- Update Button -->
+                    <span (click)="redirectToUpdate(country)" class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
+                        style='font-size:23px;color: rgb(64, 109, 234);'></span>
+                    <!-- Delete Button -->
+                    &nbsp;
+                    &nbsp;
+                    <span (click)="deleteCountry(country.countryCode)" class='fa-solid fa-trash fa-xl'
+                        style='font-size:23px;color: red;'></span>
                 </td>
             </tr>
         </tbody>

@@ -1,16 +1,17 @@
-
 <div class="container">
-   
+
     <!-- Add Button: Button to navigate to the 'CreateEmployeeComponent' -->
-    <button class="btn btn-primary float-end mt-1" style="border-radius: 50px;" (click)="navigateToCreateEmployee()">Add</button>
-    
+
+    <div class="position-fixed top-0 end-0"></div>
+    <span (click)="navigateToCreateEmployee()" class="fa-solid fa-circle-plus"
+        style='font-size:30px;color: rgb(22, 27, 91); margin-top: 10px;'></span>
     <!-- Table to display the list of employees -->
     <table class="table table-striped">
         <thead>
             <!-- Table header row -->
             <tr>
                 <!-- Column headers -->
-                <th>Employee ID</th>
+                <!-- <th>Employee ID</th> -->
                 <th>Country</th>
                 <th>Company</th>
                 <th>First Name</th>
@@ -24,19 +25,27 @@
             <!-- Loop through each employee in the 'employees' array and display their data -->
             <tr *ngFor="let employee of employees">
                 <!-- Display employee data in each table cell -->
-                <td>{{employee.employeeId}}</td>
-                <td>{{ getCountryNameById(employee.countryId)}}</td> <!-- Use method 'getCountryNameById' to get the country name based on countryId -->
-                <td>{{ getCompanyNameById(employee.companyId) }}</td> <!-- Use method 'getCompanyNameById' to get the company name based on companyId -->
+                <!-- <td>{{employee.employeeId}}</td> -->
+                <td>{{ getCountryNameById(employee.countryId)}}</td>
+                <!-- Use method 'getCountryNameById' to get the country name based on countryId -->
+                <td>{{ getCompanyNameById(employee.companyId) }}</td>
+                <!-- Use method 'getCompanyNameById' to get the company name based on companyId -->
                 <td>{{ employee.firstName }}</td>
                 <td>{{ employee.lastName }}</td>
                 <td>{{ employee.birthDate }}</td>
                 <td>{{ employee.employeeEmail }}</td>
-  
+
                 <td>
-                    <!-- Update Button - Button to navigate to the 'UpdateEmployeeComponent' with the selected employee data -->
-                    <button class="btn btn-primary me-3" style="border-radius: 50px;" (click)="navigateToUpdateEmployee(employee)">Update</button>
-                    <!-- Delete Button - Button to delete the selected employee data from the server -->
-                    <button class="btn btn-danger me-3" style="border-radius: 50px;" (click)="deleteEmployee(employee)">Delete</button>
+
+                    <!-- Update Button -->
+                    <span (click)="navigateToUpdateEmployee(employee)"
+                        class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
+                        style='font-size:23px;color: rgb(64, 109, 234);'></span>
+                    <!-- Delete Button -->
+                    &nbsp;
+                    &nbsp;
+                    <span (click)="deleteEmployee(employee)" class='fa-solid fa-trash fa-xl'
+                        style='font-size:23px;color: red;'></span>
                 </td>
             </tr>
         </tbody>

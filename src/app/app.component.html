@@ -1,13 +1,16 @@
-<div class="col-md-6 m-3">
-    <button type="button" class="btn btn-outline-primary" (click)="RedirectToCompany()">Company</button>
-</div>
+<nav class="navbar navbar-light" style="background-color: #b1b7bc;">
+    <a class="navbar-brand" href="#" style="margin-left: 30px; font-weight: bold;">Admin Dashborad</a>
 
-<div class="col-md-6 m-3">
-    <button type="button" class="btn btn-outline-primary" (click)="RedirectToCountry()">Country</button>
-</div>
+    <div class="form-inline my-5 my-lg-0">
+        <button type="button" class="btn btn-primary" (click)="RedirectToCompany()"
+            style="margin-right: 10px;">Company</button>
+        <button type="button" class="btn btn-primary" (click)="RedirectToCountry()"
+            style="margin-right: 10px;">Country</button>
+        <button type="button" class="btn btn-primary" (click)="RedirectToEmployee()"
+            style="margin-right: 10px;">Employee</button>
+    </div>
+</nav>
 
-<div class="col-md-4 m-3">
-    <!-- <h3 class="card-title">User Roles</h3>-->
-    <button type="button" class="btn btn-outline-primary" (click)="RedirectToEmployee()">Employee</button>
-</div>
+
+
 <router-outlet></router-outlet>
