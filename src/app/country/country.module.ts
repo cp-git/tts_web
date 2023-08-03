@@ -4,6 +4,7 @@ import { CountryComponent } from './components/country/country.component';
 import { AddCountryComponent } from './components/add-country/add-country.component';
 import { FormsModule } from '@angular/forms';
 import { UpdateCountryComponent } from './components/update-country/update-country.component';
+import { CompanyComponent } from '../company/company/company.component';
 
 
 

@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CountryModule } from './country/country.module';
 import { LoginModule } from './login/login.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     CompanyModule,
     CountryModule,
     LoginModule,
-    DashboardModule
+    DashboardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CompanyComponent } from './components/company/company.component';
+import { CompanyComponent } from './company/company.component';
 import { FormsModule } from '@angular/forms';
 
 import { AddCompanyComponent } from './components/add-company/add-company.component';
@@ -13,7 +13,7 @@ import { UpdateCompanyComponent } from './components/update-company/update-compa
     CompanyComponent,
 
     AddCompanyComponent,
-      UpdateCompanyComponent,
+    UpdateCompanyComponent,
 
   ],
   imports: [
