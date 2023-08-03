@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 import { Task } from 'src/app/classes/task';
+import { Employee } from 'src/app/classes/employee';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,8 +16,12 @@ export class DashboardComponent implements OnInit {
   parentTaskData: Task[] = [];
   allParentTaskData = new Map();
 
+  employees: Employee[] = [];
+
   childTaskData = new Map();
-  constructor(private dashboardService: DashboardService) {
+
+  constructor(private dashboardService: DashboardService
+  ) {
     this.assignStatus();
   }
 
@@ -33,6 +38,10 @@ export class DashboardComponent implements OnInit {
 
   // calling default method when load component
   private initialization() {
+
+    // for getting all employees
+    this.getAllEmployees();
+
     // for getting all parent task
     this.getAllParentTask();
   }
@@ -61,12 +70,24 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  // for gettign all employees
+  private getAllEmployees() {
+    this.dashboardService.getAllEmployees().subscribe(
+      (response) => {
+        this.employees = response;
+      },
+      (error) => {
+        console.log("Failed to get all employees");
+      }
+    );
+  }
+
   onClickChild(task: Task) {
     this.dashboardService.getChildTaskByParentId(task.taskId).subscribe(
       (response) => {
-          this.childTaskData.set(task.taskId, response);
-          console.table(this.childTaskData);
-          
+        this.childTaskData.set(task.taskId, response);
+        console.table(this.childTaskData);
+
       },
       (error) => {
         console.log("Failed to load child task!");

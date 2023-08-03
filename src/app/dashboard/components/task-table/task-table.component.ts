@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Task } from 'src/app/classes/task';
 import { DashboardService } from '../../services/dashboard.service';
+import { Employee } from 'src/app/classes/employee';
 
 @Component({
   selector: 'app-task-table',
@@ -10,6 +11,8 @@ import { DashboardService } from '../../services/dashboard.service';
 export class TaskTableComponent implements OnInit {
 
   @Input() parentTaskData: Task[] = [];
+  @Input() employees: Employee[] = [];
+
   // @Input() childTaskData: Map<number, Task[]> = new Map();
 
   // @Output() onClickChild: EventEmitter<any> = new EventEmitter();

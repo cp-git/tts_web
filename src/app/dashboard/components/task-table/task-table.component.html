@@ -23,8 +23,24 @@
                     </th>
                     <td>{{ task.taskName }}</td>
                     <td>{{ task.taskDescription }}</td>
-                    <td>{{ task.taskCreatedBy }}</td>
-                    <td>{{ task.taskAssignedTo }}</td>
+                    <td>
+                        <select id="createEmployeeId" name="createEmployeeId" [(ngModel)]="task.taskCreatedBy" required
+                            class="form-control">
+                            <option value="undefined" selected>Select Employee</option>
+                            <!-- Loop through the 'employees' array and display each employee as an option -->
+                            <option *ngFor="let employee of employees" [value]="employee.employeeId">{{
+                                employee.firstName }}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select id="assignedToEmployeeId" name="assignedToEmployeeId" [(ngModel)]="task.taskAssignedTo" required
+                            class="form-control">
+                            <option value="undefined" selected>Select Employee</option>
+                            <!-- Loop through the 'employees' array and display each employee as an option -->
+                            <option *ngFor="let employee of employees" [value]="employee.employeeId">{{
+                                employee.firstName }}</option>
+                        </select>
+                    </td>
                     <td>{{ task.taskEndDate | date:'MM-dd-yyyy'}}</td>
                     <td>{{ task.taskStatus }}</td>
                     <td>
@@ -39,7 +55,7 @@
                 <tr *ngIf="showChildTable.get(task.taskId)">
                     <td colspan="8">
                         <!-- Custom template for child table -->
-                        <app-task-table [parentTaskData]="task.childTask"></app-task-table>
+                        <app-task-table [parentTaskData]="task.childTask" [employees]="employees"></app-task-table>
                     </td>
                 </tr>
             </ng-container>
