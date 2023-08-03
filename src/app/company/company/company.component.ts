@@ -16,7 +16,7 @@ export class CompanyComponent implements OnInit {
 
   country!: Country; // A single country instance (assumed to be used for specific purposes)
   countries!: Country[]; // An array to hold the list of countries fetched from the service
-
+  countryName: any;
   constructor(private companyService: CompanyService, private route: Router) {
   }
 
@@ -42,7 +42,7 @@ export class CompanyComponent implements OnInit {
     );
   }
 
-  countryName: any; // A variable (possibly used for specific purposes)
+
 
   // Delete a company by its companyCode
   deleteCompany(companyCode: any) {
