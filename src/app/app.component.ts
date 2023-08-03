@@ -7,12 +7,20 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'tts_web';
- 
+
   constructor(private route: Router) {
+
   }
-  
+
+  RedirectToCompany() {
+    this.route.navigate(['company'])
+  }
+
+  RedirectToCountry() {
+    this.route.navigate(['country'])
+  }
+
   RedirectToEmployee() {
     this.route.navigate(['employee'])
   }
-
 }
