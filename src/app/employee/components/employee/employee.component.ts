@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { Country } from '../../class/country';
 import { Company } from '../../class/company';
 import { JsonpInterceptor } from '@angular/common/http';
-
+import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 
 @Component({
   selector: 'app-employee',
@@ -16,9 +16,9 @@ import { JsonpInterceptor } from '@angular/common/http';
 })
 export class EmployeeComponent {
   // Properties to store selected country and company
-  country!: Country; 
+  country!: Country;
   company!: Company;
-
+  data: any;
   // Property to store the selected employee ID
   employeeId!: number;
 
@@ -33,12 +33,13 @@ export class EmployeeComponent {
   companies!: Company[];
 
   // Constructor to inject EmployeeService and Router dependencies
-  constructor(private employeeService: EmployeeService, private router: Router) { }
+  constructor(private employeeService: EmployeeService, private router: Router, private dialogueBoxService: DialogueBoxService) { }
 
   //This method is called when the component is initialized
   ngOnInit() {
     // Fetch the list of employees initially
-    this.getAllEmployees();
+    this.getAllEmployeesAndPasswordData();
+    // this.getAllEmployees();
     this.fetchCountries();
     this.fetchCompanies();
   }
@@ -66,6 +67,16 @@ export class EmployeeComponent {
     );
   }
 
+  getAllEmployeesAndPasswordData() {
+    this.employeeService.getAllEmployeeAndPasswordData().subscribe(
+      (data: EmployeeAndPasswordDTO[]) => {
+        this.employees = data;
+      },
+      (error) => {
+        console.error('Error while fetching employees:', error);
+      }
+    );
+  }
   // Method to fetch all countries from the server and update the 'countries' property
   fetchCountries() {
     // Subscribe to the observable returned by the employeeService to get the list of countries
@@ -119,18 +130,28 @@ export class EmployeeComponent {
 
   // Method to delete an employee when the "Delete" button is clicked for a specific employee
   deleteEmployee(employee: Employee) {
-    // Subscribe to the observable returned by the employeeService to delete the employee
-    this.employeeService.deleteEmployeeByEmployeeId(employee.employeeId).subscribe(
-      (response) => {
-        console.log('Employee deleted successfully:', response); // Log success message on successful deletion
-        alert('Employee deleted successfully');
-        // After deleting the employee, refresh the employee list to remove the deleted employee from the table
-        this.getAllEmployees();
-      },
-      (error) => {
-        console.error('Failed to delete employee:', error); // Handle any errors that occur during the request
-        alert('Failed to delete employee');
+    this.dialogueBoxService.open('Are you sure you want to delete this Employee ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
+        // Subscribe to the observable returned by the employeeService to delete the employee
+        this.employeeService.deleteEmployeeByEmployeeId(employee.employeeId).subscribe(
+          (response) => {
+            console.log('Employee deleted successfully:', response); // Log success message on successful deletion
+            this.dialogueBoxService.open('Employee deleted successfully', 'information');
+            // After deleting the employee, refresh the employee list to remove the deleted employee from the table
+            //this.getAllEmployees();
+            this.ngOnInit();
+          },
+          (error) => {
+            console.error('Failed to delete employee:', error); // Handle any errors that occur during the request
+            this.dialogueBoxService.open('Failed to delete employee', 'warning');
+          }
+        );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
       }
-    );
+    });
   }
 }

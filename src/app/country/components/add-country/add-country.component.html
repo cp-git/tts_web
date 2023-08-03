@@ -21,7 +21,7 @@
 
 
     <div>
-        <button type="submit" (click)="addCountry(country)" class="btn btn-primary mt-3"
+        <button type="submit" [disabled]="!isFormValid()" (click)="addCountry(country)" class="btn btn-primary mt-3"
             style="border-radius: 50px;">Submit</button>
     </div>
 

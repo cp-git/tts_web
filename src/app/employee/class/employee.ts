@@ -8,6 +8,7 @@ export class Employee {
     lastName!: string;
     birthDate!: Date;
     employeeEmail!: string;
-   
+    username!: string
+
 }
 

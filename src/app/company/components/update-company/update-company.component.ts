@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Company } from '../../class/company';
 import { CompanyService } from '../../services/company.service';
 import { Country } from '../../class/country';
-
+import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 @Component({
   selector: 'app-update-company',
   templateUrl: './update-company.component.html',
@@ -15,7 +15,7 @@ export class UpdateCompanyComponent implements OnInit {
   company: Company;
   countries!: Country[];
 
-  constructor(private router: Router, private companyService: CompanyService) {
+  constructor(private router: Router, private companyService: CompanyService, private dialogueBoxService: DialogueBoxService) {
     this.company = new Company(); // Initialize an empty Company object.
   }
 
@@ -30,10 +30,10 @@ export class UpdateCompanyComponent implements OnInit {
     // Call the service to update the company data based on the company code.
     this.companyService.updateCompanyByCompanyCode(updatedCompany.companyCode, updatedCompany).subscribe(
       response => {
-        alert(`Company updated successfully!`);
+        this.dialogueBoxService.open('Company updated successfully', 'information');
       },
       error => {
-        alert(`Company updation failed!`);
+        this.dialogueBoxService.open('Company updation failed', 'warning');
       }
     );
   }
@@ -49,5 +49,17 @@ export class UpdateCompanyComponent implements OnInit {
       }
     );
   }
+  // Method to check if the form is valid
+  isFormValid(): boolean {
+    return (
+      !!this.company.companyCode &&
+      !!this.company.companyName &&
+      !!this.company.companyContactEmail &&
+      !!this.company.companyContactPhone &&
+      !!this.company.companyAddress &&
+      !!this.company.companyZip &&
+      !!this.company.companyCountryId
 
+    );
+  }
 }

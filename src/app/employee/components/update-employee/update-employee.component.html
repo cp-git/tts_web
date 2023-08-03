@@ -16,8 +16,7 @@
         <!-- Country -->
         <div class="col-md-4">
             <label class="label" for="countryId"><strong>Country:</strong></label>
-            <select id="countryId" name="countryId" [(ngModel)]="employee.countryId" required
-                class="form-control">
+            <select id="countryId" name="countryId" [(ngModel)]="employee.countryId" required class="form-control">
                 <option value="">Select a country</option>
                 <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
             </select>
@@ -27,8 +26,7 @@
         <!-- Company -->
         <div class="col-md-4">
             <label class="label" for="companyId"><strong>Company:</strong></label>
-            <select id="companyId" name="companyId" [(ngModel)]="employee.companyId" required
-                class="form-control">
+            <select id="companyId" name="companyId" [(ngModel)]="employee.companyId" required class="form-control">
                 <option value="">Select a company</option>
                 <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyName }}</option>
             </select>
@@ -48,6 +46,7 @@
     </div>
     <!-- Submit Button -->
     <div>
-        <button type="submit" (click)="updateEmployeeByEmployeeId()" class="btn btn-primary mt-3">Submit</button>
+        <button type="submit" [disabled]="!isFormValid()" (click)="updateEmployeeByEmployeeId()"
+            class="btn btn-primary mt-3">Submit</button>
     </div>
 </div>

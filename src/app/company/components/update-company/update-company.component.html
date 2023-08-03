@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-md-4">
             <label class="label" for="companyContactPhone">Contact Phone:</label>
-            <input type="text" id="companyContactPhone" name="companyContactPhone"
+            <input type="number" id="companyContactPhone" name="companyContactPhone"
                 [(ngModel)]="company.companyContactPhone" required class="form-control">
         </div>
         <div class="col-md-4">
@@ -34,7 +34,7 @@
         </div>
         <div class="col-md-4">
             <label class="label" for="companyZip">Zip Code:</label>
-            <input type="text" id="companyZip" name="companyZip" [(ngModel)]="company.companyZip" required
+            <input type="number" id="companyZip" name="companyZip" [(ngModel)]="company.companyZip" required
                 class="form-control">
         </div>
     </div>
@@ -51,6 +51,7 @@
     </div>
 
     <div>
-        <button type="button" class="btn btn-primary mt-3" (click)="updateCompany(company)">Update</button>
+        <button type="button" [disabled]="!isFormValid()" class="btn btn-primary mt-3"
+            (click)="updateCompany(company)">Update</button>
     </div>
 </div>

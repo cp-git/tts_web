@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Country } from '../../class/country';
 import { CountryService } from '../../services/country.service';
 import { Router } from '@angular/router';
-
+import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 @Component({
   selector: 'app-update-country',
   templateUrl: './update-country.component.html',
@@ -15,7 +15,7 @@ export class UpdateCountryComponent {
   country: Country;
   countries!: Country[];
 
-  constructor(private router: Router, private countrySerice: CountryService) {
+  constructor(private router: Router, private countrySerice: CountryService, private dialogueBoxService: DialogueBoxService) {
     this.country = new Country(); // Initialize an empty country object.
   }
 
@@ -31,13 +31,20 @@ export class UpdateCountryComponent {
     // Call the service to update the country data based on the country code.
     this.countrySerice.updateCountryByCountryCode(updatedCountry.countryCode, updatedCountry).subscribe(
       response => {
-        alert(`country updated successfully!`);
+        this.dialogueBoxService.open('country updated successfully', 'information');
       },
       error => {
-        alert(`country updation failed!`);
+        this.dialogueBoxService.open('country updation failed', 'warning');
       }
     );
   }
 
+  // Method to check if the form is valid
+  isFormValid(): boolean {
+    return (
+      !!this.country.countryName &&
+      !!this.country.countryCode
 
+    );
+  }
 }
