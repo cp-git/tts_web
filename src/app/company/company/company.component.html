@@ -1,0 +1,45 @@
+<div class="container">
+    <!-- Add button at the top right corner -->
+    <button class="btn btn-primary float-end mt-1" style="border-radius: 50px;" (click)="RedirectToAdd()">Add</button>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Company ID</th>
+                <th>Company Code</th>
+                <th>Company Name</th>
+                <th>Contact Email</th>
+                <th>Contact Phone</th>
+                <th>Address</th>
+                <th>ZIP</th>
+                <th>Country Name</th>
+                <th>Actions</th> <!-- New column for update and delete buttons -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let company of companies">
+                <td>{{ company.companyId }}</td>
+                <td>{{ company.companyCode }}</td>
+                <td>{{ company.companyName }}</td>
+                <td>{{ company.companyContactEmail }}</td>
+                <td>{{ company.companyContactPhone }}</td>
+                <td>{{ company.companyAddress }}</td>
+                <td>{{ company.companyZip }}</td>
+                <!-- <td>{{ company.companyCountryId }}</td> -->
+                <td>{{ getCountryNameById(company.companyCountryId) }}</td>
+
+                <td>
+                    <!-- Update Button -->
+                    <button class="btn btn-primary me-3" style="border-radius: 50px;"
+                        (click)="redirectToUpdate(company)">Update</button>
+                    <!-- Delete Button -->
+
+                    <button class="btn btn-danger me-3" style="border-radius: 50px;"
+                        (click)="deleteCompany(company.companyCode)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

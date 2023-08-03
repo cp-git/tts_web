@@ -1,0 +1,44 @@
+
+<div class="container">
+   
+    <!-- Add Button: Button to navigate to the 'CreateEmployeeComponent' -->
+    <button class="btn btn-primary float-end mt-1" style="border-radius: 50px;" (click)="navigateToCreateEmployee()">Add</button>
+    
+    <!-- Table to display the list of employees -->
+    <table class="table table-striped">
+        <thead>
+            <!-- Table header row -->
+            <tr>
+                <!-- Column headers -->
+                <th>Employee ID</th>
+                <th>Country</th>
+                <th>Company</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>DOB</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through each employee in the 'employees' array and display their data -->
+            <tr *ngFor="let employee of employees">
+                <!-- Display employee data in each table cell -->
+                <td>{{employee.employeeId}}</td>
+                <td>{{ getCountryNameById(employee.countryId)}}</td> <!-- Use method 'getCountryNameById' to get the country name based on countryId -->
+                <td>{{ getCompanyNameById(employee.companyId) }}</td> <!-- Use method 'getCompanyNameById' to get the company name based on companyId -->
+                <td>{{ employee.firstName }}</td>
+                <td>{{ employee.lastName }}</td>
+                <td>{{ employee.birthDate }}</td>
+                <td>{{ employee.employeeEmail }}</td>
+  
+                <td>
+                    <!-- Update Button - Button to navigate to the 'UpdateEmployeeComponent' with the selected employee data -->
+                    <button class="btn btn-primary me-3" style="border-radius: 50px;" (click)="navigateToUpdateEmployee(employee)">Update</button>
+                    <!-- Delete Button - Button to delete the selected employee data from the server -->
+                    <button class="btn btn-danger me-3" style="border-radius: 50px;" (click)="deleteEmployee(employee)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
