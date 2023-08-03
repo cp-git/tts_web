@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'tts_web';
+ 
+  constructor(private route: Router) {
+  }
+  
+  RedirectToEmployee() {
+    this.route.navigate(['employee'])
+  }
+
 }
