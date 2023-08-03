@@ -30,11 +30,9 @@
               "src/styles.css"
             ],
             "scripts": [
-              
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/@popperjs/core/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
-
             ]
           },
           "configurations": {
@@ -104,6 +102,6 @@
     }
   },
   "cli": {
-    "analytics": "da39dee5-ef23-472b-b828-24c449d993a5"
+    "analytics": false
   }
 }

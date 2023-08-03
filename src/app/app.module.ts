@@ -8,11 +8,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { CountryModule } from './country/country.module';
 import { LoginModule } from './login/login.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { FormsModule } from '@angular/forms';
 
+
+import { EmployeeModule } from './employee/employee.module';
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     CompanyModule,
     CountryModule,
+    EmployeeModule,
     LoginModule,
     DashboardModule,
   ],
