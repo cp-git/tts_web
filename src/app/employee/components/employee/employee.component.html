@@ -1,9 +1,29 @@
 <div class="container">
-
     <!-- Add Button: Button to navigate to the 'CreateEmployeeComponent' -->
     <div class="position-fixed top-0 end-0"></div>
     <span (click)="navigateToCreateEmployee()" class="fa-solid fa-circle-plus"
-        style='font-size:30px;color: rgb(22, 27, 91); margin-top: 10px;'></span>
+        style='font-size:30px;color: green; margin-top: 10px;'></span>
+
+    <!-- Gap between plus icon and filter options -->
+    <div style="margin-top: 20px;"></div>
+    <!-- Filter options (assuming you have select boxes for country and company filtering) -->
+    <label class="blue-label" for="countrySelect"> Select Country:</label>
+    <select id="countrySelect" [(ngModel)]="selectedCountryId">
+        <option value="undefined"> All Countries</option>
+        <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
+    </select>
+    &nbsp;
+    <label class="blue-label" for="companySelect"> Select Company:</label>
+    <select id="companySelect" [(ngModel)]="selectedCompanyId">
+        <option value="undefined"> All Companies</option>
+        <option *ngFor="let company of companies | filter:'companyCountryId':selectedCountryId "
+            [value]="company.companyId">
+            {{ company.companyName }}</option>
+    </select>
+
+
+
+    <div style="margin-top: 20px;"></div>
     <!-- Table to display the list of employees -->
     <table class="table table-striped">
         <thead>
@@ -21,8 +41,9 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Loop through each employee in the 'employees' array and display their data -->
-            <tr *ngFor="let employee of employees">
+            <!-- Loop through each filtered employee in the 'employees' array and display their data -->
+            <tr
+                *ngFor="let employee of employees | filter:'countryId':selectedCountryId | filter:'companyId':selectedCompanyId">
                 <!-- Display employee data in each table cell -->
                 <td>{{employee.username}}</td>
                 <td>{{ employee.firstName }}</td>
@@ -37,13 +58,13 @@
                 <td>
                     <!-- Update Button -->
                     <span (click)="navigateToUpdateEmployee(employee)"
-                        class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
-                        style='font-size:23px;color: rgb(64, 109, 234);'></span>
+                        class="fa-solid fa-circle-down fa-rotate-180 fa-xl" style="color: #0095A8;"></span>
                     <!-- Delete Button -->
                     &nbsp;
                     &nbsp;
                     <span (click)="deleteEmployee(employee)" class='fa-solid fa-trash fa-xl'
-                        style='font-size:23px;color: red;'></span>
+                        style='font-size:23px;color: red;'>
+                    </span>
                 </td>
             </tr>
         </tbody>

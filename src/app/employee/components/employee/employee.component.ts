@@ -12,7 +12,8 @@ import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.css']
+  styleUrls: ['./employee.component.css'],
+
 })
 export class EmployeeComponent {
   // Properties to store selected country and company
@@ -21,7 +22,8 @@ export class EmployeeComponent {
   data: any;
   // Property to store the selected employee ID
   employeeId!: number;
-
+  selectedCountryId!: number;
+  selectedCompanyId!: number;
   // Property to store data of employee and password (used for updating employee data)
   employeeData: EmployeeAndPasswordDTO = new EmployeeAndPasswordDTO();
 
@@ -31,6 +33,7 @@ export class EmployeeComponent {
   // Properties to store the list of countries and companies
   countries!: Country[];
   companies!: Company[];
+
 
   // Constructor to inject EmployeeService and Router dependencies
   constructor(private employeeService: EmployeeService, private router: Router, private dialogueBoxService: DialogueBoxService) { }
@@ -67,10 +70,12 @@ export class EmployeeComponent {
     );
   }
 
+
   getAllEmployeesAndPasswordData() {
     this.employeeService.getAllEmployeeAndPasswordData().subscribe(
       (data: EmployeeAndPasswordDTO[]) => {
         this.employees = data;
+        console.log(this.employees)
       },
       (error) => {
         console.error('Error while fetching employees:', error);

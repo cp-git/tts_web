@@ -13,24 +13,28 @@
             <input type="text" id="lastName" name="lastName" [(ngModel)]="employee.lastName" required
                 class="form-control">
         </div>
-        <!-- Country -->
+        <!-- Dropdown to select the country -->
         <div class="col-md-4">
             <label class="label" for="countryId"><strong>Country:</strong></label>
             <select id="countryId" name="countryId" [(ngModel)]="employee.countryId" required class="form-control">
-                <option value="">Select a country</option>
+                <option value="undefined" selected>Select a country</option>
+                <!-- Loop through the 'countries' array and display each country as an option -->
                 <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
             </select>
         </div>
-    </div>
-    <div class="row">
-        <!-- Company -->
+
+        <!-- Dropdown to select the company -->
         <div class="col-md-4">
             <label class="label" for="companyId"><strong>Company:</strong></label>
             <select id="companyId" name="companyId" [(ngModel)]="employee.companyId" required class="form-control">
-                <option value="">Select a company</option>
-                <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyName }}</option>
+                <option value="undefined" selected>Select a company</option>
+                <!-- Loop through the 'companies' array and display each company as an option -->
+                <option *ngFor="let company of companies | advFilter:'companyCountryId':employee.countryId"
+                    [value]="company.companyId">
+                    {{ company.companyName }}</option>
             </select>
         </div>
+
         <!-- Date of Birth -->
         <div class="col-md-4">
             <label for="birthDate"><strong>DOB:</strong></label>
@@ -46,7 +50,6 @@
     </div>
     <!-- Submit Button -->
     <div>
-        <button type="submit" [disabled]="!isFormValid()" (click)="updateEmployeeByEmployeeId()"
-            class="btn btn-primary mt-3">Submit</button>
+        <button type="submit" (click)="updateEmployeeByEmployeeId()" class="btn btn-primary mt-3">Submit</button>
     </div>
 </div>

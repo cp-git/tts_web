@@ -33,7 +33,7 @@ export class AddCountryComponent {
       },
       (error) => {
         // Handle error if the country addition fails or the country already exists
-        this.dialogueBoxService.open('Failed to add Country', 'warning');
+        this.dialogueBoxService.open('Failed to add Country.Already Exist', 'warning');
 
       }
     );

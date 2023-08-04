@@ -19,7 +19,8 @@ export class CreateEmployeeComponent implements OnInit {
   employees: Employee[] = []; // Property to store the list of employees, initialized as an empty array
   countries!: Country[]; // Property to store the list of countries as an array of 'Country' objects
   companies!: Company[]; // Property to store the list of companies as an array of 'Company' objects
-
+  selectedCountryId!: number;
+  selectedCompanyId!: number;
 
   constructor(private employeeService: EmployeeService, private dialogueBoxService: DialogueBoxService) { } // Constructor with parameter to inject 'EmployeeService' dependency
 
@@ -62,6 +63,17 @@ export class CreateEmployeeComponent implements OnInit {
         console.error('Error fetching countries:', error); // Log an error message with details of the error
       }
     );
+  }
+
+  // Inside your component class
+  getFilteredCompanies(): Company[] {
+    if (!this.selectedCountryId) {
+      // If no country is selected, return all companies
+      return this.companies;
+    } else {
+      // Filter companies based on selected countryId
+      return this.companies.filter(company => company.companyCountryId === this.selectedCountryId);
+    }
   }
 
   // Method to check if the form is valid
