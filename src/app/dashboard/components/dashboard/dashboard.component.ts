@@ -10,8 +10,8 @@ import { Employee } from 'src/app/classes/employee';
 })
 export class DashboardComponent implements OnInit {
 
-  statusArray = new Map();
-
+  employeeId: any;
+  companyId: any;
   // to storing all parent task
   parentTaskData: Task[] = [];
   allParentTaskData = new Map();
@@ -22,19 +22,15 @@ export class DashboardComponent implements OnInit {
 
   constructor(private dashboardService: DashboardService
   ) {
-    this.assignStatus();
+
+    this.employeeId = localStorage.getItem('employeeId');
+    this.companyId = localStorage.getItem('companyId');
   }
 
   ngOnInit(): void {
     this.initialization();
   }
 
-  private assignStatus() {
-    this.statusArray.set('CREATED', 'CREATED');
-    this.statusArray.set('INPROGRESS', 'INPROGRESS');
-    this.statusArray.set('DONE', 'DONE');
-
-  }
 
   // calling default method when load component
   private initialization() {
@@ -43,31 +39,14 @@ export class DashboardComponent implements OnInit {
     this.getAllEmployees();
 
     // for getting all parent task
-    this.getAllParentTask();
-  }
-
-  private getAllParentTask() {
-
-    // getting all parent task for status array
-    this.statusArray.forEach((value, key) => {
-      this.getAllParentTaskByStatus(value);
-    });
-  }
-
-  // for getting all parent task using status 
-  getAllParentTaskByStatus(status: string) {
-    this.dashboardService.getAllParentTaskByStatus(status).subscribe(
-      (data) => {
-
-        // getting and adding data in map
-        this.allParentTaskData.set(status, data);
-        console.table(this.allParentTaskData);
-
-      },
-      (error) => {
-        console.log("Failed to get data!");
-      }
-    );
+    const data = {
+      status: 'ALL',
+      createdBy: 0,
+      assignedTo: 0,
+      companyId: this.companyId,
+      parentId: 0
+    };
+    this.getParentTask(data);
   }
 
   // for gettign all employees
@@ -75,6 +54,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getAllEmployees().subscribe(
       (response) => {
         this.employees = response;
+        console.log(this.employees);
+
       },
       (error) => {
         console.log("Failed to get all employees");
@@ -82,6 +63,7 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  // for getting child task using parent id
   onClickChild(task: Task) {
     this.dashboardService.getChildTaskByParentId(task.taskId).subscribe(
       (response) => {
@@ -96,24 +78,26 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  onClickCreated(event: any) {
-    this.parentTaskData = this.allParentTaskData.get('CREATED')
-    console.log(this.parentTaskData);
+  // for fetching task using status, createdby, assigned to, companyId and parent Id
+  getParentTask(data: any) {
+    console.log(data);
+    const status = data.status;
+    const createdBy = data.createdBy;
+    const assignedTo = data.assignedTo;
+    const companyId = data.companyId;
+    const parentId = data.parentId;
 
+    this.dashboardService.getTasksByStatusAndCreatorAndAssigneeOfCompanyByCompanyIdId(parentId, status, createdBy, assignedTo, companyId).subscribe(
+      (response) => {
+        this.parentTaskData = response;
+        console.log(this.parentTaskData);
+
+      },
+      (error) => {
+        console.log("Failed to get parent task for status : " + status);
+
+      }
+    );
   }
-
-  onClickInProgress(event: any) {
-    this.parentTaskData = this.allParentTaskData.get('INPROGRESS')
-    console.log(this.parentTaskData);
-
-
-  }
-
-  onClickDone(event: any) {
-    this.parentTaskData = this.allParentTaskData.get('DONE')
-    console.log(this.parentTaskData);
-
-  }
-
 
 }

@@ -3,7 +3,7 @@
         <label class="name" for="name">
             FirstName LastName
         </label>
-        
+
     </div>
     <div>
         <label class="company" for="company">
@@ -13,8 +13,8 @@
     <div class="container">
 
         <!-- status buttons (Created/ In-Progress/ Done) -->
-        <app-status-buttons (onClickCreated)="onClickCreated($event)" (onClickDone)="onClickDone($event)" (onClickInProgress)="onClickInProgress($event)"></app-status-buttons>
-        
+        <app-status-buttons (onChangeFilter)="getParentTask($event)"></app-status-buttons>
+
     </div>
 
     <!-- task table  -->

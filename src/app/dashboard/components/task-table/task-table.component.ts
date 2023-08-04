@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@
 import { Task } from 'src/app/classes/task';
 import { DashboardService } from '../../services/dashboard.service';
 import { Employee } from 'src/app/classes/employee';
+import { Status } from 'src/app/classes/status';
 
 @Component({
   selector: 'app-task-table',
@@ -13,78 +14,83 @@ export class TaskTableComponent implements OnInit {
   @Input() parentTaskData: Task[] = [];
   @Input() employees: Employee[] = [];
 
-  // @Input() childTaskData: Map<number, Task[]> = new Map();
-
-  // @Output() onClickChild: EventEmitter<any> = new EventEmitter();
-
-  childTaskArray: any;
-
-  constructor(private dashboardService: DashboardService) {
-
-  }
-
   childData: Task[] = [];
+  allStatus: Status[] = [];  // to store all status 
+  showChildTable: Map<number, boolean> = new Map();   // for opening/ closing child table for task
+
+  constructor(private dashboardService: DashboardService,
+  ) {
+
+  }
+
   ngOnInit(): void {
-
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    // if (changes['parentTaskData']) {
-    //   this.parentTaskData = changes['parentTaskData'].currentValue;
-    //   // console.log(this.parentTaskData);
-  
-    //   this.parentTaskData.forEach(task =>
-    //     this.showChildTable2.set(task.taskId, false)
-    //   );
-    // }
-    
-
-    // if (changes['childTaskData']) {
-    //   this.childTaskData = this.childTaskData;
-    //   console.log(this.childTaskData);
-
-    //   // // Convert the Map to an array of objects
-    //   // this.childTaskArray = { key: any, value: any }[] = Array.from(this.childTaskData, ([key, value]) => ({ key, value }));
-
-    //   this.childTaskData.forEach((value, key) =>
-    //     value.forEach(task => this.showChildTable2.set(task.taskId, false))
-
-    //   );
-    // }
+    this.getAllStatus();
   }
 
   // for opening/ closing child table for task
-  showChildTable: Map<number, boolean> = new Map();
+  toggleChildTable(task: Task): void {
 
-  key: any;
-  // for opening/ closing child table for task
-  toggleChildTable(index: number, task: Task): void {
-    // this.showChildTable[index] = !this.showChildTable[index];
-    console.log(this.showChildTable.get(task.taskId));
-
-
+    // updating showChildTable variable with toggled value
     this.showChildTable.set(task.taskId, !this.showChildTable.get(task.taskId));
 
-    this.key = task.taskId;
-    // this.onClickChild.emit(task);
+    // calling function to get child task
     this.onClickChild(task);
   }
 
-  onClickChild(task: Task) {
+  // for getting child task using parent id
+  private onClickChild(task: Task) {
+
+    // calling function to get child task using parent id
     this.dashboardService.getChildTaskByParentId(task.taskId).subscribe(
       (response) => {
-        // this.childTaskData.set(task.taskId, response);
-        // console.table(this.childTaskData);
         this.childData = response;
 
-       this.parentTaskData[this.parentTaskData.indexOf(task)].childTask = this.childData;
-        
+        // setting child data to parent task
+        this.parentTaskData[this.parentTaskData.indexOf(task)].childTask = this.childData;
+
       },
       (error) => {
         console.log("Failed to load child task!");
-
       }
     );
   }
 
+  // calls when we change status
+  onChangeStatus(task: Task) {
+    const status = this.allStatus.find(status => task.taskStatus == status.statusId);
+    console.log(status);
+    if (status) {
+      switch (status.statusCode.toLowerCase()) {
+        case 'create':
+          break;
+
+        case 'inprogress':
+          break;
+          
+        case 'done':
+          // when status is done then setting actual end date to current date
+          task.taskActualEndDate = new Date();
+          break;
+
+      }
+    }
+
+  }
+
+
+  // for getting all status
+  private getAllStatus() {
+    this.dashboardService.getAllStatus().subscribe(
+      (response) => {
+
+        // stroign all status
+        this.allStatus = response;
+        console.log(this.allStatus);
+
+      },
+      (error) => {
+        console.log("Failed to get all status");
+      }
+    );
+  }
 }
