@@ -11,11 +11,11 @@ import { Company } from '../class/company';
   providedIn: 'root'
 })
 export class EmployeeService {
-  
+
   private readonly employeeUrl: string;
-  private countryUrl: any; 
-  private companyUrl: any; 
-  
+  private countryUrl: any;
+  private companyUrl: any;
+
   // Constructor to initialize the HttpClient and set the employeeUrl, countryUrl, and companyUrl
   constructor(private _http: HttpClient) {
     // Get the employeeUrl, countryUrl, and companyUrl from the environment file
@@ -40,6 +40,11 @@ export class EmployeeService {
   getAllEmployees(): Observable<Employee[]> {
     // Send a GET request to the API to retrieve a list of all employees
     return this._http.get<Employee[]>(`${this.employeeUrl}/allemployees`);
+  }
+
+  // Retrieves a list of all employees and their associated password information
+  getAllEmployeeAndPasswordData(): Observable<any> {
+    return this._http.get<any>(`${this.employeeUrl}/allemployee`);
   }
 
   // Method to update an existing employee by their employeeId

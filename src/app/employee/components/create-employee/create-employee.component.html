@@ -18,6 +18,7 @@
             <input type="text" id="lastName" name="lastName" [(ngModel)]="employeeData.lastName" required
                 class="form-control">
         </div>
+
         <!-- Dropdown to select the country -->
         <div class="col-md-4">
             <label class="label" for="countryId"><strong>Country:</strong></label>
@@ -27,17 +28,21 @@
                 <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
             </select>
         </div>
-    </div>
-    <div class="row">
+
         <!-- Dropdown to select the company -->
         <div class="col-md-4">
             <label class="label" for="companyId"><strong>Company:</strong></label>
             <select id="companyId" name="companyId" [(ngModel)]="employeeData.companyId" required class="form-control">
                 <option value="undefined" selected>Select a company</option>
                 <!-- Loop through the 'companies' array and display each company as an option -->
-                <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyName }}</option>
+                <option *ngFor="let company of companies | advFilter:'companyCountryId':employeeData.countryId"
+                    [value]="company.companyId">
+                    {{ company.companyName }}</option>
             </select>
         </div>
+
+
+
         <!-- Input field for the date of birth (DOB) -->
         <div class="col-md-4">
             <label for="birthDate"><strong>DOB:</strong></label>

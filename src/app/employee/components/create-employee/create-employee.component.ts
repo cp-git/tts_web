@@ -5,8 +5,8 @@ import { EmployeeAndPasswordDTO } from '../../class/employeeandpasswordDTO';
 import { EmployeeService } from '../../services/employee.service';
 import { Country } from '../../class/country';
 import { Company } from '../../class/company';
+import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-create-employee',
@@ -20,12 +20,10 @@ export class CreateEmployeeComponent implements OnInit {
   employees: Employee[] = []; // Property to store the list of employees, initialized as an empty array
   countries!: Country[]; // Property to store the list of countries as an array of 'Country' objects
   companies!: Company[]; // Property to store the list of companies as an array of 'Company' objects
+  selectedCountryId!: number;
+  selectedCompanyId!: number;
 
-
-  birthDate!: null; // Property to store the birth date, initialized as null
-
-
-  constructor(private employeeService: EmployeeService, private router: Router) { } // Constructor with parameter to inject 'EmployeeService' dependency
+  constructor(private employeeService: EmployeeService, private dialogueBoxService: DialogueBoxService, private router: Router) { } // Constructor with parameter to inject 'EmployeeService' dependency
 
   //This method is called when the component is initialized
   ngOnInit(): void {
@@ -46,12 +44,12 @@ export class CreateEmployeeComponent implements OnInit {
     this.employeeService.createEmployee(this.employeeData).subscribe( // Call the 'createEmployee' method of 'EmployeeService' to create the employee and subscribe to the response
       (response) => {
         console.log('Employee created successfully:', response); // Log the successful response
-        alert('Employee Created Successfully'); // Show an alert indicating successful creation
+        this.dialogueBoxService.open('Employee Created Successfully', 'information'); // Show an alert indicating successful creation
         // Create a new instance of 'EmployeeAndPasswordDTO' to reset/Clear the form inputs after successful creation
         this.employeeData = new EmployeeAndPasswordDTO();
       },
       (error) => {
-        alert('Failed to Create Employee. UserName or Email Already Exist'); // Show an alert indicating failure with a specific message
+        this.dialogueBoxService.open('Failed to Create Employee. UserName or Email Already Exist', 'warning'); // Show an alert indicating failure with a specific message
       }
     );
   }
@@ -67,6 +65,33 @@ export class CreateEmployeeComponent implements OnInit {
       }
     );
   }
+
+  // Inside your component class
+  getFilteredCompanies(): Company[] {
+    if (!this.selectedCountryId) {
+      // If no country is selected, return all companies
+      return this.companies;
+    } else {
+      // Filter companies based on selected countryId
+      return this.companies.filter(company => company.companyCountryId === this.selectedCountryId);
+    }
+  }
+
+  // Method to check if the form is valid
+  isFormValid(): boolean {
+    return (
+      !!this.employeeData.firstName &&
+      !!this.employeeData.lastName &&
+      !!this.employeeData.countryId &&
+      !!this.employeeData.companyId &&
+      !!this.employeeData.birthDate &&
+      !!this.employeeData.employeeEmail &&
+      !!this.employeeData.username &&
+      !!this.employeeData.password
+    );
+  }
+
+
 
   // Method to fetch all companies from the server and update the 'companies' property
   fetchCompanies() {

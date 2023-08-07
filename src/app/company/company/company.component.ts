@@ -3,6 +3,7 @@ import { CompanyService } from '../services/company.service';
 import { Company } from '../class/company';
 import { Country } from '../class/country';
 import { Router } from '@angular/router';
+import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
@@ -17,7 +18,7 @@ export class CompanyComponent implements OnInit {
   country!: Country; // A single country instance (assumed to be used for specific purposes)
   countries!: Country[]; // An array to hold the list of countries fetched from the service
   countryName: any;
-  constructor(private companyService: CompanyService, private route: Router) {
+  constructor(private companyService: CompanyService, private route: Router, private dialogueBoxService: DialogueBoxService) {
   }
 
   ngOnInit(): void {
@@ -47,15 +48,25 @@ export class CompanyComponent implements OnInit {
 
   // Delete a company by its companyCode
   deleteCompany(companyCode: any) {
-    this.companyService.deleteCompanyByCompanyId(companyCode).subscribe(
-      (response) => {
-        // Update the 'companies' array by removing the deleted company
-        this.companies = this.companies.filter((company) => company.companyCode !== companyCode);
-      },
-      (error) => {
-        console.error('Error deleting company:', error);
+    this.dialogueBoxService.open('Are you sure you want to delete this Company ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
+        this.companyService.deleteCompanyByCompanyId(companyCode).subscribe(
+          (response) => {
+            // Update the 'companies' array by removing the deleted company
+            this.companies = this.companies.filter((company) => company.companyCode !== companyCode);
+            this.dialogueBoxService.open('Company deleted successfully', 'information');
+          },
+          (error) => {
+            this.dialogueBoxService.open('Error deleting company', 'warning');
+          }
+        );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
       }
-    );
+    });
   }
 
   // Fetch the list of countries from the service

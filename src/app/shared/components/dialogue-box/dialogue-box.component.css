@@ -1,0 +1,73 @@
+.btn-secondary:hover {
+    background-color: red !important;
+    border-radius: 15px !important;
+}
+
+.modal-body {
+    font-size: 16px;
+}
+
+.btn-primary:hover {
+    background-color: green !important;
+    border-color: green !important;
+    border-radius: 15px !important;
+}
+
+.btn-primary {
+    border-radius: 15px !important;
+}
+
+.btn-secondary {
+    border-radius: 15px !important;
+}
+
+.modal-content {
+    border: 1px solid #ccc;
+    border-radius: 60px !important;
+}
+
+
+.warning-icon {
+    color: red;
+}
+
+.info-icon {
+    color: blue;
+}
+
+.decision-icon {
+    color: goldenrod;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* Set position to fixed and center the modal */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Rest of your styles... */
+    border: 7px solid rgb(39, 3, 242);
+    background-color: whitesmoke;
+    /* Add the grey background color */
+    width: 400px;
+    height: 250px;
+    /* Remove fixed height */
+    overflow: hidden;
+    border-radius: 60px !important;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

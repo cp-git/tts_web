@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Country } from '../../class/country';
 import { CountryService } from '../../services/country.service';
+import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,7 +16,7 @@ export class AddCountryComponent {
 
   country!: Country; // The current country object to be added
 
-  constructor(private countryService: CountryService, private router: Router) {
+  constructor(private countryService: CountryService, private router: Router, private dialogueBoxService: DialogueBoxService) {
     this.country = new Country(); // Initialize an empty country object for adding a new country
   }
 
@@ -29,15 +30,25 @@ export class AddCountryComponent {
     this.countryService.addCountry(country).subscribe(
       (data) => {
         // On successful addition, show a success alert
-        alert('Country added successfully');
+        this.dialogueBoxService.open('Country added successfully', 'information');
+
       },
       (error) => {
         // Handle error if the country addition fails or the country already exists
-        alert('Failed to add Country');
+        this.dialogueBoxService.open('Failed to add Country.Already Exist', 'warning');
+
       }
     );
   }
 
+  // Method to check if the form is valid
+  isFormValid(): boolean {
+    return (
+      !!this.country.countryName &&
+      !!this.country.countryCode
+
+    );
+  }
 
   RedirectToCountry() {
     this.router.navigate(['country'])
