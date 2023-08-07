@@ -3,6 +3,8 @@ import { CompanyService } from '../../services/company.service';
 import { Company } from '../../class/company';
 import { Country } from '../../class/country';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-add-company',
   templateUrl: './add-company.component.html',
@@ -15,7 +17,7 @@ export class AddCompanyComponent implements OnInit {
 
   company!: Company; // The current company object to be added
 
-  constructor(private companyService: CompanyService, private dialogueBoxService: DialogueBoxService) {
+  constructor(private companyService: CompanyService, private dialogueBoxService: DialogueBoxService, private route: Router) {
     this.company = new Company(); // Initialize an empty Company object for adding a new company
   }
 
@@ -62,4 +64,9 @@ export class AddCompanyComponent implements OnInit {
 
     );
   }
+  RedirectToCompany() {
+    this.route.navigate(['company'])
+  }
+
+
 }

@@ -3,7 +3,7 @@ import { EmployeeAndPasswordDTO } from '../../class/employeeandpasswordDTO';
 import { EmployeeService } from '../../services/employee.service';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from '../../class/company';
 import { Country } from '../../class/country';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
@@ -24,7 +24,8 @@ export class UpdateEmployeeComponent {
     private employeeService: EmployeeService, // Injecting the EmployeeService dependency
     private location: Location, // Injecting the Location dependency to interact with the browser's history
     private route: ActivatedRoute, // Injecting the ActivatedRoute dependency to access route parameters
-    private dialogueBoxService: DialogueBoxService
+    private dialogueBoxService: DialogueBoxService,
+    private router: Router
   ) {
     this.employee = new Employee(); // Initializing the 'employee' property with a new Employee object
   }
@@ -119,4 +120,7 @@ export class UpdateEmployeeComponent {
     );
   }
 
+  RedirectToEmployee() {
+    this.router.navigate(['employee'])
+  }
 }

@@ -35,7 +35,8 @@ export class CompanyComponent implements OnInit {
   private getAllCompanies() {
     this.companyService.getAllCompanies().subscribe(
       response => {
-        this.companies = response; // Assign the retrieved data to the 'companies' array
+        this.companies = response.sort((a, b) => a.companyName.localeCompare(b.companyName));
+
       },
       error => {
         console.log('No data in table ');
@@ -90,5 +91,7 @@ export class CompanyComponent implements OnInit {
   redirectToUpdate(company: Company) {
     this.route.navigate(['/update'], { state: { company } });
   }
-
+  RedirectToAdmin() {
+    this.route.navigate(['adminDash'])
+  }
 }

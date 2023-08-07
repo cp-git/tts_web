@@ -159,4 +159,8 @@ export class EmployeeComponent {
       }
     });
   }
+
+  RedirectToAdmin() {
+    this.router.navigate(['adminDash'])
+  }
 }

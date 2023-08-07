@@ -6,6 +6,7 @@ import { EmployeeService } from '../../services/employee.service';
 import { Country } from '../../class/country';
 import { Company } from '../../class/company';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-employee',
@@ -22,7 +23,7 @@ export class CreateEmployeeComponent implements OnInit {
   selectedCountryId!: number;
   selectedCompanyId!: number;
 
-  constructor(private employeeService: EmployeeService, private dialogueBoxService: DialogueBoxService) { } // Constructor with parameter to inject 'EmployeeService' dependency
+  constructor(private employeeService: EmployeeService, private dialogueBoxService: DialogueBoxService, private router: Router) { } // Constructor with parameter to inject 'EmployeeService' dependency
 
   //This method is called when the component is initialized
   ngOnInit(): void {
@@ -102,5 +103,9 @@ export class CreateEmployeeComponent implements OnInit {
         console.error('Error fetching companies:', error); // Log an error message with details of the error
       }
     );
+  }
+
+  RedirectToEmployee() {
+    this.router.navigate(['employee'])
   }
 }

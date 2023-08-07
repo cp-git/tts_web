@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Country } from '../../class/country';
 import { CountryService } from '../../services/country.service';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-add-country',
   templateUrl: './add-country.component.html',
@@ -14,7 +16,7 @@ export class AddCountryComponent {
 
   country!: Country; // The current country object to be added
 
-  constructor(private countryService: CountryService, private dialogueBoxService: DialogueBoxService) {
+  constructor(private countryService: CountryService, private router: Router, private dialogueBoxService: DialogueBoxService) {
     this.country = new Country(); // Initialize an empty country object for adding a new country
   }
 
@@ -48,5 +50,8 @@ export class AddCountryComponent {
     );
   }
 
+  RedirectToCountry() {
+    this.router.navigate(['country'])
+  }
 
 }

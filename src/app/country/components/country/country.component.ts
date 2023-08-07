@@ -68,4 +68,7 @@ export class CountryComponent implements OnInit {
   redirectToUpdate(country: Country) {
     this.route.navigate(['/updateCountry'], { state: { country } });
   }
+  RedirectToAdmin() {
+    this.route.navigate(['adminDash'])
+  }
 }

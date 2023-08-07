@@ -36,6 +36,7 @@ export class UpdateCompanyComponent implements OnInit {
         this.dialogueBoxService.open('Company updation failed', 'warning');
       }
     );
+
   }
 
   // Function to fetch the list of countries from the service.
@@ -62,4 +63,9 @@ export class UpdateCompanyComponent implements OnInit {
 
     );
   }
+
+  RedirectToCompany() {
+    this.router.navigate(['company'])
+  }
+
 }

@@ -11,11 +11,12 @@ import { CreateEmployeeComponent } from './employee/components/create-employee/c
 import { UpdateEmployeeComponent } from './employee/components/update-employee/update-employee.component';
 import { LoginComponent } from './login/components/login/login.component';
 import { DashboardComponent } from './dashboard/components/dashboard/dashboard.component';
+import { AdmindashboardComponent } from './adminDashboard/admindashboard/admindashboard.component';
 const routes: Routes = [
   { path: 'employee', component: EmployeeComponent },
   { path: 'createEmp', component: CreateEmployeeComponent },
   { path: 'updateEmp', component: UpdateEmployeeComponent },
-  { path: 'login', component: LoginComponent },
+  { path: '', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'company', component: CompanyComponent },
   { path: 'addCompany', component: AddCompanyComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'country', component: CountryComponent },
   { path: 'addCountry', component: AddCountryComponent },
   { path: 'updateCountry', component: UpdateCountryComponent },
+  { path: 'adminDash', component: AdmindashboardComponent }
 
 ];
 
