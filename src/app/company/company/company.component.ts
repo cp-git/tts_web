@@ -80,5 +80,7 @@ export class CompanyComponent implements OnInit {
   redirectToUpdate(company: Company) {
     this.route.navigate(['/update'], { state: { company } });
   }
-
+  RedirectToAdmin() {
+    this.route.navigate(['adminDash'])
+  }
 }

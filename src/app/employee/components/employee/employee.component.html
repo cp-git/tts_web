@@ -1,10 +1,21 @@
-<div class="container">
+<nav class="navbar navbar-light" style="background-color: #b1b7bc;">
+    <a class="navbar-brand" href="#" style="margin-left: 30px; font-weight: bold;">Admin Dashboard</a>
 
+    <div class="form-inline my-5 my-lg-0">
+        <a class="navbar-brand" href="#" style="margin-left: 10px; font-weight: bold;">Employees Details</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center w-100">
+        <span (click)="navigateToCreateEmployee()" class="fa-solid fa-circle-plus"
+            style='font-size:30px;color: rgb(33, 176, 40); margin-top: 10px;'></span>
+        <span (click)=" RedirectToAdmin()" class="fa-solid fa-circle-arrow-left fa-lg"
+            style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer; margin-top: 10px;"></span>
+    </div>
     <!-- Add Button: Button to navigate to the 'CreateEmployeeComponent' -->
 
     <div class="position-fixed top-0 end-0"></div>
-    <span (click)="navigateToCreateEmployee()" class="fa-solid fa-circle-plus"
-        style='font-size:30px;color: rgb(22, 27, 91); margin-top: 10px;'></span>
+
     <!-- Table to display the list of employees -->
     <table class="table table-striped">
         <thead>
