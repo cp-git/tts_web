@@ -16,7 +16,7 @@ import { JsonpInterceptor } from '@angular/common/http';
 })
 export class EmployeeComponent {
   // Properties to store selected country and company
-  country!: Country; 
+  country!: Country;
   company!: Company;
 
   // Property to store the selected employee ID
@@ -132,5 +132,9 @@ export class EmployeeComponent {
         alert('Failed to delete employee');
       }
     );
+  }
+
+  RedirectToAdmin() {
+    this.router.navigate(['adminDash'])
   }
 }

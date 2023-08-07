@@ -3,7 +3,7 @@ import { EmployeeAndPasswordDTO } from '../../class/employeeandpasswordDTO';
 import { EmployeeService } from '../../services/employee.service';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from '../../class/company';
 import { Country } from '../../class/country';
 
@@ -19,11 +19,12 @@ export class UpdateEmployeeComponent {
   employees: Employee[] = []; // Declaration of the 'employees' array to hold a list of Employee objects
   countries!: Country[]; // Declaration of the 'countries' array to hold a list of Country objects
   companies!: Company[]; // Declaration of the 'companies' array to hold a list of Company objects
- 
+
   constructor(
     private employeeService: EmployeeService, // Injecting the EmployeeService dependency
     private location: Location, // Injecting the Location dependency to interact with the browser's history
-    private route: ActivatedRoute // Injecting the ActivatedRoute dependency to access route parameters
+    private route: ActivatedRoute, // Injecting the ActivatedRoute dependency to access route parameters
+    private router: Router
   ) {
     this.employee = new Employee(); // Initializing the 'employee' property with a new Employee object
   }
@@ -34,12 +35,12 @@ export class UpdateEmployeeComponent {
     this.fetchCompanies(); // Call the method to fetch the list of companies
   }
 
- // Method to get the maximum date for the birth date input field and return it as a string
- getMaxDate(): string {
-  const currentDate = new Date(); // Get the current date and time
-  const maxDate = currentDate.toISOString().split('T')[0]; // Format the current date as a string in "yyyy-mm-dd" format
-  return maxDate; // Return the formatted date as the maximum date for the birth date input field
-}
+  // Method to get the maximum date for the birth date input field and return it as a string
+  getMaxDate(): string {
+    const currentDate = new Date(); // Get the current date and time
+    const maxDate = currentDate.toISOString().split('T')[0]; // Format the current date as a string in "yyyy-mm-dd" format
+    return maxDate; // Return the formatted date as the maximum date for the birth date input field
+  }
 
   // Method to update an employee and their password
   updateEmployeeAndPassword() {
@@ -93,7 +94,7 @@ export class UpdateEmployeeComponent {
     );
   }
 
-   // Method to get Companies
+  // Method to get Companies
   fetchCompanies() {
     this.employeeService.getAllCompanies().subscribe(
       (data) => {
@@ -107,5 +108,9 @@ export class UpdateEmployeeComponent {
 
   back() {
     this.location.back(); // Go back to the previous location in the browser's history
+  }
+
+  RedirectToEmployee() {
+    this.router.navigate(['employee'])
   }
 }

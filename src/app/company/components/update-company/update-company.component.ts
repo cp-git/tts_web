@@ -36,6 +36,7 @@ export class UpdateCompanyComponent implements OnInit {
         alert(`Company updation failed!`);
       }
     );
+
   }
 
   // Function to fetch the list of countries from the service.
@@ -48,6 +49,11 @@ export class UpdateCompanyComponent implements OnInit {
         console.error('Error fetching countries:', error);
       }
     );
+  }
+
+
+  RedirectToCompany() {
+    this.router.navigate(['company'])
   }
 
 }
