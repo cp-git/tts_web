@@ -1,12 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { DialogueBoxComponent } from './components/dialogue-box/dialogue-box.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FilterPipe } from './pipe/filter.pipe';
+import { AdvFilterPipe } from './pipe/adv-filter.pipe';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    DialogueBoxComponent,
+
+    FilterPipe,
+    AdvFilterPipe
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatDialogModule,
+  ],
+  exports: [
+    FilterPipe,
+    AdvFilterPipe
   ]
 })
 export class SharedModule { }

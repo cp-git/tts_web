@@ -3,10 +3,10 @@ import { EmployeeAndPasswordDTO } from '../../class/employeeandpasswordDTO';
 import { EmployeeService } from '../../services/employee.service';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from '../../class/company';
 import { Country } from '../../class/country';
-
+import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 @Component({
   selector: 'app-update-employee',
   templateUrl: './update-employee.component.html',
@@ -19,11 +19,13 @@ export class UpdateEmployeeComponent {
   employees: Employee[] = []; // Declaration of the 'employees' array to hold a list of Employee objects
   countries!: Country[]; // Declaration of the 'countries' array to hold a list of Country objects
   companies!: Company[]; // Declaration of the 'companies' array to hold a list of Company objects
- 
+
   constructor(
     private employeeService: EmployeeService, // Injecting the EmployeeService dependency
     private location: Location, // Injecting the Location dependency to interact with the browser's history
-    private route: ActivatedRoute // Injecting the ActivatedRoute dependency to access route parameters
+    private route: ActivatedRoute, // Injecting the ActivatedRoute dependency to access route parameters
+    private dialogueBoxService: DialogueBoxService,
+    private router: Router
   ) {
     this.employee = new Employee(); // Initializing the 'employee' property with a new Employee object
   }
@@ -34,23 +36,23 @@ export class UpdateEmployeeComponent {
     this.fetchCompanies(); // Call the method to fetch the list of companies
   }
 
- // Method to get the maximum date for the birth date input field and return it as a string
- getMaxDate(): string {
-  const currentDate = new Date(); // Get the current date and time
-  const maxDate = currentDate.toISOString().split('T')[0]; // Format the current date as a string in "yyyy-mm-dd" format
-  return maxDate; // Return the formatted date as the maximum date for the birth date input field
-}
+  // Method to get the maximum date for the birth date input field and return it as a string
+  getMaxDate(): string {
+    const currentDate = new Date(); // Get the current date and time
+    const maxDate = currentDate.toISOString().split('T')[0]; // Format the current date as a string in "yyyy-mm-dd" format
+    return maxDate; // Return the formatted date as the maximum date for the birth date input field
+  }
 
   // Method to update an employee and their password
   updateEmployeeAndPassword() {
     this.employeeService.updateEmployeeAndPasswordById(this.employeeId, this.employeeData).subscribe(
       (response) => {
         console.log('Employee and password updated successfully:', response); // Log success message and response
-        alert('Employee updated successfully'); // Display an alert indicating successful employee update
+        this.dialogueBoxService.open('Employee updated successfully', 'information'); // Display an alert indicating successful employee update
       },
       (error) => {
         console.error('Failed to update employee and password:', error); // Log error message and response
-        alert('Employee updation Failed'); // Display an alert indicating failed employee update
+        this.dialogueBoxService.open('Employee updation Failed', 'warning'); // Display an alert indicating failed employee update
       }
     );
   }
@@ -60,10 +62,10 @@ export class UpdateEmployeeComponent {
     // Call the service method to update the employee
     this.employeeService.updateEmployeeByEmployeeId(this.employee).subscribe(
       (response) => {
-        alert('Employee updated successfully!'); // Display an alert indicating successful employee update
+        this.dialogueBoxService.open('Employee updated successfully', 'information'); // Display an alert indicating successful employee update
       },
       (error) => {
-        alert('Error updating employee due to Email Already Exist'); // Display an alert indicating failed employee update
+        this.dialogueBoxService.open('Error updating employee due to Email Already Exist', 'warning'); // Display an alert indicating failed employee update
       }
     );
   }
@@ -93,7 +95,7 @@ export class UpdateEmployeeComponent {
     );
   }
 
-   // Method to get Companies
+  // Method to get Companies
   fetchCompanies() {
     this.employeeService.getAllCompanies().subscribe(
       (data) => {
@@ -104,8 +106,21 @@ export class UpdateEmployeeComponent {
       }
     );
   }
+  // Method to check if the form is valid
+  isFormValid(): boolean {
+    return (
+      !!this.employeeData.firstName &&
+      !!this.employeeData.lastName &&
+      !!this.employeeData.countryId &&
+      !!this.employeeData.companyId &&
+      !!this.employeeData.birthDate &&
+      !!this.employeeData.employeeEmail &&
+      !!this.employeeData.username &&
+      !!this.employeeData.password
+    );
+  }
 
-  back() {
-    this.location.back(); // Go back to the previous location in the browser's history
+  RedirectToEmployee() {
+    this.router.navigate(['employee'])
   }
 }

@@ -12,9 +12,11 @@ import { DashboardModule } from './dashboard/dashboard.module';
 
 import { EmployeeModule } from './employee/employee.module';
 import { TaskModule } from './task/task.module';
+import { AdmindashboardComponent } from './adminDashboard/admindashboard/admindashboard.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AdmindashboardComponent
   ],
   imports: [
     BrowserModule,

@@ -1,42 +1,80 @@
+<nav class="navbar navbar-light" style="background-color: #b1b7bc;">
+    <a class="navbar-brand" href="#" style="margin-left: 30px; font-weight: bold;">Admin Dashboard</a>
 
+    <div class="form-inline my-5 my-lg-0">
+        <a class="navbar-brand" href="#" style="margin-left: 10px; font-weight: bold;">Employees Details</a>
+    </div>
+</nav>
 <div class="container">
-   
-    <!-- Add Button: Button to navigate to the 'CreateEmployeeComponent' -->
-    <button class="btn btn-primary float-end mt-1" style="border-radius: 50px;" (click)="navigateToCreateEmployee()">Add</button>
-    
+    <div class="d-flex justify-content-between align-items-center w-100">
+        <span (click)="navigateToCreateEmployee()" class="fa-solid fa-circle-plus"
+            style='font-size:30px;color: rgb(33, 176, 40); margin-top: 10px;'></span>
+        <span (click)=" RedirectToAdmin()" class="fa-solid fa-circle-arrow-left fa-lg"
+            style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer; margin-top: 10px;"></span>
+    </div>
+    <!-- Gap between plus icon and filter options -->
+    <div style="margin-top: 20px;"></div>
+    <!-- Filter options (assuming you have select boxes for country and company filtering) -->
+    <label class="blue-label" for="countrySelect"> Select Country:</label>
+    <select id="countrySelect" [(ngModel)]="selectedCountryId">
+        <option value="undefined"> All Countries</option>
+        <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
+    </select>
+    &nbsp;
+    <label class="blue-label" for="companySelect"> Select Company:</label>
+    <select id="companySelect" [(ngModel)]="selectedCompanyId">
+        <option value="undefined"> All Companies</option>
+        <option *ngFor="let company of companies | filter:'companyCountryId':selectedCountryId "
+            [value]="company.companyId">
+            {{ company.companyName }}</option>
+    </select>
+
+    <div class="position-fixed top-0 end-0"></div>
+
+    <div style="margin-top: 20px;"></div>
     <!-- Table to display the list of employees -->
     <table class="table table-striped">
         <thead>
             <!-- Table header row -->
             <tr>
                 <!-- Column headers -->
-                <th>Employee ID</th>
-                <th>Country</th>
-                <th>Company</th>
+                <th>UserName</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>DOB</th>
                 <th>Email</th>
+                <th>Company</th>
+                <th>Country</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Loop through each employee in the 'employees' array and display their data -->
-            <tr *ngFor="let employee of employees">
+            <!-- Loop through each filtered employee in the 'employees' array and display their data -->
+            <tr
+                *ngFor="let employee of employees | filter:'countryId':selectedCountryId | filter:'companyId':selectedCompanyId">
                 <!-- Display employee data in each table cell -->
-                <td>{{employee.employeeId}}</td>
-                <td>{{ getCountryNameById(employee.countryId)}}</td> <!-- Use method 'getCountryNameById' to get the country name based on countryId -->
-                <td>{{ getCompanyNameById(employee.companyId) }}</td> <!-- Use method 'getCompanyNameById' to get the company name based on companyId -->
+                <td>{{employee.username}}</td>
                 <td>{{ employee.firstName }}</td>
                 <td>{{ employee.lastName }}</td>
-                <td>{{ employee.birthDate }}</td>
+                <td>{{ employee.birthDate | date:'yyyy-MM-dd'}}</td>
                 <td>{{ employee.employeeEmail }}</td>
-  
+                <td>{{ getCompanyNameById(employee.companyId) }}</td>
+                <!-- Use method 'getCompanyNameById' to get the company name based on companyId -->
+                <td>{{ getCountryNameById(employee.countryId)}}</td>
+                <!-- Use method 'getCountryNameById' to get the country name based on countryId -->
+
                 <td>
-                    <!-- Update Button - Button to navigate to the 'UpdateEmployeeComponent' with the selected employee data -->
-                    <button class="btn btn-primary me-3" style="border-radius: 50px;" (click)="navigateToUpdateEmployee(employee)">Update</button>
-                    <!-- Delete Button - Button to delete the selected employee data from the server -->
-                    <button class="btn btn-danger me-3" style="border-radius: 50px;" (click)="deleteEmployee(employee)">Delete</button>
+                    <!-- Update Button -->
+                    <span (click)="navigateToUpdateEmployee(employee)"
+                        class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
+                        style='font-size:23px;color: rgb(64, 109, 234);'></span>
+
+                    <!-- Delete Button -->
+                    &nbsp;
+                    &nbsp;
+                    <span (click)="deleteEmployee(employee)" class='fa-solid fa-trash fa-xl'
+                        style='font-size:23px;color: red;'>
+                    </span>
                 </td>
             </tr>
         </tbody>

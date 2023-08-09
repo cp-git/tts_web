@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../../services/company.service';
 import { Company } from '../../class/company';
 import { Country } from '../../class/country';
+import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-company',
@@ -15,7 +17,7 @@ export class AddCompanyComponent implements OnInit {
 
   company!: Company; // The current company object to be added
 
-  constructor(private companyService: CompanyService) {
+  constructor(private companyService: CompanyService, private dialogueBoxService: DialogueBoxService, private route: Router) {
     this.company = new Company(); // Initialize an empty Company object for adding a new company
   }
 
@@ -29,11 +31,11 @@ export class AddCompanyComponent implements OnInit {
     this.companyService.addCompany(company).subscribe(
       (data) => {
         // On successful addition, show a success alert
-        alert('Company added successfully');
+        this.dialogueBoxService.open('Company added successfully', 'information');
       },
       (error) => {
-        // Handle error if the company addition fails or the country already exists
-        alert('Failed to add OR Country already exists');
+        // Handle error if the company addition fails or the company already exists
+        this.dialogueBoxService.open('Failed to add.Company already exists', 'warning');
       }
     );
   }
@@ -49,5 +51,22 @@ export class AddCompanyComponent implements OnInit {
       }
     );
   }
+  // Method to check if the form is valid
+  isFormValid(): boolean {
+    return (
+      !!this.company.companyCode &&
+      !!this.company.companyName &&
+      !!this.company.companyContactEmail &&
+      !!this.company.companyContactPhone &&
+      !!this.company.companyAddress &&
+      !!this.company.companyZip &&
+      !!this.company.companyCountryId
+
+    );
+  }
+  RedirectToCompany() {
+    this.route.navigate(['company'])
+  }
+
 
 }

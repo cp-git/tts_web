@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CountryService } from '../../services/country.service';
 import { Router } from '@angular/router';
 import { Country } from '../../class/country';
-
+import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
@@ -15,7 +15,7 @@ export class CountryComponent implements OnInit {
   countries!: Country[]; // An array to hold the list of countries fetched from the service
 
 
-  constructor(private countryService: CountryService, private route: Router) {
+  constructor(private countryService: CountryService, private route: Router, private dialogueBoxService: DialogueBoxService) {
   }
   ngOnInit(): void {
     this.fetchCountries();
@@ -42,19 +42,33 @@ export class CountryComponent implements OnInit {
   }
 
   deleteCountry(countryCode: any) {
-    this.countryService.deleteCountryByCountryCode(countryCode).subscribe(
-      (response) => {
-        // Update the 'companies' array by removing the deleted country
-        this.countries = this.countries.filter((country) => country.countryCode !== countryCode);
-      },
-      (error) => {
-        console.error('Error deleting country:', error);
+    this.dialogueBoxService.open('Are you sure you want to delete this Employee ? ', 'decision').then((response) => {
+      if (response) {
+        console.log('User clicked OK');
+        // Do something if the user clicked OK
+        this.countryService.deleteCountryByCountryCode(countryCode).subscribe(
+          (response) => {
+            // Update the 'companies' array by removing the deleted country
+            this.countries = this.countries.filter((country) => country.countryCode !== countryCode);
+            this.dialogueBoxService.open('Country deleted successfully', 'information');
+          },
+          (error) => {
+            console.error('Error deleting country:', error);
+            this.dialogueBoxService.open('Error deleting country', 'warning');
+          }
+        );
+      } else {
+        console.log('User clicked Cancel');
+        // Do something if the user clicked Cancel
       }
-    );
+    });
   }
 
   // Redirect to the 'update' route and pass the country object as a parameter
   redirectToUpdate(country: Country) {
     this.route.navigate(['/updateCountry'], { state: { country } });
+  }
+  RedirectToAdmin() {
+    this.route.navigate(['adminDash'])
   }
 }
