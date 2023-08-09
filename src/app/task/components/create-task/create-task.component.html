@@ -1,0 +1,121 @@
+<!-- Modal -->
+<div class="modal fade" id="createTask" tabindex="-1" aria-labelledby="createTaskLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createTaskLabel">Create Task</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- {{task|json}} -->
+                <ng-container *ngTemplateOutlet="taskForm;"></ng-container>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Form  -->
+<ng-template #taskForm>
+    <form #addTaskForm="ngForm" (submit)="onClickSubmit(task)">
+        <div class="row">
+            <div class="col ">
+                <label for="parentTaskId" class="form-label">Parent Task</label><br>
+                <select class="form-control" name="parentTaskId" id="parentTaskId" name="parentTaskId"
+                    [(ngModel)]="task.taskParent" [required]="true">
+                    <option value="undefined" disabled>Select Option</option>
+                    <option value="0">Create As Parent</option>
+                    <!-- <ng-container *ngFor="let parentTaskObject of parentTaskList"> -->
+                    <option value="{{parentTask.taskId}}">{{parentTask.taskName}}</option>
+                    <!-- </ng-container> -->
+                </select>
+
+            </div>
+            <div class="col">
+                <label for="taskName" class="form-label">Task Name</label>
+                <input type="text" class="form-control" id="taskName" name="taskName" [(ngModel)]="task.taskName"
+                    [required]="true">
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="taskDescription" class="form-label">Task Description</label>
+                <textarea class="form-control" id="taskDescription" name="taskDescription"
+                    [(ngModel)]="task.taskDescription" placeholder="Add task description" [required]="true"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <label for="taskCreatedBy" class="form-label">Created By</label><br>
+                <select class="form-control" name="taskCreatedBy" id="taskCreatedBy" name="taskCreatedBy"
+                    [(ngModel)]="task.taskCreatedBy" [required]="true" disabled>
+                    <option value="undefined" disabled>Select Option</option>
+                    <!-- <ng-container *ngFor="let employee of allEmployees"> -->
+                    <option value="{{employeeId}}" selected="true">Self</option>
+                    <!-- </ng-container> -->
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="taskAssignedTo" class="form-label">Assigned To</label><br>
+                <select class="form-control" name="taskAssignedTo" id="taskAssignedTo" name="taskAssignedTo"
+                    [(ngModel)]="task.taskAssignedTo" [required]="true">
+                    <option value="undefined" disabled>Select Option</option>
+                    <option value="{{employeeId}}" selected="true">Self</option>
+                    <ng-container *ngFor="let employee of allEmployees">
+                        <option *ngIf="employeeId!=employee.employeeId" value="{{employee.employeeId}}">
+                            {{employee.firstName}} {{employee.lastName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+
+            <div class="col-sm-3">
+                <label for="taskStatus" class="form-label">Status</label><br>
+                <select class="form-control" name="taskStatus" id="taskStatus" name="taskStatus"
+                    [(ngModel)]="task.taskStatus" [required]="true" (change)="onChangeStatus(task.taskStatus)">
+                    <option value="undefined" disabled>Select Option</option>
+                    <ng-container *ngFor="let status of allStatus">
+                        <option selected="{{status.statusId==1}}" value="{{status.statusId}}">{{status.statusCode}}
+                        </option>
+                    </ng-container>
+                </select>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="startDate" class="form-label">Start date</label>
+                <input type="date" class="form-control" id="startDate" name="startDate" [(ngModel)]="task.taskStartDate"
+                    [required]="true">
+            </div>
+            <div class="col-sm-3">
+                <label for="endDate" class="form-label">End date</label>
+                <input type="date" class="form-control" id="endDate" name="endDate" [(ngModel)]="task.taskEndDate"
+                    [required]="true">
+            </div>
+            <div class="col-sm-3">
+                <label for="actualStartDate" class="form-label">Actual Start date</label>
+                <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
+                    [(ngModel)]="task.taskActualStartDate">
+            </div>
+
+            <div class="col-sm-3">
+                <label for="actualEndDate" class="form-label">Actual End date</label>
+                <input type="date" class="form-control" id="actualEndDate" name="actualEndDate"
+                    [(ngModel)]="task.taskActualEndDate">
+            </div>
+        </div>
+        <div class="modal-footer mt-3">
+            <button type="submit" class="btn btn-primary" [disabled]="!addTaskForm.valid">Save</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+
+    </form>
+</ng-template>
+
+<!-- {{parentTaskList|json}} -->
+{{parentTask|json}}
+{{task|json}}

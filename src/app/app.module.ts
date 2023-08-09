@@ -11,6 +11,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 
 
 import { EmployeeModule } from './employee/employee.module';
+import { TaskModule } from './task/task.module';
 import { AdmindashboardComponent } from './adminDashboard/admindashboard/admindashboard.component';
 @NgModule({
   declarations: [
@@ -21,11 +22,14 @@ import { AdmindashboardComponent } from './adminDashboard/admindashboard/adminda
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+
     CompanyModule,
     CountryModule,
     EmployeeModule,
+    
     LoginModule,
     DashboardModule,
+    TaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]
