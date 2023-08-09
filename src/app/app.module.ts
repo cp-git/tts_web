@@ -11,6 +11,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 
 
 import { EmployeeModule } from './employee/employee.module';
+import { TaskModule } from './task/task.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -26,6 +27,7 @@ import { EmployeeModule } from './employee/employee.module';
     
     LoginModule,
     DashboardModule,
+    TaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]

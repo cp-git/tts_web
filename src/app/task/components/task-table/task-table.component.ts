@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Task } from 'src/app/classes/task';
-import { DashboardService } from '../../services/dashboard.service';
-import { Employee } from 'src/app/classes/employee';
+import { Component, Input, OnInit } from '@angular/core';
+import { Task } from '../../class/task';
 import { Status } from 'src/app/classes/status';
+import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
+import { Employee } from 'src/app/classes/employee';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-task-table',
@@ -11,20 +12,31 @@ import { Status } from 'src/app/classes/status';
 })
 export class TaskTableComponent implements OnInit {
 
+
   @Input() parentTaskData: Task[] = [];
   @Input() employees: Employee[] = [];
+  @Input() allStatus: Status[] = [];
 
+  employeeId: any;
+  companyId: any;
+  parentTask: Task = {} as Task;
   childData: Task[] = [];
-  allStatus: Status[] = [];  // to store all status 
+  emptyTask: Task = {} as Task;
+
+  // allStatus: Status[] = [];  // to store all status 
   showChildTable: Map<number, boolean> = new Map();   // for opening/ closing child table for task
 
-  constructor(private dashboardService: DashboardService,
+  constructor(
+    private dashboardService: DashboardService,
+    private taskService: TaskService
   ) {
 
+    this.employeeId = localStorage.getItem("employeeId");
+    this.companyId = localStorage.getItem("companyId");
   }
 
   ngOnInit(): void {
-    this.getAllStatus();
+    // this.getAllStatus();
   }
 
   // for opening/ closing child table for task
@@ -40,8 +52,13 @@ export class TaskTableComponent implements OnInit {
   // for getting child task using parent id
   private onClickChild(task: Task) {
 
+    // if (this.parentTaskData[this.parentTaskData.indexOf(task)].childTask) {
+    //   console.log("exist");
+
+    // } else {
+    console.log("not exist");
     // calling function to get child task using parent id
-    this.dashboardService.getChildTaskByParentId(task.taskId).subscribe(
+    this.taskService.getChildTaskByParentId(task.taskId).subscribe(
       (response) => {
         this.childData = response;
 
@@ -53,6 +70,8 @@ export class TaskTableComponent implements OnInit {
         console.log("Failed to load child task!");
       }
     );
+    // }
+
   }
 
   // calls when we change status
@@ -66,15 +85,28 @@ export class TaskTableComponent implements OnInit {
 
         case 'inprogress':
           break;
-          
+
         case 'done':
           // when status is done then setting actual end date to current date
-          task.taskActualEndDate = new Date();
+          // task.taskActualEndDate = new Date();
           break;
 
       }
     }
 
+  }
+
+  onClickCreateTask(task: Task) {
+    console.log(task);
+    
+    this.parentTask = Object.assign({}, task);
+    console.log(this.parentTask);
+    
+    this.emptyTask.companyId = this.companyId;
+    this.emptyTask.taskParent = this.parentTask.taskId;
+    this.emptyTask.taskCreatedBy = this.employeeId;
+    this.emptyTask.taskAssignedTo = this.employeeId;
+    
   }
 
 

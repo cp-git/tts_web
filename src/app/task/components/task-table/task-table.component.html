@@ -19,8 +19,8 @@
     <tr>
         <th scope="col">Child</th>
         <th scope="col">Task Name</th>
-        <th scope="col" class="col-sm-3" >Description</th>
-        <th scope="col">Owner</th>
+        <th scope="col" class="col-sm-3">Description</th>
+        <th scope="col">Created By</th>
         <th scope="col">Assigned To</th>
         <th scope="col">ETA</th>
         <th scope="col">Status</th>
@@ -36,8 +36,9 @@
             <span *ngIf="!showChildTable.get(task.taskId)" class="fa-solid fa-plus"></span>
             <span *ngIf="showChildTable.get(task.taskId)" class="fa-solid fa-minus"></span>
         </th>
-        <td for="taskName" data-toggle="tooltip" data-placement="right" title="{{task.taskDescription}}">{{ task.taskName }}</td>
-        <td >{{ task.taskDescription }}</td>
+        <td for="taskName" data-toggle="tooltip" data-placement="right" title="{{task.taskDescription}}">{{
+            task.taskName }}</td>
+        <td>{{ task.taskDescription }}</td>
         <td>
             <ng-container *ngFor="let employee of employees">
                 <ng-container *ngIf="employee.employeeId === task.taskCreatedBy">
@@ -49,15 +50,16 @@
         <td>
             <select id="assignedToEmployeeId" name="assignedToEmployeeId" [(ngModel)]="task.taskAssignedTo" required
                 class="form-control">
-                <option value="undefined" selected>Select Employee</option>
+                <option value="undefined" [disabled]="true">Select Employee</option>
                 <!-- Loop through the 'employees' array and display each employee as an option -->
                 <option *ngFor="let employee of employees" [value]="employee.employeeId">{{
                     employee.firstName }}</option>
             </select>
         </td>
         <td>{{ task.taskEndDate | date:'dd-MM-yyyy'}}</td>
-        <td><select id="statusId" name="statusId" [(ngModel)]="task.taskStatus" required class="form-control" (change)="onChangeStatus(task)">
-                <option value="undefined" selected>Select Status</option>
+        <td><select id="statusId" name="statusId" [(ngModel)]="task.taskStatus" required class="form-control"
+                (change)="onChangeStatus(task)">
+                <option value="undefined" [disabled]="true">Select Status</option>
                 <!-- Loop through the 'allStatus' array and display each status as an option -->
                 <option *ngFor="let status of allStatus" [value]="status.statusId">{{
                     status.statusCode }}</option>
@@ -66,7 +68,8 @@
         <td>
             <div class="row mt-1">
                 <div class="col">
-                    <span title="Add Task" class="fa-solid fa-circle-plus fa-xl" style="color: #03a300;"></span>
+                    <span title="Add Task" class="fa-solid fa-circle-plus fa-xl" style="color: #03a300;"
+                        data-bs-toggle="modal" data-bs-target="#createTask" (click)="onClickCreateTask(task)"></span>
                 </div>
                 <div class="col">
                     <span title="Save Task" class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
@@ -76,6 +79,9 @@
                     <span title="Delete Task" class="fa-solid fa-trash fa-xl" style="color: #ff0000;"></span>
                 </div>
 
+                <div class="col">
+                    <span title="Response history" class="fa-solid fa fa-history fa-xl" style="color: blue"></span>
+                </div>
             </div>
         </td>
     </tr>
@@ -83,7 +89,12 @@
     <tr *ngIf="showChildTable.get(task.taskId)">
         <td colspan="9">
             <!-- Custom template for child table -->
-            <app-task-table [parentTaskData]="task.childTask" [employees]="employees"></app-task-table>
+            <app-task-table [parentTaskData]="task.childTask" [employees]="employees"
+                [allStatus]="allStatus"></app-task-table>
         </td>
     </tr>
 </ng-template>
+
+<!-- <ng-container *ngIf="parentTask"> -->
+    <app-create-task [task]="emptyTask" [parentTask]="parentTask" [allEmployees]="employees" [allStatus]="allStatus"></app-create-task>
+<!-- </ng-container> -->
