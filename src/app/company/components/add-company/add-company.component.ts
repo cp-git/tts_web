@@ -64,9 +64,7 @@ export class AddCompanyComponent implements OnInit {
 
     );
   }
-  RedirectToCompany() {
-    this.route.navigate(['company'])
-  }
+
 
 
 }

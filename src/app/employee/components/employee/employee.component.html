@@ -6,7 +6,7 @@
         <span (click)="navigateToCreateEmployee()" class="fa-solid fa-circle-plus"
             style='font-size:30px;color: rgb(33, 176, 40); margin-top: 10px;'></span>
 
-        <span (click)=" RedirectToAdmin()" class="fa-solid fa-circle-arrow-left fa-lg"
+        <span [routerLink]="['/adminDash']" class="fa-solid fa-circle-arrow-left fa-lg"
             style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer; margin-top: 10px;"></span>
     </div>
     <!-- Gap between plus icon and filter options -->

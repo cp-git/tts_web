@@ -119,7 +119,5 @@ export class CreateEmployeeComponent implements OnInit {
     );
   }
 
-  RedirectToEmployee() {
-    this.router.navigate(['employee'])
-  }
+
 }

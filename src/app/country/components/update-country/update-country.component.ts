@@ -46,9 +46,6 @@ export class UpdateCountryComponent {
       !!this.country.countryCode
     );
   }
-  RedirectToCountry() {
-    this.router.navigate(['country'])
-  }
 
 
 }
