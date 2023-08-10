@@ -33,7 +33,7 @@ export class EmployeeService {
   // Method to get an employee with password by their employeeId
   getEmployeeWithPasswordById(employeeId: number): Observable<EmployeeAndPasswordDTO> {
     // Send a GET request to the API to retrieve an employee's data (including password) by their employeeId
-    return this._http.get<EmployeeAndPasswordDTO>(`${this.employeeUrl}/employeepass/${employeeId}`);
+    return this._http.get<EmployeeAndPasswordDTO>(`${this.employeeUrl}/employee/${employeeId}`);
   }
 
   // Method to get all employees

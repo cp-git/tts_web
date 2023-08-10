@@ -1,8 +1,8 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center w-100">
         <h2>Add Employee</h2>
-        <span (click)=" RedirectToEmployee()" class="fa-solid fa-circle-arrow-left fa-lg"
-            style="font-size: 23px; color: rgb(20, 18, 18); cursor: pointer;"></span>
+        <span [routerLink]="['/employee']" class="fa-solid fa-circle-arrow-left fa-lg"
+            style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
     </div>
     <form #addUpdateForm="ngForm" class="form-material">
         <!-- Form for adding a new employee -->

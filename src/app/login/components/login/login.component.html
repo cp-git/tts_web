@@ -15,10 +15,10 @@
       <label *ngIf="isLoggedIn==false && clicked">Please enter correct username or password</label>
       <div class="row">
         <div class="col-auto me-auto">
-          <button type="submit" class="btn btn-login" (click)="logindirect(passwordData)">Login</button>
+          <button type="submit" class="btn btn-login" (click)="login(passwordData)">Login</button>
         </div>
         <div class="col-auto">
-          <button type="forgot" class="btn btn-forgot" (click)="openForgotPopup()">Forgot</button>
+          <!-- <button type="forgot" class="btn btn-forgot" (click)="openForgotPopup()">Forgot</button> -->
         </div>
         <div class="col-auto">
           <button type="reset" class="btn btn-reset">Reset</button>
@@ -27,7 +27,7 @@
     </form>
   </div>
 </div>
-{{passwordData | json}}
+
 <!-- <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
     Dropdown button
@@ -71,7 +71,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Forgot Password</h5>
-        <button type="button" class="btn-close" (click)="closeForgotPopup()" aria-label="Close"></button>
+        <!-- <button type="button" class="btn-close" (click)="closeForgotPopup()" aria-label="Close"></button> -->
       </div>
       <div class="modal-body">
         <!-- Add fields for username and email -->
@@ -86,9 +86,10 @@
       </div>
       <div class="modal-footer">
         <!-- Add the "Forgot" button in the popup -->
-        <button type="button" class="btn btn-forgot" (click)="handleForgotPassword()">Forgot</button>
-        <button type="button" class="btn btn-secondary" (click)="closeForgotPopup()">Cancel</button>
+        <!-- <button type="button" class="btn btn-forgot" (click)="handleForgotPassword()">Forgot</button> -->
+        <!-- <button type="button" class="btn btn-secondary" (click)="closeForgotPopup()">Cancel</button> -->
       </div>
     </div>
   </div>
 </div>
+<app-footer></app-footer>

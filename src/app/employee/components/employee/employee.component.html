@@ -1,27 +1,28 @@
-<nav class="navbar navbar-light" style="background-color: #b1b7bc;">
-    <a class="navbar-brand" href="#" style="margin-left: 30px; font-weight: bold;">Admin Dashboard</a>
-
-    <div class="form-inline my-5 my-lg-0">
-        <a class="navbar-brand" href="#" style="margin-left: 10px; font-weight: bold;">Employees Details</a>
-    </div>
-</nav>
+<app-header></app-header>
 <div class="container">
+    <!-- <app-header></app-header> -->
+
     <div class="d-flex justify-content-between align-items-center w-100">
         <span (click)="navigateToCreateEmployee()" class="fa-solid fa-circle-plus"
             style='font-size:30px;color: rgb(33, 176, 40); margin-top: 10px;'></span>
-        <span (click)=" RedirectToAdmin()" class="fa-solid fa-circle-arrow-left fa-lg"
+
+        <span [routerLink]="['/adminDash']" class="fa-solid fa-circle-arrow-left fa-lg"
             style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer; margin-top: 10px;"></span>
     </div>
     <!-- Gap between plus icon and filter options -->
     <div style="margin-top: 20px;"></div>
     <!-- Filter options (assuming you have select boxes for country and company filtering) -->
-    <label class="blue-label" for="countrySelect"> Select Country:</label>
+    <label for="countrySelect"><b>Select Country:</b></label>
+    &nbsp;
     <select id="countrySelect" [(ngModel)]="selectedCountryId">
         <option value="undefined"> All Countries</option>
         <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
     </select>
     &nbsp;
-    <label class="blue-label" for="companySelect"> Select Company:</label>
+    &nbsp;
+    &nbsp;
+    <label for="companySelect"><b> Select Company:</b></label>
+    &nbsp;
     <select id="companySelect" [(ngModel)]="selectedCompanyId">
         <option value="undefined"> All Companies</option>
         <option *ngFor="let company of companies | filter:'companyCountryId':selectedCountryId "
@@ -76,7 +77,10 @@
                         style='font-size:23px;color: red;'>
                     </span>
                 </td>
+
+
             </tr>
         </tbody>
     </table>
 </div>
+<app-footer></app-footer>

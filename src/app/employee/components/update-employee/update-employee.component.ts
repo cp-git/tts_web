@@ -120,7 +120,5 @@ export class UpdateEmployeeComponent {
     );
   }
 
-  RedirectToEmployee() {
-    this.router.navigate(['employee'])
-  }
+
 }

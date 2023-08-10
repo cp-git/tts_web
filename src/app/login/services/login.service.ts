@@ -14,13 +14,7 @@ export class LoginService {
     this.passwordUrl = `http://localhost:8090/employee/ttsms/password`
   }
 
-  // login(username: string, password: string): boolean {
-  //   if (username == 'admin' && password == 'admin') {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+
   login(username: string, password: string): Observable<boolean> {
     const url = this.passwordUrl + username + '/' + password;
     return this.http.get(url).pipe(
