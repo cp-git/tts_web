@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CompanyService } from '../services/company.service';
-import { Company } from '../class/company';
-import { Country } from '../class/country';
+import { CompanyService } from '../../services/company.service';
+import { Company } from '../../class/company';
+import { Country } from '../../class/country';
 import { Router } from '@angular/router';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 @Component({
@@ -11,17 +11,25 @@ import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service
 })
 export class CompanyComponent implements OnInit {
 
-
+  employeeId: any;
   companies: Company[] = []; // An array to hold the list of companies fetched from the service
   company!: Company; // Current selected company
 
   country!: Country; // A single country instance (assumed to be used for specific purposes)
   countries!: Country[]; // An array to hold the list of countries fetched from the service
   countryName: any;
-  constructor(private companyService: CompanyService, private route: Router, private dialogueBoxService: DialogueBoxService) {
+  constructor(
+    private companyService: CompanyService,
+    private route: Router,
+    private dialogueBoxService: DialogueBoxService
+  ) {
+    this.employeeId = sessionStorage.getItem("employeeId");
   }
 
   ngOnInit(): void {
+    if (this.employeeId <= 0) {
+      this.route.navigate([''])
+    }
     this.getAllCompanies(); // Fetch all companies from the service on component initialization
     this.fetchCountries(); // Fetch the list of countries from the service on component initialization
   }

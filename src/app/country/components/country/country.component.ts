@@ -10,14 +10,22 @@ import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service
 })
 export class CountryComponent implements OnInit {
 
-
+  employeeId: any;
   country!: Country; // A single country instance (assumed to be used for specific purposes)
   countries!: Country[]; // An array to hold the list of countries fetched from the service
 
 
-  constructor(private countryService: CountryService, private route: Router, private dialogueBoxService: DialogueBoxService) {
+  constructor(
+    private countryService: CountryService,
+    private route: Router,
+    private dialogueBoxService: DialogueBoxService
+  ) {
+    this.employeeId = sessionStorage.getItem("employeeId");
   }
   ngOnInit(): void {
+    if (this.employeeId < 0) {
+      this.route.navigate([''])
+    }
     this.fetchCountries();
   }
 

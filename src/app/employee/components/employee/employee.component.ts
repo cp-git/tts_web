@@ -40,6 +40,9 @@ export class EmployeeComponent {
 
   //This method is called when the component is initialized
   ngOnInit() {
+    const empid = sessionStorage.getItem('employeeId');
+    const username = sessionStorage.getItem('username');
+    console.log("Empid:", empid, username);
     // Fetch the list of employees initially
     this.getAllEmployeesAndPasswordData();
     // this.getAllEmployees();

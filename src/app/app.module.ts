@@ -11,11 +11,11 @@ import { DashboardModule } from './dashboard/dashboard.module';
 
 
 import { EmployeeModule } from './employee/employee.module';
-import { AdmindashboardComponent } from './adminDashboard/admindashboard/admindashboard.component';
+import { AdminModule } from './adminDashboard/admin/admin.module';
+import { HeaderModule } from './header/header.module';
 @NgModule({
   declarations: [
     AppComponent,
-    AdmindashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +26,8 @@ import { AdmindashboardComponent } from './adminDashboard/admindashboard/adminda
     EmployeeModule,
     LoginModule,
     DashboardModule,
+    AdminModule,
+    HeaderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
