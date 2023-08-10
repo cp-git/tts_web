@@ -4,76 +4,81 @@
         <span (click)=" RedirectToEmployee()" class="fa-solid fa-circle-arrow-left fa-lg"
             style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
     </div>
-    <!-- Form for adding a new employee -->
-    <div class="row">
-        <!-- Input field for the first name -->
-        <div class="col-md-4">
-            <label for="firstName"><strong>First Name:</strong></label>
-            <input type="text" id="firstName" name="firstName" [(ngModel)]="employeeData.firstName" required
-                class="form-control">
-        </div>
-        <!-- Input field for the last name -->
-        <div class="col-md-4">
-            <label for="lastName"><strong>Last Name:</strong></label>
-            <input type="text" id="lastName" name="lastName" [(ngModel)]="employeeData.lastName" required
-                class="form-control">
-        </div>
+    <form #addUpdateForm="ngForm" class="form-material">
+        <!-- Form for adding a new employee -->
+        <div class="row">
+            <!-- Input field for the first name -->
+            <div class="col-md-4">
+                <label for="firstName"><strong>First Name:</strong></label>
+                <input type="text" id="firstName" name="firstName" [(ngModel)]="employeeData.firstName" required
+                    class="form-control">
+            </div>
+            <!-- Input field for the last name -->
+            <div class="col-md-4">
+                <label for="lastName"><strong>Last Name:</strong></label>
+                <input type="text" id="lastName" name="lastName" [(ngModel)]="employeeData.lastName" required
+                    class="form-control">
+            </div>
 
-        <!-- Dropdown to select the country -->
-        <div class="col-md-4">
-            <label class="label" for="countryId"><strong>Country:</strong></label>
-            <select id="countryId" name="countryId" [(ngModel)]="employeeData.countryId" required class="form-control">
-                <option value="undefined" selected>Select a country</option>
-                <!-- Loop through the 'countries' array and display each country as an option -->
-                <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
-            </select>
-        </div>
+            <!-- Dropdown to select the country -->
+            <div class="col-md-4">
+                <label class="label" for="countryId"><strong>Country:</strong></label>
+                <select id="countryId" name="countryId" [(ngModel)]="employeeData.countryId" required
+                    class="form-control">
+                    <option value="undefined" selected>Select a country</option>
+                    <!-- Loop through the 'countries' array and display each country as an option -->
+                    <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}
+                    </option>
+                </select>
+            </div>
 
-        <!-- Dropdown to select the company -->
-        <div class="col-md-4">
-            <label class="label" for="companyId"><strong>Company:</strong></label>
-            <select id="companyId" name="companyId" [(ngModel)]="employeeData.companyId" required class="form-control">
-                <option value="undefined" selected>Select a company</option>
-                <!-- Loop through the 'companies' array and display each company as an option -->
-                <option *ngFor="let company of companies | advFilter:'companyCountryId':employeeData.countryId"
-                    [value]="company.companyId">
-                    {{ company.companyName }}</option>
-            </select>
-        </div>
+            <!-- Dropdown to select the company -->
+            <div class="col-md-4">
+                <label class="label" for="companyId"><strong>Company:</strong></label>
+                <select id="companyId" name="companyId" [(ngModel)]="employeeData.companyId" required
+                    class="form-control">
+                    <option value="undefined" selected>Select a company</option>
+                    <!-- Loop through the 'companies' array and display each company as an option -->
+                    <option *ngFor="let company of companies | advFilter:'companyCountryId':employeeData.countryId"
+                        [value]="company.companyId">
+                        {{ company.companyName }}</option>
+                </select>
+            </div>
 
 
 
-        <!-- Input field for the date of birth (DOB) -->
-        <div class="col-md-4">
-            <label for="birthDate"><strong>DOB:</strong></label>
-            <input type="date" id="birthDate" name="birthDate" [(ngModel)]="employeeData.birthDate" required
-                class="form-control" max="{{ getMaxDate() }}">
+            <!-- Input field for the date of birth (DOB) -->
+            <div class="col-md-4">
+                <label for="birthDate"><strong>DOB:</strong></label>
+                <input type="date" id="birthDate" name="birthDate" [(ngModel)]="employeeData.birthDate" required
+                    class="form-control" max="{{ getMaxDate() }}">
+            </div>
+            <!-- Input field for the employee's email -->
+            <div class="col-md-4">
+                <label for="employeeEmail"><strong>Email:</strong></label>
+                <input type="email" id="employeeEmail" name="employeeEmail" [(ngModel)]="employeeData.employeeEmail"
+                    required class="form-control">
+            </div>
         </div>
-        <!-- Input field for the employee's email -->
-        <div class="col-md-4">
-            <label for="employeeEmail"><strong>Email:</strong></label>
-            <input type="email" id="employeeEmail" name="employeeEmail" [(ngModel)]="employeeData.employeeEmail"
-                required class="form-control">
+        <!-- Additional row for username and password inputs -->
+        <div class="row">
+            <!-- Input field for the employee's username -->
+            <div class="col-md-4">
+                <label for="username"><strong>UserName:</strong></label>
+                <input type="text" id="username" name="username" [(ngModel)]="employeeData.username" required
+                    class="form-control">
+            </div>
+            <!-- Input field for the employee's password -->
+            <div class="col-md-4">
+                <label for="password"><strong>Password:</strong></label>
+                <input type="text" id="password" name="password" [(ngModel)]="employeeData.password" required
+                    class="form-control">
+            </div>
         </div>
-    </div>
-    <!-- Additional row for username and password inputs -->
-    <div class="row">
-        <!-- Input field for the employee's username -->
-        <div class="col-md-4">
-            <label for="username"><strong>UserName:</strong></label>
-            <input type="text" id="username" name="username" [(ngModel)]="employeeData.username" required
-                class="form-control">
+        <!-- Submit button to add the new employee -->
+        <div>
+            <button type="submit" [disabled]="!addUpdateForm.valid" (click)="createEmployee()"
+                class="btn btn-primary mt-3">Submit</button>
         </div>
-        <!-- Input field for the employee's password -->
-        <div class="col-md-4">
-            <label for="password"><strong>Password:</strong></label>
-            <input type="text" id="password" name="password" [(ngModel)]="employeeData.password" required
-                class="form-control">
-        </div>
-    </div>
-    <!-- Submit button to add the new employee -->
-    <div>
-        <button type="submit" (click)="createEmployee()" class="btn btn-primary mt-3">Submit</button>
-    </div>
+    </form>
 </div>
-<app-footer></app-footer>

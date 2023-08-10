@@ -13,6 +13,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { EmployeeModule } from './employee/employee.module';
 import { AdminModule } from './adminDashboard/admin/admin.module';
 import { HeaderModule } from './header/header.module';
+import { TaskModule } from './task/task.module';
+import { AdmindashboardComponent } from './adminDashboard/admindashboard/admindashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,13 +23,16 @@ import { HeaderModule } from './header/header.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+
     CompanyModule,
     CountryModule,
     EmployeeModule,
+
     LoginModule,
     DashboardModule,
     AdminModule,
-    HeaderModule
+    HeaderModule,
+    TaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]

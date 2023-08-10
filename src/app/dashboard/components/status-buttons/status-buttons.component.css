@@ -1,0 +1,12 @@
+button {
+  margin: 5px;
+}
+
+.form-check input,
+.form-check label {
+  cursor: pointer;
+}
+
+.form-check label:hover {
+    color: blue; /* Change this to your desired color */
+}
