@@ -1,9 +1,9 @@
 import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Task } from '../../class/task';
-import { TaskModule } from '../../task.module';
 import { Employee } from 'src/app/classes/employee';
-import { Status } from 'src/app/classes/status';
+import { Status } from 'src/app/status/class/status';
 import { TaskService } from '../../services/task.service';
+import { StatusEnum } from 'src/app/status/enum/status.enum';
 
 @Component({
   selector: 'app-create-task',
@@ -18,7 +18,14 @@ export class CreateTaskComponent implements OnInit {
   @Input() task: Task = {} as Task;
 
   employeeId: any;
+  statusEnum = StatusEnum;
 
+  // for today's date
+  todayForEndDate: any;
+  todayForStartDate: any;
+  currentDate: any = new Date().toISOString().split('T')[0];
+
+  taskName: any;
   constructor(
 
     private taskService: TaskService
@@ -26,63 +33,90 @@ export class CreateTaskComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.taskName = this.parentTask.taskName;
+    console.log(this.taskName);
+
     this.employeeId = localStorage.getItem("employeeId");
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
+    if (changes['parentTask']) {
+      console.log(this.parentTask);
+      
+    }
+    // setTimeout(() => {
+    //   if (changes['parentTask']) {
+    //     console.log(this.parentTask);
+        
+    //   }
+    //  }, 30000); 
   }
 
   onClickSubmit(task: Task) {
     console.log(task);
     this.taskService.createTask(task).subscribe(
-      (response)=>{
+      (response) => {
         alert("Task created successfully");
       },
-      (error)=>{
+      (error) => {
         console.log("Faild to create task!");
-        
+
       }
     );
 
   }
 
-  todayForEndDate: any;
-  todayForStartDate: any;
 
+  // calling function when use change the status on add task screen
   onChangeStatus(statusId: any) {
-    const status = this.allStatus.find(status => statusId == status.statusId);
-    console.log(status);
-    if (status) {
-      switch (status.statusCode.toLowerCase()) {
-        case 'create':
+    // const status = this.allStatus.find(status => statusId == status.statusId);
+    // const status = this.statusEnum[statusId];
+    if (statusId) {
+      switch (statusId) {
+
+        // for created
+        case this.statusEnum.CREATED.toString():
+          // console.log("hey");
+          this.todayForStartDate = '';
+          this.task.taskActualStartDate = null as unknown as Date;
+
+          this.todayForEndDate = '';
+          this.task.taskActualEndDate = null as unknown as Date;
           break;
 
-        case 'inprogress':
+        // for In progress
+        case this.statusEnum.INPROGRESS.toString():
           // when status is inprogress then setting actual start date to current date
-          // this.todayForStartDate =new Date().toISOString().split('T')[0];
-          // this.task.taskActualStartDate= new Date();
+          this.todayForStartDate = new Date().toISOString().split('T')[0];
+          this.task.taskActualStartDate = new Date();
 
-          // this.todayForEndDate = '';
-          // this.task.taskActualEndDate = null as unknown as Date; 
-          // console.log(this.task);
+          this.todayForEndDate = '';
+          this.task.taskActualEndDate = null as unknown as Date;
+          console.log(this.task);
 
           break;
 
-        case 'done':
+        // for done
+        case this.statusEnum.DONE.toString():
           console.log(new Date().toString());
 
           // when status is done then setting actual end date to current date
-          // this.todayForEndDate = new Date().toISOString().split('T')[0];
-          // this.task.taskActualEndDate = new Date();
+          this.todayForEndDate = new Date().toISOString().split('T')[0];
+          this.task.taskActualEndDate = new Date();
 
-          // this.todayForStartDate = '';
-          // this.task.taskActualStartDate = null as unknown as Date; 
+          this.todayForStartDate = '';
+          this.task.taskActualStartDate = null as unknown as Date;
           break;
 
       }
     }
   }
 
+  selectedDate!: Date; // This will hold the selected date with timestamp
 
+  onDateSelect(event: any) {
+    this.selectedDate = new Date(event.target.value);
+    console.log(this.selectedDate);
+
+  }
 }

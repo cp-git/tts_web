@@ -18,9 +18,10 @@
 
 <!-- Form  -->
 <ng-template #taskForm>
+    <!-- {{parentTask|json}} -->
     <form #addTaskForm="ngForm" (submit)="onClickSubmit(task)">
         <div class="row">
-            <div class="col ">
+            <div class="col">
                 <label for="parentTaskId" class="form-label">Parent Task</label><br>
                 <select class="form-control" name="parentTaskId" id="parentTaskId" name="parentTaskId"
                     [(ngModel)]="task.taskParent" [required]="true">
@@ -29,13 +30,20 @@
                     <!-- <ng-container *ngFor="let parentTaskObject of parentTaskList"> -->
                     <option value="{{parentTask.taskId}}">{{parentTask.taskName}}</option>
                     <!-- </ng-container> -->
+
+                    <!-- <ng-container *ngIf="parentTask.childTask">
+                        <ng-container *ngFor="let childTask of parentTask.childTask">
+                            <option value="{{childTask.taskId}}">{{childTask.taskName}}</option>
+
+                        </ng-container>
+                    </ng-container> -->
                 </select>
 
             </div>
             <div class="col">
                 <label for="taskName" class="form-label">Task Name</label>
-                <input type="text" class="form-control" id="taskName" name="taskName" [(ngModel)]="task.taskName"
-                    [required]="true">
+                <input type="text" class="form-control" id="taskName" name="taskName" placeholder="Enter task name"
+                    [(ngModel)]="task.taskName" [required]="true">
             </div>
 
         </div>
@@ -44,7 +52,8 @@
             <div class="col">
                 <label for="taskDescription" class="form-label">Task Description</label>
                 <textarea class="form-control" id="taskDescription" name="taskDescription"
-                    [(ngModel)]="task.taskDescription" placeholder="Add task description" [required]="true"></textarea>
+                    [(ngModel)]="task.taskDescription" placeholder="Enter task description"
+                    [required]="true"></textarea>
             </div>
         </div>
         <div class="row">
@@ -77,7 +86,7 @@
                     [(ngModel)]="task.taskStatus" [required]="true" (change)="onChangeStatus(task.taskStatus)">
                     <option value="undefined" disabled>Select Option</option>
                     <ng-container *ngFor="let status of allStatus">
-                        <option selected="{{status.statusId==1}}" value="{{status.statusId}}">{{status.statusCode}}
+                        <option value="{{status.statusId}}">{{status.statusCode}}
                         </option>
                     </ng-container>
                 </select>
@@ -93,23 +102,34 @@
             </div>
             <div class="col-sm-3">
                 <label for="endDate" class="form-label">End date</label>
-                <input type="date" class="form-control" id="endDate" name="endDate" [(ngModel)]="task.taskEndDate"
-                    [required]="true">
+                <input type="date" class="form-control" id="endDate" name="endDate" [min]="task.taskStartDate"
+                    [(ngModel)]="task.taskEndDate" [required]="true" [disabled]="task.taskStartDate==null">
             </div>
             <div class="col-sm-3">
                 <label for="actualStartDate" class="form-label">Actual Start date</label>
                 <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
+                    [min]="task.taskStartDate" [max]="(task.taskStatus == statusEnum.DONE)?currentDate:task.taskEndDate"
+                    [disabled]="task.taskStartDate == null || task.taskEndDate == null || task.taskStatus == statusEnum.CREATED"
                     [(ngModel)]="task.taskActualStartDate">
             </div>
 
             <div class="col-sm-3">
                 <label for="actualEndDate" class="form-label">Actual End date</label>
                 <input type="date" class="form-control" id="actualEndDate" name="actualEndDate"
-                    [(ngModel)]="task.taskActualEndDate">
+                    [(ngModel)]="task.taskActualEndDate" [min]="task.taskActualStartDate" [max]="currentDate"
+                    [disabled]="task.taskStatus != statusEnum.DONE || task.taskEndDate == null || task.taskActualStartDate == null">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="taskReason" class="form-label">Reason</label>
+                <textarea class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
+                    placeholder="Enter reason" [required]="true"></textarea>
             </div>
         </div>
         <div class="modal-footer mt-3">
-            <button type="submit" class="btn btn-primary" [disabled]="!addTaskForm.valid">Save</button>
+            <button type="submit" class="btn btn-primary">Save</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
 
@@ -117,5 +137,4 @@
 </ng-template>
 
 <!-- {{parentTaskList|json}} -->
-{{parentTask|json}}
-{{task|json}}
+<!-- {{parentTask.taskName|json}} -->

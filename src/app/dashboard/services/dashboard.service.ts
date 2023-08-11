@@ -2,8 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Employee } from 'src/app/classes/employee';
-import { Status } from 'src/app/classes/status';
-import { Task } from 'src/app/task/class/task';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +9,6 @@ import { Task } from 'src/app/task/class/task';
 export class DashboardService {
 
   private readonly EmployeeURL = `http://localhost:8090/employee/ttsms`;
-  private readonly StatusURL = `http://localhost:8090/status/ttsms`;
 
   constructor(private http: HttpClient) { }
 
@@ -28,12 +25,6 @@ export class DashboardService {
   getAllEmployees(): Observable<Employee[]> {
     return this.http.get<Employee[]>(`${this.EmployeeURL}/allemployee`);
   }
-
-  // for getting all status
-  getAllStatus(): Observable<Status[]> {
-    return this.http.get<Status[]>(`${this.StatusURL}/allstatus`);
-  }
-
 
   getCompanyById(companyId: number) {
     return {

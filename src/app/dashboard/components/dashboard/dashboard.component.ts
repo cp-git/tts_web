@@ -3,8 +3,9 @@ import { DashboardService } from '../../services/dashboard.service';
 import { Task } from 'src/app/task/class/task';
 import { Employee } from 'src/app/classes/employee';
 import { TaskService } from 'src/app/task/services/task.service';
-import { Status } from 'src/app/classes/status';
+import { Status } from 'src/app/status/class/status';
 import { Company } from 'src/app/company/class/company';
+import { StatusService } from 'src/app/status/services/status.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,7 +28,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private statusService: StatusService
   ) {
 
     this.employeeId = localStorage.getItem('employeeId');
@@ -122,7 +124,7 @@ export class DashboardComponent implements OnInit {
 
   // for getting all status
   private getAllStatus() {
-    this.dashboardService.getAllStatus().subscribe(
+    this.statusService.getAllStatus().subscribe(
       (response) => {
 
         // stroign all status
