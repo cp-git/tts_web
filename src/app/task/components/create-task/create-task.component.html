@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="createTask" tabindex="-1" aria-labelledby="createTaskLabel" aria-hidden="true">
+<div #createTaskModal class="modal fade" id="createTask{{parentTask.taskId}}" tabindex="-1" aria-labelledby="createTaskLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -130,7 +130,7 @@
         </div>
         <div class="modal-footer mt-3">
             <button type="submit" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #closeButton id="closeButton">Close</button>
         </div>
 
     </form>

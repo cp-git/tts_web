@@ -21,7 +21,7 @@ export class TaskService {
     return this.http.get<Task[]>(`${this.TaskURL}/allchilds/${parentId}`);
   }
 
-  createTask(task:Task):Observable<Task>{
+  createTaskAndAddReason(task:Task):Observable<Task>{
     return this.http.post<Task>(`${this.TaskURL}/savetask`, task);
   }
 }

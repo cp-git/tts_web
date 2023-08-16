@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
 import { Task } from '../../class/task';
 import { Employee } from 'src/app/classes/employee';
 import { Status } from 'src/app/status/class/status';
@@ -11,6 +11,7 @@ import { StatusEnum } from 'src/app/status/enum/status.enum';
   styleUrls: ['./create-task.component.css']
 })
 export class CreateTaskComponent implements OnInit {
+  @ViewChild('createTaskModal') createTaskModal!: ElementRef;
 
   @Input() parentTask: Task = {} as Task;
   @Input() allEmployees: Employee[] = [];
@@ -28,35 +29,40 @@ export class CreateTaskComponent implements OnInit {
   taskName: any;
   constructor(
 
-    private taskService: TaskService
-
+    private taskService: TaskService,
+    private renderer: Renderer2
   ) { }
 
   ngOnInit(): void {
     this.taskName = this.parentTask.taskName;
     console.log(this.taskName);
-
+    console.log("parent Task " + JSON.stringify(this.parentTask));
     this.employeeId = localStorage.getItem("employeeId");
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['parentTask']) {
-      console.log(this.parentTask);
-      
+      console.log("parent Task " + JSON.stringify(this.parentTask));
+
     }
-    // setTimeout(() => {
-    //   if (changes['parentTask']) {
-    //     console.log(this.parentTask);
-        
-    //   }
-    //  }, 30000); 
   }
 
   onClickSubmit(task: Task) {
     console.log(task);
-    this.taskService.createTask(task).subscribe(
+    this.taskService.createTaskAndAddReason(task).subscribe(
       (response) => {
         alert("Task created successfully");
+
+        // for closing modal after creating task
+        const modalElement = this.createTaskModal.nativeElement;
+        if (modalElement) {
+          const closeButton = modalElement.querySelector('#closeButton');
+          if (closeButton) {
+            this.renderer.selectRootElement(closeButton).click();
+          }
+        }
+        
+
       },
       (error) => {
         console.log("Faild to create task!");

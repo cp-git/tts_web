@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { Task } from '../../class/task';
 import { Status } from 'src/app/status/class/status';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
@@ -6,6 +6,7 @@ import { Employee } from 'src/app/classes/employee';
 import { TaskService } from '../../services/task.service';
 import { StatusEnum } from 'src/app/status/enum/status.enum';
 import { StatusService } from 'src/app/status/services/status.service';
+import { CreateTaskComponent } from '../create-task/create-task.component';
 
 @Component({
   selector: 'app-task-table',
@@ -13,6 +14,8 @@ import { StatusService } from 'src/app/status/services/status.service';
   styleUrls: ['./task-table.component.css']
 })
 export class TaskTableComponent implements OnInit {
+
+  // @ViewChild(CreateTaskComponent) createTaskComponent!: CreateTaskComponent;
 
   @Input() parentTaskData: Task[] = [];
   @Input() employees: Employee[] = [];
@@ -70,8 +73,8 @@ export class TaskTableComponent implements OnInit {
     //   console.log("exist");
 
     // } else {
-      console.log(task);
-      
+    console.log(task);
+
     // console.log("exist");
     // calling function to get child task using parent id
     this.taskService.getChildTaskByParentId(task.taskId).subscribe(
@@ -81,8 +84,8 @@ export class TaskTableComponent implements OnInit {
 
         // setting child data to parent task
         this.parentTaskData[this.parentTaskData.indexOf(task)].childTask = this.childData;
-        
-        
+
+
       },
       (error) => {
         console.log("Failed to load child task!");
@@ -121,6 +124,9 @@ export class TaskTableComponent implements OnInit {
     this.parentTask = Object.assign({}, task);
     console.log(this.parentTask);
     console.log("hey");
+    console.log("Parent details");
+    console.log(this.parentTask);
+
 
     this.emptyTask.companyId = this.companyId;
     this.emptyTask.taskParent = this.parentTask.taskId;
@@ -131,6 +137,11 @@ export class TaskTableComponent implements OnInit {
     this.emptyTask.taskActualEndDate = null as unknown as Date;
 
     console.log(this.emptyTask);
+
+    // this.createTaskComponent.parentTask = this.parentTask;
+    // this.createTaskComponent.task = this.emptyTask;
+    // this.createTaskComponent.allEmployees = this.employees;
+    // this.createTaskComponent.allStatus = this.allStatus;
 
   }
 
