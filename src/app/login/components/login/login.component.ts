@@ -4,6 +4,9 @@ import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Password } from '../../class/password';
+import { EmployeeAndPasswordDTO } from 'src/app/employee/class/employeeandpasswordDTO';
+import { EmployeeService } from 'src/app/employee/services/employee.service';
+import { AuthenticationServiceService } from 'src/app/service/authentication-service.service';
 declare var $: any;
 @Component({
   selector: 'app-login',
@@ -12,99 +15,59 @@ declare var $: any;
 })
 export class LoginComponent implements OnInit {
 
-  //  isLoggedIn: boolean = false;
-
-  // clicked: boolean = false;
+  isLoggedIn: boolean = false;
+  clicked: boolean = false;
+  username: string = '';
+  password: string = '';
+  errorMessage: string = '';
 
   passwordData!: Password;
   userData!: Password;
-  // username: string = '';
-  // password: string = '';
-
-
-  isLoggedIn = false;
-  clicked = false;
 
   forgotData = { username: '', email: '' };
   showForgotPopup = false;
 
+
+  empid: any;
+
+  employeeData: EmployeeAndPasswordDTO = new EmployeeAndPasswordDTO();
+
   constructor(
     private route: Router,
     private loginService: LoginService,
-    private http: HttpClient
+    private http: HttpClient,
+    private employeeService: EmployeeService,
+    private authService: AuthenticationServiceService
 
   ) {
+    this.empid = sessionStorage.getItem('employeeId');
     this.passwordData = new Password();
     this.userData = new Password();
   }
-
   ngOnInit(): void {
+
   }
 
-  // login() {
-  //   this.isLoggedIn = this.loginService.login(this.username,this.password);
-  //   this.clicked=true;
-  //   if (this.isLoggedIn) {
-  //     this.route.navigate(['/dashboard']);
-  //   } else {
-  //     this.route.navigate(['/login']);
-
-  //   }
-  // }
-
-  // login() {
-  //   this.loginService.login(this.username, this.password).subscribe(
-  //     (isLoggedIn: boolean) => {
-  //       alert(isLoggedIn);
-  //       if (isLoggedIn) {
-  //         alert("pass");
-  //         this.route.navigate(['/dashboard']);
-
-  //       } else {
-  //         // Show error message or handle login failure
-  //         // For now, just redirect back to the login page
-  //         alert("fail");
-  //         this.route.navigate(['/login']);
-
-  //       }
-  //     },
-  //     (error) => {
-  //       // Handle error cases, e.g., API not reachable
-  //       console.error('Error while logging in:', error);
-  //       // For now, just redirect back to the login page
-  //       this.route.navigate(['/login']);
-  //     }
-  //   );
-  // }
-
-  // loginUser(username: any, password: any) {
-  //   this.loginService.getPasswordByUsernameAndPassword(username, password).subscribe(
-  //     (response) => {
-  //       alert(response);
-  //       if (response.success) {
-  //         alert("pass");
-  //       }
-  //     },
-  //     (error) => {
-  //       console.error('Failed to get :', error); // Handle any errors that occur during the request
-  //     }
-  //   );
-  // }
-
-
-  logindirect(passwordData: any) {
+  login(passwordData: any) {
     // alert(passwordData + this.passwordData.username);
     this.loginService.getPasswordByUsernameAndPassword(this.passwordData.username, this.passwordData.password)
       .subscribe(
         (response) => {
+          this.authService.setSession(this.passwordData);
           // Check the response from the API
           this.userData = response;
+          // alert(this.userData);
+          sessionStorage.setItem('employeeId', this.userData.employeeId.toString());
           if (this.userData) {
             if (this.userData.username === "admin") {
-              this.route.navigate(['/adminDash']);
+
+              this.route.navigate(['/company']);
             } else {
               this.route.navigate(['/dashboard']);
             }
+
+            this.getEmployeeWithPassword();
+
           } else {
             alert("Invalid Details");
           }
@@ -114,25 +77,22 @@ export class LoginComponent implements OnInit {
         }
       );
   }
-
-
-
-  openForgotPopup() {
-    this.showForgotPopup = true;
+  // Method to get an employee with their password by ID
+  getEmployeeWithPassword() {
+    // alert(this.empid);
+    this.employeeService.getEmployeeWithPasswordById(this.empid).subscribe(
+      (response: any) => {
+        this.employeeData = response; // Assign the response to 'employeeData' property
+        // sessionStorage.setItem('countryId', this.employeeData.countryId.toString());
+        sessionStorage.setItem('companyId', this.employeeData.companyId.toString())
+        //alert(JSON.stringify(this.employeeData));
+      },
+      (error: any) => {
+        console.error('Failed to get employee with password:', error); // Log error message and response
+      }
+    );
   }
 
-  closeForgotPopup() {
-    this.showForgotPopup = false;
-  }
 
-  handleForgotPassword() {
-    // Implement your "Forgot" password logic here
-    // For simplicity, we'll just display the username and email in the console
-    console.log('Username: ', this.forgotData.username);
-    console.log('Email: ', this.forgotData.email);
-
-    // Close the popup after handling the "Forgot" password
-    this.closeForgotPopup();
-  }
 
 }

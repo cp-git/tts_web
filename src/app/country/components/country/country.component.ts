@@ -10,14 +10,22 @@ import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service
 })
 export class CountryComponent implements OnInit {
 
-
+  employeeId: any;
   country!: Country; // A single country instance (assumed to be used for specific purposes)
   countries!: Country[]; // An array to hold the list of countries fetched from the service
 
 
-  constructor(private countryService: CountryService, private route: Router, private dialogueBoxService: DialogueBoxService) {
+  constructor(
+    private countryService: CountryService,
+    private route: Router,
+    private dialogueBoxService: DialogueBoxService
+  ) {
+    this.employeeId = sessionStorage.getItem("employeeId");
   }
   ngOnInit(): void {
+    if (this.employeeId < 0) {
+      this.route.navigate([''])
+    }
     this.fetchCountries();
   }
 
@@ -36,10 +44,6 @@ export class CountryComponent implements OnInit {
     );
   }
 
-  // Redirect to the 'add country' route
-  RedirectToAdd() {
-    this.route.navigate(['addCountry']);
-  }
 
   deleteCountry(countryCode: any) {
     this.dialogueBoxService.open('Are you sure you want to delete this Employee ? ', 'decision').then((response) => {
@@ -68,7 +72,5 @@ export class CountryComponent implements OnInit {
   redirectToUpdate(country: Country) {
     this.route.navigate(['/updateCountry'], { state: { country } });
   }
-  RedirectToAdmin() {
-    this.route.navigate(['adminDash'])
-  }
+
 }

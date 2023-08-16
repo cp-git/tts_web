@@ -1,0 +1,24 @@
+/* #sticky-footer {
+    flex-shrink: 0;
+
+    height: 30px;
+
+    background-color: #d5d5d5;
+} */
+
+
+
+
+.fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 0;
+    /* Adjust padding as needed */
+    background-color: #5b595b;
+    /* Dark background color */
+    color: rgba(255, 255, 255, 0.5);
+    /* White text with 50% opacity */
+    text-align: center;
+}

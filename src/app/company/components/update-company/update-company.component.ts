@@ -64,8 +64,6 @@ export class UpdateCompanyComponent implements OnInit {
     );
   }
 
-  RedirectToCompany() {
-    this.router.navigate(['company'])
-  }
+
 
 }

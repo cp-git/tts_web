@@ -50,8 +50,5 @@ export class AddCountryComponent {
     );
   }
 
-  RedirectToCountry() {
-    this.router.navigate(['country'])
-  }
 
 }

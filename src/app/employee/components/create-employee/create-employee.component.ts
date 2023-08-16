@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class CreateEmployeeComponent implements OnInit {
 
-  employeeId!: number; // Property to store the employee ID
+  employeeId!: any; // Property to store the employee ID
   employeeData: EmployeeAndPasswordDTO = new EmployeeAndPasswordDTO(); // Property to store employee data, initialized with a new instance of 'EmployeeAndPasswordDTO'
   employees: Employee[] = []; // Property to store the list of employees, initialized as an empty array
   countries!: Country[]; // Property to store the list of countries as an array of 'Country' objects
@@ -23,13 +23,27 @@ export class CreateEmployeeComponent implements OnInit {
   selectedCountryId!: number;
   selectedCompanyId!: number;
 
-  constructor(private employeeService: EmployeeService, private dialogueBoxService: DialogueBoxService, private router: Router) { } // Constructor with parameter to inject 'EmployeeService' dependency
+  constructor(
+    private employeeService: EmployeeService,
+    private dialogueBoxService: DialogueBoxService,
+    private router: Router) {
+
+    this.employeeId = sessionStorage.getItem("employeeId");
+  } // Constructor with parameter to inject 'EmployeeService' dependency
 
   //This method is called when the component is initialized
   ngOnInit(): void {
+    if (this.employeeId > 0) {
+      console.log("inside");
 
-    this.fetchCountries(); // Call the method 'fetchCountries()' to fetch the countries
-    this.fetchCompanies(); // Call the method 'fetchCompanies()' to fetch the companies
+      this.fetchCountries(); // Call the method 'fetchCountries()' to fetch the countries
+      this.fetchCompanies(); // Call the method 'fetchCompanies()' to fetch the companies
+    } else {
+      console.log("else");
+
+      this.router.navigate([''])
+    }
+
   }
 
   // Method to get the maximum date for the birth date input field and return it as a string
@@ -105,7 +119,5 @@ export class CreateEmployeeComponent implements OnInit {
     );
   }
 
-  RedirectToEmployee() {
-    this.router.navigate(['employee'])
-  }
+
 }
