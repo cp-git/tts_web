@@ -15,6 +15,7 @@ import { AdminModule } from './adminDashboard/admin/admin.module';
 import { HeaderModule } from './header/header.module';
 import { TaskModule } from './task/task.module';
 import { AdmindashboardComponent } from './adminDashboard/admindashboard/admindashboard.component';
+import { ReasonModule } from './reason/reason.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,8 @@ import { AdmindashboardComponent } from './adminDashboard/admindashboard/adminda
     DashboardModule,
     AdminModule,
     HeaderModule,
-    TaskModule
+    TaskModule,
+    ReasonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

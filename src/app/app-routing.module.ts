@@ -12,6 +12,7 @@ import { UpdateEmployeeComponent } from './employee/components/update-employee/u
 import { LoginComponent } from './login/components/login/login.component';
 import { DashboardComponent } from './dashboard/components/dashboard/dashboard.component';
 import { AdmindashboardComponent } from './adminDashboard/admindashboard/admindashboard.component';
+import { ChangeHistoryComponent } from './reason/components/change-history/change-history.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
 
@@ -26,12 +27,12 @@ const routes: Routes = [
   { path: 'country', component: CountryComponent },
   { path: 'addCountry', component: AddCountryComponent },
   { path: 'updateCountry', component: UpdateCountryComponent },
-  { path: 'adminDash', component: AdmindashboardComponent }
-
+  { path: 'adminDash', component: AdmindashboardComponent },
+  { path: 'dashboard/changehistory/:id', component: ChangeHistoryComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{ useHash: true })],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

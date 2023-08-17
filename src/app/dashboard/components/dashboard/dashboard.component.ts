@@ -85,21 +85,6 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  // // for getting child task using parent id
-  // onClickChild(task: Task) {
-  //   this.taskService.getChildTaskByParentId(task.taskId).subscribe(
-  //     (response) => {
-  //       this.childTaskData.set(task.taskId, response);
-  //       console.table(this.childTaskData);
-
-  //     },
-  //     (error) => {
-  //       console.log("Failed to load child task!");
-
-  //     }
-  //   );
-  // }
-
   // for fetching task using status, createdby, assigned to, companyId and parent Id
   getParentTask(data: any) {
     console.log(data);
@@ -138,6 +123,7 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  // fetching company using company id
   getCompanyById(companyId: number) {
     this.company = this.dashboardService.getCompanyById(companyId);
   }

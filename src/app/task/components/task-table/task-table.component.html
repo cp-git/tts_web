@@ -9,8 +9,10 @@
         <tbody>
             <!-- Main Rows with Expandable Child Panels -->
             <ng-container *ngFor="let task of parentTaskData; let i = index">
-
                 <ng-container *ngTemplateOutlet="tableRows; context: {$implicit: task}"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="parentTaskData.length<=0">
+                <ng-container *ngTemplateOutlet="tableRows; context: {$implicit: emptyTaskRow}"></ng-container>
             </ng-container>
         </tbody>
     </table>
@@ -34,7 +36,7 @@
 
 <ng-template #tableRows let-task>
     <tr>
-        <th scope="row" (click)="toggleChildTable(task)">
+        <th scope="row" (click)="toggleChildTable(task)" >
             <span *ngIf="!showChildTable.get(task.taskId)" class="fa-solid fa-plus"></span>
             <span *ngIf="showChildTable.get(task.taskId)" class="fa-solid fa-minus"></span>
         </th>
@@ -51,8 +53,8 @@
         </td>
         <td>
             <select id="assignedToEmployeeId" name="assignedToEmployeeId" [(ngModel)]="task.taskAssignedTo" required
-                class="form-control">
-                <option value="undefined" [disabled]="true">Select Employee</option>
+                class="form-control" [disabled]="parentTaskData.length<=0">
+                <option value="undefined" [disabled]="true" selected>Select Employee</option>
                 <!-- Loop through the 'employees' array and display each employee as an option -->
                 <option *ngFor="let employee of employees" [value]="employee.employeeId">{{
                     employee.firstName }}</option>
@@ -60,7 +62,7 @@
         </td>
         <td>{{ task.taskEndDate | date:'dd-MM-yyyy'}}</td>
         <td><select id="statusId" name="statusId" [(ngModel)]="task.taskStatus" required class="form-control"
-                (change)="onChangeStatus(task)">
+                (change)="onChangeStatus(task)" [disabled]="parentTaskData.length<=0">
                 <option value="undefined" [disabled]="true">Select Status</option>
                 <!-- Loop through the 'allStatus' array and display each status as an option -->
                 <option *ngFor="let status of allStatus" [value]="status.statusId">{{
@@ -70,30 +72,34 @@
         <td>
             <div class="row mt-1">
                 <div class="col">
-                    
+
                     <span title="Add Task" class="fa-solid fa-circle-plus fa-xl" style="color: #03a300;"
-                        data-bs-toggle="modal" attr.data-bs-target="#createTask{{parentTask.taskId}}" (click)="onClickCreateTask(task)"></span>
-                     
+                        data-bs-toggle="modal" attr.data-bs-target="#createTask{{parentTask.taskId}}"
+                        (click)="onClickCreateTask(task, 'ADD')"></span>
+
                 </div>
-                <div class="col">
-                    <span title="Save Task" class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
-                        style="color: #0095a8;"></span>
+                <div class="col" *ngIf="parentTaskData.length>0">
+                    <span title="Save Task" class="fa-solid fa-circle-down fa-rotate-180 fa-xl" data-bs-toggle="modal"
+                        attr.data-bs-target="#createTask{{parentTask.taskId}}"
+                        (click)="onClickCreateTask(task, 'UPDATE')" style="color: #0095a8;" ></span>
                 </div>
-                <div class="col">
+                <div class="col" *ngIf="parentTaskData.length>0">
                     <span title="Delete Task" class="fa-solid fa-trash fa-xl" style="color: #ff0000;"></span>
                 </div>
 
-                <div class="col">
-                    <span title="Response history" class="fa-solid fa fa-history fa-xl" style="color: blue"></span>
+                <div class="col" *ngIf="parentTaskData.length>0">
+                    <span title="Response history" class="fa-solid fa fa-history fa-xl"
+                    [routerLink]="['changehistory', task.taskId]" style="color: blue"></span>
                 </div>
             </div>
+    
         </td>
     </tr>
     <!-- Expandable Child Panel -->
     <tr *ngIf="showChildTable.get(task.taskId)">
         <td colspan="9">
             <!-- for child table -->
-            <app-task-table  [parentTaskData]="task.childTask" [employees]="employees"
+            <app-task-table [parentTaskData]="task.childTask" [employees]="employees"
                 [allStatus]="allStatus"></app-task-table>
         </td>
     </tr>
@@ -102,4 +108,6 @@
 <!-- <ng-container *ngIf="parentTask"> -->
 <!-- </ng-container> -->
 <!-- {{parentTask|json}} -->
-<app-create-task [task]="emptyTask" [parentTask]="parentTask" [allEmployees]="employees" [allStatus]="allStatus"></app-create-task>
+<app-create-task [task]="emptyTask" [parentTask]="parentTask" [allEmployees]="employees"
+    [allStatus]="allStatus" [updateScreen]="updateScreen" (afterCreateTask)="afterCreateTask()"></app-create-task>
+    <!-- {{emptyTask|json}} -->

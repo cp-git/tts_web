@@ -18,17 +18,17 @@
 
 <!-- Form  -->
 <ng-template #taskForm>
-    <!-- {{parentTask|json}} -->
-    <form #addTaskForm="ngForm" (submit)="onClickSubmit(task)">
+    <!-- {{task|json}} -->
+    <form #addTaskForm="ngForm">
         <div class="row">
             <div class="col">
                 <label for="parentTaskId" class="form-label">Parent Task</label><br>
                 <select class="form-control" name="parentTaskId" id="parentTaskId" name="parentTaskId"
-                    [(ngModel)]="task.taskParent" [required]="true">
-                    <option value="undefined" disabled>Select Option</option>
-                    <option value="0">Create As Parent</option>
+                    [(ngModel)]="task.taskParent" [required]="true" [disabled]="updateScreen">
+                    <option *ngIf="!updateScreen" value="undefined" disabled>Select Option</option>
+                    <option *ngIf="!updateScreen" value="0">Create As Parent</option>
                     <!-- <ng-container *ngFor="let parentTaskObject of parentTaskList"> -->
-                    <option value="{{parentTask.taskId}}">{{parentTask.taskName}}</option>
+                    <option *ngIf="parentTask.taskId" value="{{parentTask.taskId}}">{{parentTask.taskName}}</option>
                     <!-- </ng-container> -->
 
                     <!-- <ng-container *ngIf="parentTask.childTask">
@@ -98,18 +98,18 @@
             <div class="col-sm-3">
                 <label for="startDate" class="form-label">Start date</label>
                 <input type="date" class="form-control" id="startDate" name="startDate" [(ngModel)]="task.taskStartDate"
-                    [required]="true">
+                    [required]="true" [disabled]="updateScreen">
             </div>
             <div class="col-sm-3">
                 <label for="endDate" class="form-label">End date</label>
                 <input type="date" class="form-control" id="endDate" name="endDate" [min]="task.taskStartDate"
-                    [(ngModel)]="task.taskEndDate" [required]="true" [disabled]="task.taskStartDate==null">
+                    [(ngModel)]="task.taskEndDate" [required]="true" [disabled]="task.taskStartDate==null || updateScreen">
             </div>
             <div class="col-sm-3">
                 <label for="actualStartDate" class="form-label">Actual Start date</label>
                 <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
                     [min]="task.taskStartDate" [max]="(task.taskStatus == statusEnum.DONE)?currentDate:task.taskEndDate"
-                    [disabled]="task.taskStartDate == null || task.taskEndDate == null || task.taskStatus == statusEnum.CREATED"
+                    [disabled]="task.taskStartDate == null || task.taskEndDate == null || task.taskStatus == statusEnum.CREATED "
                     [(ngModel)]="task.taskActualStartDate">
             </div>
 
@@ -129,7 +129,8 @@
             </div>
         </div>
         <div class="modal-footer mt-3">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button *ngIf="updateScreen" type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
+            <button *ngIf="!updateScreen" type="submit" class="btn btn-primary" (click)="onClickSave(task)">Save</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #closeButton id="closeButton">Close</button>
         </div>
 

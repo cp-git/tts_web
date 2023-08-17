@@ -15,7 +15,8 @@ import { TaskTableComponent } from './components/task-table/task-table.component
   imports: [
     CommonModule,
     TaskRoutingModule,
-    FormsModule
+    FormsModule,
+    
   ],
   exports:[
     CreateTaskComponent,

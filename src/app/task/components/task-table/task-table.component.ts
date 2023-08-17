@@ -15,8 +15,6 @@ import { CreateTaskComponent } from '../create-task/create-task.component';
 })
 export class TaskTableComponent implements OnInit {
 
-  // @ViewChild(CreateTaskComponent) createTaskComponent!: CreateTaskComponent;
-
   @Input() parentTaskData: Task[] = [];
   @Input() employees: Employee[] = [];
   @Input() allStatus: Status[] = [];
@@ -27,13 +25,18 @@ export class TaskTableComponent implements OnInit {
   parentTask: Task = {} as Task;
   childData: Task[] = [];
   emptyTask: Task = {} as Task;
+  emptyTaskRow: Task = {} as Task;
 
   showChildTable: Map<number, boolean> = new Map();    // for opening/ closing child table for task
+
+  childTask: Task[] = [];
+  updateScreen: boolean = false;
 
   constructor(
     private dashboardService: DashboardService,
     private taskService: TaskService,
-    private statusService: StatusService
+    private statusService: StatusService,
+    // private reasonService:Rea
   ) {
 
     this.employeeId = localStorage.getItem("employeeId");
@@ -45,6 +48,7 @@ export class TaskTableComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    // re-initialize showChildTable
     // if (changes['parentTaskData']) {
     //   this.showChildTable = new Map();
     // }
@@ -117,33 +121,45 @@ export class TaskTableComponent implements OnInit {
 
   }
 
-  childTask: Task[] = [];
-  onClickCreateTask(task: Task) {
+  onClickCreateTask(task: Task, operation: string) {
+
+    this.updateScreen = false;
+    this.parentTask = {} as Task;
+
     console.log(task);
 
-    this.parentTask = Object.assign({}, task);
-    console.log(this.parentTask);
-    console.log("hey");
-    console.log("Parent details");
-    console.log(this.parentTask);
+    if (operation == 'ADD') {
+      this.updateScreen = false;
+      this.parentTask = Object.assign({}, task);
 
+      this.emptyTask.companyId = this.companyId;
+      this.emptyTask.taskParent = this.parentTask.taskId;
+      this.emptyTask.taskCreatedBy = this.employeeId;
+      this.emptyTask.taskAssignedTo = this.employeeId;
+      this.emptyTask.taskStatus = this.statusEnum.CREATED;
+      this.emptyTask.taskActualStartDate = null as unknown as Date;
+      this.emptyTask.taskActualEndDate = null as unknown as Date;
 
-    this.emptyTask.companyId = this.companyId;
-    this.emptyTask.taskParent = this.parentTask.taskId;
-    this.emptyTask.taskCreatedBy = this.employeeId;
-    this.emptyTask.taskAssignedTo = this.employeeId;
-    this.emptyTask.taskStatus = this.statusEnum.CREATED;
-    this.emptyTask.taskActualStartDate = null as unknown as Date;
-    this.emptyTask.taskActualEndDate = null as unknown as Date;
+    }
+    else if (operation == 'UPDATE') {
+      this.updateScreen = true;
+      this.taskService.getTaskByTaskId(task.taskParent).subscribe(
+        (response) => {
+          // on success 
+          this.parentTask = response;
+        }
+      );
+      console.log(this.parentTask);
+      this.emptyTask = Object.assign({}, task);
 
-    console.log(this.emptyTask);
-
-    // this.createTaskComponent.parentTask = this.parentTask;
-    // this.createTaskComponent.task = this.emptyTask;
-    // this.createTaskComponent.allEmployees = this.employees;
-    // this.createTaskComponent.allStatus = this.allStatus;
-
+    }
   }
+
+  // operation after creating task
+  afterCreateTask(){
+    location.reload();
+  }
+
 
 
   // for getting all status

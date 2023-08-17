@@ -12,7 +12,7 @@
         <div class="col-md-4">
             <label class="label" for="companyCode">Company Code:</label>
             <input type="text" id="companyCode" name="companyCode" [(ngModel)]="company.companyCode" required
-                class="form-control">
+                class="form-control" [disabled] = true>
         </div>
         <div class="col-md-4">
             <label class="label" for="companyName">Company Name:</label>
