@@ -10,3 +10,11 @@ button {
 .form-check label:hover {
     color: blue; /* Change this to your desired color */
 }
+
+.form-check{
+  margin-left: 12px;
+}
+
+.border{
+  margin: 2px;
+}

@@ -62,9 +62,13 @@
                 <select class="form-control" name="taskCreatedBy" id="taskCreatedBy" name="taskCreatedBy"
                     [(ngModel)]="task.taskCreatedBy" [required]="true" disabled>
                     <option value="undefined" disabled>Select Option</option>
-                    <!-- <ng-container *ngFor="let employee of allEmployees"> -->
-                    <option value="{{employeeId}}" selected="true">Self</option>
-                    <!-- </ng-container> -->
+                    <option  *ngIf="!updateScreen" value="{{employeeId}}" selected="true">Self</option>
+                    <ng-container *ngIf="updateScreen">
+                        <ng-container *ngFor="let employee of allEmployees">
+                            <option value="{{employee.employeeId}}">{{employee.firstName}} {{employee.lastName}}</option>
+                        </ng-container>
+                    </ng-container>
+                  
                 </select>
             </div>
             <div class="col-sm-4">
@@ -110,14 +114,14 @@
                 <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
                     [min]="task.taskStartDate" [max]="(task.taskStatus == statusEnum.DONE)?currentDate:task.taskEndDate"
                     [disabled]="task.taskStartDate == null || task.taskEndDate == null || task.taskStatus == statusEnum.CREATED "
-                    [(ngModel)]="task.taskActualStartDate">
+                    [(ngModel)]="task.taskActualStartDate" [required]="true">
             </div>
 
             <div class="col-sm-3">
                 <label for="actualEndDate" class="form-label">Actual End date</label>
                 <input type="date" class="form-control" id="actualEndDate" name="actualEndDate"
                     [(ngModel)]="task.taskActualEndDate" [min]="task.taskActualStartDate" [max]="currentDate"
-                    [disabled]="task.taskStatus != statusEnum.DONE || task.taskEndDate == null || task.taskActualStartDate == null">
+                    [disabled]="task.taskStatus != statusEnum.DONE || task.taskEndDate == null || task.taskActualStartDate == null" [required]="true">
 
             </div>
         </div>
@@ -129,9 +133,12 @@
             </div>
         </div>
         <div class="modal-footer mt-3">
-            <button *ngIf="updateScreen" type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
-            <button *ngIf="!updateScreen" type="submit" class="btn btn-primary" (click)="onClickSave(task)">Save</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #closeButton id="closeButton">Close</button>
+            <button [disabled]="!addTaskForm.valid" *ngIf="updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)" type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
+           
+            <ng-container *ngIf="!(updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo))"> <label style="color: red;">* Update only allowed to Owner/ Assignee</label></ng-container>
+            
+            <button [disabled]="!addTaskForm.valid" *ngIf="!updateScreen" type="submit" class="btn btn-primary" (click)="onClickSave(task)">Save</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeButton">Close</button>
         </div>
 
     </form>

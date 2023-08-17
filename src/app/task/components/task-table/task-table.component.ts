@@ -39,8 +39,8 @@ export class TaskTableComponent implements OnInit {
     // private reasonService:Rea
   ) {
 
-    this.employeeId = localStorage.getItem("employeeId");
-    this.companyId = localStorage.getItem("companyId");
+    this.employeeId = sessionStorage.getItem("employeeId");
+    this.companyId = sessionStorage.getItem("companyId");
   }
 
   ngOnInit(): void {
@@ -122,10 +122,10 @@ export class TaskTableComponent implements OnInit {
   }
 
   onClickCreateTask(task: Task, operation: string) {
-
+    this.emptyTask = {} as Task;
     this.updateScreen = false;
     this.parentTask = {} as Task;
-
+    
     console.log(task);
 
     if (operation == 'ADD') {
@@ -143,6 +143,8 @@ export class TaskTableComponent implements OnInit {
     }
     else if (operation == 'UPDATE') {
       this.updateScreen = true;
+      console.log(task);
+
       this.taskService.getTaskByTaskId(task.taskParent).subscribe(
         (response) => {
           // on success 
@@ -156,7 +158,7 @@ export class TaskTableComponent implements OnInit {
   }
 
   // operation after creating task
-  afterCreateTask(){
+  afterCreateTask() {
     location.reload();
   }
 

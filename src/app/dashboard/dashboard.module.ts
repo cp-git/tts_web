@@ -4,6 +4,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { StatusButtonsComponent } from './components/status-buttons/status-buttons.component';
 import { TaskModule } from '../task/task.module';
+import { FooterModule } from '../footer/footer.module';
 
 
 
@@ -15,7 +16,8 @@ import { TaskModule } from '../task/task.module';
   imports: [
     CommonModule,
     FormsModule,
-    TaskModule
+    TaskModule,
+    FooterModule
   ]
 })
 export class DashboardModule { }

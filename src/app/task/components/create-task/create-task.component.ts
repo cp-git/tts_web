@@ -22,13 +22,15 @@ export class CreateTaskComponent implements OnInit {
   @Output() afterCreateTask: EventEmitter<any> = new EventEmitter();
   employeeId: any;
   statusEnum = StatusEnum;
-
+  backupTask: Task = {} as Task;
   // for today's date
   // todayForEndDate: any;
   // todayForStartDate: any;
   currentDate: any = new Date().toISOString().split('T')[0];
 
   taskName: any;
+
+
   constructor(
 
     private taskService: TaskService,
@@ -40,13 +42,20 @@ export class CreateTaskComponent implements OnInit {
     this.taskName = this.parentTask.taskName;
     console.log(this.taskName);
     console.log("parent Task " + JSON.stringify(this.parentTask));
-    this.employeeId = localStorage.getItem("employeeId");
+    this.employeeId = sessionStorage.getItem("employeeId");
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['parentTask']) {
       console.log("parent Task " + JSON.stringify(this.parentTask));
 
+
+    }
+
+    if (changes['task']) {
+      this.task = this.task;
+      this.backupTask = Object.assign({}, this.task);
+      console.log(this.backupTask);
     }
   }
 
@@ -92,7 +101,7 @@ export class CreateTaskComponent implements OnInit {
           }
         }
 
-
+        this.afterCreateTask.emit();
       },
       (error) => {
         console.log("Faild to create task!");
