@@ -13,7 +13,7 @@ export class LoginService {
   forgotUrl: any;
   constructor(private http: HttpClient) {
     this.passwordUrl = `http://localhost:8090/employee/ttsms/password`
-    this.forgotUrl = `http://localhost:8090/ttsms/forgotpass`
+    this.forgotUrl = `http://localhost:8090/employee/ttsms/forgotpass`
 
   }
 
