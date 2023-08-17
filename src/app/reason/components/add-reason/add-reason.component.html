@@ -1,0 +1,30 @@
+<div class="container mt-4">
+    <!-- Button to trigger showing the reason modal -->
+    <button class="btn btn-primary" (click)="showReasonModal()">Show Reason</button>
+
+    <!-- Reason modal dialog -->
+    <div class="card" id="reasonModal">
+        <!-- Modal header -->
+        <div class="card-header text-center">
+            Reason
+        </div>
+
+        <!-- Modal body -->
+        <div class="card-body">
+            <!-- Display current date and time -->
+            <p> {{ currentDateTime }}</p>
+
+            <!-- Text area for entering the reason -->
+            <textarea id="textArea" class="form-control" rows="6" [(ngModel)]="reasonText"></textarea>
+        </div>
+
+        <!-- Modal footer with buttons -->
+        <div class="card-footer text-center">
+            <!-- Button to save the reason -->
+            <button id="saveButton" class="btn btn-primary" (click)="saveReason()">Save</button>
+
+            <!-- Button to cancel and close the modal -->
+            <button id="cancelButton" class="btn btn-danger ms-4" (click)="cancel()">Cancel</button>
+        </div>
+    </div>
+</div>

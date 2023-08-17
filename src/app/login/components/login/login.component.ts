@@ -27,20 +27,18 @@ export class LoginComponent implements OnInit {
   forgotData = { username: '', email: '' };
   showForgotPopup = false;
 
-
-  empid: any;
+  employeeId: any;
 
   employeeData: EmployeeAndPasswordDTO = new EmployeeAndPasswordDTO();
 
   constructor(
     private route: Router,
     private loginService: LoginService,
-    private http: HttpClient,
     private employeeService: EmployeeService,
     private authService: AuthenticationServiceService
 
   ) {
-    this.empid = sessionStorage.getItem('employeeId');
+    this.employeeId = sessionStorage.getItem('employeeId');
     this.passwordData = new Password();
     this.userData = new Password();
   }
@@ -52,12 +50,14 @@ export class LoginComponent implements OnInit {
     // alert(passwordData + this.passwordData.username);
     this.loginService.getPasswordByUsernameAndPassword(this.passwordData.username, this.passwordData.password)
       .subscribe(
-        (response) => {
+        async (response) => {
           this.authService.setSession(this.passwordData);
           // Check the response from the API
           this.userData = response;
           // alert(this.userData);
           sessionStorage.setItem('employeeId', this.userData.employeeId.toString());
+          await this.getEmployeeWithPassword(this.userData.employeeId);
+
           if (this.userData) {
             if (this.userData.username === "admin") {
 
@@ -65,8 +65,6 @@ export class LoginComponent implements OnInit {
             } else {
               this.route.navigate(['/dashboard']);
             }
-
-            this.getEmployeeWithPassword();
 
           } else {
             alert("Invalid Details");
@@ -78,24 +76,29 @@ export class LoginComponent implements OnInit {
       );
   }
 
-
-
   // Method to get an employee with their password by ID
-  getEmployeeWithPassword() {
+  private async getEmployeeWithPassword(employeeId: number) {
     // alert(this.empid);
-    console.log(this.empid);
+    // console.log(this.empid);
 
-    this.employeeService.getEmployeeWithPasswordById(this.empid).subscribe(
-      (response: any) => {
-        this.employeeData = response; // Assign the response to 'employeeData' property
-        // sessionStorage.setItem('countryId', this.employeeData.countryId.toString());
-        sessionStorage.setItem('companyId', this.employeeData.companyId.toString())
-        //alert(JSON.stringify(this.employeeData));
-      },
-      (error: any) => {
-        console.error('Failed to get employee with password:', error); // Log error message and response
-      }
-    );
+    const employeeData = await this.employeeService.getEmployeeWithPasswordById(employeeId).toPromise();
+    if (employeeData) {
+      sessionStorage.setItem('companyId', employeeData.companyId.toString())
+      sessionStorage.setItem('empData', JSON.stringify(employeeData));
+
+    }
+
+    // this.employeeService.getEmployeeWithPasswordById(this.empid).subscribe(
+    //   (response: any) => {
+    //     this.employeeData = response; // Assign the response to 'employeeData' property
+    //     // sessionStorage.setItem('countryId', this.employeeData.countryId.toString());
+    //     sessionStorage.setItem('companyId', this.employeeData.companyId.toString())
+    //     //alert(JSON.stringify(this.employeeData));
+    //   },
+    //   (error: any) => {
+    //     console.error('Failed to get employee with password:', error); // Log error message and response
+    //   }
+    // );
   }
 
   redirectToForgot() {

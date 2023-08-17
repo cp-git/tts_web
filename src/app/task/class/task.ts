@@ -13,4 +13,6 @@ export interface Task {
     taskParent: number;
 
     childTask: Task[];
+    reason: String;
+    employeeId : String;
 }

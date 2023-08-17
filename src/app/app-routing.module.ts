@@ -12,6 +12,7 @@ import { UpdateEmployeeComponent } from './employee/components/update-employee/u
 import { LoginComponent } from './login/components/login/login.component';
 import { DashboardComponent } from './dashboard/components/dashboard/dashboard.component';
 import { AdmindashboardComponent } from './adminDashboard/admindashboard/admindashboard.component';
+import { ChangeHistoryComponent } from './reason/components/change-history/change-history.component';
 import { ForgotPasswordComponent } from './login/components/forgot-password/forgot-password.component';
 import { HomeComponent } from './home/home/home.component';
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'addCountry', component: AddCountryComponent },
   { path: 'updateCountry', component: UpdateCountryComponent },
   { path: 'adminDash', component: AdmindashboardComponent },
+  { path: 'dashboard/changehistory/:id', component: ChangeHistoryComponent },
   { path: 'forgot', component: ForgotPasswordComponent },
   { path: '', component: HomeComponent }
 

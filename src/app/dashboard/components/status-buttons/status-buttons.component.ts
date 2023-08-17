@@ -17,10 +17,10 @@ export class StatusButtonsComponent {
   companyId: any;
 
   constructor() {
-    this.employeeId = localStorage.getItem('employeeId');
+    this.employeeId = sessionStorage.getItem('employeeId');
     console.log("employeeID " + this.employeeId);
 
-    this.companyId = localStorage.getItem('companyId');
+    this.companyId = sessionStorage.getItem('companyId');
 
     this.selectedTask = 'ALL';
     this.selectedCreatedBy = 0;

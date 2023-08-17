@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Task } from '../class/task';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-  private readonly TaskURL = `http://localhost:8090/task/ttsms`;
+  private readonly TaskURL = environment.taskUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -17,11 +18,16 @@ export class TaskService {
   }
 
   // for getting child task using parent id
-  getChildTaskByParentId(parentId: number) {
+  getChildTaskByParentId(parentId: number):Observable<Task[]> {
     return this.http.get<Task[]>(`${this.TaskURL}/allchilds/${parentId}`);
   }
 
-  createTask(task: Task): Observable<Task> {
+  createOrUpdateTaskAndAddReason(task:Task):Observable<Task>{
     return this.http.post<Task>(`${this.TaskURL}/savetask`, task);
+  }
+  
+  getTaskByTaskId(taskId:number) :Observable<Task>{
+    return this.http.get<Task>(`${this.TaskURL}/task/${taskId}`);
+
   }
 }
