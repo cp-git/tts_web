@@ -14,7 +14,7 @@ nav {
 
 .navbar-brand {
     font-size: 24px;
-    /* text-transform: uppercase; */
+    /* / text-transform: uppercase; */
     font-weight: 900;
     color: #683aa4;
 }
@@ -59,6 +59,7 @@ button {
     display: flex;
 }
 
+
 #hero .img-col {
     justify-content: flex-end;
     margin-top: 100px;
@@ -68,6 +69,7 @@ button {
     max-width: 100%;
     width: 100%;
 }
+
 
 /* Styling for the cards */
 #hero .card {
