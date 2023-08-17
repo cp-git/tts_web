@@ -12,13 +12,15 @@ import { UpdateEmployeeComponent } from './employee/components/update-employee/u
 import { LoginComponent } from './login/components/login/login.component';
 import { DashboardComponent } from './dashboard/components/dashboard/dashboard.component';
 import { AdmindashboardComponent } from './adminDashboard/admindashboard/admindashboard.component';
+import { ForgotPasswordComponent } from './login/components/forgot-password/forgot-password.component';
+import { HomeComponent } from './home/home/home.component';
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+
 
   { path: 'employee', component: EmployeeComponent },
   { path: 'createEmp', component: CreateEmployeeComponent },
   { path: 'updateEmp', component: UpdateEmployeeComponent },
-  { path: '', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'company', component: CompanyComponent },
   { path: 'addCompany', component: AddCompanyComponent },
@@ -26,12 +28,15 @@ const routes: Routes = [
   { path: 'country', component: CountryComponent },
   { path: 'addCountry', component: AddCountryComponent },
   { path: 'updateCountry', component: UpdateCountryComponent },
-  { path: 'adminDash', component: AdmindashboardComponent }
+  { path: 'adminDash', component: AdmindashboardComponent },
+  { path: 'forgot', component: ForgotPasswordComponent },
+  { path: '', component: HomeComponent }
+
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{ useHash: true })],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

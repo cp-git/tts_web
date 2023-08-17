@@ -77,9 +77,14 @@ export class LoginComponent implements OnInit {
         }
       );
   }
+
+
+
   // Method to get an employee with their password by ID
   getEmployeeWithPassword() {
     // alert(this.empid);
+    console.log(this.empid);
+
     this.employeeService.getEmployeeWithPasswordById(this.empid).subscribe(
       (response: any) => {
         this.employeeData = response; // Assign the response to 'employeeData' property
@@ -93,6 +98,8 @@ export class LoginComponent implements OnInit {
     );
   }
 
-
+  redirectToForgot() {
+    this.route.navigate(['/forgot']);
+  }
 
 }
