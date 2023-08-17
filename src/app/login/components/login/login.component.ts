@@ -87,18 +87,22 @@ export class LoginComponent implements OnInit {
       sessionStorage.setItem('empData', JSON.stringify(employeeData));
 
     }
-    // (response: any) => {
-    // this.employeeData = response; // Assign the response to 'employeeData' property
-    // sessionStorage.setItem('countryId', this.employeeData.countryId.toString());
 
-    //alert(JSON.stringify(this.employeeData));
-    // },
-    // (error: any) => {
-    //   console.error('Failed to get employee with password:', error); // Log error message and response
-    // }
+    // this.employeeService.getEmployeeWithPasswordById(this.empid).subscribe(
+    //   (response: any) => {
+    //     this.employeeData = response; // Assign the response to 'employeeData' property
+    //     // sessionStorage.setItem('countryId', this.employeeData.countryId.toString());
+    //     sessionStorage.setItem('companyId', this.employeeData.companyId.toString())
+    //     //alert(JSON.stringify(this.employeeData));
+    //   },
+    //   (error: any) => {
+    //     console.error('Failed to get employee with password:', error); // Log error message and response
+    //   }
     // );
   }
 
-
+  redirectToForgot() {
+    this.route.navigate(['/forgot']);
+  }
 
 }

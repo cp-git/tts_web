@@ -9,13 +9,13 @@ import { CountryModule } from './country/country.module';
 import { LoginModule } from './login/login.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 
-
 import { EmployeeModule } from './employee/employee.module';
 import { AdminModule } from './adminDashboard/admin/admin.module';
 import { HeaderModule } from './header/header.module';
 import { TaskModule } from './task/task.module';
-import { AdmindashboardComponent } from './adminDashboard/admindashboard/admindashboard.component';
+import { HomeModule } from './home/home.module';
 import { ReasonModule } from './reason/reason.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +28,7 @@ import { ReasonModule } from './reason/reason.module';
     CompanyModule,
     CountryModule,
     EmployeeModule,
+    HomeModule,
 
     LoginModule,
     DashboardModule,

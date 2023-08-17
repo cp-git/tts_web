@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { Password } from '../class/password';
@@ -10,8 +10,11 @@ export class LoginService {
 
 
   passwordUrl: any;
+  forgotUrl: any;
   constructor(private http: HttpClient) {
     this.passwordUrl = `http://localhost:8090/employee/ttsms/password`
+    this.forgotUrl = `http://localhost:8090/employee/ttsms/forgotpass`
+
   }
 
 
@@ -33,7 +36,15 @@ export class LoginService {
 
 
   getPasswordByUsernameAndPassword(username: string, password: string): Observable<Password> {
-
     return this.http.get<Password>(`${this.passwordUrl}/${username}/${password}`);
   }
+
+  forgotPasswordByUsername(username: string): Observable<any> {
+    const requestData = { "username": username };
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<any>(this.forgotUrl, requestData);
+  }
+
 }
