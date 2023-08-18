@@ -12,10 +12,9 @@ import { Router } from '@angular/router';
 })
 export class AddCompanyComponent implements OnInit {
 
-
   countries!: Country[]; // An array to store the list of countries fetched from the API
-
   company!: Company; // The current company object to be added
+  selectedFile: File | undefined;  // To store the selected file
 
   constructor(private companyService: CompanyService, private dialogueBoxService: DialogueBoxService, private route: Router) {
     this.company = new Company(); // Initialize an empty Company object for adding a new company
@@ -27,17 +26,28 @@ export class AddCompanyComponent implements OnInit {
 
   // Function to add a new company
   addCompany(company: Company) {
-    // alert(JSON.stringify(company)); // Show the company object as an alert (for debugging)
-    this.companyService.addCompany(company).subscribe(
-      (data) => {
-        // On successful addition, show a success alert
-        this.dialogueBoxService.open('Company added successfully', 'information');
-      },
-      (error) => {
-        // Handle error if the company addition fails or the company already exists
-        this.dialogueBoxService.open('Failed to add.Company already exists', 'warning');
-      }
-    );
+
+    if (this.selectedFile) {
+      console.log(this.selectedFile.name);
+
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+      formData.append('company', JSON.stringify(company));
+
+      this.companyService.addCompany(formData).subscribe(
+        (data) => {
+          // On successful addition, show a success alert
+          this.dialogueBoxService.open('Company added successfully', 'information');
+        },
+        (error) => {
+          // Handle error if the company addition fails or the company already exists
+          this.dialogueBoxService.open('Failed to add.Company already exists', 'warning');
+        }
+      );
+    }
+
+
+
   }
 
   // Function to fetch the list of countries from the API
@@ -52,19 +62,21 @@ export class AddCompanyComponent implements OnInit {
     );
   }
   // Method to check if the form is valid
-  isFormValid(): boolean {
-    return (
-      !!this.company.companyCode &&
-      !!this.company.companyName &&
-      !!this.company.companyContactEmail &&
-      !!this.company.companyContactPhone &&
-      !!this.company.companyAddress &&
-      !!this.company.companyZip &&
-      !!this.company.companyCountryId
+  // isFormValid(): boolean {
+  //   return (
+  //     !!this.company.companyCode &&
+  //     !!this.company.companyName &&
+  //     !!this.company.companyContactEmail &&
+  //     !!this.company.companyContactPhone &&
+  //     !!this.company.companyAddress &&
+  //     !!this.company.companyZip &&
+  //     !!this.company.companyCountryId
 
-    );
+  //   );
+  // }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
   }
-
-
 
 }

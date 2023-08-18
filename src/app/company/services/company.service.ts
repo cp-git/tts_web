@@ -27,8 +27,8 @@ export class CompanyService {
   }
 
 
-  addCompany(company: Company): Observable<any> {
-    return this.http.post<any>(`${this.companyUrl}`, company);
+  addCompany(formData : FormData): Observable<any> {
+    return this.http.post<any>(`${this.companyUrl}`, formData);
   }
 
 

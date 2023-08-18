@@ -35,7 +35,8 @@ export class DashboardService {
       "companyContactPhone": "9638527410",
       "companyAddress": "add",
       "companyZip": "412230",
-      "companyCountryId": 1
+      "companyCountryId": 1,
+      "companyPhoto":"abc.png"
     }
 
   }

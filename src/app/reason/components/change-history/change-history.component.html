@@ -24,7 +24,7 @@
                 <!-- Display assigned-to employee name using getEmployeeNameById method -->
                 <td>{{ getEmployeeNameById(reason.assignedTo) }}</td>
                 <!-- Display status name using getStatusNameById method -->
-                <td>{{ getStatusNameById(reason.statusId) }}</td>
+                <td>{{ getStatusNameById(reason.statusId) | titlecase}}</td>
                 <!-- Display reason text -->
                 <td>{{ reason.reasonText }}</td>
             </tr>
