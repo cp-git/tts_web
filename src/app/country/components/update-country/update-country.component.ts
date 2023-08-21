@@ -3,6 +3,7 @@ import { Country } from '../../class/country';
 import { CountryService } from '../../services/country.service';
 import { Router } from '@angular/router';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
+import { Location } from '@angular/common'
 @Component({
   selector: 'app-update-country',
   templateUrl: './update-country.component.html',
@@ -15,7 +16,7 @@ export class UpdateCountryComponent {
   country: Country;
   countries!: Country[];
 
-  constructor(private router: Router, private countrySerice: CountryService, private dialogueBoxService: DialogueBoxService) {
+  constructor(private location: Location, private router: Router, private countrySerice: CountryService, private dialogueBoxService: DialogueBoxService) {
     this.country = new Country(); // Initialize an empty country object.
   }
 
@@ -27,12 +28,16 @@ export class UpdateCountryComponent {
 
   // Function to update the country details.
   updateCountry(updatedCountry: Country) {
-    alert(JSON.stringify(updatedCountry))
-    //  alert(JSON.stringify(updatedCountry));
+    // alert(JSON.stringify(updatedCountry))
+
     // Call the service to update the country data based on the country code.
     this.countrySerice.updateCountryByCountryCode(updatedCountry.countryCode, updatedCountry).subscribe(
       response => {
-        this.dialogueBoxService.open('country updated successfully', 'information');
+        this.dialogueBoxService.open('country updated successfully', 'information').then((response) => {
+          if (response) {
+            this.location.back(); // Refresh the page
+          }
+        });
       },
       error => {
         this.dialogueBoxService.open('country updation failed', 'warning');

@@ -36,6 +36,9 @@ export class CountryComponent implements OnInit {
       (data) => {
 
         this.countries = data; // Store the fetched countries in the 'countries' array
+        this.countries.sort((a, b) => {
+          return a.countryName.localeCompare(b.countryName);
+        });
         // alert(this.countries);
       },
       (error) => {
