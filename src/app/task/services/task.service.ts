@@ -22,12 +22,21 @@ export class TaskService {
     return this.http.get<Task[]>(`${this.TaskURL}/allchilds/${parentId}`);
   }
 
-  createOrUpdateTaskAndAddReason(task:Task):Observable<Task>{
-    return this.http.post<Task>(`${this.TaskURL}/savetask`, task);
+  createOrUpdateTaskAndAddReason(formData:FormData):Observable<Task>{
+    return this.http.post<Task>(`${this.TaskURL}/savetask`, formData);
   }
   
   getTaskByTaskId(taskId:number) :Observable<Task>{
     return this.http.get<Task>(`${this.TaskURL}/task/${taskId}`);
 
+  }
+
+  // This method fetches the list of files of a specific type from the server
+  getFilesByTaskId(taskId: number):Observable<string[]> {
+    return this.http.get<string[]>(`${this.TaskURL}/task/getfiles?taskid=${taskId}`);
+  }
+
+   downloadFileByTaskIdAndFileName(taskId: number, fileName: string): Observable<Blob> {
+    return this.http.get(`${this.TaskURL}/download/${taskId}?filename=${fileName}`, { responseType: 'blob' });
   }
 }

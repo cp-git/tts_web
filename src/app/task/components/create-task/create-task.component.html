@@ -134,6 +134,23 @@
                     placeholder="Enter reason" [required]="true"></textarea>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="label" for="uploadFile">Upload File</label>
+                <input type="file" id="uploadFile" name="uploadFile" (change)="onFileSelected($event)"
+                    class="form-control" [required]="true">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="label" for="attachement">Attachements</label>
+                <ul>
+                    <li *ngFor="let file of fileNames">
+                        <a  href="javascript:void(0)" (click)="downloadFile(file)">{{ file }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <div class="modal-footer mt-3">
             <button [disabled]="!addTaskForm.valid" *ngIf="updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)" type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
            
