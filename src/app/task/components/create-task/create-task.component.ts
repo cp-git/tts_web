@@ -64,18 +64,17 @@ export class CreateTaskComponent implements OnInit {
 
   // for adding task and reason
   onClickSave(task: Task) {
+    task.employeeId = this.employeeId;    // assigning employee id to object
 
-    task.employeeId = this.employeeId;
-    // if (this.selectedFile) {
-    // console.log(this.selectedFile.name);
-
-    const formData = new FormData();
+    const formData = new FormData();    // creating form data to send in header
     if (this.selectedFile) {
-      formData.append('file', this.selectedFile);
+      formData.append('file', this.selectedFile);   // adding file in header with key - 'file'
     }
-    const taskBlob = new Blob([JSON.stringify(this.task)], { type: 'application/json' });
-    formData.append('task', taskBlob);
 
+    const taskBlob = new Blob([JSON.stringify(task)], { type: 'application/json' });    // converting object into blob 
+    formData.append('task', taskBlob);    // adding task object in header with key - 'task'
+
+    // calling service to create or update task and adding reason 
     this.taskService.createOrUpdateTaskAndAddReason(formData).subscribe(
       (response) => {
         alert("Task created successfully");
@@ -89,29 +88,29 @@ export class CreateTaskComponent implements OnInit {
           }
         }
 
+        // convey to parent for creating task
         this.afterCreateTask.emit();
       },
       (error) => {
         console.log("Faild to create task!");
       }
     );
-    // }
   }
 
   // for updating task and adding reason
   onClickUpdate(task: Task) {
-    task.employeeId = this.employeeId;
-    // if (this.selectedFile) {
-    // console.log(this.selectedFile.name);
 
-    const formData = new FormData();
+    task.employeeId = this.employeeId;    // assigning employee id to object
+
+    const formData = new FormData();    // creating form data to send in header
     if (this.selectedFile) {
-      formData.append('file', this.selectedFile);
+      formData.append('file', this.selectedFile);   // adding file in header with key - 'file'
     }
 
-    const taskBlob = new Blob([JSON.stringify(task)], { type: 'application/json' });
-    formData.append('task', taskBlob);
+    const taskBlob = new Blob([JSON.stringify(task)], { type: 'application/json' });    // converting object into blob 
+    formData.append('task', taskBlob);    // adding task object in header with key - 'task'
 
+    // calling service to create or update task and adding reason 
     this.taskService.createOrUpdateTaskAndAddReason(formData).subscribe(
       (response) => {
         alert("Task updated successfully");
@@ -125,13 +124,13 @@ export class CreateTaskComponent implements OnInit {
           }
         }
 
+        // convey to parent for updating task
         this.afterCreateTask.emit();
       },
       (error) => {
         console.log("Faild to create task!");
       }
     );
-    // }
   }
 
 
@@ -191,10 +190,12 @@ export class CreateTaskComponent implements OnInit {
   }
 
   selectedFile !: File;
+  // called on file selected
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
   }
 
+  // for getting files by task id
   getFilesByTaskId(taskId: number) {
     this.taskService.getFilesByTaskId(taskId).subscribe(
       (response) => {
@@ -205,6 +206,7 @@ export class CreateTaskComponent implements OnInit {
     );
   }
 
+  // calling service to get file using file name and task id
   downloadFile(fileName: string) {
     // Make an API request to get the blob data
     this.taskService.downloadFileByTaskIdAndFileName(this.task.taskId, fileName).subscribe((blobData: Blob) => {
