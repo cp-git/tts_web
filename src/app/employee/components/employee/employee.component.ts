@@ -78,7 +78,6 @@ export class EmployeeComponent {
     this.employeeService.getAllEmployeeAndPasswordData().subscribe(
       (data: EmployeeAndPasswordDTO[]) => {
         this.employees = data;
-        this.employees = data.sort((a, b) => a.username.localeCompare(b.username));
         console.log(this.employees)
       },
       (error) => {

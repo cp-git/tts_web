@@ -30,6 +30,14 @@ export class EmployeeService {
     return this._http.post<any>(`${this.employeeUrl}/employee`, employeeAndPasswordDTO);
   }
 
+  // This function sends a POST request to the API to create a new employee with the provided data in a FormData object.
+  createEmployees(formData: FormData): Observable<any> {
+    // Send a POST request to the API endpoint for creating a new employee
+    return this._http.post<any>(`${this.employeeUrl}/employee`, formData);
+  }
+
+
+
   // Method to get an employee with password by their employeeId
   getEmployeeWithPasswordById(employeeId: number): Observable<EmployeeAndPasswordDTO> {
     // Send a GET request to the API to retrieve an employee's data (including password) by their employeeId
@@ -47,11 +55,13 @@ export class EmployeeService {
     return this._http.get<any>(`${this.employeeUrl}/allemployee`);
   }
 
-  // Method to update an existing employee by their employeeId
-  updateEmployeeByEmployeeId(employee: Employee): Observable<any> {
-    // Send a PUT request to the API to update an existing employee's data by their employeeId
-    return this._http.put<any>(`${this.employeeUrl}/employee/update/${employee.employeeId}`, employee);
+
+  // This function sends a PUT request to the API to update an existing employee's data by their employeeId.
+  updateEmployeeByEmployeeId(employeeId: number, formData: FormData): Observable<any> {
+    // Construct and send a PUT request to the API endpoint for updating an employee
+    return this._http.put<any>(`${this.employeeUrl}/employee/update/${employeeId}`, formData);
   }
+
 
   // Method to delete an employee by their employeeId
   deleteEmployeeByEmployeeId(employeeId: number): Observable<any> {

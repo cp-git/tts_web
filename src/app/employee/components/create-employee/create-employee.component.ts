@@ -7,14 +7,14 @@ import { Country } from '../../class/country';
 import { Company } from '../../class/company';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common'
+import { EmployeePasswordAndEmployeePhotosDTO } from '../../class/employee-password-and-employee-photos-dto';
 @Component({
   selector: 'app-create-employee',
   templateUrl: './create-employee.component.html',
   styleUrls: ['./create-employee.component.css']
 })
 export class CreateEmployeeComponent implements OnInit {
-
+  employee!: Employee; // The current employee object to be added
   employeeId!: any; // Property to store the employee ID
   employeeData: EmployeeAndPasswordDTO = new EmployeeAndPasswordDTO(); // Property to store employee data, initialized with a new instance of 'EmployeeAndPasswordDTO'
   employees: Employee[] = []; // Property to store the list of employees, initialized as an empty array
@@ -22,12 +22,12 @@ export class CreateEmployeeComponent implements OnInit {
   companies!: Company[]; // Property to store the list of companies as an array of 'Company' objects
   selectedCountryId!: number;
   selectedCompanyId!: number;
-
+  employeePhotosData: EmployeePasswordAndEmployeePhotosDTO = new EmployeePasswordAndEmployeePhotosDTO();
+  selectedFile: File | undefined;  // To store the selected file
   constructor(
     private employeeService: EmployeeService,
     private dialogueBoxService: DialogueBoxService,
-    private router: Router,
-    private location: Location) {
+    private router: Router) {
 
     this.employeeId = sessionStorage.getItem("employeeId");
   } // Constructor with parameter to inject 'EmployeeService' dependency
@@ -54,24 +54,43 @@ export class CreateEmployeeComponent implements OnInit {
     return maxDate; // Return the formatted date as the maximum date for the birth date input field
   }
 
-  // Method to create an employee by calling the employee service's createEmployee method
-  createEmployee() {
-    this.employeeService.createEmployee(this.employeeData).subscribe( // Call the 'createEmployee' method of 'EmployeeService' to create the employee and subscribe to the response
-      (response) => {
-        console.log('Employee created successfully:', response); // Log the successful response
-        this.dialogueBoxService.open('Employee Created Successfully', 'information').then((response) => {
-          if (response) {
-            this.location.back(); // Refresh the page
-          }
-        }); // Show an alert indicating successful creation
-        // Create a new instance of 'EmployeeAndPasswordDTO' to reset/Clear the form inputs after successful creation
-        this.employeeData = new EmployeeAndPasswordDTO();
-      },
-      (error) => {
-        this.dialogueBoxService.open('Failed to Create Employee. UserName or Email Already Exist', 'warning'); // Show an alert indicating failure with a specific message
-      }
-    );
+
+  // This function creates a new employee and uploads an optional file.
+  createEmployee(employee: Employee) {
+    // Check if a file is selected for upload
+    if (this.selectedFile) {
+      // Create a FormData object to prepare the data for HTTP POST request
+      const formData = new FormData();
+
+      // Append the selected file to the FormData object
+      formData.append('file', this.selectedFile);
+
+      // Create a Blob containing the employee data in JSON format
+      const employeeBlob = new Blob([JSON.stringify(employee)], { type: 'application/json' });
+
+      // Append the employee data Blob to the FormData object
+      formData.append('employee', employeeBlob);
+
+      // Call the employeeService to create a new employee with the provided data
+      this.employeeService.createEmployees(formData).subscribe(
+        (response) => {
+          // Log a success message and display an information alert indicating that the employee was created successfully
+          console.log('Employee created successfully:', response);
+          this.dialogueBoxService.open('Employee Created Successfully', 'information');
+
+          // Reset the form data for employee creation (if needed)
+          this.employeeData = new EmployeeAndPasswordDTO();
+        },
+        (error) => {
+          // Display a warning alert indicating that there was an error creating the employee, possibly due to a duplicate username or email
+          this.dialogueBoxService.open('Failed to Create Employee. UserName or Email Already Exist', 'warning');
+        }
+      );
+    }
   }
+
+
+
 
   // Method to fetch all countries from the server and update the 'countries' property
   fetchCountries() {
@@ -123,6 +142,8 @@ export class CreateEmployeeComponent implements OnInit {
       }
     );
   }
-
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
 
 }
