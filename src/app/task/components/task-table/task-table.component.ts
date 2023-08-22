@@ -148,7 +148,10 @@ export class TaskTableComponent implements OnInit {
       this.taskService.getTaskByTaskId(task.taskParent).subscribe(
         (response) => {
           // on success 
+          
           this.parentTask = response;
+          console.log(this.parentTask);
+
         }
       );
       console.log(this.parentTask);
