@@ -19,7 +19,7 @@ export class UpdateEmployeeComponent {
   employees: Employee[] = []; // Declaration of the 'employees' array to hold a list of Employee objects
   countries!: Country[]; // Declaration of the 'countries' array to hold a list of Country objects
   companies!: Company[]; // Declaration of the 'companies' array to hold a list of Company objects
-
+  selectedFile: File | undefined;  // To store the selected file
   constructor(
     private employeeService: EmployeeService, // Injecting the EmployeeService dependency
     private location: Location, // Injecting the Location dependency to interact with the browser's history
@@ -47,13 +47,8 @@ export class UpdateEmployeeComponent {
   updateEmployeeAndPassword() {
     this.employeeService.updateEmployeeAndPasswordById(this.employeeId, this.employeeData).subscribe(
       (response) => {
-        alert(JSON.stringify(this.employeeData));
         console.log('Employee and password updated successfully:', response); // Log success message and response
-        this.dialogueBoxService.open('Employee updated successfully', 'information').then((response) => {
-          if (response) {
-            this.location.back(); // Refresh the page
-          }
-        });// Display an alert indicating successful employee update
+        this.dialogueBoxService.open('Employee updated successfully', 'information'); // Display an alert indicating successful employee update
       },
       (error) => {
         console.error('Failed to update employee and password:', error); // Log error message and response
@@ -62,19 +57,37 @@ export class UpdateEmployeeComponent {
     );
   }
 
-  // Method to update an existing employee
-  updateEmployeeByEmployeeId() {
-    // Call the service method to update the employee
-    this.employeeService.updateEmployeeByEmployeeId(this.employee).subscribe(
-      (response) => {
-        console.log(JSON.stringify(this.employee));
-        this.dialogueBoxService.open('Employee updated successfully', 'information'); // Display an alert indicating successful employee update
-      },
-      (error) => {
-        this.dialogueBoxService.open('Error updating employee due to Email Already Exist', 'warning'); // Display an alert indicating failed employee update
-      }
-    );
+  // This function updates an employee's information, including an optional file upload.
+  updateEmployeeByEmployeeId(updatedEmployee: Employee) {
+    // Check if a file is selected for upload
+    if (this.selectedFile) {
+      // Log the name of the selected file
+      console.log(this.selectedFile.name);
+
+      // Create a FormData object to prepare the data for HTTP POST request
+      const formData = new FormData();
+      formData.append('file', this.selectedFile); // Append the selected file to the FormData object
+
+      // Create a Blob containing the updatedEmployee data in JSON format
+      const employeeBlob = new Blob([JSON.stringify(updatedEmployee)], { type: 'application/json' });
+
+      // Append the employee data Blob to the FormData object
+      formData.append('employee', employeeBlob);
+
+      // Call the employeeService to update the employee with the given employeeId
+      this.employeeService.updateEmployeeByEmployeeId(updatedEmployee.employeeId, formData).subscribe(
+        (response) => {
+          // Display a success alert indicating that the employee was updated successfully
+          this.dialogueBoxService.open('Employee updated successfully', 'information');
+        },
+        (error) => {
+          // Display a warning alert indicating that there was an error updating the employee, possibly due to a duplicate email
+          this.dialogueBoxService.open('Error updating employee due to Email Already Exist', 'warning');
+        }
+      );
+    }
   }
+
 
   // Method to get an employee with their password by ID
   getEmployeeWithPassword() {
@@ -126,5 +139,7 @@ export class UpdateEmployeeComponent {
     );
   }
 
-
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
 }
