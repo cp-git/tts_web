@@ -46,7 +46,7 @@
             <div class="col-md-4">
                 <label for="birthDate"><strong>DOB:</strong></label>
                 <input type="date" id="birthDate" name="birthDate" [ngModel]="employee.birthDate | date:'yyyy-MM-dd'"
-                    required class="form-control" max="{{ getMaxDate()}}">
+                    required class="form-control" max="{{ getMaxDate() }}">
             </div>
             <!-- Employee Email -->
             <div class="col-md-4">
@@ -54,10 +54,16 @@
                 <input type="email" id="employeeEmail" name="employeeEmail" [(ngModel)]="employee.employeeEmail"
                     required pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}" class="form-control">
             </div>
+            <div class="col-md-4">
+                <label class="label" for="photoFilename"><strong>Profile:</strong></label>
+                <input type="file" id="photoFilename" name="photoFilename" (change)="onFileSelected($event)"
+                    class="form-control" ngModel [required]="true">
+
+            </div>
         </div>
         <!-- Submit Button -->
         <div>
-            <button type="submit" [disabled]="!addUpdateForm.valid" (click)="updateEmployeeByEmployeeId()"
+            <button type="submit" [disabled]="!addUpdateForm.valid" (click)="updateEmployeeByEmployeeId(employee)"
                 class="btn btn-primary mt-3">Submit</button>
         </div>
     </form>

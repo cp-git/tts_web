@@ -58,9 +58,7 @@
                 <label for="employeeEmail"><strong>Email:</strong></label>
                 <input type="email" id="employeeEmail" name="employeeEmail" [(ngModel)]="employeeData.employeeEmail"
                     required pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}" class="form-control">
-
             </div>
-
         </div>
         <!-- Additional row for username and password inputs -->
         <div class="row">
@@ -76,10 +74,16 @@
                 <input type="text" id="password" name="password" [(ngModel)]="employeeData.password" required
                     class="form-control">
             </div>
+            <div class="col-md-4">
+                <label class="label" for="photoFilename"><strong>Profile:</strong></label>
+                <input type="file" id="photoFilename" name="photoFilename" (change)="onFileSelected($event)"
+                    class="form-control" ngModel [required]="true">
+
+            </div>
         </div>
         <!-- Submit button to add the new employee -->
         <div>
-            <button type="submit" [disabled]="!addUpdateForm.valid" (click)="createEmployee()"
+            <button type="submit" [disabled]="!addUpdateForm.valid" (click)="createEmployee(employeeData)"
                 class="btn btn-primary mt-3">Submit</button>
         </div>
     </form>
