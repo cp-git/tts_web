@@ -3,6 +3,7 @@ import { Country } from '../../class/country';
 import { CountryService } from '../../services/country.service';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-add-country',
@@ -16,7 +17,7 @@ export class AddCountryComponent {
 
   country!: Country; // The current country object to be added
 
-  constructor(private countryService: CountryService, private router: Router, private dialogueBoxService: DialogueBoxService) {
+  constructor(private location: Location, private countryService: CountryService, private router: Router, private dialogueBoxService: DialogueBoxService) {
     this.country = new Country(); // Initialize an empty country object for adding a new country
   }
 
@@ -26,20 +27,25 @@ export class AddCountryComponent {
 
   // Function to add a new country
   addCountry(country: Country) {
-
     this.countryService.addCountry(country).subscribe(
       (data) => {
-        // On successful addition, show a success alert
-        this.dialogueBoxService.open('Country added successfully', 'information');
+        console.log('Country added successfully:', data);
+        this.dialogueBoxService.open('Country added successfully', 'information').then((response) => {
+          if (response) {
+            this.location.back(); // Refresh the page
+          }
+        });
 
       },
       (error) => {
-        // Handle error if the country addition fails or the country already exists
-        this.dialogueBoxService.open('Failed to add Country.Already Exist', 'warning');
-
+        console.error('Failed to add Country:', error);
+        this.dialogueBoxService.open('Failed to add Country. Already Exists', 'warning');
       }
     );
+
+
   }
+
 
   // Method to check if the form is valid
   isFormValid(): boolean {

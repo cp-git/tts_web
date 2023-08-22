@@ -2,3 +2,29 @@
 .blue-label {
     color: blue;
 }
+
+.table-container {
+    max-height: 450px;
+    /* Adjust the height as needed */
+    overflow-y: auto;
+}
+
+.table-container thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+/* Hide the default scroll bar */
+.table-container::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 0.25em;
+}
