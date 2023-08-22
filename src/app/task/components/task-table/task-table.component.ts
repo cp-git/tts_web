@@ -125,7 +125,7 @@ export class TaskTableComponent implements OnInit {
     this.emptyTask = {} as Task;
     this.updateScreen = false;
     this.parentTask = {} as Task;
-    
+
     console.log(task);
 
     if (operation == 'ADD') {
@@ -145,18 +145,16 @@ export class TaskTableComponent implements OnInit {
       this.updateScreen = true;
       console.log(task);
 
-      this.taskService.getTaskByTaskId(task.taskParent).subscribe(
-        (response) => {
-          // on success 
-          
-          this.parentTask = response;
-          console.log(this.parentTask);
-
-        }
-      );
-      console.log(this.parentTask);
+      if (task.taskParent > 0) {
+        this.taskService.getTaskByTaskId(task.taskParent).subscribe(
+          (response) => {
+            // on success 
+            this.parentTask = response;
+            console.log(this.parentTask);
+          }
+        );
+      }
       this.emptyTask = Object.assign({}, task);
-
     }
   }
 

@@ -57,7 +57,8 @@ export class CreateTaskComponent implements OnInit {
       this.task = this.task;
       this.backupTask = Object.assign({}, this.task);
       console.log(this.backupTask);
-      this.getFilesByTaskId(this.task.taskId);
+      if (this.task.taskId > 0)
+        this.getFilesByTaskId(this.task.taskId);
     }
   }
 
@@ -65,69 +66,72 @@ export class CreateTaskComponent implements OnInit {
   onClickSave(task: Task) {
 
     task.employeeId = this.employeeId;
+    // if (this.selectedFile) {
+    // console.log(this.selectedFile.name);
+
+    const formData = new FormData();
     if (this.selectedFile) {
-      console.log(this.selectedFile.name);
-
-      const formData = new FormData();
       formData.append('file', this.selectedFile);
-
-      const taskBlob = new Blob([JSON.stringify(this.task)], { type: 'application/json' });
-      formData.append('task', taskBlob);
-
-      this.taskService.createOrUpdateTaskAndAddReason(formData).subscribe(
-        (response) => {
-          alert("Task created successfully");
-
-          // for closing modal after creating task
-          const modalElement = this.createTaskModal.nativeElement;
-          if (modalElement) {
-            const closeButton = modalElement.querySelector('#closeButton');
-            if (closeButton) {
-              this.renderer.selectRootElement(closeButton).click();
-            }
-          }
-
-          this.afterCreateTask.emit();
-        },
-        (error) => {
-          console.log("Faild to create task!");
-        }
-      );
     }
+    const taskBlob = new Blob([JSON.stringify(this.task)], { type: 'application/json' });
+    formData.append('task', taskBlob);
+
+    this.taskService.createOrUpdateTaskAndAddReason(formData).subscribe(
+      (response) => {
+        alert("Task created successfully");
+
+        // for closing modal after creating task
+        const modalElement = this.createTaskModal.nativeElement;
+        if (modalElement) {
+          const closeButton = modalElement.querySelector('#closeButton');
+          if (closeButton) {
+            this.renderer.selectRootElement(closeButton).click();
+          }
+        }
+
+        this.afterCreateTask.emit();
+      },
+      (error) => {
+        console.log("Faild to create task!");
+      }
+    );
+    // }
   }
 
   // for updating task and adding reason
   onClickUpdate(task: Task) {
     task.employeeId = this.employeeId;
+    // if (this.selectedFile) {
+    // console.log(this.selectedFile.name);
+
+    const formData = new FormData();
     if (this.selectedFile) {
-      console.log(this.selectedFile.name);
-
-      const formData = new FormData();
       formData.append('file', this.selectedFile);
-
-      const taskBlob = new Blob([JSON.stringify(task)], { type: 'application/json' });
-      formData.append('task', taskBlob);
-
-      this.taskService.createOrUpdateTaskAndAddReason(formData).subscribe(
-        (response) => {
-          alert("Task updated successfully");
-
-          // for closing modal after creating task
-          const modalElement = this.createTaskModal.nativeElement;
-          if (modalElement) {
-            const closeButton = modalElement.querySelector('#closeButton');
-            if (closeButton) {
-              this.renderer.selectRootElement(closeButton).click();
-            }
-          }
-
-          this.afterCreateTask.emit();
-        },
-        (error) => {
-          console.log("Faild to create task!");
-        }
-      );
     }
+
+    const taskBlob = new Blob([JSON.stringify(task)], { type: 'application/json' });
+    formData.append('task', taskBlob);
+
+    this.taskService.createOrUpdateTaskAndAddReason(formData).subscribe(
+      (response) => {
+        alert("Task updated successfully");
+
+        // for closing modal after creating task
+        const modalElement = this.createTaskModal.nativeElement;
+        if (modalElement) {
+          const closeButton = modalElement.querySelector('#closeButton');
+          if (closeButton) {
+            this.renderer.selectRootElement(closeButton).click();
+          }
+        }
+
+        this.afterCreateTask.emit();
+      },
+      (error) => {
+        console.log("Faild to create task!");
+      }
+    );
+    // }
   }
 
 
@@ -203,23 +207,23 @@ export class CreateTaskComponent implements OnInit {
 
   downloadFile(fileName: string) {
     // Make an API request to get the blob data
-   this.taskService.downloadFileByTaskIdAndFileName(this.task.taskId, fileName).subscribe((blobData: Blob) => {
-        // Create a blob URL
-        const blobUrl = URL.createObjectURL(blobData);
+    this.taskService.downloadFileByTaskIdAndFileName(this.task.taskId, fileName).subscribe((blobData: Blob) => {
+      // Create a blob URL
+      const blobUrl = URL.createObjectURL(blobData);
 
-        // Create an anchor element
-        const a = document.createElement('a');
-        a.href = blobUrl;
+      // Create an anchor element
+      const a = document.createElement('a');
+      a.href = blobUrl;
 
-        // Set the download attribute and file name
-        a.download = fileName; // Set the desired file name here
+      // Set the download attribute and file name
+      a.download = fileName; // Set the desired file name here
 
-        // Trigger a click event on the anchor to initiate the download
-        a.click();
+      // Trigger a click event on the anchor to initiate the download
+      a.click();
 
-        // Clean up: revoke the blob URL after the download
-        URL.revokeObjectURL(blobUrl);
-      });
+      // Clean up: revoke the blob URL after the download
+      URL.revokeObjectURL(blobUrl);
+    });
 
 
   }
