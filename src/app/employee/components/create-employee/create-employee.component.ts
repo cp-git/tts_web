@@ -7,7 +7,7 @@ import { Country } from '../../class/country';
 import { Company } from '../../class/company';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 import { Router } from '@angular/router';
-
+import { Location } from '@angular/common'
 @Component({
   selector: 'app-create-employee',
   templateUrl: './create-employee.component.html',
@@ -26,7 +26,8 @@ export class CreateEmployeeComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     private dialogueBoxService: DialogueBoxService,
-    private router: Router) {
+    private router: Router,
+    private location: Location) {
 
     this.employeeId = sessionStorage.getItem("employeeId");
   } // Constructor with parameter to inject 'EmployeeService' dependency
@@ -58,7 +59,11 @@ export class CreateEmployeeComponent implements OnInit {
     this.employeeService.createEmployee(this.employeeData).subscribe( // Call the 'createEmployee' method of 'EmployeeService' to create the employee and subscribe to the response
       (response) => {
         console.log('Employee created successfully:', response); // Log the successful response
-        this.dialogueBoxService.open('Employee Created Successfully', 'information'); // Show an alert indicating successful creation
+        this.dialogueBoxService.open('Employee Created Successfully', 'information').then((response) => {
+          if (response) {
+            this.location.back(); // Refresh the page
+          }
+        }); // Show an alert indicating successful creation
         // Create a new instance of 'EmployeeAndPasswordDTO' to reset/Clear the form inputs after successful creation
         this.employeeData = new EmployeeAndPasswordDTO();
       },

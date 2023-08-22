@@ -4,6 +4,7 @@ import { Company } from '../../class/company';
 import { CompanyService } from '../../services/company.service';
 import { Country } from '../../class/country';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
+import { Location } from '@angular/common'
 @Component({
   selector: 'app-update-company',
   templateUrl: './update-company.component.html',
@@ -15,7 +16,7 @@ export class UpdateCompanyComponent implements OnInit {
   company: Company;
   countries!: Country[];
 
-  constructor(private router: Router, private companyService: CompanyService, private dialogueBoxService: DialogueBoxService) {
+  constructor(private location: Location, private router: Router, private companyService: CompanyService, private dialogueBoxService: DialogueBoxService) {
     this.company = new Company(); // Initialize an empty Company object.
   }
 
@@ -30,7 +31,11 @@ export class UpdateCompanyComponent implements OnInit {
     // Call the service to update the company data based on the company code.
     this.companyService.updateCompanyByCompanyCode(updatedCompany.companyCode, updatedCompany).subscribe(
       response => {
-        this.dialogueBoxService.open('Company updated successfully', 'information');
+        this.dialogueBoxService.open('Company updated successfully', 'information').then((response) => {
+          if (response) {
+            this.location.back(); // Refresh the page
+          }
+        });
       },
       error => {
         this.dialogueBoxService.open('Company updation failed', 'warning');

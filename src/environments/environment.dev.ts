@@ -12,5 +12,5 @@ export const environment = {
   companyUrl: `http://localhost:8090/company/ttsms/company`,
   reasonUrl: `http://localhost:8090/reason/ttsms`,
   statusUrl: `http://localhost:8090/status/ttsms`,
-  taskUrl:`http://localhost:8090/task/ttsms`
+  taskUrl: `http://localhost:8090/task/ttsms`
 };

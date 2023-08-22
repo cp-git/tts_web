@@ -9,34 +9,35 @@
             style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer; margin-top: 10px;"></span>
     </div>
 
+    <div class="table-container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <!-- <th>Country ID</th> -->
+                    <th>Country Name</th>
+                    <th>Country Code</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let country of countries">
+                    <!-- <td>{{ country.countryId }}</td> -->
+                    <td>{{ country.countryName }}</td>
+                    <td>{{ country.countryCode }}</td>
+                    <td>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <!-- <th>Country ID</th> -->
-                <th>Country Name</th>
-                <th>Country Code</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let country of countries">
-                <!-- <td>{{ country.countryId }}</td> -->
-                <td>{{ country.countryName }}</td>
-                <td>{{ country.countryCode }}</td>
-                <td>
-
-                    <!-- Update Button -->
-                    <span (click)="redirectToUpdate(country)" class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
-                        style='font-size:23px;color: rgb(64, 109, 234);'></span>
-                    <!-- Delete Button -->
-                    &nbsp;
-                    &nbsp;
-                    <span (click)="deleteCountry(country.countryCode)" class='fa-solid fa-trash fa-xl'
-                        style='font-size:23px;color: red;'></span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                        <!-- Update Button -->
+                        <span (click)="redirectToUpdate(country)" class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
+                            style='font-size:23px;color: rgb(64, 109, 234);'></span>
+                        <!-- Delete Button -->
+                        &nbsp;
+                        &nbsp;
+                        <span (click)="deleteCountry(country.countryCode)" class='fa-solid fa-trash fa-xl'
+                            style='font-size:23px;color: red;'></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <app-footer></app-footer>

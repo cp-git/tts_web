@@ -47,8 +47,13 @@ export class UpdateEmployeeComponent {
   updateEmployeeAndPassword() {
     this.employeeService.updateEmployeeAndPasswordById(this.employeeId, this.employeeData).subscribe(
       (response) => {
+        alert(JSON.stringify(this.employeeData));
         console.log('Employee and password updated successfully:', response); // Log success message and response
-        this.dialogueBoxService.open('Employee updated successfully', 'information'); // Display an alert indicating successful employee update
+        this.dialogueBoxService.open('Employee updated successfully', 'information').then((response) => {
+          if (response) {
+            this.location.back(); // Refresh the page
+          }
+        });// Display an alert indicating successful employee update
       },
       (error) => {
         console.error('Failed to update employee and password:', error); // Log error message and response
@@ -62,6 +67,7 @@ export class UpdateEmployeeComponent {
     // Call the service method to update the employee
     this.employeeService.updateEmployeeByEmployeeId(this.employee).subscribe(
       (response) => {
+        console.log(JSON.stringify(this.employee));
         this.dialogueBoxService.open('Employee updated successfully', 'information'); // Display an alert indicating successful employee update
       },
       (error) => {
