@@ -1,5 +1,6 @@
 <!-- Modal -->
-<div #createTaskModal class="modal fade" id="createTask{{parentTask.taskId}}" tabindex="-1" aria-labelledby="createTaskLabel" aria-hidden="true">
+<div #createTaskModal class="modal fade" id="createTask{{parentTask.taskId}}" tabindex="-1"
+    aria-labelledby="createTaskLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -64,13 +65,14 @@
                 <select class="form-control" name="taskCreatedBy" id="taskCreatedBy" name="taskCreatedBy"
                     [(ngModel)]="task.taskCreatedBy" [required]="true" disabled>
                     <option value="undefined" disabled>Select Option</option>
-                    <option  *ngIf="!updateScreen" value="{{employeeId}}" selected="true">Self</option>
+                    <option *ngIf="!updateScreen" value="{{employeeId}}" selected="true">Self</option>
                     <ng-container *ngIf="updateScreen">
                         <ng-container *ngFor="let employee of allEmployees">
-                            <option value="{{employee.employeeId}}">{{employee.firstName}} {{employee.lastName}}</option>
+                            <option value="{{employee.employeeId}}">{{employee.firstName}} {{employee.lastName}}
+                            </option>
                         </ng-container>
                     </ng-container>
-                  
+
                 </select>
             </div>
             <div class="col-sm-4">
@@ -109,12 +111,13 @@
             <div class="col-sm-3">
                 <label for="endDate" class="form-label">End date</label>
                 <input type="date" class="form-control" id="endDate" name="endDate" [min]="task.taskStartDate"
-                    [(ngModel)]="task.taskEndDate" [required]="true" [disabled]="task.taskStartDate==null || updateScreen">
+                    [(ngModel)]="task.taskEndDate" [required]="true"
+                    [disabled]="task.taskStartDate==null || updateScreen">
             </div>
             <div class="col-sm-3">
                 <label for="actualStartDate" class="form-label">Actual Start date</label>
-                <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
-                    [min]="currentDate" [max]="(task.taskStatus == statusEnum.DONE)?currentDate:task.taskEndDate"
+                <input type="date" class="form-control" id="actualStartDate" name="actualStartDate" [min]="currentDate"
+                    [max]="(task.taskStatus == statusEnum.DONE)?currentDate:task.taskEndDate"
                     [disabled]="task.taskStartDate == null || task.taskEndDate == null || task.taskStatus == statusEnum.CREATED "
                     [(ngModel)]="task.taskActualStartDate" [required]="true">
             </div>
@@ -123,7 +126,8 @@
                 <label for="actualEndDate" class="form-label">Actual End date</label>
                 <input type="date" class="form-control" id="actualEndDate" name="actualEndDate"
                     [(ngModel)]="task.taskActualEndDate" [min]="task.taskActualStartDate" [max]="currentDate"
-                    [disabled]="task.taskStatus != statusEnum.DONE || task.taskEndDate == null || task.taskActualStartDate == null" [required]="true">
+                    [disabled]="task.taskStatus != statusEnum.DONE || task.taskEndDate == null || task.taskActualStartDate == null"
+                    [required]="true">
 
             </div>
         </div>
@@ -146,17 +150,22 @@
                 <label class="label" for="attachement">Attachements</label>
                 <ul>
                     <li *ngFor="let file of fileNames">
-                        <a  href="javascript:void(0)" (click)="downloadFile(file)">{{ file }}</a>
+                        <a href="javascript:void(0)" (click)="downloadFile(file)">{{ file }}</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="modal-footer mt-3">
-            <button [disabled]="!addTaskForm.valid" *ngIf="updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)" type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
-           
-            <ng-container *ngIf="updateScreen && !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"> <label style="color: red;">* Update only allowed to Creator/ Assignee</label></ng-container>
-            
-            <button [disabled]="!addTaskForm.valid" *ngIf="!updateScreen" type="submit" class="btn btn-primary" (click)="onClickSave(task)">Save</button>
+            <button [disabled]="!addTaskForm.valid"
+                *ngIf="updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
+
+            <ng-container
+                *ngIf="updateScreen && !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)">
+                <label style="color: red;">* Update only allowed to Creator/ Assignee</label></ng-container>
+
+            <button [disabled]="!addTaskForm.valid" *ngIf="!updateScreen" type="submit" class="btn btn-primary"
+                (click)="onClickSave(task)">Save</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeButton">Close</button>
         </div>
 
