@@ -6,7 +6,6 @@ import { Employee } from 'src/app/classes/employee';
 import { TaskService } from '../../services/task.service';
 import { StatusEnum } from 'src/app/status/enum/status.enum';
 import { StatusService } from 'src/app/status/services/status.service';
-import { CreateTaskComponent } from '../create-task/create-task.component';
 
 @Component({
   selector: 'app-task-table',
@@ -125,7 +124,7 @@ export class TaskTableComponent implements OnInit {
     this.emptyTask = {} as Task;
     this.updateScreen = false;
     this.parentTask = {} as Task;
-    
+
     console.log(task);
 
     if (operation == 'ADD') {
@@ -145,18 +144,16 @@ export class TaskTableComponent implements OnInit {
       this.updateScreen = true;
       console.log(task);
 
-      this.taskService.getTaskByTaskId(task.taskParent).subscribe(
-        (response) => {
-          // on success 
-          
-          this.parentTask = response;
-          console.log(this.parentTask);
-
-        }
-      );
-      console.log(this.parentTask);
+      if (task.taskParent > 0) {
+        this.taskService.getTaskByTaskId(task.taskParent).subscribe(
+          (response) => {
+            // on success 
+            this.parentTask = response;
+            console.log(this.parentTask);
+          }
+        );
+      }
       this.emptyTask = Object.assign({}, task);
-
     }
   }
 
