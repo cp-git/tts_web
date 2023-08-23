@@ -6,6 +6,7 @@ import { Employee } from 'src/app/classes/employee';
 import { TaskService } from '../../services/task.service';
 import { StatusEnum } from 'src/app/status/enum/status.enum';
 import { StatusService } from 'src/app/status/services/status.service';
+import { CreateTaskComponent } from '../create-task/create-task.component';
 
 @Component({
   selector: 'app-task-table',
