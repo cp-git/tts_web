@@ -1,16 +1,22 @@
-span{
+span {
     margin-bottom: 10px;
 }
 
-.icons{
+.icons {
     padding: 0px 12px;
 }
+
 .table-custom-font-size td,
 .table-custom-font-size th {
-  /* font-size: 15px;  */
+    /* font-size: 15px;  */
 }
 
-.taskTable{
+.table {
+    margin-top: 5px;
+    border-color: black;
+    border-width: 4px;
+}
+
+.taskTable {
     margin-top: 5px;
 }
-
