@@ -4,7 +4,7 @@ import { Company } from '../../class/company';
 import { Country } from '../../class/country';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 import { Router } from '@angular/router';
-
+import { Location } from '@angular/common'
 @Component({
   selector: 'app-add-company',
   templateUrl: './add-company.component.html',
@@ -16,7 +16,7 @@ export class AddCompanyComponent implements OnInit {
   company!: Company; // The current company object to be added
   selectedFile: File | undefined;  // To store the selected file
 
-  constructor(private companyService: CompanyService, private dialogueBoxService: DialogueBoxService, private route: Router) {
+  constructor(private companyService: CompanyService, private dialogueBoxService: DialogueBoxService, private route: Router, private location: Location) {
     this.company = new Company(); // Initialize an empty Company object for adding a new company
   }
 
@@ -48,7 +48,11 @@ export class AddCompanyComponent implements OnInit {
       this.companyService.addCompany(formData).subscribe(
         (data) => {
           // On successful addition, show a success alert
-          this.dialogueBoxService.open('Company added successfully', 'information');
+          this.dialogueBoxService.open('Company added successfully', 'information').then((response) => {
+            if (response) {
+              this.location.back(); // Refresh the page
+            }
+          });
         },
         (error) => {
           // Handle error if the company addition fails or the company already exists

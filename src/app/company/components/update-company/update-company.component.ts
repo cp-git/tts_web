@@ -4,6 +4,7 @@ import { Company } from '../../class/company';
 import { CompanyService } from '../../services/company.service';
 import { Country } from '../../class/country';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
+import { Location } from '@angular/common'
 @Component({
   selector: 'app-update-company',
   templateUrl: './update-company.component.html',
@@ -16,7 +17,7 @@ export class UpdateCompanyComponent implements OnInit {
   countries!: Country[];
   selectedFile: File | undefined;  // To store the selected file
 
-  constructor(private router: Router, private companyService: CompanyService, private dialogueBoxService: DialogueBoxService) {
+  constructor(private router: Router, private companyService: CompanyService, private dialogueBoxService: DialogueBoxService, private location: Location) {
     this.company = new Company(); // Initialize an empty Company object.
   }
 
@@ -51,7 +52,11 @@ export class UpdateCompanyComponent implements OnInit {
       this.companyService.updateCompanyByCompanyCode(updatedCompany.companyCode, formData).subscribe(
         (response) => {
           // Display a success alert indicating that the company was updated successfully
-          this.dialogueBoxService.open('Company updated successfully', 'information');
+          this.dialogueBoxService.open('Company updated successfully', 'information').then((response) => {
+            if (response) {
+              this.location.back(); // Refresh the page
+            }
+          });
         },
         (error) => {
           // Display a warning alert indicating that there was an error updating the company

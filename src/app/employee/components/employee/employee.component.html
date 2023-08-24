@@ -34,53 +34,55 @@
 
     <div style="margin-top: 20px;"></div>
     <!-- Table to display the list of employees -->
-    <table class="table table-striped">
-        <thead>
-            <!-- Table header row -->
-            <tr>
-                <!-- Column headers -->
-                <th>UserName</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>DOB</th>
-                <th>Email</th>
-                <th>Company</th>
-                <th>Country</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Loop through each filtered employee in the 'employees' array and display their data -->
-            <tr
-                *ngFor="let employee of employees | filter:'countryId':selectedCountryId | filter:'companyId':selectedCompanyId">
-                <!-- Display employee data in each table cell -->
-                <td>{{employee.username}}</td>
-                <td>{{ employee.firstName }}</td>
-                <td>{{ employee.lastName }}</td>
-                <td>{{ employee.birthDate | date:'yyyy-MM-dd'}}</td>
-                <td>{{ employee.employeeEmail }}</td>
-                <td>{{ getCompanyNameById(employee.companyId) }}</td>
-                <!-- Use method 'getCompanyNameById' to get the company name based on companyId -->
-                <td>{{ getCountryNameById(employee.countryId)}}</td>
-                <!-- Use method 'getCountryNameById' to get the country name based on countryId -->
+    <div class="table-container">
+        <table class="table table-striped">
+            <thead>
+                <!-- Table header row -->
+                <tr>
+                    <!-- Column headers -->
+                    <th>UserName</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>DOB</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Country</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through each filtered employee in the 'employees' array and display their data -->
+                <tr
+                    *ngFor="let employee of employees | filter:'countryId':selectedCountryId | filter:'companyId':selectedCompanyId">
+                    <!-- Display employee data in each table cell -->
+                    <td>{{employee.username}}</td>
+                    <td>{{ employee.firstName }}</td>
+                    <td>{{ employee.lastName }}</td>
+                    <td>{{ employee.birthDate | date:'yyyy-MM-dd'}}</td>
+                    <td>{{ employee.employeeEmail }}</td>
+                    <td>{{ getCompanyNameById(employee.companyId) }}</td>
+                    <!-- Use method 'getCompanyNameById' to get the company name based on companyId -->
+                    <td>{{ getCountryNameById(employee.countryId)}}</td>
+                    <!-- Use method 'getCountryNameById' to get the country name based on countryId -->
 
-                <td>
-                    <!-- Update Button -->
-                    <span (click)="navigateToUpdateEmployee(employee)"
-                        class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
-                        style='font-size:23px;color: rgb(64, 109, 234);'></span>
+                    <td>
+                        <!-- Update Button -->
+                        <span (click)="navigateToUpdateEmployee(employee)"
+                            class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
+                            style='font-size:23px;color: rgb(64, 109, 234);'></span>
 
-                    <!-- Delete Button -->
-                    &nbsp;
-                    &nbsp;
-                    <span (click)="deleteEmployee(employee)" class='fa-solid fa-trash fa-xl'
-                        style='font-size:23px;color: red;'>
-                    </span>
-                </td>
+                        <!-- Delete Button -->
+                        &nbsp;
+                        &nbsp;
+                        <span (click)="deleteEmployee(employee)" class='fa-solid fa-trash fa-xl'
+                            style='font-size:23px;color: red;'>
+                        </span>
+                    </td>
 
 
-            </tr>
-        </tbody>
-    </table>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <app-footer></app-footer>
