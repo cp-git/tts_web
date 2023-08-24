@@ -7,6 +7,7 @@ import { StatusEnum } from 'src/app/status/enum/status.enum';
 import { Location } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
+import { EmployeeService } from 'src/app/employee/services/employee.service';
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
@@ -33,14 +34,16 @@ export class CreateTaskComponent implements OnInit {
   taskName: any;
 
   fileNames: any
-
+  companyEmployees: Employee[] = [];
+  companyId: any;
   constructor(
 
     private taskService: TaskService,
     private renderer: Renderer2,
     private location: Location,
     private http: HttpClient,
-    private dialogueBoxService: DialogueBoxService
+    private dialogueBoxService: DialogueBoxService,
+    private employeeService: EmployeeService
   ) { }
 
   ngOnInit(): void {
@@ -48,6 +51,9 @@ export class CreateTaskComponent implements OnInit {
     console.log(this.taskName);
     console.log("parent Task " + JSON.stringify(this.parentTask));
     this.employeeId = sessionStorage.getItem("employeeId");
+    this.companyId = sessionStorage.getItem("companyId");
+    //alert(this.companyId);
+    this.loadCompanyEmployees();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -62,6 +68,20 @@ export class CreateTaskComponent implements OnInit {
       if (this.task.taskId > 0)
         this.getFilesByTaskId(this.task.taskId);
     }
+  }
+
+  // Load employees by company ID
+  loadCompanyEmployees() {
+
+    this.employeeService.getAllEmployeesByCompanyId(this.companyId).subscribe(
+
+      (employees) => {
+        this.companyEmployees = employees;
+      },
+      (error) => {
+        console.error('Error fetching company employees:', error);
+      }
+    );
   }
 
   // for adding task and reason

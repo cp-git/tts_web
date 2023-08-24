@@ -81,7 +81,7 @@
                     [(ngModel)]="task.taskAssignedTo" [required]="true">
                     <option value="undefined" disabled>Select Option</option>
                     <option value="{{employeeId}}" selected="true">Self</option>
-                    <ng-container *ngFor="let employee of allEmployees">
+                    <ng-container *ngFor="let employee of companyEmployees">
                         <option *ngIf="employeeId!=employee.employeeId" value="{{employee.employeeId}}">
                             {{employee.firstName}} {{employee.lastName}}</option>
                     </ng-container>
@@ -174,3 +174,4 @@
 
 <!-- {{parentTaskList|json}} -->
 <!-- {{parentTask.taskName|json}} -->
+{{allStatus|json}}
