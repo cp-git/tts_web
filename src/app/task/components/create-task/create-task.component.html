@@ -16,6 +16,7 @@
 
         </div>
     </div>
+
 </div>
 
 
@@ -44,7 +45,7 @@
 
             </div>
             <div class="col">
-                <label for="taskName" class="form-label">Task Name</label>
+                <label for="taskName" class="form-label">Task Name<span class="required-asterisk">*</span></label>
                 <input type="text" class="form-control" id="taskName" name="taskName" placeholder="Enter task name"
                     [(ngModel)]="task.taskName" [required]="true">
             </div>
@@ -53,7 +54,8 @@
 
         <div class="row">
             <div class="col">
-                <label for="taskDescription" class="form-label">Task Description</label>
+                <label for="taskDescription" class="form-label">Task Description<span
+                        class="required-asterisk">*</span></label>
                 <textarea class="form-control" id="taskDescription" name="taskDescription"
                     [(ngModel)]="task.taskDescription" placeholder="Enter task description"
                     [required]="true"></textarea>
@@ -104,12 +106,12 @@
 
         <div class="row">
             <div class="col-sm-3">
-                <label for="startDate" class="form-label">Start date</label>
+                <label for="startDate" class="form-label">Start date<span class="required-asterisk">*</span></label>
                 <input type="date" class="form-control" id="startDate" name="startDate" [(ngModel)]="task.taskStartDate"
                     [required]="true" [disabled]="updateScreen" [min]="currentDate">
             </div>
             <div class="col-sm-3">
-                <label for="endDate" class="form-label">End date</label>
+                <label for="endDate" class="form-label">End date<span class="required-asterisk">*</span></label>
                 <input type="date" class="form-control" id="endDate" name="endDate" [min]="task.taskStartDate"
                     [(ngModel)]="task.taskEndDate" [required]="true"
                     [disabled]="task.taskStartDate==null || updateScreen">
@@ -133,7 +135,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <label for="taskReason" class="form-label">Reason</label>
+                <label for="taskReason" class="form-label">Reason<span class="required-asterisk">*</span></label>
                 <textarea class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
                     placeholder="Enter reason" [required]="true"></textarea>
             </div>
@@ -156,18 +158,37 @@
             </div>
         </div>
         <div class="modal-footer mt-3">
-            <button [disabled]="!addTaskForm.valid"
-                *ngIf="updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+            <!-- Move the success message here and apply centering classes -->
+            <div class="text-center mx-auto">
+                <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+                    Task created/updated successfully!
+                </div>
+            </div>
+
+            <!-- Add loading spinner here -->
+            <div *ngIf="isLoading">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Move the "Save" and "Close" buttons to the right -->
+            <button [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage"
+                *ngIf="!isLoading && updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
                 type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
 
             <ng-container
                 *ngIf="updateScreen && !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)">
-                <label style="color: red;">* Update only allowed to Creator/ Assignee</label></ng-container>
+                <label style="color: red;">* Update only allowed to Creator/ Assignee</label>
+            </ng-container>
 
-            <button [disabled]="!addTaskForm.valid" *ngIf="!updateScreen" type="submit" class="btn btn-primary"
+            <button [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage"
+                *ngIf="!isLoading && !updateScreen" type="submit" class="btn btn-primary"
                 (click)="onClickSave(task)">Save</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeButton">Close</button>
+            <button type="button" class="btn btn-secondary" (click)="closeModal()" id="closeButton">Close</button>
         </div>
+
+
 
     </form>
 </ng-template>

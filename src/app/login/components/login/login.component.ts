@@ -57,7 +57,8 @@ export class LoginComponent implements OnInit {
           // Check the response from the API
           this.userData = response;
           // alert(this.userData);
-
+          sessionStorage.setItem('employeeId', this.userData.employeeId.toString());
+          await this.getEmployeeWithPassword(this.userData.employeeId);
 
           if (this.userData) {
             if (this.userData.username === "admin") {
@@ -66,8 +67,7 @@ export class LoginComponent implements OnInit {
             } else {
               this.route.navigate(['/dashboard']);
             }
-            sessionStorage.setItem('employeeId', this.userData.employeeId.toString());
-            await this.getEmployeeWithPassword(this.userData.employeeId);
+
           } else {
             this.dialogueBoxService.open('Invalid Details', 'warning')
           }
