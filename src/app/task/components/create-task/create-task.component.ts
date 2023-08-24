@@ -6,6 +6,7 @@ import { TaskService } from '../../services/task.service';
 import { StatusEnum } from 'src/app/status/enum/status.enum';
 import { Location } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
@@ -38,7 +39,8 @@ export class CreateTaskComponent implements OnInit {
     private taskService: TaskService,
     private renderer: Renderer2,
     private location: Location,
-    private http: HttpClient
+    private http: HttpClient,
+    private dialogueBoxService: DialogueBoxService
   ) { }
 
   ngOnInit(): void {
@@ -78,6 +80,7 @@ export class CreateTaskComponent implements OnInit {
     this.taskService.createOrUpdateTaskAndAddReason(formData).subscribe(
       (response) => {
         alert("Task created successfully");
+        //this.dialogueBoxService.open('Task created successfully', 'information')
 
         // for closing modal after creating task
         const modalElement = this.createTaskModal.nativeElement;

@@ -24,6 +24,7 @@ li a:hover {
 
 li a.active {
     background-color: red;
+    border-radius: 15px;
 }
 
 .navbar {
@@ -49,4 +50,10 @@ li a.active {
     color: rgb(255, 0, 0);
     cursor: pointer;
     margin-right: 30px
+}
+
+.admin {
+    color: white;
+    margin-left: 350px;
+
 }
