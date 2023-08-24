@@ -7,6 +7,7 @@ import { Password } from '../../class/password';
 import { EmployeeAndPasswordDTO } from 'src/app/employee/class/employeeandpasswordDTO';
 import { EmployeeService } from 'src/app/employee/services/employee.service';
 import { AuthenticationServiceService } from 'src/app/service/authentication-service.service';
+import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 declare var $: any;
 @Component({
   selector: 'app-login',
@@ -35,7 +36,8 @@ export class LoginComponent implements OnInit {
     private route: Router,
     private loginService: LoginService,
     private employeeService: EmployeeService,
-    private authService: AuthenticationServiceService
+    private authService: AuthenticationServiceService,
+    private dialogueBoxService: DialogueBoxService,
 
   ) {
     this.employeeId = sessionStorage.getItem('employeeId');
@@ -55,8 +57,7 @@ export class LoginComponent implements OnInit {
           // Check the response from the API
           this.userData = response;
           // alert(this.userData);
-          sessionStorage.setItem('employeeId', this.userData.employeeId.toString());
-          await this.getEmployeeWithPassword(this.userData.employeeId);
+
 
           if (this.userData) {
             if (this.userData.username === "admin") {
@@ -65,9 +66,10 @@ export class LoginComponent implements OnInit {
             } else {
               this.route.navigate(['/dashboard']);
             }
-
+            sessionStorage.setItem('employeeId', this.userData.employeeId.toString());
+            await this.getEmployeeWithPassword(this.userData.employeeId);
           } else {
-            alert("Invalid Details");
+            this.dialogueBoxService.open('Invalid Details', 'warning')
           }
         },
         (error) => {

@@ -36,7 +36,7 @@
 
 <ng-template #tableRows let-task>
     <tr>
-        <th scope="row" (click)="toggleChildTable(task)" >
+        <th scope="row" (click)="toggleChildTable(task)">
             <span *ngIf="!showChildTable.get(task.taskId)" class="fa-solid fa-plus"></span>
             <span *ngIf="showChildTable.get(task.taskId)" class="fa-solid fa-minus"></span>
         </th>
@@ -46,7 +46,7 @@
         <td>
             <ng-container *ngFor="let employee of employees">
                 <ng-container *ngIf="employee.employeeId == task.taskCreatedBy">
-                    {{employee.firstName | titlecase}} {{employee.lastName | titlecase}} 
+                    {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
                 </ng-container>
             </ng-container>
 
@@ -61,7 +61,7 @@
             </select> -->
             <ng-container *ngFor="let employee of employees">
                 <ng-container *ngIf="employee.employeeId == task.taskAssignedTo">
-                    {{employee.firstName | titlecase}} {{employee.lastName | titlecase}} 
+                    {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
                 </ng-container>
             </ng-container>
 
@@ -77,10 +77,10 @@
             </select> -->
             <ng-container *ngFor="let status of allStatus">
                 <ng-container *ngIf="status.statusId == task.taskStatus">
-                    {{status.statusCode | titlecase}} 
+                    {{status.statusCode | titlecase}}
                 </ng-container>
             </ng-container>
-            
+
         </td>
         <td>{{task.taskActualEndDate | date:'dd-MM-yyyy'}}</td>
         <td>
@@ -94,7 +94,7 @@
                 <div class="col icons" *ngIf="parentTaskData.length>0">
                     <span title="Save Task" class="fa-solid fa-circle-down fa-rotate-180 fa-xl" data-bs-toggle="modal"
                         attr.data-bs-target="#createTask{{parentTask.taskId}}"
-                        (click)="onClickCreateTask(task, 'UPDATE')" style="color: #0095a8;" ></span>
+                        (click)="onClickCreateTask(task, 'UPDATE')" style="color: #0095a8;"></span>
                 </div>
                 <div class="col icons" *ngIf="parentTaskData.length>0">
                     <span title="Delete Task" class="fa-solid fa-trash fa-xl" style="color: #ff0000;"></span>
@@ -102,10 +102,10 @@
 
                 <div class="col icons" *ngIf="parentTaskData.length>0">
                     <span title="Response history" class="fa-solid fa fa-history fa-xl"
-                    [routerLink]="['changehistory', task.taskId]" style="color: blue"></span>
+                        [routerLink]="['changehistory', task.taskId]" style="color: blue"></span>
                 </div>
             </div>
-    
+
         </td>
     </tr>
     <!-- Expandable Child Panel -->
@@ -119,9 +119,9 @@
 </ng-template>
 
 <!-- <ng-container *ngIf="parentTask"> -->
-    <app-create-task [task]="emptyTask" [parentTask]="parentTask" [allEmployees]="employees"
-    [allStatus]="allStatus" [updateScreen]="updateScreen" (afterCreateTask)="afterCreateTask()"></app-create-task>
+<app-create-task [task]="emptyTask" [parentTask]="parentTask" [allEmployees]="employees" [allStatus]="allStatus"
+    [updateScreen]="updateScreen" (afterCreateTask)="afterCreateTask()"></app-create-task>
 
 <!-- </ng-container> -->
 <!-- {{parentTask|json}} -->
-    <!-- {{emptyTask|json}} -->
+<!-- {{emptyTask|json}} -->
