@@ -48,7 +48,11 @@ export class UpdateEmployeeComponent {
     this.employeeService.updateEmployeeAndPasswordById(this.employeeId, this.employeeData).subscribe(
       (response) => {
         console.log('Employee and password updated successfully:', response); // Log success message and response
-        this.dialogueBoxService.open('Employee updated successfully', 'information'); // Display an alert indicating successful employee update
+        this.dialogueBoxService.open('Employee updated successfully', 'information').then((response) => {
+          if (response) {
+            this.location.back(); // Refresh the page
+          }
+        });
       },
       (error) => {
         console.error('Failed to update employee and password:', error); // Log error message and response
@@ -78,7 +82,11 @@ export class UpdateEmployeeComponent {
       this.employeeService.updateEmployeeByEmployeeId(updatedEmployee.employeeId, formData).subscribe(
         (response) => {
           // Display a success alert indicating that the employee was updated successfully
-          this.dialogueBoxService.open('Employee updated successfully', 'information');
+          this.dialogueBoxService.open('Employee updated successfully', 'information').then((response) => {
+            if (response) {
+              this.location.back(); // Refresh the page
+            }
+          });
         },
         (error) => {
           // Display a warning alert indicating that there was an error updating the employee, possibly due to a duplicate email
