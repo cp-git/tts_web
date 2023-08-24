@@ -84,4 +84,13 @@ export class EmployeeService {
   getAllCompanies(): Observable<Company[]> {
     return this._http.get<Company[]>(`${this.companyUrl}/all`);
   }
+
+  getAllCompanyEmployeeByCompanyId(): Observable<Employee[]> {
+    return this._http.get<Employee[]>(`${this.employeeUrl}`)
+  }
+  // Method to get all employees by company ID
+  getAllEmployeesByCompanyId(companyId: number): Observable<Employee[]> {
+    // Send a GET request to the API to retrieve a list of all employees for the given company
+    return this._http.get<Employee[]>(`${this.employeeUrl}/companyemp/${companyId}`);
+  }
 }
