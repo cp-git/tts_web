@@ -1,6 +1,7 @@
-.name, .company{
-    font-weight:bold;
-    font-size:x-large;
+.name,
+.company {
+    font-weight: bold;
+    font-size: x-large;
     font-family: Arial, Helvetica, sans-serif;
 }
 

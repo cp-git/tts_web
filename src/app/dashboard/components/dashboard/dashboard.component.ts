@@ -7,6 +7,7 @@ import { Status } from 'src/app/status/class/status';
 import { Company } from 'src/app/company/class/company';
 import { StatusService } from 'src/app/status/services/status.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.dev';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,8 @@ export class DashboardComponent implements OnInit {
   // to storing all parent task
   parentTaskData: Task[] = [];
   allParentTaskData = new Map();
-
+  displayCompanyLogo: any;
+  displayEmployeeLogo: any;
   employees: Employee[] = [];
   allStatus: Status[] = [];
   childTaskData = new Map();
@@ -32,13 +34,14 @@ export class DashboardComponent implements OnInit {
     private dashboardService: DashboardService,
     private taskService: TaskService,
     private statusService: StatusService,
-    private router :Router
+    private router: Router
   ) {
-
+    this.displayCompanyLogo = `${environment.companyUrl}/photos`;
+    this.displayEmployeeLogo = `${environment.employeeUrl}/employee/photos`
     this.employeeId = sessionStorage.getItem('employeeId');
     this.companyId = sessionStorage.getItem('companyId');
-    this.loggedInUserData  = sessionStorage.getItem('empData');
-     
+    this.loggedInUserData = sessionStorage.getItem('empData');
+
     this.loggedInUserData = JSON.parse(this.loggedInUserData);
     console.log(this.loggedInUserData);
 
@@ -47,6 +50,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialization();
+
   }
 
 
@@ -120,17 +124,24 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  // fetching company using company id
-  getCompanyById(companyId: number) {
-    this.company = this.dashboardService.getCompanyById(companyId);
+  // Method to fetch the company by ID
+  getCompanyById(companyId: number): void {
+    this.dashboardService.getCompanyById(companyId).subscribe(
+      (data) => {
+        this.company = data; // Store the retrieved company data
+        console.log('Retrieved company:', this.company);
+      },
+      (error) => {
+        console.error('Error retrieving company:', error);
+      }
+    );
   }
-
   logout() {
     // Clear session storage data
     sessionStorage.removeItem('employeeId');
     sessionStorage.removeItem('companyId');
     sessionStorage.removeItem('empData');
-    
+
     this.router.navigate(['/'])
   }
 }

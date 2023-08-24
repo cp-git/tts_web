@@ -2,15 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Employee } from 'src/app/classes/employee';
-
+import { environment } from 'src/environments/environment.dev';
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
-
+  companyUrl: any;
   private readonly EmployeeURL = `http://localhost:8090/employee/ttsms`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.companyUrl = `${environment.companyUrl}`; // Base URL for company-related API endpoints
+  }
 
 
   // when there is service for task then please move this code there
@@ -26,18 +28,23 @@ export class DashboardService {
     return this.http.get<Employee[]>(`${this.EmployeeURL}/allemployee`);
   }
 
-  getCompanyById(companyId: number) {
-    return {
-      "companyId": 1,
-      "companyCode": "cpa",
-      "companyName": "Cloud Point",
-      "companyContactEmail": "cpa@gmail.com",
-      "companyContactPhone": "9638527410",
-      "companyAddress": "add",
-      "companyZip": "412230",
-      "companyCountryId": 1,
-      "companyPhoto":"abc.png"
-    }
+  // getCompanyById(companyId: number) {
+  //   return {
+  //     "companyId": 1,
+  //     "companyCode": "cpa",
+  //     "companyName": "Cloud Point",
+  //     "companyContactEmail": "cpa@gmail.com",
+  //     "companyContactPhone": "9638527410",
+  //     "companyAddress": "add",
+  //     "companyZip": "412230",
+  //     "companyCountryId": 1,
+  //     "companyPhoto":"abc.png"
+  //   }
 
+  // }
+
+  getCompanyById(companyId: number): Observable<any> {
+    const url = `${this.companyUrl}/${companyId}`;
+    return this.http.get(url);
   }
 }

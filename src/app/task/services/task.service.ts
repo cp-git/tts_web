@@ -18,25 +18,25 @@ export class TaskService {
   }
 
   // for getting child task using parent id
-  getChildTaskByParentId(parentId: number):Observable<Task[]> {
+  getChildTaskByParentId(parentId: number): Observable<Task[]> {
     return this.http.get<Task[]>(`${this.TaskURL}/allchilds/${parentId}`);
   }
 
-  createOrUpdateTaskAndAddReason(formData:FormData):Observable<Task>{
+  createOrUpdateTaskAndAddReason(formData: FormData): Observable<Task> {
     return this.http.post<Task>(`${this.TaskURL}/savetask`, formData);
   }
-  
-  getTaskByTaskId(taskId:number) :Observable<Task>{
+
+  getTaskByTaskId(taskId: number): Observable<Task> {
     return this.http.get<Task>(`${this.TaskURL}/task/${taskId}`);
 
   }
 
   // This method fetches the list of files of a specific type from the server
-  getFilesByTaskId(taskId: number):Observable<string[]> {
+  getFilesByTaskId(taskId: number): Observable<string[]> {
     return this.http.get<string[]>(`${this.TaskURL}/task/getfiles?taskid=${taskId}`);
   }
 
-   downloadFileByTaskIdAndFileName(taskId: number, fileName: string): Observable<Blob> {
+  downloadFileByTaskIdAndFileName(taskId: number, fileName: string): Observable<Blob> {
     return this.http.get(`${this.TaskURL}/download/${taskId}?filename=${fileName}`, { responseType: 'blob' });
   }
 }
