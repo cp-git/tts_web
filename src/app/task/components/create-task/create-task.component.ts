@@ -25,6 +25,9 @@ export class CreateTaskComponent implements OnInit {
   employeeId: any;
   statusEnum = StatusEnum;
   backupTask: Task = {} as Task;
+  isLoading: boolean = false;
+  showSuccessMessage: boolean = false;
+
   // for today's date
   // todayForEndDate: any;
   // todayForStartDate: any;
@@ -66,6 +69,7 @@ export class CreateTaskComponent implements OnInit {
 
   // for adding task and reason
   onClickSave(task: Task) {
+    this.isLoading = true;
     task.employeeId = this.employeeId;    // assigning employee id to object
 
     const formData = new FormData();    // creating form data to send in header
@@ -79,30 +83,32 @@ export class CreateTaskComponent implements OnInit {
     // calling service to create or update task and adding reason 
     this.taskService.createOrUpdateTaskAndAddReason(formData).subscribe(
       (response) => {
-        alert("Task created successfully");
-        //this.dialogueBoxService.open('Task created successfully', 'information')
-
+        this.showSuccessMessage = true;
+        // alert("Task created successfully");
+        // this.dialogueBoxService.open('task created successfully', 'information')
         // for closing modal after creating task
-        const modalElement = this.createTaskModal.nativeElement;
-        if (modalElement) {
-          const closeButton = modalElement.querySelector('#closeButton');
-          if (closeButton) {
-            this.renderer.selectRootElement(closeButton).click();
-          }
-        }
+        // const modalElement = this.createTaskModal.nativeElement;
+        // if (modalElement) {
+        //   const closeButton = modalElement.querySelector('#closeButton');
+        //   if (closeButton) {
+        //     this.renderer.selectRootElement(closeButton).click();
+        //   }
+        // }
 
         // convey to parent for creating task
-        this.afterCreateTask.emit();
+        //this.afterCreateTask.emit();
       },
       (error) => {
         console.log("Faild to create task!");
       }
-    );
+    ).add(() => {
+      this.isLoading = false;
+    });
   }
 
   // for updating task and adding reason
   onClickUpdate(task: Task) {
-
+    this.isLoading = true;
     task.employeeId = this.employeeId;    // assigning employee id to object
 
     const formData = new FormData();    // creating form data to send in header
@@ -116,24 +122,27 @@ export class CreateTaskComponent implements OnInit {
     // calling service to create or update task and adding reason 
     this.taskService.createOrUpdateTaskAndAddReason(formData).subscribe(
       (response) => {
-        alert("Task updated successfully");
+        this.showSuccessMessage = true;
+        // alert("Task updated successfully");
 
-        // for closing modal after creating task
-        const modalElement = this.createTaskModal.nativeElement;
-        if (modalElement) {
-          const closeButton = modalElement.querySelector('#closeButton');
-          if (closeButton) {
-            this.renderer.selectRootElement(closeButton).click();
-          }
-        }
+        // // for closing modal after creating task
+        // const modalElement = this.createTaskModal.nativeElement;
+        // if (modalElement) {
+        //   const closeButton = modalElement.querySelector('#closeButton');
+        //   if (closeButton) {
+        //     this.renderer.selectRootElement(closeButton).click();
+        //   }
+        // }
 
-        // convey to parent for updating task
-        this.afterCreateTask.emit();
+        // // convey to parent for updating task
+        // this.afterCreateTask.emit();
       },
       (error) => {
         console.log("Faild to create task!");
       }
-    );
+    ).add(() => {
+      this.isLoading = false;
+    });
   }
 
 
@@ -232,4 +241,15 @@ export class CreateTaskComponent implements OnInit {
 
 
   }
+  closeModal() {
+    const modalElement = this.createTaskModal.nativeElement;
+    if (modalElement) {
+      const closeButton = modalElement.querySelector('#closeButton');
+      if (closeButton) {
+        this.renderer.selectRootElement(closeButton).click();
+      }
+    }
+    this.afterCreateTask.emit();
+  }
+
 }

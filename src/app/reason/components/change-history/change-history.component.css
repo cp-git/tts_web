@@ -8,12 +8,12 @@
 }
 
 .change-history-heading {
-    background-color: #337ab7;
+    background-color: blue;
     /* Change to the desired background color */
     color: white;
     /* Change to the desired text color */
     padding: 10px 20px;
-    border-radius: 100px;
+    border-radius: 15px;
     text-align: center;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .close-button {
-    border-radius: 20px;
+    border-radius: 15px;
     /* Apply border-radius */
     background-color: red;
     /* Change color to red */
