@@ -45,7 +45,8 @@
 
             </div>
             <div class="col">
-                <label for="taskName" class="form-label">Task Name<span class="required-asterisk">*</span></label>
+                <label for="taskName" class="form-label">Task Name<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label>
                 <input type="text" class="form-control" id="taskName" name="taskName" placeholder="Enter task name"
                     [(ngModel)]="task.taskName" [required]="true">
             </div>
@@ -54,8 +55,8 @@
 
         <div class="row">
             <div class="col">
-                <label for="taskDescription" class="form-label">Task Description<span
-                        class="required-asterisk">*</span></label>
+                <label for="taskDescription" class="form-label">Task Description<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label>
                 <textarea class="form-control" id="taskDescription" name="taskDescription"
                     [(ngModel)]="task.taskDescription" placeholder="Enter task description"
                     [required]="true"></textarea>
@@ -106,38 +107,44 @@
 
         <div class="row">
             <div class="col-sm-3">
-                <label for="startDate" class="form-label">Start date<span class="required-asterisk">*</span></label>
+                <label for="startDate" class="form-label">Start date<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label>
                 <input type="date" class="form-control" id="startDate" name="startDate" [(ngModel)]="task.taskStartDate"
                     [required]="true" [disabled]="updateScreen" [min]="currentDate">
             </div>
             <div class="col-sm-3">
-                <label for="endDate" class="form-label">End date<span class="required-asterisk">*</span></label>
+                <label for="endDate" class="form-label">End date<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label>
                 <input type="date" class="form-control" id="endDate" name="endDate" [min]="task.taskStartDate"
                     [(ngModel)]="task.taskEndDate" [required]="true"
                     [disabled]="task.taskStartDate==null || updateScreen">
             </div>
+
             <div class="col-sm-3">
-                <label for="actualStartDate" class="form-label">Actual Start date</label>
-                <input type="date" class="form-control" id="actualStartDate" name="actualStartDate" [min]="currentDate"
-                    [max]="(task.taskStatus == statusEnum.DONE)?currentDate:task.taskEndDate"
+                <label for="actualStartDate" class="form-label">Actual Start date<span class="required-asterisk"
+                        *ngIf=" task.taskStatus == statusEnum.INPROGRESS">*</span></label>
+                <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
+                    [min]="task.taskStartDate"
                     [disabled]="task.taskStartDate == null || task.taskEndDate == null || task.taskStatus == statusEnum.CREATED "
-                    [(ngModel)]="task.taskActualStartDate" [required]="true">
+                    [(ngModel)]="task.taskActualStartDate"
+                    [required]="updateScreen && task.taskStatus == statusEnum.INPROGRESS">
             </div>
 
             <div class="col-sm-3">
-                <label for="actualEndDate" class="form-label">Actual End date</label>
+                <label for="actualEndDate" class="form-label">Actual End date<span class="required-asterisk"
+                        *ngIf="updateScreen && task.taskStatus == statusEnum.DONE">*</span></label>
                 <input type="date" class="form-control" id="actualEndDate" name="actualEndDate"
-                    [(ngModel)]="task.taskActualEndDate" [min]="task.taskActualStartDate" [max]="currentDate"
-                    [disabled]="task.taskStatus != statusEnum.DONE || task.taskEndDate == null || task.taskActualStartDate == null"
-                    [required]="true">
-
+                    [(ngModel)]="task.taskActualEndDate" [min]="task.taskActualStartDate"
+                    [disabled]="!(updateScreen && task.taskStatus == statusEnum.DONE) || task.taskEndDate == null || task.taskActualStartDate == null"
+                    [required]="updateScreen && task.taskStatus == statusEnum.DONE">
             </div>
         </div>
+
         <div class="row">
             <div class="col">
                 <label for="taskReason" class="form-label">Reason<span class="required-asterisk">*</span></label>
                 <textarea class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
-                    placeholder="Enter reason" [required]="true"></textarea>
+                    placeholder="Enter reason" [required]="updateScreen"></textarea>
             </div>
         </div>
         <div class="row">
