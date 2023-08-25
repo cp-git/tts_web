@@ -71,13 +71,14 @@ export class ChangeHistoryComponent implements OnInit {
     return status ? status.statusCode : '';
   }
 
+
   // Method to get the name of an employee by their ID
   getEmployeeNameById(employeeId: number): string {
     // Find the employee in the employees array based on the provided employeeId
     const employee = this.employees.find((e) => e.employeeId === employeeId);
 
-    // Return the employee's first name if found, otherwise an empty string
-    return employee ? employee.firstName : '';
+    // Return the full name (first name + last name) if found, otherwise an empty string
+    return employee ? `${employee.firstName} ${employee.lastName}` : '';
   }
 
 
