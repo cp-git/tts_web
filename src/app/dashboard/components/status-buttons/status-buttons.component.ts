@@ -1,11 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 @Component({
   selector: 'app-status-buttons',
   templateUrl: './status-buttons.component.html',
   styleUrls: ['./status-buttons.component.css']
 })
-export class StatusButtonsComponent {
+export class StatusButtonsComponent implements OnInit {
 
   @Output() onChangeFilter: EventEmitter<any> = new EventEmitter();
 
@@ -22,15 +21,31 @@ export class StatusButtonsComponent {
 
     this.companyId = sessionStorage.getItem('companyId');
 
-    this.selectedTask = 'ALL';
-    this.selectedCreatedBy = 0;
-    this.selectedAssignedTo = 0;
 
+  }
+
+  ngOnInit() {
+    // Initialize selected values from SessionStorage or use default values
+    this.selectedTask = sessionStorage.getItem('selectedTask') || 'ALL';
+    this.selectedCreatedBy = sessionStorage.getItem('selectedCreatedBy') || this.employeeId;
+    this.selectedAssignedTo = sessionStorage.getItem('selectedAssignedTo') || this.employeeId;
+    // When the component initializes, emit the initial filter values
+    this.emitFilter();
   }
 
   // on change of filters
   onChangeFilterTask() {
+    // Store selected values in SessionStorage
+    sessionStorage.setItem('selectedTask', this.selectedTask);
+    sessionStorage.setItem('selectedCreatedBy', this.selectedCreatedBy);
+    sessionStorage.setItem('selectedAssignedTo', this.selectedAssignedTo);
 
+    // Emit the filter values
+    this.emitFilter();
+  }
+
+  // Function to emit the filter values
+  emitFilter() {
     const data = {
       status: this.selectedTask,
       createdBy: this.selectedCreatedBy,
@@ -39,7 +54,7 @@ export class StatusButtonsComponent {
       parentId: 0
     }
     console.log(data);
-    // send data to parent for operation (getting data using api call)
+    // Send data to the parent for operation (getting data using an API call)
     this.onChangeFilter.emit(data);
   }
 }
