@@ -1,5 +1,5 @@
 export enum StatusEnum {
     CREATED = 1,
     INPROGRESS = 2,
-    DONE = 5,
+    DONE = 3,
 }

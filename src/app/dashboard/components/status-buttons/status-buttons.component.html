@@ -5,60 +5,65 @@
         <b> Created By:</b>
         <div class="row ">
             <div class="col form-check">
-                <input class="form-check-input radio-border" type="radio" name="createdBy" id="createdByMe"
-                    [value]="employeeId" [(ngModel)]="selectedCreatedBy" (change)="onChangeFilterTask()">
-                <label class="form-check-label" for="createdByMe">
-                    Me
+                <input class="form-check-input radio-border" type="radio" name="createdBy" id="createdByAll" [value]="0"
+                    (change)="selectedCreatedBy = 0; onChangeFilterTask()" [checked]="selectedCreatedBy == 0">
+                <label class="form-check-label" for="createdByAll">
+                    All
                 </label>
+
             </div>
 
         </div>
         <div class="row ">
             <div class="col form-check">
-                <input class="form-check-input radio-border" type="radio" name="createdBy" id="createdByAll" [value]="0"
-                    checked [(ngModel)]="selectedCreatedBy" (change)="onChangeFilterTask()">
-                <label class="form-check-label" for="createdByAll">
-                    All
-                </label>
-            </div>
-        </div>
-    </div>
-    <!-- assigned to -->
-    <div class="col border-around">
-        <b> Assigned To:</b>
-        <div class="row">
-            <div class="col form-check">
-                <input class="form-check-input radio-border" type="radio" name="assignedTo" id="assignedToMe"
-                    [value]="employeeId" [(ngModel)]="selectedAssignedTo" (change)="onChangeFilterTask()">
-                <label class="form-check-label" for="assignedToMe">
+                <input class="form-check-input radio-border" type="radio" name="createdBy" id="createdByMe"
+                    [value]="employeeId" (change)="selectedCreatedBy = employeeId; onChangeFilterTask()"
+                    [checked]="selectedCreatedBy == employeeId">
+                <label class="form-check-label" for="createdByMe">
                     Me
                 </label>
             </div>
         </div>
+    </div>
+    <!-- Assigned To section -->
+    <div class="col border-around">
+        <b> Assigned To:</b>
         <div class="row">
             <div class="col form-check">
                 <input class="form-check-input radio-border" type="radio" name="assignedTo" id="assignedToAll"
-                    [value]="0" checked [(ngModel)]="selectedAssignedTo" (change)="onChangeFilterTask()">
+                    [value]="0" (change)="selectedAssignedTo = 0; onChangeFilterTask()"
+                    [checked]="selectedAssignedTo == 0">
                 <label class="form-check-label" for="assignedToAll">
                     All
                 </label>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col form-check">
 
+                <input class="form-check-input radio-border" type="radio" name="assignedTo" id="assignedToMe"
+                    [value]="employeeId" (change)="selectedAssignedTo = employeeId; onChangeFilterTask()"
+                    [checked]="selectedAssignedTo == employeeId">
+                <label class="form-check-label" for="assignedToMe">
+                    Me
+                </label>
+            </div>
+        </div>
+    </div>
+    <!-- Task section -->
     <div class="col border-around">
         <b> Task :</b>
         <div class="row">
             <div class="col form-check">
                 <input class="form-check-input radio-border" type="radio" name="task" id="allParentTask" value="ALL"
-                    checked [(ngModel)]="selectedTask" (change)="onChangeFilterTask()">
+                    (change)="selectedTask = 'ALL'; onChangeFilterTask()" [checked]="selectedTask === 'ALL'">
                 <label class="form-check-label" for="allParentTask">
                     All
                 </label>
             </div>
             <div class="col form-check">
                 <input class="form-check-input radio-border" type="radio" name="task" id="createdTask" value="CREATED"
-                    [(ngModel)]="selectedTask" (change)="onChangeFilterTask()">
+                    (change)="selectedTask = 'CREATED'; onChangeFilterTask()" [checked]="selectedTask === 'CREATED'">
                 <label class="form-check-label" for="createdTask">
                     Created
                 </label>
@@ -67,19 +72,21 @@
         <div class="row">
             <div class="col form-check">
                 <input class="form-check-input radio-border" type="radio" name="task" id="inprogressTask"
-                    value="INPROGRESS" [(ngModel)]="selectedTask" (change)="onChangeFilterTask()">
+                    value="INPROGRESS" (change)="selectedTask = 'INPROGRESS'; onChangeFilterTask()"
+                    [checked]="selectedTask === 'INPROGRESS'">
                 <label class="form-check-label" for="inprogressTask">
                     In-progress
                 </label>
             </div>
             <div class="col form-check">
                 <input class="form-check-input radio-border" type="radio" name="task" id="doneTask" value="DONE"
-                    [(ngModel)]="selectedTask" (change)="onChangeFilterTask()">
+                    (change)="selectedTask = 'DONE'; onChangeFilterTask()" [checked]="selectedTask === 'DONE'">
                 <label class="form-check-label" for="doneTask">
                     Done
                 </label>
             </div>
         </div>
     </div>
+
 
 </div>

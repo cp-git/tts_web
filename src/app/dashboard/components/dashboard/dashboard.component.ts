@@ -137,6 +137,9 @@ export class DashboardComponent implements OnInit {
     );
   }
   logout() {
+    sessionStorage.removeItem('selectedAssignedTo');
+    sessionStorage.removeItem('selectedCreatedBy');
+    sessionStorage.removeItem('selectedTask');
     // Clear session storage data
     sessionStorage.removeItem('employeeId');
     sessionStorage.removeItem('companyId');

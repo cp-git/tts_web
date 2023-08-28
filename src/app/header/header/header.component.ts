@@ -15,9 +15,15 @@ export class HeaderComponent {
 
 
   logout() {
+
+
+
     // Clear session storage data
     sessionStorage.removeItem('employeeId');
     sessionStorage.removeItem('companyId');
 
+
+    // Navigate to the '/' route
+    this.router.navigate(['/']);
   }
 }
