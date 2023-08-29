@@ -21,6 +21,8 @@ export class CreateTaskComponent implements OnInit {
   @Input() allStatus: Status[] = [];
   @Input() task: Task = {} as Task;
   @Input() updateScreen: boolean = false;
+  @Input() modalId: any;
+
 
   @Output() afterCreateTask: EventEmitter<any> = new EventEmitter();
   employeeId: any;
@@ -28,6 +30,7 @@ export class CreateTaskComponent implements OnInit {
   backupTask: Task = {} as Task;
   isLoading: boolean = false;
   showSuccessMessage: boolean = false;
+  showErrorMessage: boolean = false;
 
   // for today's date
   // todayForEndDate: any;
@@ -62,6 +65,7 @@ export class CreateTaskComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['parentTask']) {
       console.log("parent Task " + JSON.stringify(this.parentTask));
+
     }
 
     if (changes['task']) {
@@ -87,6 +91,7 @@ export class CreateTaskComponent implements OnInit {
     );
   }
 
+  taskObject: any;
   // for adding task and reason
   onClickSave(task: Task) {
     this.isLoading = true;
@@ -104,6 +109,8 @@ export class CreateTaskComponent implements OnInit {
     this.taskService.createOrUpdateTaskAndAddReason(formData).subscribe(
       (response) => {
         this.showSuccessMessage = true;
+        this.taskObject = response;
+
         // alert("Task created successfully");
         // this.dialogueBoxService.open('task created successfully', 'information')
         // for closing modal after creating task
@@ -119,6 +126,7 @@ export class CreateTaskComponent implements OnInit {
         //this.afterCreateTask.emit();
       },
       (error) => {
+        this.showErrorMessage = true;
         console.log("Faild to create task!");
       }
     ).add(() => {
@@ -158,6 +166,7 @@ export class CreateTaskComponent implements OnInit {
         // this.afterCreateTask.emit();
       },
       (error) => {
+        this.showErrorMessage = true;
         console.log("Faild to create task!");
       }
     ).add(() => {

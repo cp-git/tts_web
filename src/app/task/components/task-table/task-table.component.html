@@ -87,18 +87,18 @@
             <div class="row">
                 <div class="col icons">
                     <span title="Add Task" class="fa-solid fa-circle-plus fa-xl" style="color: #03a300;"
-                        data-bs-toggle="modal" attr.data-bs-target="#createTask{{parentTask.taskId}}"
+                        data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
                         (click)="onClickCreateTask(task, 'ADD')"></span>
 
                 </div>
                 <div class="col icons" *ngIf="parentTaskData.length>0">
                     <span title="Save Task" class="fa-solid fa-circle-down fa-rotate-180 fa-xl" data-bs-toggle="modal"
-                        attr.data-bs-target="#createTask{{parentTask.taskId}}"
-                        (click)="onClickCreateTask(task, 'UPDATE')" style="color: #0095a8;"></span>
+                        attr.data-bs-target="#createTask{{modalId + 1}}" (click)="onClickCreateTask(task, 'UPDATE')"
+                        style="color: #0095a8;"></span>
                 </div>
-                <div class="col icons" *ngIf="parentTaskData.length>0">
+                <!-- <div class="col icons" *ngIf="parentTaskData.length>0">
                     <span title="Delete Task" class="fa-solid fa-trash fa-xl" style="color: #ff0000;"></span>
-                </div>
+                </div> -->
 
                 <div class="col icons" *ngIf="parentTaskData.length>0">
                     <span title="Response history" class="fa-solid fa fa-history fa-xl"
@@ -112,15 +112,15 @@
     <tr *ngIf="showChildTable.get(task.taskId)">
         <td colspan="9">
             <!-- for child table -->
-            <app-task-table [parentTaskData]="task.childTask" [employees]="employees"
-                [allStatus]="allStatus"></app-task-table>
+            <app-task-table [modalId]="modalId + task.taskId + 1" [parentTaskData]="task.childTask"
+                [employees]="employees" [allStatus]="allStatus"></app-task-table>
         </td>
     </tr>
 </ng-template>
 
 <!-- <ng-container *ngIf="parentTask"> -->
-<app-create-task [task]="emptyTask" [parentTask]="parentTask" [allEmployees]="employees" [allStatus]="allStatus"
-    [updateScreen]="updateScreen" (afterCreateTask)="afterCreateTask()"></app-create-task>
+<app-create-task [modalId]="modalId + 1" [task]="emptyTask" [parentTask]="parentTask" [allEmployees]="employees"
+    [allStatus]="allStatus" [updateScreen]="updateScreen" (afterCreateTask)="afterCreateTask()"></app-create-task>
 
 <!-- </ng-container> -->
 <!-- {{parentTask|json}} -->
