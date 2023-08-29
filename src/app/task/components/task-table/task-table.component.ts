@@ -18,6 +18,7 @@ export class TaskTableComponent implements OnInit {
   @Input() parentTaskData: Task[] = [];
   @Input() employees: Employee[] = [];
   @Input() allStatus: Status[] = [];
+  @Input() modalId: number = 0;
 
   statusEnum = StatusEnum;
   employeeId: any;
@@ -41,6 +42,8 @@ export class TaskTableComponent implements OnInit {
 
     this.employeeId = sessionStorage.getItem("employeeId");
     this.companyId = sessionStorage.getItem("companyId");
+
+    this.parentTask.taskId = 0;
   }
 
   ngOnInit(): void {
