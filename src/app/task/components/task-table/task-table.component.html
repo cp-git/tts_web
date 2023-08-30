@@ -1,4 +1,8 @@
 <!-- <app-create-task></app-create-task> -->
+<!-- <div class="col icons">
+    <span title="Add Task" class="fa-solid fa-circle-plus fa-xl" style="color: #03a300;" data-bs-toggle="modal"
+        attr.data-bs-target="#createTask{{modalId + 1}}" (click)="onClickCreateTask(task, 'ADD')"></span>
+</div> -->
 
 <div class="taskTable" *ngIf="parentTaskData">
     <table class="table table-striped table-bordered table-custom-font-size">
@@ -89,8 +93,8 @@
                     <span title="Add Task" class="fa-solid fa-circle-plus fa-xl" style="color: #03a300;"
                         data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
                         (click)="onClickCreateTask(task, 'ADD')"></span>
-
                 </div>
+
                 <div class="col icons" *ngIf="parentTaskData.length>0">
                     <span title="Save Task" class="fa-solid fa-circle-down fa-rotate-180 fa-xl" data-bs-toggle="modal"
                         attr.data-bs-target="#createTask{{modalId + 1}}" (click)="onClickCreateTask(task, 'UPDATE')"

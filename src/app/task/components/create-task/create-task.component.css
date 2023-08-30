@@ -5,3 +5,8 @@
 .required-asterisk {
     color: red;
 }
+
+::placeholder {
+    color: #ccc;
+    /* Use a nearly white or very light gray color */
+}

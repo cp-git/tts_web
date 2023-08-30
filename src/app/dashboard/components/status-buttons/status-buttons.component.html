@@ -88,10 +88,11 @@
         </div>
         <div class="row">
             <div class="col form-check">
-                <input class="form-check-input radio-border" type="radio" name="task" id="cancelTask" value="CANCEL"
-                    (change)="selectedTask = 'CANCEL'; onChangeFilterTask()" [checked]="selectedTask === 'CANCEL'">
+                <input class="form-check-input radio-border" type="radio" name="task" id="cancelTask" value="CANCELLED"
+                    (change)="selectedTask = 'CANCELLED'; onChangeFilterTask()"
+                    [checked]="selectedTask === 'CANCELLED'">
                 <label class="form-check-label" for="cancelTask">
-                    Cancel
+                    Cancelled
                 </label>
             </div>
         </div>
