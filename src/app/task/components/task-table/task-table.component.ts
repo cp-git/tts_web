@@ -19,7 +19,7 @@ export class TaskTableComponent implements OnInit {
   @Input() employees: Employee[] = [];
   @Input() allStatus: Status[] = [];
   @Input() modalId: number = 0;
-
+  @Input() task: Task = {} as Task;
   statusEnum = StatusEnum;
   employeeId: any;
   companyId: any;
@@ -47,8 +47,11 @@ export class TaskTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     // this.getAllStatus();
   }
+
+
 
   ngOnChanges(changes: SimpleChanges): void {
     // re-initialize showChildTable
@@ -72,6 +75,7 @@ export class TaskTableComponent implements OnInit {
     // calling function to get child task
     this.onClickChild(task);
   }
+
 
   // for getting child task using parent id
   private onClickChild(task: Task) {

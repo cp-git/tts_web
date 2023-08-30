@@ -20,3 +20,12 @@ span {
 .taskTable {
     margin-top: 5px;
 }
+
+.disabled-icon {
+    opacity: 0.5;
+    /* You can adjust the styling to visually indicate that it's disabled */
+    pointer-events: none;
+    /* Prevents clicks on the icon when disabled */
+    cursor: not-allowed;
+    /* Shows a "not-allowed" cursor when hovering over the icon */
+}

@@ -27,12 +27,16 @@
         <div class="row">
             <div class="col">
                 <label for="parentTaskId" class="form-label">Parent Task</label><br>
+
                 <select class="form-control" name="parentTaskId" id="parentTaskId" name="parentTaskId"
                     [(ngModel)]="task.taskParent" [required]="true" [disabled]="updateScreen">
                     <option *ngIf="!updateScreen" value="undefined" disabled>Select Option</option>
                     <option *ngIf="!updateScreen" value="0">Create As Parent</option>
                     <!-- <ng-container *ngFor="let parentTaskObject of parentTaskList"> -->
-                    <option *ngIf="parentTask.taskId" value="{{parentTask.taskId}}">{{parentTask.taskName}}</option>
+
+                    <option
+                        *ngIf="!(parentTask.taskStatus == statusEnum.DONE || parentTask.taskStatus == statusEnum.CANCELLED)"
+                        value="{{parentTask.taskId}}">{{parentTask.taskName}}</option>
                     <!-- </ng-container> -->
 
                     <!-- <ng-container *ngIf="parentTask.childTask">
@@ -47,9 +51,9 @@
             <div class="col">
                 <label for="taskName" class="form-label">Task Name<span class="required-asterisk"
                         *ngIf="!updateScreen">*</span></label>
-                <input [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
-                    type="text" class="form-control" id="taskName" name="taskName" placeholder="Enter task name"
-                    [(ngModel)]="task.taskName" [required]="true">
+                <input [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
+                    type="text" class="form-control extra-light-placeholder" id="taskName" name="taskName"
+                    placeholder="Enter task name" [(ngModel)]="task.taskName" [required]="true">
             </div>
 
         </div>
@@ -58,7 +62,7 @@
             <div class="col">
                 <label for="taskDescription" class="form-label">Task
                     Description<span class="required-asterisk" *ngIf="!updateScreen">*</span></label>
-                <textarea [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                <textarea [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
                     class="form-control" id="taskDescription" name="taskDescription" [(ngModel)]="task.taskDescription"
                     placeholder="Enter task description" [required]="true"></textarea>
             </div>
@@ -81,7 +85,7 @@
             </div>
             <div class="col-sm-4">
                 <label for="taskAssignedTo" class="form-label">Assigned To</label><br>
-                <select [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                <select [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
                     class="form-control" name="taskAssignedTo" id="taskAssignedTo" name="taskAssignedTo"
                     [(ngModel)]="task.taskAssignedTo" [required]="true">
                     <option value="undefined" disabled>Select Option</option>
@@ -95,7 +99,7 @@
 
             <div class="col-sm-3">
                 <label for="taskStatus" class="form-label">Status</label><br>
-                <select [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                <select [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
                     class="form-control" name="taskStatus" id="taskStatus" name="taskStatus"
                     [(ngModel)]="task.taskStatus" [required]="true" (change)="onChangeStatus(task.taskStatus)">
                     <option value="undefined" disabled>Select Option</option>
@@ -112,15 +116,16 @@
             <div class="col-sm-3">
                 <label for="startDate" class="form-label">Start date<span class="required-asterisk"
                         *ngIf="!updateScreen">*</span></label>
-                <input [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
-                    type="date" class="form-control" id="startDate" name="startDate" [(ngModel)]="task.taskStartDate"
+                <input [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
+                    type="date" class="form-control " id="startDate" name="startDate" [(ngModel)]="task.taskStartDate"
                     [required]="true" [disabled]="updateScreen" [min]="currentDate">
             </div>
             <div class="col-sm-3">
                 <label for="endDate" class="form-label">End date<span class="required-asterisk"
                         *ngIf="!updateScreen">*</span></label>
-                <input [disabled]="task.taskStatus === statusEnum.CANCEL" type="date" class="form-control" id="endDate"
-                    name="endDate" [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate" [required]="true"
+                <input [disabled]="task.taskStatus === statusEnum.CANCELLED" type="date" class="form-control"
+                    id="endDate" name="endDate" [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate"
+                    [required]="true"
                     [disabled]="task.taskStartDate==null || updateScreen || task.taskStatus == statusEnum.DONE">
             </div>
 
@@ -129,17 +134,17 @@
                         *ngIf=" task.taskStatus == statusEnum.INPROGRESS">*</span></label>
                 <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
                     [min]="task.taskStartDate"
-                    [disabled]="task.taskStartDate == null || task.taskEndDate == null || task.taskStatus == statusEnum.CREATED || task.taskStatus === statusEnum.CANCEL|| task.taskStatus === statusEnum.DONE "
+                    [disabled]="task.taskStartDate == null || task.taskEndDate == null || task.taskStatus == statusEnum.CREATED || task.taskStatus === statusEnum.CANCELLED|| task.taskStatus === statusEnum.DONE "
                     [(ngModel)]="task.taskActualStartDate"
                     [required]="updateScreen && task.taskStatus == statusEnum.INPROGRESS">
             </div>
 
             <div class="col-sm-3">
                 <label for="actualEndDate" class="form-label">Actual End date<span class="required-asterisk"
-                        *ngIf="updateScreen && task.taskStatus == statusEnum.DONE">*</span></label>
+                        *ngIf="updateScreen && (task.taskStatus == statusEnum.DONE ||task.taskStatus == statusEnum.CANCELLED)">*</span></label>
                 <input type="date" class="form-control" id="actualEndDate" name="actualEndDate"
                     [(ngModel)]="task.taskActualEndDate" [min]="task.taskActualStartDate"
-                    [disabled]="!(updateScreen && (task.taskStatus == statusEnum.DONE ||task.taskStatus == statusEnum.CANCEL)) ||task.taskStatus === statusEnum.CANCEL|| task.taskEndDate == null || task.taskActualStartDate == null  || task.taskStatus === statusEnum.DONE"
+                    [disabled]="!(updateScreen && (task.taskStatus == statusEnum.DONE ||task.taskStatus == statusEnum.CANCELLED)) ||task.taskStatus === statusEnum.CANCELLED|| task.taskEndDate == null || task.taskActualStartDate == null  || task.taskStatus === statusEnum.DONE"
                     [required]="updateScreen && task.taskStatus == statusEnum.DONE">
             </div>
         </div>
@@ -147,7 +152,7 @@
         <div class="row">
             <div class="col">
                 <label for="taskReason" class="form-label">Reason<span class="required-asterisk">*</span></label>
-                <textarea [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                <textarea [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
                     class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
                     placeholder="Enter reason" [required]="updateScreen"></textarea>
             </div>
@@ -155,7 +160,7 @@
         <div class="row">
             <div class="col-md-4">
                 <label class="form-label" for="uploadFile">Upload File</label>
-                <input [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                <input [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
                     type="file" id="uploadFile" name="uploadFile" (change)="onFileSelected($event)" class="form-control"
                     [required]="true">
             </div>
@@ -190,7 +195,7 @@
 
             <!-- Move the "Save" and "Close" buttons to the right -->
             <button
-                [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
                 *ngIf="!isLoading && updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
                 type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
 
@@ -200,7 +205,7 @@
             </ng-container>
 
             <button
-                [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
                 *ngIf="!isLoading && !updateScreen" type="submit" class="btn btn-primary"
                 (click)="onClickSave(task)">Save</button>
             <button type="button" class="btn btn-secondary" (click)="closeModal()" id="closeButton">Close</button>
