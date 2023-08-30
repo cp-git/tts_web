@@ -47,8 +47,9 @@
             <div class="col">
                 <label for="taskName" class="form-label">Task Name<span class="required-asterisk"
                         *ngIf="!updateScreen">*</span></label>
-                <input [disabled]="task.taskStatus === statusEnum.DONE" type="text" class="form-control" id="taskName"
-                    name="taskName" placeholder="Enter task name" [(ngModel)]="task.taskName" [required]="true">
+                <input [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                    type="text" class="form-control" id="taskName" name="taskName" placeholder="Enter task name"
+                    [(ngModel)]="task.taskName" [required]="true">
             </div>
 
         </div>
@@ -57,9 +58,9 @@
             <div class="col">
                 <label for="taskDescription" class="form-label">Task
                     Description<span class="required-asterisk" *ngIf="!updateScreen">*</span></label>
-                <textarea [disabled]="task.taskStatus === statusEnum.DONE" class="form-control" id="taskDescription"
-                    name="taskDescription" [(ngModel)]="task.taskDescription" placeholder="Enter task description"
-                    [required]="true"></textarea>
+                <textarea [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                    class="form-control" id="taskDescription" name="taskDescription" [(ngModel)]="task.taskDescription"
+                    placeholder="Enter task description" [required]="true"></textarea>
             </div>
         </div>
         <div class="row">
@@ -80,8 +81,9 @@
             </div>
             <div class="col-sm-4">
                 <label for="taskAssignedTo" class="form-label">Assigned To</label><br>
-                <select [disabled]="task.taskStatus === statusEnum.DONE" class="form-control" name="taskAssignedTo"
-                    id="taskAssignedTo" name="taskAssignedTo" [(ngModel)]="task.taskAssignedTo" [required]="true">
+                <select [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                    class="form-control" name="taskAssignedTo" id="taskAssignedTo" name="taskAssignedTo"
+                    [(ngModel)]="task.taskAssignedTo" [required]="true">
                     <option value="undefined" disabled>Select Option</option>
                     <option value="{{employeeId}}" selected="true">Self</option>
                     <ng-container *ngFor="let employee of companyEmployees">
@@ -93,9 +95,9 @@
 
             <div class="col-sm-3">
                 <label for="taskStatus" class="form-label">Status</label><br>
-                <select [disabled]="task.taskStatus === statusEnum.DONE" class="form-control" name="taskStatus"
-                    id="taskStatus" name="taskStatus" [(ngModel)]="task.taskStatus" [required]="true"
-                    (change)="onChangeStatus(task.taskStatus)">
+                <select [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                    class="form-control" name="taskStatus" id="taskStatus" name="taskStatus"
+                    [(ngModel)]="task.taskStatus" [required]="true" (change)="onChangeStatus(task.taskStatus)">
                     <option value="undefined" disabled>Select Option</option>
                     <ng-container *ngFor="let status of allStatus">
                         <option value="{{status.statusId}}">{{status.statusCode |titlecase}}
@@ -110,15 +112,15 @@
             <div class="col-sm-3">
                 <label for="startDate" class="form-label">Start date<span class="required-asterisk"
                         *ngIf="!updateScreen">*</span></label>
-                <input [disabled]="task.taskStatus === statusEnum.DONE" type="date" class="form-control" id="startDate"
-                    name="startDate" [(ngModel)]="task.taskStartDate" [required]="true" [disabled]="updateScreen"
-                    [min]="currentDate">
+                <input [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                    type="date" class="form-control" id="startDate" name="startDate" [(ngModel)]="task.taskStartDate"
+                    [required]="true" [disabled]="updateScreen" [min]="currentDate">
             </div>
             <div class="col-sm-3">
                 <label for="endDate" class="form-label">End date<span class="required-asterisk"
                         *ngIf="!updateScreen">*</span></label>
-                <input type="date" class="form-control" id="endDate" name="endDate" [min]="task.taskStartDate"
-                    [(ngModel)]="task.taskEndDate" [required]="true"
+                <input [disabled]="task.taskStatus === statusEnum.CANCEL" type="date" class="form-control" id="endDate"
+                    name="endDate" [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate" [required]="true"
                     [disabled]="task.taskStartDate==null || updateScreen || task.taskStatus == statusEnum.DONE">
             </div>
 
@@ -127,7 +129,7 @@
                         *ngIf=" task.taskStatus == statusEnum.INPROGRESS">*</span></label>
                 <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
                     [min]="task.taskStartDate"
-                    [disabled]="task.taskStartDate == null || task.taskEndDate == null || task.taskStatus == statusEnum.CREATED || task.taskStatus === statusEnum.DONE "
+                    [disabled]="task.taskStartDate == null || task.taskEndDate == null || task.taskStatus == statusEnum.CREATED || task.taskStatus === statusEnum.CANCEL|| task.taskStatus === statusEnum.DONE "
                     [(ngModel)]="task.taskActualStartDate"
                     [required]="updateScreen && task.taskStatus == statusEnum.INPROGRESS">
             </div>
@@ -137,7 +139,7 @@
                         *ngIf="updateScreen && task.taskStatus == statusEnum.DONE">*</span></label>
                 <input type="date" class="form-control" id="actualEndDate" name="actualEndDate"
                     [(ngModel)]="task.taskActualEndDate" [min]="task.taskActualStartDate"
-                    [disabled]="!(updateScreen && task.taskStatus == statusEnum.DONE) || task.taskEndDate == null || task.taskActualStartDate == null || task.taskStatus === statusEnum.DONE"
+                    [disabled]="!(updateScreen && (task.taskStatus == statusEnum.DONE ||task.taskStatus == statusEnum.CANCEL)) ||task.taskStatus === statusEnum.CANCEL|| task.taskEndDate == null || task.taskActualStartDate == null  || task.taskStatus === statusEnum.DONE"
                     [required]="updateScreen && task.taskStatus == statusEnum.DONE">
             </div>
         </div>
@@ -145,16 +147,17 @@
         <div class="row">
             <div class="col">
                 <label for="taskReason" class="form-label">Reason<span class="required-asterisk">*</span></label>
-                <textarea [disabled]="task.taskStatus === statusEnum.DONE" class="form-control" id="taskReason"
-                    name="taskReason" [(ngModel)]="task.reason" placeholder="Enter reason"
-                    [required]="updateScreen"></textarea>
+                <textarea [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                    class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
+                    placeholder="Enter reason" [required]="updateScreen"></textarea>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <label class="form-label" for="uploadFile">Upload File</label>
-                <input [disabled]="task.taskStatus === statusEnum.DONE" type="file" id="uploadFile" name="uploadFile"
-                    (change)="onFileSelected($event)" class="form-control" [required]="true">
+                <input [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
+                    type="file" id="uploadFile" name="uploadFile" (change)="onFileSelected($event)" class="form-control"
+                    [required]="true">
             </div>
         </div>
         <div class="row">
@@ -174,7 +177,7 @@
                     Task created/updated successfully!
                 </div>
                 <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
-                    Please update sub-task status to Done! OR not completed
+                    Task Creation/updation failed.Please update sub-task status to Done/Cancel.
                 </div>
             </div>
 
@@ -187,7 +190,7 @@
 
             <!-- Move the "Save" and "Close" buttons to the right -->
             <button
-                [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||task.taskStatus === statusEnum.DONE"
+                [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
                 *ngIf="!isLoading && updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
                 type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
 
@@ -197,7 +200,7 @@
             </ng-container>
 
             <button
-                [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||task.taskStatus === statusEnum.DONE"
+                [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCEL"
                 *ngIf="!isLoading && !updateScreen" type="submit" class="btn btn-primary"
                 (click)="onClickSave(task)">Save</button>
             <button type="button" class="btn btn-secondary" (click)="closeModal()" id="closeButton">Close</button>
