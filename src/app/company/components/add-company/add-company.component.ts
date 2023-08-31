@@ -15,7 +15,7 @@ export class AddCompanyComponent implements OnInit {
   countries!: Country[]; // An array to store the list of countries fetched from the API
   company!: Company; // The current company object to be added
   selectedFile: File | undefined;  // To store the selected file
-
+  submitButtonDisabled = false;
   constructor(private companyService: CompanyService, private dialogueBoxService: DialogueBoxService, private route: Router, private location: Location) {
     this.company = new Company(); // Initialize an empty Company object for adding a new company
   }
@@ -43,7 +43,8 @@ export class AddCompanyComponent implements OnInit {
 
       // Append the company data Blob to the FormData object
       formData.append('company', companyBlob);
-
+      // Set the submitButtonDisabled to true
+      this.submitButtonDisabled = true;
       // Call the companyService to add a new company with the provided data
       this.companyService.addCompany(formData).subscribe(
         (data) => {

@@ -21,7 +21,7 @@
 
 
     <div>
-        <button type="button" [disabled]="!isFormValid()" class="btn btn-primary mt-3"
+        <button type="button" [disabled]="!isFormValid()||submitButtonDisabled" class="btn btn-primary mt-3"
             (click)="updateCountry(country)">Update</button>
     </div>
 </div>

@@ -20,6 +20,7 @@ export class UpdateEmployeeComponent {
   countries!: Country[]; // Declaration of the 'countries' array to hold a list of Country objects
   companies!: Company[]; // Declaration of the 'companies' array to hold a list of Company objects
   selectedFile: File | undefined;  // To store the selected file
+  submitButtonDisabled = false;
   constructor(
     private employeeService: EmployeeService, // Injecting the EmployeeService dependency
     private location: Location, // Injecting the Location dependency to interact with the browser's history
@@ -77,7 +78,7 @@ export class UpdateEmployeeComponent {
 
       // Append the employee data Blob to the FormData object
       formData.append('employee', employeeBlob);
-
+      this.submitButtonDisabled = true;
       // Call the employeeService to update the employee with the given employeeId
       this.employeeService.updateEmployeeByEmployeeId(updatedEmployee.employeeId, formData).subscribe(
         (response) => {

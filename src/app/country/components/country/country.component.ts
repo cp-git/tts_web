@@ -49,7 +49,7 @@ export class CountryComponent implements OnInit {
 
 
   deleteCountry(countryCode: any) {
-    this.dialogueBoxService.open('Are you sure you want to delete this Employee ? ', 'decision').then((response) => {
+    this.dialogueBoxService.open('Are you sure you want to delete this Country ? ', 'decision').then((response) => {
       if (response) {
         console.log('User clicked OK');
         // Do something if the user clicked OK

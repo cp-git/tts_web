@@ -16,7 +16,7 @@ export class UpdateCompanyComponent implements OnInit {
   company: Company;
   countries!: Country[];
   selectedFile: File | undefined;  // To store the selected file
-
+  submitButtonDisabled = false;
   constructor(private router: Router, private companyService: CompanyService, private dialogueBoxService: DialogueBoxService, private location: Location) {
     this.company = new Company(); // Initialize an empty Company object.
   }
@@ -47,7 +47,8 @@ export class UpdateCompanyComponent implements OnInit {
 
       // Append the company data Blob to the FormData object
       formData.append('company', companyBlob);
-
+      // Set the submitButtonDisabled to true
+      this.submitButtonDisabled = true;
       // Call the companyService to update the company with the given companyCode
       this.companyService.updateCompanyByCompanyCode(updatedCompany.companyCode, formData).subscribe(
         (response) => {
