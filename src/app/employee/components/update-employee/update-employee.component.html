@@ -63,8 +63,8 @@
         </div>
         <!-- Submit Button -->
         <div>
-            <button type="submit" [disabled]="!addUpdateForm.valid" (click)="updateEmployeeByEmployeeId(employee)"
-                class="btn btn-primary mt-3">Submit</button>
+            <button type="submit" [disabled]="!addUpdateForm.valid||submitButtonDisabled"
+                (click)="updateEmployeeByEmployeeId(employee)" class="btn btn-primary mt-3">Submit</button>
         </div>
     </form>
 </div>

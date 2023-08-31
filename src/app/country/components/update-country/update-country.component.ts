@@ -11,7 +11,7 @@ import { Location } from '@angular/common'
 })
 export class UpdateCountryComponent {
 
-
+  submitButtonDisabled = false;
   // Define the country class and initialize the countries array.
   country: Country;
   countries!: Country[];
@@ -29,7 +29,8 @@ export class UpdateCountryComponent {
   // Function to update the country details.
   updateCountry(updatedCountry: Country) {
     // alert(JSON.stringify(updatedCountry))
-
+    // Set the submitButtonDisabled to true
+    this.submitButtonDisabled = true;
     // Call the service to update the country data based on the country code.
     this.countrySerice.updateCountryByCountryCode(updatedCountry.countryCode, updatedCountry).subscribe(
       response => {

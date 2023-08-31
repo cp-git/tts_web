@@ -30,4 +30,8 @@ export class ForgotPasswordComponent {
       this.isLoading = false;
     });
   }
+  redirectToLogin() {
+    // Use the router to navigate to the login page
+    this.route.navigate(['/login']); // Replace '/login' with the actual URL of your login page
+  }
 }

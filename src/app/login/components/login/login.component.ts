@@ -57,23 +57,26 @@ export class LoginComponent implements OnInit {
           // Check the response from the API
           this.userData = response;
           // alert(this.userData);
-          sessionStorage.setItem('employeeId', this.userData.employeeId.toString());
-          await this.getEmployeeWithPassword(this.userData.employeeId);
 
           if (this.userData) {
-            if (this.userData.username === "admin") {
+            // Set employeeId in sessionStorage
+            sessionStorage.setItem('employeeId', this.userData.employeeId.toString());
+            await this.getEmployeeWithPassword(this.userData.employeeId);
 
+            if (this.userData.username === "admin") {
               this.route.navigate(['/company']);
             } else {
               this.route.navigate(['/dashboard']);
             }
-
           } else {
-            this.dialogueBoxService.open('Invalid Details', 'warning')
+            // Display a dialog box with the message "Invalid Details" in case of login failure.
+            this.dialogueBoxService.open('Seems that either username or password is not right.', 'warning');
           }
         },
         (error) => {
           console.log('Error occurred:', error);
+          // Display a dialog box with the message "Invalid Details" for login failure due to an error.
+          this.dialogueBoxService.open('Seems that either username or password is not right.', 'warning');
         }
       );
   }

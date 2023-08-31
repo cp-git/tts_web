@@ -62,7 +62,7 @@
 
         </div>
         <div>
-            <button type="submit" [disabled]="!addCompanyData.valid" (click)="addCompany(company)"
+            <button type="submit" [disabled]="!addCompanyData.valid||submitButtonDisabled" (click)="addCompany(company)"
                 class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>
 
         </div>

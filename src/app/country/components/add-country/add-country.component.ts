@@ -12,7 +12,7 @@ import { Location } from '@angular/common'
 })
 export class AddCountryComponent {
 
-
+  submitButtonDisabled = false;
   countries!: Country[]; // An array to store the list of countries fetched from the API
 
   country!: Country; // The current country object to be added
@@ -27,6 +27,8 @@ export class AddCountryComponent {
 
   // Function to add a new country
   addCountry(country: Country) {
+    // Set the submitButtonDisabled to true
+    this.submitButtonDisabled = true;
     this.countryService.addCountry(country).subscribe(
       (data) => {
         console.log('Country added successfully:', data);

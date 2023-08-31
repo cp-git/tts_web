@@ -63,8 +63,8 @@
         </div>
 
         <div>
-            <button type="button" [disabled]="!updateCompanyData.valid" class="btn btn-primary mt-3"
-                (click)="updateCompany(company)">Update</button>
+            <button type="button" [disabled]="!updateCompanyData.valid||submitButtonDisabled"
+                class="btn btn-primary mt-3" (click)="updateCompany(company)">Update</button>
         </div>
     </form>
 </div>
