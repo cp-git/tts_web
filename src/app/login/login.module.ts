@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { FooterModule } from '../footer/footer.module';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -15,7 +16,8 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
   imports: [
     CommonModule,
     FormsModule,
-    FooterModule
+    FooterModule,
+    RouterModule,
   ]
 })
 export class LoginModule { }

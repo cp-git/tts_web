@@ -15,6 +15,7 @@
 }
 
 .form-group {
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -23,11 +24,12 @@
 }
 
 .form-control {
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 18px;
 }
 
 .btn {
-    background-color: #007bff;
+    background-color: #337AB7;
     border: none;
     color: #fff;
 }
@@ -44,4 +46,38 @@ button {
 ::placeholder {
     color: #ccc;
     /* Use a nearly white or very light gray color */
+}
+
+.forgot-password {
+    text-align: right;
+
+
+}
+
+.login-button {
+    margin-top: 20px;
+}
+
+.forgot-password a:hover {
+    color: #0be168;
+    /* Change the color to your desired hover color */
+    text-decoration: underline;
+    /* Add an underline effect on hover */
+    /* You can also add other styles as needed */
+}
+
+.col-auto a {
+    display: inline-block;
+    margin-right: 10px;
+
+    /* Adjust the margin as needed to control spacing */
+}
+
+.resetbtn {
+    background: none;
+    border: none;
+    outline: none;
+    color: #337AB7 !important;
+    cursor: pointer;
+    text-decoration: underline;
 }

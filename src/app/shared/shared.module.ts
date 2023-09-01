@@ -4,7 +4,7 @@ import { DialogueBoxComponent } from './components/dialogue-box/dialogue-box.com
 import { MatDialogModule } from '@angular/material/dialog';
 import { FilterPipe } from './pipe/filter.pipe';
 import { AdvFilterPipe } from './pipe/adv-filter.pipe';
-
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -16,6 +16,7 @@ import { AdvFilterPipe } from './pipe/adv-filter.pipe';
   imports: [
     CommonModule,
     MatDialogModule,
+    MatIconModule,
   ],
   exports: [
     FilterPipe,
