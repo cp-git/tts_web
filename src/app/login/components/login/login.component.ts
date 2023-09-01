@@ -70,13 +70,13 @@ export class LoginComponent implements OnInit {
             }
           } else {
             // Display a dialog box with the message "Invalid Details" in case of login failure.
-            this.dialogueBoxService.open('Seems that either username or password is not right.', 'warning');
+            this.dialogueBoxService.open('Seems that either username or password is Incorrect.', 'warning');
           }
         },
         (error) => {
           console.log('Error occurred:', error);
           // Display a dialog box with the message "Invalid Details" for login failure due to an error.
-          this.dialogueBoxService.open('Seems that either username or password is not right.', 'warning');
+          this.dialogueBoxService.open('Seems that either username or password is Incorrect.', 'warning');
         }
       );
   }
@@ -109,5 +109,7 @@ export class LoginComponent implements OnInit {
   redirectToForgot() {
     this.route.navigate(['/forgot']);
   }
+
+
 
 }

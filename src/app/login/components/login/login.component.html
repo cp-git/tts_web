@@ -13,17 +13,24 @@
           [(ngModel)]="passwordData.password">
       </div>
       <label *ngIf="isLoggedIn==false && clicked">Please enter correct username or password</label>
-      <div class="row">
-        <div class="col-auto me-auto">
-          <button type="submit" class="btn btn-login" (click)="login(passwordData)">Login</button>
+      <div class="col-auto row">
+        <div class="col reset">
+          <button type="reset" class="text-muted resetbtn">Reset
+            Form?</button>
         </div>
-        <div class="col-auto">
-          <button type="forgot" class="btn btn-forgot" (click)="redirectToForgot()">Forgot</button>
-        </div>
-        <div class="col-auto">
-          <button type="reset" class="btn btn-reset">Reset</button>
+        <div class="col forgot-password">
+          <button class="btn btn-link" [routerLink]="['/forgot']" class="text-muted resetbtn">Forgot Password?</button>
         </div>
       </div>
+
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary form-control" (click)="login(passwordData)">Login</button>
+      </div>
+      <!-- <div class="col-auto">
+          <button type="reset" class="btn btn-reset">Reset</button>
+        </div> -->
+
     </form>
   </div>
 </div>
