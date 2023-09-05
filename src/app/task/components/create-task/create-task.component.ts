@@ -42,6 +42,8 @@ export class CreateTaskComponent implements OnInit {
   fileNames: any
   companyEmployees: Employee[] = [];
   companyId: any;
+  todayForStartDate: string = '';
+  todayForEndDate: string = '';
   constructor(
 
     private taskService: TaskService,
@@ -69,12 +71,37 @@ export class CreateTaskComponent implements OnInit {
     }
 
     if (changes['task']) {
-      this.task = this.task;
-      this.backupTask = Object.assign({}, this.task);
-      console.log(this.backupTask);
-      if (this.task.taskId > 0)
-        this.getFilesByTaskId(this.task.taskId);
+      this.onChangeTaskObject();
     }
+  }
+
+  private onChangeTaskObject() {
+    this.task = this.task;
+    this.backupTask = Object.assign({}, this.task);
+    console.log(this.backupTask);
+    if (this.task.taskId > 0)
+      this.getFilesByTaskId(this.task.taskId);
+
+    if (this.task.taskStatus != this.statusEnum.CREATED && this.task.taskStatus != undefined) {
+      if ((this.task.taskActualStartDate == undefined || this.task.taskActualStartDate == null || !this.task.taskActualStartDate)) {
+        this.todayForStartDate = new Date().toISOString().split('T')[0];
+        this.task.taskActualStartDate = new Date();
+
+      } else {
+        // when status is inprogress then setting actual start date to current date
+        this.todayForStartDate = new Date(this.task.taskActualStartDate).toISOString().split('T')[0];
+      }
+      if (this.task.taskStatus != this.statusEnum.CREATED && this.task.taskStatus != this.statusEnum.INPROGRESS && this.task.taskStatus != undefined) {
+        if ((this.task.taskActualEndDate == undefined || this.task.taskActualEndDate == null || !this.task.taskActualEndDate)) {
+          this.todayForEndDate = new Date().toISOString().split('T')[0];
+          this.task.taskActualEndDate = new Date();
+        } else {
+          // when status is done then setting actual end date to current date
+          this.todayForEndDate = new Date(this.task.taskActualEndDate).toISOString().split('T')[0];
+        }
+      }
+    }
+
   }
 
   // Load employees by company ID
@@ -176,48 +203,83 @@ export class CreateTaskComponent implements OnInit {
 
 
   // calling function when use change the status on add task screen
-  onChangeStatus(statusId: any) {
+  onChangeStatus(statusId: any, task: Task) {
     // const status = this.allStatus.find(status => statusId == status.statusId);
     // const status = this.statusEnum[statusId];
+    alert("hiii" + this.statusEnum.CANCELLED.toString()
+    )
     if (statusId) {
       switch (statusId) {
 
         // for created
         case this.statusEnum.CREATED.toString():
           // console.log("hey");
-          // this.todayForStartDate = '';
+          this.todayForStartDate = '';
           this.task.taskActualStartDate = null as unknown as Date;
 
-          // this.todayForEndDate = '';
+          this.todayForEndDate = '';
           this.task.taskActualEndDate = null as unknown as Date;
           break;
 
         // for In progress
         case this.statusEnum.INPROGRESS.toString():
-          // when status is inprogress then setting actual start date to current date
-          // this.todayForStartDate = new Date().toISOString().split('T')[0];
-          // this.task.taskActualStartDate = new Date();
+          if (task.taskActualStartDate == undefined || task.taskActualStartDate == null || !task.taskActualStartDate) {
+            this.todayForStartDate = new Date().toISOString().split('T')[0];
+            this.task.taskActualStartDate = new Date();
+            alert(this.todayForStartDate);
 
-          // this.todayForEndDate = '';
+          } else {
+            this.todayForStartDate = new Date(this.task.taskActualStartDate).toISOString().split('T')[0];
+            alert("exisiting" + this.todayForStartDate);
+
+          }
+
+          this.todayForEndDate = '';
           this.task.taskActualEndDate = null as unknown as Date;
           console.log(this.task);
 
           break;
 
         // for done
-        case this.statusEnum.DONE.toString():
+        case (this.statusEnum.CANCELLED.toString()):
           console.log(new Date().toString());
 
           // when status is done then setting actual end date to current date
-          // this.todayForEndDate = new Date().toISOString().split('T')[0];
-          // console.log(this.todayForEndDate);
+          this.todayForEndDate = new Date().toISOString().split('T')[0];
+          alert(this.todayForEndDate);
 
-          // this.task.taskActualEndDate = new Date(this.todayForEndDate);
+          this.task.taskActualEndDate = new Date(this.todayForEndDate);
 
-          // this.todayForStartDate = '';
-          // this.task.taskActualStartDate = null as unknown as Date;
+          if (task.taskActualStartDate == undefined || task.taskActualStartDate == null || !task.taskActualStartDate) {
+            // when status is inprogress then setting actual start date to current date
+            this.todayForStartDate = new Date().toISOString().split('T')[0];
+            this.task.taskActualStartDate = new Date();
+          } else {
+            this.todayForStartDate = new Date(this.task.taskActualStartDate).toISOString().split('T')[0];
+            console.log(this.todayForStartDate);
+
+          }
           break;
+        // for done
+        case (this.statusEnum.DONE.toString()):
+          console.log(new Date().toString());
 
+          // when status is done then setting actual end date to current date
+          this.todayForEndDate = new Date().toISOString().split('T')[0];
+          alert(this.todayForEndDate);
+
+          this.task.taskActualEndDate = new Date(this.todayForEndDate);
+
+          if (task.taskActualStartDate == undefined || task.taskActualStartDate == null || !task.taskActualStartDate) {
+            // when status is inprogress then setting actual start date to current date
+            this.todayForStartDate = new Date().toISOString().split('T')[0];
+            this.task.taskActualStartDate = new Date();
+          } else {
+            this.todayForStartDate = new Date(this.task.taskActualStartDate).toISOString().split('T')[0];
+            console.log(this.todayForStartDate);
+
+          }
+          break;
       }
     }
   }
@@ -230,7 +292,7 @@ export class CreateTaskComponent implements OnInit {
 
   }
 
-  selectedFile !: File;
+  selectedFile!: File;
   // called on file selected
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
@@ -280,5 +342,8 @@ export class CreateTaskComponent implements OnInit {
     }
     this.afterCreateTask.emit();
   }
+
+
+
 
 }

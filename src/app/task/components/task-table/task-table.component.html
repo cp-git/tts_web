@@ -46,7 +46,8 @@
         </th>
         <td for="taskName" data-toggle="tooltip" data-placement="right" title="{{task.taskDescription}}">{{
             task.taskName }}</td>
-        <td>{{ task.taskDescription }}</td>
+        <td for="taskDescription" data-toggle="tooltip" data-placement="right" title="{{task.taskDescription}}">{{
+            task.taskDescription | slice:0:25 }}{{ task.taskDescription.length > 25 ? '...' : '' }}</td>
         <td>
             <ng-container *ngFor="let employee of employees">
                 <ng-container *ngIf="employee.employeeId == task.taskCreatedBy">
