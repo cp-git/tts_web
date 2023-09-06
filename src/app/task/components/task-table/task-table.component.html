@@ -41,8 +41,10 @@
 <ng-template #tableRows let-task>
     <tr>
         <th scope="row" (click)="toggleChildTable(task)">
-            <span *ngIf="!showChildTable.get(task.taskId)" class="fa-solid fa-plus"></span>
-            <span *ngIf="showChildTable.get(task.taskId)" class="fa-solid fa-minus"></span>
+            <ng-container *ngIf="task.havingChild">
+                <span *ngIf="!showChildTable.get(task.taskId)" class="fa-solid fa-plus"></span>
+                <span *ngIf="showChildTable.get(task.taskId)" class="fa-solid fa-minus"></span>
+            </ng-container>
         </th>
         <td for="taskName" data-toggle="tooltip" data-placement="right" title="{{task.taskDescription}}">{{
             task.taskName }}</td>
