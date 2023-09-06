@@ -1,6 +1,5 @@
 export interface Status {
-    statusId: number;
+    statusId:number;
     statusCode: string;
     statusDescription: string;
-    statusOrder: number
 }

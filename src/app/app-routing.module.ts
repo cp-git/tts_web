@@ -15,9 +15,6 @@ import { AdmindashboardComponent } from './adminDashboard/admindashboard/adminda
 import { ChangeHistoryComponent } from './reason/components/change-history/change-history.component';
 import { ForgotPasswordComponent } from './login/components/forgot-password/forgot-password.component';
 import { HomeComponent } from './home/home/home.component';
-import { StatusComponent } from './status/components/status/status.component';
-import { AddStatusComponent } from './status/components/add-status/add-status.component';
-import { UpdateStatusComponent } from './status/components/update-status/update-status.component';
 const routes: Routes = [
 
 
@@ -35,10 +32,7 @@ const routes: Routes = [
   { path: 'adminDash', component: AdmindashboardComponent },
   { path: 'dashboard/changehistory/:id', component: ChangeHistoryComponent },
   { path: 'forgot', component: ForgotPasswordComponent },
-  { path: '', component: HomeComponent },
-  { path: 'status', component: StatusComponent },
-  { path: 'addStatus', component: AddStatusComponent },
-  { path: 'updateStatus', component: UpdateStatusComponent },
+  { path: '', component: HomeComponent }
 
 
 ];
