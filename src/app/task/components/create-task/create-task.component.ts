@@ -206,8 +206,7 @@ export class CreateTaskComponent implements OnInit {
   onChangeStatus(statusId: any, task: Task) {
     // const status = this.allStatus.find(status => statusId == status.statusId);
     // const status = this.statusEnum[statusId];
-    alert("hiii" + this.statusEnum.CANCELLED.toString()
-    )
+    //alert("hi" + this.statusEnum.CANCELLED.toString());
     if (statusId) {
       switch (statusId) {
 
@@ -226,11 +225,11 @@ export class CreateTaskComponent implements OnInit {
           if (task.taskActualStartDate == undefined || task.taskActualStartDate == null || !task.taskActualStartDate) {
             this.todayForStartDate = new Date().toISOString().split('T')[0];
             this.task.taskActualStartDate = new Date();
-            alert(this.todayForStartDate);
+            // alert(this.todayForStartDate);
 
           } else {
             this.todayForStartDate = new Date(this.task.taskActualStartDate).toISOString().split('T')[0];
-            alert("exisiting" + this.todayForStartDate);
+            // alert("exisiting" + this.todayForStartDate);
 
           }
 
@@ -246,7 +245,7 @@ export class CreateTaskComponent implements OnInit {
 
           // when status is done then setting actual end date to current date
           this.todayForEndDate = new Date().toISOString().split('T')[0];
-          alert(this.todayForEndDate);
+          // alert(this.todayForEndDate);
 
           this.task.taskActualEndDate = new Date(this.todayForEndDate);
 
@@ -266,7 +265,7 @@ export class CreateTaskComponent implements OnInit {
 
           // when status is done then setting actual end date to current date
           this.todayForEndDate = new Date().toISOString().split('T')[0];
-          alert(this.todayForEndDate);
+          // alert(this.todayForEndDate);
 
           this.task.taskActualEndDate = new Date(this.todayForEndDate);
 
