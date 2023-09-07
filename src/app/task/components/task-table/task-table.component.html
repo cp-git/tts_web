@@ -45,11 +45,12 @@
                 <span *ngIf="!showChildTable.get(task.taskId)" class="fa-solid fa-plus"></span>
                 <span *ngIf="showChildTable.get(task.taskId)" class="fa-solid fa-minus"></span>
             </ng-container>
+
         </th>
         <td for="taskName" data-toggle="tooltip" data-placement="right" title="{{task.taskDescription}}">{{
             task.taskName }}</td>
         <td for="taskDescription" data-toggle="tooltip" data-placement="right" title="{{task.taskDescription}}">{{
-            task.taskDescription | slice:0:25 }}{{ task.taskDescription.length > 25 ? '...' : '' }}</td>
+            task.taskDescription | slice:0:25 }}</td>
         <td>
             <ng-container *ngFor="let employee of employees">
                 <ng-container *ngIf="employee.employeeId == task.taskCreatedBy">

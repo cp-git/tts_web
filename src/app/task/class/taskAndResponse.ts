@@ -6,4 +6,5 @@ export interface TaskAndResponse {
     taskActualEndDate: Date;
     companyId: number;
     taskParent: number;
+
 }

@@ -11,6 +11,7 @@ export interface Task {
     taskActualEndDate: Date;
     companyId: number;
     taskParent: number;
+    havingChild: boolean;
 
     childTask: Task[];
     reason: String;
