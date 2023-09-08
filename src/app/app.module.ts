@@ -15,7 +15,7 @@ import { HeaderModule } from './header/header.module';
 import { TaskModule } from './task/task.module';
 import { HomeModule } from './home/home.module';
 import { ReasonModule } from './reason/reason.module';
-
+import { StatusModule } from './status/status.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +29,7 @@ import { ReasonModule } from './reason/reason.module';
     CountryModule,
     EmployeeModule,
     HomeModule,
-
+    StatusModule,
     LoginModule,
     DashboardModule,
     AdminModule,
