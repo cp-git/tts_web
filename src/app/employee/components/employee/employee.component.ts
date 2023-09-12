@@ -65,6 +65,7 @@ export class EmployeeComponent {
     // Subscribe to the observable returned by the employeeService to get the list of employees
     this.employeeService.getAllEmployees().subscribe(
       (employees) => {
+        console.log(JSON.stringify(employees));
         this.employees = employees; // Update the 'employees' property with fetched data
       },
       (error) => {
@@ -78,7 +79,7 @@ export class EmployeeComponent {
     this.employeeService.getAllEmployeeAndPasswordData().subscribe(
       (data: EmployeeAndPasswordDTO[]) => {
         this.employees = data;
-        console.log(this.employees)
+        console.table("hi" + JSON.stringify(this.employees))
       },
       (error) => {
         console.error('Error while fetching employees:', error);
@@ -128,7 +129,9 @@ export class EmployeeComponent {
     // Subscribe to the observable returned by the employeeService to get the employee with password
     this.employeeService.getEmployeeWithPasswordById(this.employeeId).subscribe(
       (employeeAndPassword) => {
+
         this.employeeData = employeeAndPassword; // Update the 'employeeData' property with fetched data
+
       },
       (error) => {
         console.error('Failed to get employee with password:', error); // Handle any errors that occur during the request

@@ -7,6 +7,7 @@ export class EmployeeAndPasswordDTO {
     lastName!: string;
     birthDate!: Date;
     employeeEmail!: string;
+    admin!: boolean;
     passwordId!: number;
     username!: string;
     password!: string;

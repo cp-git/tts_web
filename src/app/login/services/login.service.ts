@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { Password } from '../class/password';
-
+import { EmployeeAndPasswordDTO } from 'src/app/employee/class/employeeandpasswordDTO';
+import { environment } from 'src/environments/environment.dev';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,9 +12,11 @@ export class LoginService {
 
   passwordUrl: any;
   forgotUrl: any;
+  employeeUrl: any;
   constructor(private http: HttpClient) {
     this.passwordUrl = `http://localhost:8090/employee/ttsms/password`
     this.forgotUrl = `http://localhost:8090/employee/ttsms/forgotpass`
+    this.employeeUrl = environment.employeeUrl;
 
   }
 
@@ -34,7 +37,10 @@ export class LoginService {
     );
   }
 
-
+  getEmployeeWithPasswordById(employeeId: number): Observable<EmployeeAndPasswordDTO> {
+    // Send a GET request to the API to retrieve an employee's data (including password) by their employeeId
+    return this.http.get<EmployeeAndPasswordDTO>(`${this.employeeUrl}/employee/${employeeId}`);
+  }
   getPasswordByUsernameAndPassword(username: string, password: string): Observable<Password> {
     return this.http.get<Password>(`${this.passwordUrl}/${username}/${password}`);
   }
