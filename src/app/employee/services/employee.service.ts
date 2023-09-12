@@ -46,13 +46,16 @@ export class EmployeeService {
 
   // Method to get all employees
   getAllEmployees(): Observable<Employee[]> {
+    // alert(this.getAllEmployees)
     // Send a GET request to the API to retrieve a list of all employees
     return this._http.get<Employee[]>(`${this.employeeUrl}/allemployees`);
   }
 
   // Retrieves a list of all employees and their associated password information
   getAllEmployeeAndPasswordData(): Observable<any> {
+
     return this._http.get<any>(`${this.employeeUrl}/allemployee`);
+
   }
 
 

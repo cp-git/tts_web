@@ -21,7 +21,7 @@ export class HeaderComponent {
     // Clear session storage data
     sessionStorage.removeItem('employeeId');
     sessionStorage.removeItem('companyId');
-
+    sessionStorage.removeItem('empData');
 
     // Navigate to the '/' route
     this.router.navigate(['/']);

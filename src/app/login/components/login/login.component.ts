@@ -29,9 +29,11 @@ export class LoginComponent implements OnInit {
   showForgotPopup = false;
 
   employeeId: any;
-
+  selectedUserType: string = 'admin';
   employeeData: EmployeeAndPasswordDTO = new EmployeeAndPasswordDTO();
-
+  employeeIsAdmin: any;
+  empData: any;
+  loginAs: boolean = false;
   constructor(
     private route: Router,
     private loginService: LoginService,
@@ -40,7 +42,7 @@ export class LoginComponent implements OnInit {
     private dialogueBoxService: DialogueBoxService,
 
   ) {
-    this.employeeId = sessionStorage.getItem('employeeId');
+
     this.passwordData = new Password();
     this.userData = new Password();
   }
@@ -59,12 +61,24 @@ export class LoginComponent implements OnInit {
           // alert(this.userData);
 
           if (this.userData) {
+
+            const employeeData = await this.employeeService.getEmployeeWithPasswordById(this.userData.employeeId).toPromise();
+            if (employeeData) {
+              sessionStorage.setItem('companyId', employeeData.companyId.toString())
+              sessionStorage.setItem('empData', JSON.stringify(employeeData));
+
+            }
+            this.employeeId = sessionStorage.getItem('employeeId');
+            this.employeeIsAdmin = sessionStorage.getItem('empData')
             // Set employeeId in sessionStorage
             sessionStorage.setItem('employeeId', this.userData.employeeId.toString());
-            await this.getEmployeeWithPassword(this.userData.employeeId);
-
-            if (this.userData.username === "admin") {
-              this.route.navigate(['/company']);
+            //await this.getEmployeeWithPassword(this.userData.employeeId);
+            this.empData = JSON.parse(this.employeeIsAdmin);
+            // alert(JSON.stringify(this.empData));
+            if (this.empData.admin == true) {
+              if (this.selectedUserType == "admin") {
+                $('#exampleModal').modal('show');
+              }
             } else {
               this.route.navigate(['/dashboard']);
             }
@@ -81,30 +95,6 @@ export class LoginComponent implements OnInit {
       );
   }
 
-  // Method to get an employee with their password by ID
-  private async getEmployeeWithPassword(employeeId: number) {
-    // alert(this.empid);
-    // console.log(this.empid);
-
-    const employeeData = await this.employeeService.getEmployeeWithPasswordById(employeeId).toPromise();
-    if (employeeData) {
-      sessionStorage.setItem('companyId', employeeData.companyId.toString())
-      sessionStorage.setItem('empData', JSON.stringify(employeeData));
-
-    }
-
-    // this.employeeService.getEmployeeWithPasswordById(this.empid).subscribe(
-    //   (response: any) => {
-    //     this.employeeData = response; // Assign the response to 'employeeData' property
-    //     // sessionStorage.setItem('countryId', this.employeeData.countryId.toString());
-    //     sessionStorage.setItem('companyId', this.employeeData.companyId.toString())
-    //     //alert(JSON.stringify(this.employeeData));
-    //   },
-    //   (error: any) => {
-    //     console.error('Failed to get employee with password:', error); // Log error message and response
-    //   }
-    // );
-  }
 
   redirectToForgot() {
     this.route.navigate(['/forgot']);

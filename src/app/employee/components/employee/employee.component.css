@@ -27,3 +27,8 @@
     background-color: transparent;
     border-radius: 0.25em;
 }
+
+.larger-checkbox {
+    transform: scale(2.0);
+    /* Increase the size as needed */
+}

@@ -59,6 +59,8 @@ export class CreateEmployeeComponent implements OnInit {
   // This function creates a new employee and uploads an optional file.
   createEmployee(employee: Employee) {
     // Check if a file is selected for upload
+    alert(JSON.stringify(employee));
+    console.log(JSON.stringify(employee))
     if (this.selectedFile) {
       // Create a FormData object to prepare the data for HTTP POST request
       const formData = new FormData();
@@ -68,13 +70,15 @@ export class CreateEmployeeComponent implements OnInit {
 
       // Create a Blob containing the employee data in JSON format
       const employeeBlob = new Blob([JSON.stringify(employee)], { type: 'application/json' });
-
+      alert(JSON.stringify(employeeBlob));
       // Append the employee data Blob to the FormData object
       formData.append('employee', employeeBlob);
 
       // Call the employeeService to create a new employee with the provided data
       this.employeeService.createEmployees(formData).subscribe(
         (response) => {
+          alert(JSON.stringify(response));
+          console.log(JSON.stringify(response))
           // Log a success message and display an information alert indicating that the employee was created successfully
           console.log('Employee created successfully:', response);
           this.dialogueBoxService.open('Employee Created Successfully', 'information').then((response) => {

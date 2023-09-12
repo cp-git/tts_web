@@ -47,6 +47,7 @@
                     <th>Email</th>
                     <th>Company</th>
                     <th>Country</th>
+                    <th>Is Admin</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -63,6 +64,11 @@
                     <td>{{ getCompanyNameById(employee.companyId) }}</td>
                     <!-- Use method 'getCompanyNameById' to get the company name based on companyId -->
                     <td>{{ getCountryNameById(employee.countryId)}}</td>
+                    <!-- <td>{{employee.admin}}</td> -->
+
+                    <td>
+                        <input type="checkbox" [checked]="employee.admin" class="larger-checkbox" disabled>
+                    </td>
                     <!-- Use method 'getCountryNameById' to get the country name based on countryId -->
 
                     <td>

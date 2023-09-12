@@ -1,0 +1,8 @@
+.custom-checkbox {
+    /* Increase the size of the checkbox */
+    transform: scale(1.9);
+    margin-left: 0%;
+    margin-top: 30px;
+    /* Add some space between the checkbox and the label */
+    /* Add any other styling you want here */
+}

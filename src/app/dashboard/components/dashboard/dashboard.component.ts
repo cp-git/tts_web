@@ -156,6 +156,7 @@ export class DashboardComponent implements OnInit {
 
   // Logout method
   logout() {
+
     // Remove items from sessionStorage
     sessionStorage.removeItem('selectedAssignedTo');
     sessionStorage.removeItem('selectedCreatedBy');

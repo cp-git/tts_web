@@ -102,6 +102,7 @@ export class UpdateEmployeeComponent {
   getEmployeeWithPassword() {
     this.employeeService.getEmployeeWithPasswordById(this.employeeId).subscribe(
       (employeeAndPassword) => {
+        console.log(this.employeeData);
         this.employeeData = employeeAndPassword; // Assign the response to 'employeeData' property
       },
       (error) => {
