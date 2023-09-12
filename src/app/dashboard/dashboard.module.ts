@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { StatusButtonsComponent } from './components/status-buttons/status-buttons.component';
 import { TaskModule } from '../task/task.module';
 import { FooterModule } from '../footer/footer.module';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 @NgModule({
@@ -17,7 +17,8 @@ import { FooterModule } from '../footer/footer.module';
     CommonModule,
     FormsModule,
     TaskModule,
-    FooterModule
+    FooterModule,
+    NgMultiSelectDropDownModule.forRoot(),
   ]
 })
 export class DashboardModule { }

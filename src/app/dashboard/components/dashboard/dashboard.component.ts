@@ -1,3 +1,4 @@
+// Import necessary Angular modules and classes
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 import { Task } from 'src/app/task/class/task';
@@ -9,18 +10,19 @@ import { StatusService } from 'src/app/status/services/status.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.dev';
 
+// Define the component metadata, including the selector, template, and styles
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-
+  // Declare class properties
   employee!: Employee;
   company!: Company;
   employeeId: any;
   companyId: any;
-  // to storing all parent task
+  // to store all parent tasks
   parentTaskData: Task[] = [];
   allParentTaskData = new Map();
   displayCompanyLogo: any;
@@ -29,102 +31,117 @@ export class DashboardComponent implements OnInit {
   allStatus: Status[] = [];
   childTaskData = new Map();
   loggedInUserData: any;
+  // Define selected statuses as an array with a default value
+  selectedStatuses: string[] = ['ALL']; // Default value
 
+
+  // Constructor - executed when an instance of the component is created
   constructor(
     private dashboardService: DashboardService,
     private taskService: TaskService,
     private statusService: StatusService,
     private router: Router
   ) {
+    // Initialize properties and retrieve data from sessionStorage
     this.displayCompanyLogo = `${environment.companyUrl}/photos`;
-    this.displayEmployeeLogo = `${environment.employeeUrl}/employee/photos`
+    this.displayEmployeeLogo = `${environment.employeeUrl}/employee/photos`;
     this.employeeId = sessionStorage.getItem('employeeId');
     this.companyId = sessionStorage.getItem('companyId');
     this.loggedInUserData = sessionStorage.getItem('empData');
 
-    this.loggedInUserData = JSON.parse(this.loggedInUserData);
+    this.loggedInUserData = JSON.parse(this.loggedInUserData); // Parse JSON data
     console.log(this.loggedInUserData);
-
-    this.getCompanyById(this.companyId);
+    this.getCompanyById(this.companyId); // Fetch company data
   }
 
+  //ngOnInit is executed after the constructor
   ngOnInit(): void {
-    this.initialization();
-
+    this.initialization(); // Call the initialization method
   }
 
-
-  // calling default method when load component
+  // Initialization method
   private initialization() {
-
-    // for getting all employees
+    // Fetch all employees
     this.getAllEmployees();
 
-    // for getting all parent task
+    // Fetch all parent tasks with specified filters
     const data = {
-      status: 'ALL',
+      statuses: this.allStatus.map(status => status.statusCode), // Set all statuses by default
       createdBy: 0,
       assignedTo: 0,
       companyId: this.companyId,
-      parentId: 0
+      parentId: 0,
     };
-    this.getParentTask(data);
-    this.getAllStatus();
+
+    this.getParentTask(data); // Fetch parent tasks
+    this.getAllStatus(); // Fetch all statuses
   }
 
-  // for gettign all employees
+
+
+
+  // Fetch all employees
   private getAllEmployees() {
     this.dashboardService.getAllEmployees().subscribe(
       (response) => {
         this.employees = response;
         console.log(this.employees);
-
       },
       (error) => {
-        console.log("Failed to get all employees");
+        console.log('Failed to get all employees');
       }
     );
   }
 
-  // for fetching task using status, createdby, assigned to, companyId and parent Id
+  // Fetch parent tasks based on specified filters
+  // Fetch parent tasks based on specified filters
   getParentTask(data: any) {
     console.log(data);
-    const status = data.status;
     const createdBy = data.createdBy;
     const assignedTo = data.assignedTo;
     const companyId = data.companyId;
     const parentId = data.parentId;
 
-    this.taskService.getTasksByStatusAndCreatorAndAssigneeOfCompanyByCompanyIdId(parentId, status, createdBy, assignedTo, companyId).subscribe(
-      (response) => {
-        this.parentTaskData = response;
-        console.log(this.parentTaskData);
+    // Check if statuses array is empty
+    const statuses = data.statuses.length === 0
+      ? ["ALL"] // If empty, use "ALL" as the status
+      : data.statuses.map((status: any) => status.itemName); // Extract itemName values
 
-      },
-      (error) => {
-        console.log("Failed to get parent task for status : " + status);
-
-      }
-    );
+    this.taskService
+      .getTasksByStatusAndCreatorAndAssigneeOfCompanyByCompanyIdId(
+        parentId,
+        statuses,
+        createdBy,
+        assignedTo,
+        companyId
+      )
+      .subscribe(
+        (response) => {
+          this.parentTaskData = response;
+          console.log('Parent Task Data:', this.parentTaskData);
+        },
+        (error) => {
+          console.log('Failed to get parent tasks for statuses:', statuses);
+        }
+      );
   }
 
-  // for getting all status
+
+  // Fetch all statuses
   private getAllStatus() {
     this.statusService.getAllStatus().subscribe(
       (response) => {
-
-        // stroign all status
+        // Store all statuses
         this.allStatus = response;
         console.log(this.allStatus);
-
       },
       (error) => {
-        console.log("Failed to get all status");
+        console.log('Failed to get all statuses');
       }
     );
   }
 
-  // Method to fetch the company by ID
+  // Fetch company data by ID
   getCompanyById(companyId: number): void {
     this.dashboardService.getCompanyById(companyId).subscribe(
       (data) => {
@@ -136,15 +153,18 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
+  // Logout method
   logout() {
+    // Remove items from sessionStorage
     sessionStorage.removeItem('selectedAssignedTo');
     sessionStorage.removeItem('selectedCreatedBy');
     sessionStorage.removeItem('selectedTask');
-    // Clear session storage data
+    localStorage.removeItem('selectedDateFormat');
     sessionStorage.removeItem('employeeId');
     sessionStorage.removeItem('companyId');
     sessionStorage.removeItem('empData');
 
-    this.router.navigate(['/'])
+    this.router.navigate(['/']); // Navigate to the root URL
   }
 }

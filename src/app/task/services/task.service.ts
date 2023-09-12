@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Task } from '../class/task';
 import { Observable } from 'rxjs';
@@ -13,8 +13,33 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
 
-  getTasksByStatusAndCreatorAndAssigneeOfCompanyByCompanyIdId(parentId: any, status: any, createdBy: any, assignedTo: any, companyId: any): Observable<Task[]> {
-    return this.http.get<Task[]>(`${this.TaskURL}/allparent?parentid=${parentId}&status=${status}&createdby=${createdBy}&assignedto=${assignedTo}&companyid=${companyId}`,);
+  // getTasksByStatusAndCreatorAndAssigneeOfCompanyByCompanyIdId(parentId: any, status: any, createdBy: any, assignedTo: any, companyId: any): Observable<Task[]> {
+  //   return this.http.get<Task[]>(`${this.TaskURL}/allparent?parentid=${parentId}&status=${status}&createdby=${createdBy}&assignedto=${assignedTo}&companyid=${companyId}`,);
+  // }
+
+  // Update the method to accept an array of selected statuses
+  getTasksByStatusAndCreatorAndAssigneeOfCompanyByCompanyIdId(
+    parentId: any,
+    statuses: string[], // Accept an array of selected statuses
+    createdBy: any,
+    assignedTo: any,
+    companyId: any
+  ): Observable<Task[]> {
+    // Create an HttpParams object to handle query parameters
+    let params = new HttpParams();
+    params = params.append('parentid', parentId);
+
+    // Append each selected status to the query parameter
+    for (const status of statuses) {
+      params = params.append('status', status);
+    }
+
+    params = params.append('createdby', createdBy);
+    params = params.append('assignedto', assignedTo);
+    params = params.append('companyid', companyId);
+
+    // Use the HttpParams in the request
+    return this.http.get<Task[]>(`${this.TaskURL}/allparent`, { params });
   }
 
   // for getting child task using parent id

@@ -3,7 +3,13 @@
     <span title="Add Task" class="fa-solid fa-circle-plus fa-xl" style="color: #03a300;" data-bs-toggle="modal"
         attr.data-bs-target="#createTask{{modalId + 1}}" (click)="onClickCreateTask(task, 'ADD')"></span>
 </div> -->
-
+<!-- <select [(ngModel)]="selectedDateFormat" (change)="onDateFormatChange()">
+    <option value="dd-MM-yyyy">DD-MM-YYYY</option>
+    <option value="MM-dd-yyyy">MM-DD-YYYY</option>
+    <option value="yyyy-MM-dd">YYYY-MM-DD</option>
+    <option value="yy-MM">YY-MM</option>
+    <option value="yy-MM-dd">YY-MM-DD</option>
+</select> -->
 <div class="taskTable" *ngIf="parentTaskData">
     <table class="table table-striped table-bordered table-custom-font-size">
         <thead>
@@ -74,7 +80,7 @@
             </ng-container>
 
         </td>
-        <td>{{ task.taskEndDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{ task.taskEndDate | date: selectedDateFormat}}</td>
         <td>
             <!-- <select id="statusId" name="statusId" [(ngModel)]="task.taskStatus" required class="form-control"
                 (change)="onChangeStatus(task)" [disabled]="parentTaskData.length<=0">
@@ -90,7 +96,7 @@
             </ng-container>
 
         </td>
-        <td>{{task.taskActualEndDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{task.taskActualEndDate | date: selectedDateFormat}}</td>
         <td>
             <div class="row">
                 <div class="col icons">

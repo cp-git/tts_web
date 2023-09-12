@@ -46,62 +46,20 @@
             </div>
         </div>
     </div>
-    <!-- Task section -->
     <div class="col border-around">
-        <div class="row">
-            <div class="col col-auto">
+        <div class="row align-items-center">
+            <div class="col-auto">
                 <b> Task :</b>
             </div>
             <div class="col">
-                <div class="row">
-                    <!-- Radio buttons and labels for "Task" (All and Created) in one line -->
-                    <div class="col-3 form-check">
-                        <input class="form-check-input radio-border" type="radio" name="task" id="allParentTask"
-                            value="ALL" (change)="selectedTask = 'ALL'; onChangeFilterTask()"
-                            [checked]="selectedTask === 'ALL'">
-                        <label class="form-check-label" for="allParentTask">
-                            All
-                        </label>
-                    </div>
-                    <div class="col-3 form-check">
-                        <input class="form-check-input radio-border" type="radio" name="task" id="createdTask"
-                            value="CREATED" (change)="selectedTask = 'CREATED'; onChangeFilterTask()"
-                            [checked]="selectedTask === 'CREATED'">
-                        <label class="form-check-label" for="createdTask">
-                            Created
-                        </label>
-                    </div>
-                    <div class="col-3 form-check">
-                        <input class="form-check-input radio-border" type="radio" name="task" id="inprogressTask"
-                            value="INPROGRESS" (change)="selectedTask = 'INPROGRESS'; onChangeFilterTask()"
-                            [checked]="selectedTask === 'INPROGRESS'">
-                        <label class="form-check-label" for="inprogressTask">
-                            Inprogress
-                        </label>
-                    </div>
-                </div>
-
-                <div class="row">
-
-                    <div class="col-3 form-check">
-                        <input class="form-check-input radio-border" type="radio" name="task" id="doneTask" value="DONE"
-                            (change)="selectedTask = 'DONE'; onChangeFilterTask()" [checked]="selectedTask === 'DONE'">
-                        <label class="form-check-label" for="doneTask">
-                            Done
-                        </label>
-                    </div>
-                    <div class="col-3 form-check">
-                        <input class="form-check-input radio-border" type="radio" name="task" id="cancelTask"
-                            value="CANCELLED" (change)="selectedTask = 'CANCELLED'; onChangeFilterTask()"
-                            [checked]="selectedTask === 'CANCELLED'">
-                        <label class="form-check-label" for="cancelTask">
-                            Cancelled
-                        </label>
-                    </div>
-                </div>
+                <!-- Use the ng-multiselect-dropdown component for multi-select -->
+                <ng-multiselect-dropdown [placeholder]="'Select Statuses'" [data]="statusOptions"
+                    [(ngModel)]="selectedStatuses" [settings]="dropdownSettings" (onSelect)="onChangeFilterTask()"
+                    (onDeSelect)="onChangeFilterTask()" (onSelectAll)="onChangeFilterTask()"
+                    (onDeSelectAll)="onChangeFilterTask()">
+                </ng-multiselect-dropdown>
             </div>
-
         </div>
-
-
     </div>
+
+    <!-- {{selectedStatuses|json}} -->
