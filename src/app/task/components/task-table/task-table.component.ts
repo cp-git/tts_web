@@ -27,7 +27,9 @@ export class TaskTableComponent implements OnInit {
   childData: Task[] = [];
   emptyTask: Task = {} as Task;
   emptyTaskRow: Task = {} as Task;
-
+  selectedDateFormat!: string;
+  formattedDate: string = '';
+  dateFormat: string = 'shortDate'; // Default format
   showChildTable: Map<number, boolean> = new Map();    // for opening/ closing child table for task
 
   childTask: Task[] = [];
@@ -47,10 +49,18 @@ export class TaskTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Attempt to retrieve the selected date format from localStorage
+    const storedFormat = localStorage.getItem('selectedDateFormat');
 
+    // If a format is found in localStorage, use it; otherwise, use the default format
+    this.selectedDateFormat = storedFormat || 'MM-dd-yyyy';
     // this.getAllStatus();
   }
-
+  // Function to handle changes to the selected date format
+  onDateFormatChange() {
+    // Store the selected format in localStorage
+    localStorage.setItem('selectedDateFormat', this.selectedDateFormat);
+  }
 
 
   ngOnChanges(changes: SimpleChanges): void {
