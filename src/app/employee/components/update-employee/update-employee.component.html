@@ -11,13 +11,13 @@
             <div class="col-md-4">
                 <label for="firstName"><strong>First Name:</strong></label>
                 <input type="text" id="firstName" name="firstName" [(ngModel)]="employee.firstName" required
-                    class="form-control">
+                    class="form-control" [disabled]=true>
             </div>
             <!-- Last Name -->
             <div class="col-md-4">
                 <label for="lastName"><strong>Last Name:</strong></label>
                 <input type="text" id="lastName" name="lastName" [(ngModel)]="employee.lastName" required
-                    class="form-control">
+                    class="form-control" [disabled]=true>
             </div>
             <!-- Dropdown to select the country -->
             <div class="col-md-4">
@@ -59,16 +59,17 @@
                 <input type="file" id="photoFilename" name="photoFilename" (change)="onFileSelected($event)"
                     class="form-control" ngModel [required]="true">
             </div>
-        </div>
-        <div class="col-md-4">
-            <label class="form-check-label" for="isadmin"><strong>Is Admin:</strong></label>
-            <input type="checkbox" id="admin" name="admin" [(ngModel)]="employeeData.admin"
-                class="custom-checkbox form-check-input">
+
+            <div class="col-md-4">
+                <label class="form-check-label" for="isadmin"><strong>Is Admin:</strong></label>
+                <input type="checkbox" id="isadmin" name="isadmin" [(ngModel)]="employee.admin"
+                    class="custom-checkbox form-check-input">
+            </div>
         </div>
 
-        <td>
+        <!-- <td>
             <input type="checkbox" [checked]="employeeData.admin" class="larger-checkbox">
-        </td>
+        </td> -->
         <!-- Submit Button -->
         <div>
             <button type="submit" [disabled]="!addUpdateForm.valid||submitButtonDisabled"
@@ -76,4 +77,3 @@
         </div>
     </form>
 </div>
-{{employeeData|json}}

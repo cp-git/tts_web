@@ -81,3 +81,7 @@ button {
     cursor: pointer;
     text-decoration: underline;
 }
+
+.admin-button {
+    float: right;
+}

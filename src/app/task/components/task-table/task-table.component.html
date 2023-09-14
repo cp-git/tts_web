@@ -31,7 +31,7 @@
 
 <ng-template #headers>
     <tr>
-        <th scope="col">Child</th>
+        <th scope="col">Task</th>
         <th scope="col" class="col-sm-2">Task Name</th>
         <th scope="col" class="col-sm-2">Description</th>
         <th scope="col" class="col-sm-1.5">Created By</th>
@@ -53,8 +53,8 @@
             </ng-container>
 
         </th>
-        <td for="taskName" data-toggle="tooltip" data-placement="right" title="{{task.taskDescription}}">{{
-            task.taskName }}</td>
+        <td for="taskName" data-toggle="tooltip" data-placement="right" title="{{task.taskName}}">{{
+            task.taskName | slice:0:25 }}</td>
         <td for="taskDescription" data-toggle="tooltip" data-placement="right" title="{{task.taskDescription}}">{{
             task.taskDescription | slice:0:25 }}</td>
         <td>
