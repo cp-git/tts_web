@@ -46,7 +46,7 @@ export class StatusButtonsComponent implements OnInit {
       textField: 'itemName',
       // selectAllText: 'ALL', 
       enableCheckAll: false,
-      itemsShowLimit: 5,
+      itemsShowLimit: 3,
       allowSearchFilter: false,
     };
 

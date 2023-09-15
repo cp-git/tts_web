@@ -49,12 +49,14 @@ export class TaskTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     // Attempt to retrieve the selected date format from localStorage
     const storedFormat = localStorage.getItem('selectedDateFormat');
 
     // If a format is found in localStorage, use it; otherwise, use the default format
     this.selectedDateFormat = storedFormat || 'MM-dd-yyyy';
     // this.getAllStatus();
+
   }
   // Function to handle changes to the selected date format
   onDateFormatChange() {

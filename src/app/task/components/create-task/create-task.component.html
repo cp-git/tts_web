@@ -135,8 +135,7 @@
             </div>
 
             <div class="col-sm-3">
-                <label for="actualStartDate" class="form-label">Actual Start date<span class="required-asterisk"
-                        *ngIf=" task.taskStatus == statusEnum.INPROGRESS">*</span></label>
+                <label for="actualStartDate" class="form-label">Actual Start date</label>
 
                 <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
                     [min]="task.taskStartDate" [(ngModel)]="todayForStartDate"
@@ -144,8 +143,7 @@
             </div>
 
             <div class="col-sm-3">
-                <label for="actualEndDate" class="form-label">Actual End date<span class="required-asterisk"
-                        *ngIf="updateScreen && (task.taskStatus == statusEnum.DONE ||task.taskStatus == statusEnum.CANCELLED)">*</span></label>
+                <label for="actualEndDate" class="form-label">Actual End date</label>
                 <input type="date" class="form-control" id="actualEndDate" name="actualEndDate"
                     [(ngModel)]="todayForEndDate" [min]="task.taskActualStartDate"
                     [required]="updateScreen && task.taskStatus == statusEnum.DONE" disabled>
@@ -220,6 +218,8 @@
                 *ngIf="!isLoading && !updateScreen" type="submit" class="btn btn-primary"
                 (click)="onClickSave(task)">Save</button>
             <button type="button" class="btn btn-secondary" (click)="closeModal()" id="closeButton">Close</button>
+            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close"
+                (click)="closeModal()">Close</button> -->
         </div>
 
 
