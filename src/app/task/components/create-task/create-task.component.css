@@ -1,5 +1,6 @@
 .form-label {
     font-weight: bold;
+
 }
 
 .required-asterisk {
@@ -10,3 +11,27 @@
     color: #ccc;
     /* Use a nearly white or very light gray color */
 }
+
+
+.form-control {
+    border: 1px solid black;
+
+}
+
+
+.form-control[type="file"] {
+    border: 1px solid black;
+
+}
+
+
+.form-control.select {
+    border: 1px solid black;
+
+}
+
+/* CSS for background color of fields that are disabled  */
+/* .form-control[disabled] {
+    background-color: yellow;
+
+} */
