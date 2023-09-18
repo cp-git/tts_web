@@ -24,27 +24,48 @@ export class CreateEmployeeComponent implements OnInit {
   selectedCountryId!: number;
   selectedCompanyId!: number;
   employeePhotosData: EmployeePasswordAndEmployeePhotosDTO = new EmployeePasswordAndEmployeePhotosDTO();
+  empDataFromSession: any;
+  empData: any;
+  companyId: any;
+  countryId: any;
+  isAdmin: boolean = false;
+  country: Country = new Country();
+  company: Company = new Company();
   selectedFile: File | undefined;  // To store the selected file
   constructor(
     private employeeService: EmployeeService,
     private dialogueBoxService: DialogueBoxService,
     private router: Router, private location: Location) {
-
+    this.empDataFromSession = sessionStorage.getItem('empData')
+    this.empData = JSON.parse(this.empDataFromSession);
     this.employeeId = sessionStorage.getItem("employeeId");
+    this.companyId = this.empData.companyId;
+    this.countryId = this.empData.countryId;
+
   } // Constructor with parameter to inject 'EmployeeService' dependency
 
   //This method is called when the component is initialized
   ngOnInit(): void {
-    if (this.employeeId > 0) {
-      console.log("inside");
+    this.isAdmin = this.empData.admin;
 
-      this.fetchCountries(); // Call the method 'fetchCountries()' to fetch the countries
-      this.fetchCompanies(); // Call the method 'fetchCompanies()' to fetch the companies
+    if (this.isAdmin) {
+      this.getCountryByCountryId();
+      this.getCompanyByCompanyId();
+
     } else {
-      console.log("else");
-
-      this.router.navigate([''])
+      this.fetchCountries(); // Call the method 'fetchCountries()' to fetch the countries
+      this.fetchCompanies();
     }
+    // if (this.employeeId > 0) {
+    //   console.log("inside");
+
+    //   this.fetchCountries(); // Call the method 'fetchCountries()' to fetch the countries
+    //   this.fetchCompanies(); // Call the method 'fetchCompanies()' to fetch the companies
+    // } else {
+    //   console.log("else");
+
+    //   this.router.navigate([''])
+    // }
 
   }
 
@@ -59,7 +80,11 @@ export class CreateEmployeeComponent implements OnInit {
   // This function creates a new employee and uploads an optional file.
   createEmployee(employee: Employee) {
     // Check if a file is selected for upload
-    // alert(JSON.stringify(employee));
+    if (this.isAdmin) {
+      employee.companyId = this.companyId
+      employee.countryId = this.countryId
+    }
+    alert(JSON.stringify(employee));
     console.log(JSON.stringify(employee))
     if (this.selectedFile) {
       // Create a FormData object to prepare the data for HTTP POST request
@@ -154,5 +179,29 @@ export class CreateEmployeeComponent implements OnInit {
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
   }
+
+  getCompanyByCompanyId() {
+    // Subscribe to the observable returned by the employeeService to get the list of companies
+    this.employeeService.getCompanyByCompanyId(this.companyId).subscribe(
+      (data) => {
+        this.company = data;
+      },
+      (error) => {
+        console.error('Error fetching companies:', error); // Handle any errors that occur during the request
+      }
+    );
+  }
+
+  getCountryByCountryId() {
+    this.employeeService.getCountryByCountryId(this.countryId).subscribe(
+      (data) => {
+        this.country = data;
+      },
+      (error) => {
+        console.error('Error :', error); // Handle any errors that occur during the request
+      }
+    );
+  }
+
 
 }

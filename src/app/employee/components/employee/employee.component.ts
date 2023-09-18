@@ -17,8 +17,8 @@ import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service
 })
 export class EmployeeComponent {
   // Properties to store selected country and company
-  country!: Country;
-  company!: Company;
+  // country!: Country;
+  // company!: Company;
   data: any;
   // Property to store the selected employee ID
   employeeId!: number;
@@ -26,7 +26,8 @@ export class EmployeeComponent {
   selectedCompanyId!: number;
   // Property to store data of employee and password (used for updating employee data)
   employeeData: EmployeeAndPasswordDTO = new EmployeeAndPasswordDTO();
-
+  country: Country = new Country();
+  company: Company = new Company();
   // Property to store the list of employees
   employees: Employee[] = [];
 
@@ -34,20 +35,47 @@ export class EmployeeComponent {
   countries!: Country[];
   companies!: Company[];
 
-
+  empDataFromSession: any;
+  empData: any;
+  isAdmin: boolean = false;
+  companyId!: number;
+  companyEmployees: [] = [];
+  employee: any;
+  countryId: any;
   // Constructor to inject EmployeeService and Router dependencies
-  constructor(private employeeService: EmployeeService, private router: Router, private dialogueBoxService: DialogueBoxService) { }
+  constructor(private employeeService: EmployeeService, private router: Router, private dialogueBoxService: DialogueBoxService) {
+
+    this.employee = new Employee();
+    this.empDataFromSession = sessionStorage.getItem('empData')
+    this.empData = JSON.parse(this.empDataFromSession);
+  }
 
   //This method is called when the component is initialized
   ngOnInit() {
+
     const empid = sessionStorage.getItem('employeeId');
     const username = sessionStorage.getItem('username');
+    this.isAdmin = this.empData.admin;
+    this.companyId = this.empData.companyId;
+    this.countryId = this.empData.countryId;
+
+
     console.log("Empid:", empid, username);
     // Fetch the list of employees initially
-    this.getAllEmployeesAndPasswordData();
-    // this.getAllEmployees();
-    this.fetchCountries();
-    this.fetchCompanies();
+
+    if (this.isAdmin) {
+      //this.getAllEmployeeByEmployeeId();
+      this.getAllEmployeesAndPasswordByCompanyId();
+      this.fetchCountries();
+      this.fetchCompanies();
+      this.getCompanyByCompanyId();
+      this.getCountryByCountryId();
+    } else {
+      this.getAllEmployeesAndPasswordData();
+      // this.getAllEmployees();
+      this.fetchCountries();
+      this.fetchCompanies();
+    }
   }
 
   // Method to navigate to the CreateEmployeeComponent when the "Add" button is clicked
@@ -74,6 +102,20 @@ export class EmployeeComponent {
     );
   }
 
+  getAllEmployeeByEmployeeId() {
+
+    this.employeeService.getAllEmployeesByCompanyId(this.companyId).subscribe(
+      (response) => {
+        this.employees = response
+        console.log("companyID Employees" + this.employees)
+      },
+      (error) => {
+        console.error('Failed to get employees:', error);
+      }
+    );
+
+  }
+
 
   getAllEmployeesAndPasswordData() {
     this.employeeService.getAllEmployeeAndPasswordData().subscribe(
@@ -86,6 +128,23 @@ export class EmployeeComponent {
       }
     );
   }
+
+
+
+  getAllEmployeesAndPasswordByCompanyId() {
+    this.employeeService.getAllEmployeesAndPasswordByCompanyId(this.companyId).subscribe(
+      (data: EmployeeAndPasswordDTO[]) => {
+        this.employees = data;
+        // this.employees = this.employees.filter(employee => employee.companyId === this.companyId);
+
+        console.table("hi" + JSON.stringify(this.employees))
+      },
+      (error) => {
+        console.error('Error while fetching employees:', error);
+      }
+    );
+  }
+
   // Method to fetch all countries from the server and update the 'countries' property
   fetchCountries() {
     // Subscribe to the observable returned by the employeeService to get the list of countries
@@ -99,12 +158,48 @@ export class EmployeeComponent {
     );
   }
 
+  getCountryByCountryId() {
+    this.employeeService.getCountryByCountryId(this.countryId).subscribe(
+      (data) => {
+        this.country = data;
+      },
+      (error) => {
+        console.error('Error :', error); // Handle any errors that occur during the request
+      }
+    );
+  }
+
   // Method to fetch all companies from the server and update the 'companies' property
   fetchCompanies() {
     // Subscribe to the observable returned by the employeeService to get the list of companies
     this.employeeService.getAllCompanies().subscribe(
       (data) => {
         this.companies = data; // Update the 'companies' property with fetched data
+      },
+      (error) => {
+        console.error('Error fetching companies:', error); // Handle any errors that occur during the request
+      }
+    );
+  }
+
+  getCompanyByCompanyId() {
+    // Subscribe to the observable returned by the employeeService to get the list of companies
+    this.employeeService.getCompanyByCompanyId(this.companyId).subscribe(
+      (data) => {
+        this.company = data;
+      },
+      (error) => {
+        console.error('Error fetching companies:', error); // Handle any errors that occur during the request
+      }
+    );
+  }
+
+  // Method to fetch all companies from the server and update the 'companies' property
+  getByCompanyId() {
+    // Subscribe to the observable returned by the employeeService to get the list of companies
+    this.employeeService.getCompanyByCompanyId(this.companyId).subscribe(
+      (data) => {
+        this.company = data; // Update the 'companies' property with fetched data
       },
       (error) => {
         console.error('Error fetching companies:', error); // Handle any errors that occur during the request

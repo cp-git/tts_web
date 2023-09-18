@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,13 +6,22 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
   employeeId: any;
+  empDataFromSession: any;
+  empData: any;
+  isAdmin: boolean = false;
+
   constructor(private router: Router) {
     this.employeeId = sessionStorage.getItem("employeeId");
+    this.empDataFromSession = sessionStorage.getItem('empData')
+    this.empData = JSON.parse(this.empDataFromSession);
   }
 
+  ngOnInit() {
+    this.isAdmin = this.empData.admin;
+  }
 
   logout() {
 
