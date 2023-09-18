@@ -38,7 +38,10 @@ export class CreateEmployeeComponent implements OnInit {
     private router: Router, private location: Location) {
     this.empDataFromSession = sessionStorage.getItem('empData')
     this.empData = JSON.parse(this.empDataFromSession);
+    // Retrieve 'employeeId' from session storage
     this.employeeId = sessionStorage.getItem("employeeId");
+
+    // Set 'companyId' and 'countryId' properties based on 'empData'
     this.companyId = this.empData.companyId;
     this.countryId = this.empData.countryId;
 
@@ -49,12 +52,13 @@ export class CreateEmployeeComponent implements OnInit {
     this.isAdmin = this.empData.admin;
 
     if (this.isAdmin) {
-      this.getCountryByCountryId();
-      this.getCompanyByCompanyId();
-
+      // If the user is an admin, perform these actions
+      this.getCountryByCountryId(); // Fetch country data by 'countryId'
+      this.getCompanyByCompanyId(); // Fetch company data by 'companyId'
     } else {
+      // If the user is not an admin, perform these actions
       this.fetchCountries(); // Call the method 'fetchCountries()' to fetch the countries
-      this.fetchCompanies();
+      this.fetchCompanies(); // Call the method 'fetchCompanies()' to fetch the companies
     }
     // if (this.employeeId > 0) {
     //   console.log("inside");
@@ -84,8 +88,8 @@ export class CreateEmployeeComponent implements OnInit {
       employee.companyId = this.companyId
       employee.countryId = this.countryId
     }
-    alert(JSON.stringify(employee));
-    console.log(JSON.stringify(employee))
+
+    // Check if a file is selected for upload
     if (this.selectedFile) {
       // Create a FormData object to prepare the data for HTTP POST request
       const formData = new FormData();

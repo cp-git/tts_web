@@ -52,7 +52,7 @@ export class EmployeeComponent {
 
   //This method is called when the component is initialized
   ngOnInit() {
-
+    // Retrieve 'employeeId' and 'username' from session storage
     const empid = sessionStorage.getItem('employeeId');
     const username = sessionStorage.getItem('username');
     this.isAdmin = this.empData.admin;
@@ -62,19 +62,20 @@ export class EmployeeComponent {
 
     console.log("Empid:", empid, username);
     // Fetch the list of employees initially
-
     if (this.isAdmin) {
-      //this.getAllEmployeeByEmployeeId();
-      this.getAllEmployeesAndPasswordByCompanyId();
-      this.fetchCountries();
-      this.fetchCompanies();
-      this.getCompanyByCompanyId();
-      this.getCountryByCountryId();
+      // If the user is an admin, perform these actions
+      // Call functions to retrieve data for admins
+      this.getAllEmployeesAndPasswordByCompanyId(); // Fetch employees and passwords by companyId
+      this.fetchCountries(); // Fetch the list of countries
+      this.fetchCompanies(); // Fetch the list of companies
+      this.getCompanyByCompanyId(); // Fetch company data by companyId
+      this.getCountryByCountryId(); // Fetch country data by countryId
     } else {
-      this.getAllEmployeesAndPasswordData();
-      // this.getAllEmployees();
-      this.fetchCountries();
-      this.fetchCompanies();
+      // If the user is not an admin, perform these actions
+      // Call functions to retrieve data for non-admins
+      this.getAllEmployeesAndPasswordData(); // Fetch employees and passwords
+      this.fetchCountries(); // Fetch the list of countries
+      this.fetchCompanies(); // Fetch the list of companies
     }
   }
 
