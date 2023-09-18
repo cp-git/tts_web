@@ -56,7 +56,12 @@ export class DashboardComponent implements OnInit {
 
   //ngOnInit is executed after the constructor
   ngOnInit(): void {
+
+    console.log(this.allStatus);
+
     this.initialization(); // Call the initialization method
+
+
   }
 
   // Initialization method
