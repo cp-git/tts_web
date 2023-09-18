@@ -22,7 +22,8 @@
             <!-- Dropdown to select the country -->
             <div class="col-md-4">
                 <label class="label" for="countryId"><strong>Country:</strong></label>
-                <select id="countryId" name="countryId" [(ngModel)]="employee.countryId" required class="form-control">
+                <select id="countryId" name="countryId" [(ngModel)]="employee.countryId" required class="form-control"
+                    [disabled]="isAdmin">
                     <option value="undefined" selected>Select a country</option>
                     <!-- Loop through the 'countries' array and display each country as an option -->
                     <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}
@@ -33,7 +34,8 @@
             <!-- Dropdown to select the company -->
             <div class="col-md-4">
                 <label class="label" for="companyId"><strong>Company:</strong></label>
-                <select id="companyId" name="companyId" [(ngModel)]="employee.companyId" required class="form-control">
+                <select id="companyId" name="companyId" [(ngModel)]="employee.companyId" required class="form-control"
+                    [disabled]="isAdmin">
                     <option value="undefined" selected>Select a company</option>
                     <!-- Loop through the 'companies' array and display each company as an option -->
                     <option *ngFor="let company of companies | advFilter:'companyCountryId':employee.countryId"

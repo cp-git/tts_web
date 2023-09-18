@@ -88,6 +88,10 @@ export class EmployeeService {
     return this._http.get<Company[]>(`${this.companyUrl}/all`);
   }
 
+  getCompanyByCompanyId(companyId: number): Observable<Company> {
+    return this._http.get<Company>(`${this.companyUrl}/${companyId}`);
+  }
+
   getAllCompanyEmployeeByCompanyId(): Observable<Employee[]> {
     return this._http.get<Employee[]>(`${this.employeeUrl}`)
   }
@@ -95,5 +99,15 @@ export class EmployeeService {
   getAllEmployeesByCompanyId(companyId: number): Observable<Employee[]> {
     // Send a GET request to the API to retrieve a list of all employees for the given company
     return this._http.get<Employee[]>(`${this.employeeUrl}/companyemp/${companyId}`);
+  }
+
+  getCountryByCountryId(countryId: number): Observable<Country> {
+    // Send a GET request to the API to retrieve a list of all employees for the given company
+    return this._http.get<Country>(`${this.countryUrl}/countryId/${countryId}`);
+  }
+
+  getAllEmployeesAndPasswordByCompanyId(companyId: number): Observable<EmployeeAndPasswordDTO[]> {
+    // Send a GET request to the API to retrieve a list of all employees for the given company
+    return this._http.get<EmployeeAndPasswordDTO[]>(`${this.employeeUrl}/comEmpPwd/${companyId}`);
   }
 }

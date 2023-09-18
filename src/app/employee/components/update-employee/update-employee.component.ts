@@ -21,6 +21,13 @@ export class UpdateEmployeeComponent {
   companies!: Company[]; // Declaration of the 'companies' array to hold a list of Company objects
   selectedFile: File | undefined;  // To store the selected file
   submitButtonDisabled = false;
+  empDataFromSession: any;
+  empData: any;
+  companyId: any;
+  countryId: any;
+  isAdmin: boolean = false;
+  country: Country = new Country();
+  company: Company = new Company();
   constructor(
     private employeeService: EmployeeService, // Injecting the EmployeeService dependency
     private location: Location, // Injecting the Location dependency to interact with the browser's history
@@ -29,12 +36,26 @@ export class UpdateEmployeeComponent {
     private router: Router
   ) {
     this.employee = new Employee(); // Initializing the 'employee' property with a new Employee object
+    this.empDataFromSession = sessionStorage.getItem('empData')
+    this.empData = JSON.parse(this.empDataFromSession);
+
+    this.companyId = this.empData.companyId;
+    this.countryId = this.empData.countryId;
   }
 
   ngOnInit(): void {
+
+    this.isAdmin = this.empData.admin;
+
+    // if (this.isAdmin) {
+    //   this.employee = history.state.employee;
+    //   this.getCountryByCountryId();
+    //   this.getCompanyByCompanyId();
+    // } else {
     this.employee = history.state.employee; // Retrieve the 'employee' data from the browser's history state
     this.fetchCountries(); // Call the method to fetch the list of countries
     this.fetchCompanies(); // Call the method to fetch the list of companies
+    //}
   }
 
   // Method to get the maximum date for the birth date input field and return it as a string
@@ -152,4 +173,28 @@ export class UpdateEmployeeComponent {
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
   }
+
+  getCompanyByCompanyId() {
+    // Subscribe to the observable returned by the employeeService to get the list of companies
+    this.employeeService.getCompanyByCompanyId(this.companyId).subscribe(
+      (data) => {
+        this.company = data;
+      },
+      (error) => {
+        console.error('Error fetching companies:', error); // Handle any errors that occur during the request
+      }
+    );
+  }
+
+  getCountryByCountryId() {
+    this.employeeService.getCountryByCountryId(this.countryId).subscribe(
+      (data) => {
+        this.country = data;
+      },
+      (error) => {
+        console.error('Error :', error); // Handle any errors that occur during the request
+      }
+    );
+  }
+
 }

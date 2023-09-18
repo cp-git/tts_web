@@ -24,24 +24,39 @@
             <div class="col-md-4">
                 <label class="label" for="countryId"><strong>Country:</strong></label>
                 <select id="countryId" name="countryId" [(ngModel)]="employeeData.countryId" required
-                    class="form-control">
-                    <option value="undefined" selected>Select a country</option>
-                    <!-- Loop through the 'countries' array and display each country as an option -->
-                    <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}
-                    </option>
+                    class="form-control" [disabled]="isAdmin">
+                    <!-- Check if isAdmin is true -->
+                    <ng-container *ngIf="isAdmin; else showCountries">
+                        <option [value]="employeeData.countryId">{{ country.countryName }}</option>
+                    </ng-container>
+                    <ng-template #showCountries>
+                        <option value="undefined" selected>Select a country</option>
+                        <!-- Loop through the 'countries' array and display each country as an option -->
+                        <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}
+                        </option>
+                    </ng-template>
+
                 </select>
             </div>
+
+
 
             <!-- Dropdown to select the company -->
             <div class="col-md-4">
                 <label class="label" for="companyId"><strong>Company:</strong></label>
                 <select id="companyId" name="companyId" [(ngModel)]="employeeData.companyId" required
-                    class="form-control">
-                    <option value="undefined" selected>Select a company</option>
-                    <!-- Loop through the 'companies' array and display each company as an option -->
-                    <option *ngFor="let company of companies | advFilter:'companyCountryId':employeeData.countryId"
-                        [value]="company.companyId">
-                        {{ company.companyName }}</option>
+                    class="form-control" [disabled]="isAdmin">
+                    <ng-container *ngIf="isAdmin; else showCompanies">
+                        <option [value]="employeeData.companyId">{{ company.companyName }}</option>
+                    </ng-container>
+                    <ng-template #showCompanies>
+                        <option value="undefined" selected>Select a company</option>
+                        <!-- Loop through the 'companies' array and display each company as an option -->
+                        <option *ngFor="let company of companies | advFilter:'companyCountryId':employeeData.countryId"
+                            [value]="company.companyId">
+                            {{ company.companyName }}</option>
+                    </ng-template>
+
                 </select>
             </div>
 

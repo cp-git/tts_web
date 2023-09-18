@@ -14,20 +14,34 @@
     <!-- Filter options (assuming you have select boxes for country and company filtering) -->
     <label for="countrySelect"><b>Select Country:</b></label>
     &nbsp;
-    <select id="countrySelect" [(ngModel)]="selectedCountryId">
-        <option value="undefined"> All Countries</option>
-        <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
+    <select id="countrySelect" [(ngModel)]="selectedCountryId" [disabled]="isAdmin">
+
+        <!-- Check if isAdmin is true -->
+        <ng-container *ngIf="isAdmin; else showCountries">
+            <option [value]="selectedCountryId">{{ country.countryName }}</option>
+        </ng-container>
+        <!-- This will be shown if isAdmin is true -->
+        <ng-template #showCountries>
+            <option value="undefined"> All Countries</option>
+            <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
+        </ng-template>
     </select>
     &nbsp;
     &nbsp;
     &nbsp;
     <label for="companySelect"><b> Select Company:</b></label>
     &nbsp;
-    <select id="companySelect" [(ngModel)]="selectedCompanyId">
-        <option value="undefined"> All Companies</option>
-        <option *ngFor="let company of companies | filter:'companyCountryId':selectedCountryId "
-            [value]="company.companyId">
-            {{ company.companyName }}</option>
+    <select id="companySelect" [(ngModel)]="selectedCompanyId" [disabled]="isAdmin">
+
+        <ng-container *ngIf="isAdmin; else showCompanies">
+            <option [value]="selectedCompanyId"> {{company.companyName}}</option>
+        </ng-container>
+        <ng-template #showCompanies>
+            <option value="undefined"> All Companies</option>
+            <option *ngFor="let company of companies | filter:'companyCountryId':selectedCountryId "
+                [value]="company.companyId">
+                {{ company.companyName }}</option>
+        </ng-template>
     </select>
 
     <div class="position-fixed top-0 end-0"></div>
@@ -91,4 +105,6 @@
         </table>
     </div>
 </div>
+
+
 <app-footer></app-footer>
