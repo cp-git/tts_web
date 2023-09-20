@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from '../../class/company';
 import { Country } from '../../class/country';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
+import { environment } from 'src/environments/environment.dev';
 @Component({
   selector: 'app-update-employee',
   templateUrl: './update-employee.component.html',
@@ -28,6 +29,9 @@ export class UpdateEmployeeComponent {
   isAdmin: boolean = false;
   country: Country = new Country();
   company: Company = new Company();
+
+  selectedFileURL: string | undefined;
+  employeeURL: any;
   constructor(
     private employeeService: EmployeeService, // Injecting the EmployeeService dependency
     private location: Location, // Injecting the Location dependency to interact with the browser's history
@@ -38,13 +42,13 @@ export class UpdateEmployeeComponent {
     this.employee = new Employee(); // Initializing the 'employee' property with a new Employee object
     this.empDataFromSession = sessionStorage.getItem('empData')
     this.empData = JSON.parse(this.empDataFromSession);
-
+    this.employeeURL = environment.employeeUrl + '/employee/photos';
     this.companyId = this.empData.companyId;
     this.countryId = this.empData.countryId;
   }
 
   ngOnInit(): void {
-
+    console.log(this.employeeURL);
     this.isAdmin = this.empData.admin;
 
     // if (this.isAdmin) {
@@ -172,6 +176,13 @@ export class UpdateEmployeeComponent {
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedFileURL = e.target.result; // Update the selectedFileURL with the selected file's data URL
+      };
+      reader.readAsDataURL(this.selectedFile); // Read the selected file as a data URL
+    }
   }
 
   getCompanyByCompanyId() {

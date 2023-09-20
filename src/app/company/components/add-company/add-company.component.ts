@@ -16,6 +16,7 @@ export class AddCompanyComponent implements OnInit {
   company!: Company; // The current company object to be added
   selectedFile: File | undefined;  // To store the selected file
   submitButtonDisabled = false;
+  selectedImageUrl: string | null = null;
   constructor(private companyService: CompanyService, private dialogueBoxService: DialogueBoxService, private route: Router, private location: Location) {
     this.company = new Company(); // Initialize an empty Company object for adding a new company
   }
@@ -91,6 +92,15 @@ export class AddCompanyComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      reader.readAsDataURL(this.selectedFile);
+      reader.onload = () => {
+        this.selectedImageUrl = reader.result as string;
+      };
+    } else {
+      this.selectedImageUrl = null;
+    }
   }
 
 }

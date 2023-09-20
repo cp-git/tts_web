@@ -61,7 +61,12 @@
                     class="form-control" ngModel [required]="true">
             </div>
         </div>
+        <!-- <img src="{{companyUrl}}/{{company.companyId}}"> -->
+        <div>
+            <img *ngIf="!selectedFile" src="{{companyUrl}}/{{company.companyId}}">
 
+            <img *ngIf="selectedFile" [src]="selectedFile ? selectedFileURL : ''" id="selectedProfilePic">
+        </div>
         <div>
             <button type="button" [disabled]="!updateCompanyData.valid||submitButtonDisabled"
                 class="btn btn-primary mt-3" (click)="updateCompany(company)">Update</button>

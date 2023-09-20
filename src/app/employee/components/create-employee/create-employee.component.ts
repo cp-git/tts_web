@@ -31,6 +31,8 @@ export class CreateEmployeeComponent implements OnInit {
   isAdmin: boolean = false;
   country: Country = new Country();
   company: Company = new Company();
+
+  selectedImageUrl: string | null = null;
   selectedFile: File | undefined;  // To store the selected file
   constructor(
     private employeeService: EmployeeService,
@@ -182,6 +184,15 @@ export class CreateEmployeeComponent implements OnInit {
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      reader.readAsDataURL(this.selectedFile);
+      reader.onload = () => {
+        this.selectedImageUrl = reader.result as string;
+      };
+    } else {
+      this.selectedImageUrl = null;
+    }
   }
 
   getCompanyByCompanyId() {
