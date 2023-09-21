@@ -110,4 +110,9 @@ export class EmployeeService {
     // Send a GET request to the API to retrieve a list of all employees for the given company
     return this._http.get<EmployeeAndPasswordDTO[]>(`${this.employeeUrl}/comEmpPwd/${companyId}`);
   }
+
+  getProfileImageByEmployeeId(employeeId: number): Observable<Employee> {
+    return this._http.get<Employee>(`${this.employeeUrl}/employee/photos/${employeeId}`)
+  }
+
 }

@@ -5,6 +5,7 @@ import { CompanyService } from '../../services/company.service';
 import { Country } from '../../class/country';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 import { Location } from '@angular/common'
+import { environment } from 'src/environments/environment.dev';
 @Component({
   selector: 'app-update-company',
   templateUrl: './update-company.component.html',
@@ -17,11 +18,15 @@ export class UpdateCompanyComponent implements OnInit {
   countries!: Country[];
   selectedFile: File | undefined;  // To store the selected file
   submitButtonDisabled = false;
+  companyUrl: any;
+  selectedFileURL: any;
   constructor(private router: Router, private companyService: CompanyService, private dialogueBoxService: DialogueBoxService, private location: Location) {
     this.company = new Company(); // Initialize an empty Company object.
+    this.companyUrl = environment.companyUrl + '/photos'
   }
 
   ngOnInit() {
+    console.log(this.companyUrl)
     // Access the company object passed from the list component through history state.
     this.company = history.state.company; // Get the company object passed from the previous component.
     this.fetchCountries(); // Fetch the list of countries from the service.
@@ -95,6 +100,13 @@ export class UpdateCompanyComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedFileURL = e.target.result; // Update the selectedFileURL with the selected file's data URL
+      };
+      reader.readAsDataURL(this.selectedFile); // Read the selected file as a data URL
+    }
   }
 
 }
