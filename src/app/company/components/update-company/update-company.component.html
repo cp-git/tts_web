@@ -58,7 +58,7 @@
             <div class="col-md-4">
                 <label class="label" for="photoFilename">Logo:</label>
                 <input type="file" id="photoFilename" name="photoFilename" (change)="onFileSelected($event)"
-                    class="form-control" ngModel [required]="true">
+                    class="form-control" ngModel>
             </div>
         </div>
         <!-- <img src="{{companyUrl}}/{{company.companyId}}"> -->
@@ -68,7 +68,7 @@
             <img *ngIf="selectedFile" [src]="selectedFile ? selectedFileURL : ''" id="selectedProfilePic">
         </div>
         <div>
-            <button type="button" [disabled]="!updateCompanyData.valid||submitButtonDisabled"
+            <button type="button" [disabled]="!updateCompanyData.valid||!updateCompanyData.dirty"
                 class="btn btn-primary mt-3" (click)="updateCompany(company)">Update</button>
         </div>
     </form>

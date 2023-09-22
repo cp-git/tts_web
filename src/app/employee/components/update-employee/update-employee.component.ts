@@ -90,36 +90,37 @@ export class UpdateEmployeeComponent {
   // This function updates an employee's information, including an optional file upload.
   updateEmployeeByEmployeeId(updatedEmployee: Employee) {
     // Check if a file is selected for upload
+    const formData = new FormData();
     if (this.selectedFile) {
       // Log the name of the selected file
       console.log(this.selectedFile.name);
 
       // Create a FormData object to prepare the data for HTTP POST request
-      const formData = new FormData();
+
       formData.append('file', this.selectedFile); // Append the selected file to the FormData object
-
-      // Create a Blob containing the updatedEmployee data in JSON format
-      const employeeBlob = new Blob([JSON.stringify(updatedEmployee)], { type: 'application/json' });
-
-      // Append the employee data Blob to the FormData object
-      formData.append('employee', employeeBlob);
-      this.submitButtonDisabled = true;
-      // Call the employeeService to update the employee with the given employeeId
-      this.employeeService.updateEmployeeByEmployeeId(updatedEmployee.employeeId, formData).subscribe(
-        (response) => {
-          // Display a success alert indicating that the employee was updated successfully
-          this.dialogueBoxService.open('Employee updated successfully', 'information').then((response) => {
-            if (response) {
-              this.location.back(); // Refresh the page
-            }
-          });
-        },
-        (error) => {
-          // Display a warning alert indicating that there was an error updating the employee, possibly due to a duplicate email
-          this.dialogueBoxService.open('Error updating employee due to Email Already Exist', 'warning');
-        }
-      );
     }
+    // Create a Blob containing the updatedEmployee data in JSON format
+    const employeeBlob = new Blob([JSON.stringify(updatedEmployee)], { type: 'application/json' });
+
+    // Append the employee data Blob to the FormData object
+    formData.append('employee', employeeBlob);
+    this.submitButtonDisabled = true;
+    // Call the employeeService to update the employee with the given employeeId
+    this.employeeService.updateEmployeeByEmployeeId(updatedEmployee.employeeId, formData).subscribe(
+      (response) => {
+        // Display a success alert indicating that the employee was updated successfully
+        this.dialogueBoxService.open('Employee updated successfully', 'information').then((response) => {
+          if (response) {
+            this.location.back(); // Refresh the page
+          }
+        });
+      },
+      (error) => {
+        // Display a warning alert indicating that there was an error updating the employee, possibly due to a duplicate email
+        this.dialogueBoxService.open('Error updating employee due to Email Already Exist', 'warning');
+      }
+    );
+
   }
 
 
