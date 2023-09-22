@@ -59,7 +59,7 @@
             <div class="col-md-4">
                 <label class="label" for="photoFilename"><strong>Profile:</strong></label>
                 <input type="file" id="photoFilename" name="photoFilename" (change)="onFileSelected($event)"
-                    class="form-control" ngModel [required]="true">
+                    class="form-control" ngModel>
             </div>
 
 
@@ -82,7 +82,7 @@
         </td> -->
         <!-- Submit Button -->
         <div>
-            <button type="submit" [disabled]="!addUpdateForm.valid||submitButtonDisabled"
+            <button type="submit" [disabled]="!addUpdateForm.valid||!addUpdateForm.dirty"
                 (click)="updateEmployeeByEmployeeId(employee)" class="btn btn-primary mt-3">Submit</button>
         </div>
     </form>

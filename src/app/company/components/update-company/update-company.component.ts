@@ -36,40 +36,39 @@ export class UpdateCompanyComponent implements OnInit {
   // This function updates a company's information, including an optional file upload.
 
   updateCompany(updatedCompany: Company) {
+    // Create a FormData object to prepare the data for HTTP POST request
+    const formData = new FormData();
     // Check if a file is selected for upload
     if (this.selectedFile) {
-      // Log the name of the selected file
       console.log(this.selectedFile.name);
-
-      // Create a FormData object to prepare the data for HTTP POST request
-      const formData = new FormData();
-
       // Append the selected file to the FormData object
       formData.append('file', this.selectedFile);
-
-      // Create a Blob containing the updatedCompany data in JSON format
-      const companyBlob = new Blob([JSON.stringify(updatedCompany)], { type: 'application/json' });
-
-      // Append the company data Blob to the FormData object
-      formData.append('company', companyBlob);
-      // Set the submitButtonDisabled to true
-      this.submitButtonDisabled = true;
-      // Call the companyService to update the company with the given companyCode
-      this.companyService.updateCompanyByCompanyCode(updatedCompany.companyCode, formData).subscribe(
-        (response) => {
-          // Display a success alert indicating that the company was updated successfully
-          this.dialogueBoxService.open('Company updated successfully', 'information').then((response) => {
-            if (response) {
-              this.location.back(); // Refresh the page
-            }
-          });
-        },
-        (error) => {
-          // Display a warning alert indicating that there was an error updating the company
-          this.dialogueBoxService.open('Company updation failed', 'warning');
-        }
-      );
     }
+    // Log the name of the selected file
+
+    // Create a Blob containing the updatedCompany data in JSON format
+    const companyBlob = new Blob([JSON.stringify(updatedCompany)], { type: 'application/json' });
+
+    // Append the company data Blob to the FormData object
+    formData.append('company', companyBlob);
+    // Set the submitButtonDisabled to true
+    this.submitButtonDisabled = true;
+    // Call the companyService to update the company with the given companyCode
+    this.companyService.updateCompanyByCompanyCode(updatedCompany.companyCode, formData).subscribe(
+      (response) => {
+        // Display a success alert indicating that the company was updated successfully
+        this.dialogueBoxService.open('Company updated successfully', 'information').then((response) => {
+          if (response) {
+            this.location.back(); // Refresh the page
+          }
+        });
+      },
+      (error) => {
+        // Display a warning alert indicating that there was an error updating the company
+        this.dialogueBoxService.open('Company updation failed', 'warning');
+      }
+    );
+
   }
 
 
