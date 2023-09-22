@@ -42,9 +42,8 @@ export class AuthLoginComponent {
     private rsaService: RsaServiceService,
     private dialogueBoxService: DialogueBoxService,
   ) {
-
+    localStorage.setItem("KEY_ID", '0')
     this.initialization();
-
   }
 
 
@@ -71,16 +70,19 @@ export class AuthLoginComponent {
 
     await this.getTokenBeforeLogin(this.keyId);
     console.log("after token");
+    this.generateSecretKey();
 
-    // generating secret key
+  }
+ // generating secret key
+  private generateSecretKey() {
     const srs = sessionStorage.getItem("SERVER_RANDOM_STR");
     const crs = sessionStorage.getItem("CLIENT_RANDOM_STR");
     const cpk = sessionStorage.getItem("CLIENT_PRESECRET_KEY");
+
     if (srs && crs && cpk) {
       this.secretKey = srs + crs + cpk;
       console.log(this.secretKey);
     }
-
   }
 
   // generating initialization vector for encryption and decryption data
@@ -91,37 +93,23 @@ export class AuthLoginComponent {
 
   // get and add server's public key in session storage 
   private async addServerPublicKeyInSessionStorage() {
-    try {
       // Call getServerPublicKey and wait for its completion
       const serverPublicKey = await this.getServerPublicKey();
       this.publicKey = serverPublicKey['key'];
-      console.log(this.publicKey);
-
+    
       // set server public key in sessionStorage
       sessionStorage.setItem('SERVER_PUBLIC_KEY', JSON.stringify(serverPublicKey));
-    } catch (error) {
-      console.error('Error:', error);
-    }
-
   }
 
   // get server public key
   private async getServerPublicKey() {
-    try {
       // Making the API call and wait for the response
       const response = await firstValueFrom(this.authLoginService.getServerPublicKey());
-
-      console.log(response);
-
       return response;
-    } catch (error) {
-      console.error('Error:', error);
-    }
   }
 
   // get server random string
   private async getServerRandomString() {
-    try {
       // Making the API call and wait for the response
       var keyId = Number(localStorage.getItem("KEY_ID"));
       console.log(keyId);
@@ -140,9 +128,7 @@ export class AuthLoginComponent {
       // storing keyid and server ranodm string in session storage
       localStorage.setItem('KEY_ID', JSON.stringify(serverRandomStringObject.id));
       sessionStorage.setItem('SERVER_RANDOM_STR', serverRandomString);
-    } catch (error) {
-      console.error('Error:', error);
-    }
+   
   }
 
   // get client random string
@@ -153,12 +139,13 @@ export class AuthLoginComponent {
     // encrypting client random string using rsa algorithm
     const encryptedClientRandomString = this.rsaService.encryptDataWithRSA(clientRandomString, publicKey);
 
-    let authKey: AuthKey = new AuthKey(); // for storing key
+    
 
     const keyId = localStorage.getItem('KEY_ID');
 
     // keyid exist
     if (keyId) {
+      const authKey = new AuthKey(); // for storing key
       authKey.id = parseInt(keyId);
       authKey.clientRandomString = encryptedClientRandomString;
 
@@ -174,12 +161,11 @@ export class AuthLoginComponent {
 
   // add initiliazation vector in db
   private async addInitVector() {
-    try {
       const keyId = localStorage.getItem('KEY_ID');
-      let authKey: AuthKey = new AuthKey(); // for stoaring keys
 
       // if keyid exist
-      if (keyId) {
+      if (keyId) {  
+        const authKey = new AuthKey(); // for stoaring keys
         authKey.id = parseInt(keyId);
         authKey.initVector = this.iv;
 
@@ -190,9 +176,6 @@ export class AuthLoginComponent {
         // set init vector in sessionStorage
         sessionStorage.setItem('INITVECTOR', JSON.stringify(this.iv));
       }
-    } catch (error) {
-      console.error('Error:', error);
-    }
   }
 
   // add client presecret key 
@@ -202,11 +185,10 @@ export class AuthLoginComponent {
       this.clientPreSecretKey = await this.randomString.generateRandomString(this.LENGTH_CLIENT_PRESECRET_KEY);
       // encrypting presecret key
       const encryptedClientPreSecretKey = this.rsaService.encryptDataWithRSA(this.clientPreSecretKey, publicKey);
-
-      let authKey: AuthKey = new AuthKey(); // for storing keys
-
+      
       // if keyid exist
       if (this.keyId) {
+        const authKey = new AuthKey();
         authKey.id = parseInt(this.keyId);
         authKey.clientPreSecretKey = encryptedClientPreSecretKey;
 
@@ -242,6 +224,7 @@ export class AuthLoginComponent {
   }
 
 
+  // login
   login() {
 
     this.encryptedCredentials.username = this.rsaService.encryptDataWithRSA(this.credentials.username, this.publicKey);
@@ -282,4 +265,6 @@ export class AuthLoginComponent {
       }
     );
   }
+
+
 }

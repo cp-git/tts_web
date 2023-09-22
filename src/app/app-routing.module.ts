@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'employee', component: EmployeeComponent },
   { path: 'createEmp', component: CreateEmployeeComponent },
   { path: 'updateEmp', component: UpdateEmployeeComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'login2', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'company', component: CompanyComponent },
   { path: 'addCompany', component: AddCompanyComponent },
@@ -40,7 +40,7 @@ const routes: Routes = [
   { path: 'status', component: StatusComponent },
   { path: 'addStatus', component: AddStatusComponent },
   { path: 'updateStatus', component: UpdateStatusComponent },
-  { path: 'login2', component: AuthLoginComponent },
+  { path: 'login', component: AuthLoginComponent },
 
 ];
 

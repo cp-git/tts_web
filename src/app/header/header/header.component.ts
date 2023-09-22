@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthLoginService } from 'src/app/auth-login/services/auth-login/auth-login.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,9 @@ export class HeaderComponent implements OnInit {
   empData: any;
   isAdmin: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(
+    private authService: AuthLoginService
+  ) {
     this.employeeId = sessionStorage.getItem("employeeId");
     this.empDataFromSession = sessionStorage.getItem('empData')
     this.empData = JSON.parse(this.empDataFromSession);
@@ -24,15 +27,13 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
+    this.authService.logout();
+    // // Clear session storage data
+    // sessionStorage.removeItem('employeeId');
+    // sessionStorage.removeItem('companyId');
+    // sessionStorage.removeItem('empData');
 
-
-
-    // Clear session storage data
-    sessionStorage.removeItem('employeeId');
-    sessionStorage.removeItem('companyId');
-    sessionStorage.removeItem('empData');
-
-    // Navigate to the '/' route
-    this.router.navigate(['/']);
+    // // Navigate to the '/' route
+    // this.router.navigate(['/']);
   }
 }
