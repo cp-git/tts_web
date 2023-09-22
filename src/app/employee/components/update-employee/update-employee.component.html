@@ -59,22 +59,30 @@
             <div class="col-md-4">
                 <label class="label" for="photoFilename"><strong>Profile:</strong></label>
                 <input type="file" id="photoFilename" name="photoFilename" (change)="onFileSelected($event)"
-                    class="form-control" ngModel [required]="true">
+                    class="form-control" ngModel>
             </div>
+
 
             <div class="col-md-4">
                 <label class="form-check-label" for="isadmin"><strong>Is Admin:</strong></label>
+
                 <input type="checkbox" id="isadmin" name="isadmin" [(ngModel)]="employee.admin"
                     class="custom-checkbox form-check-input">
             </div>
+            <div>
+                <img *ngIf="!selectedFile" src="{{employeeURL}}/{{employee.employeeId}}">
+
+                <img *ngIf="selectedFile" [src]="selectedFile ? selectedFileURL : ''" id="selectedProfilePic">
+            </div>
         </div>
+
 
         <!-- <td>
             <input type="checkbox" [checked]="employeeData.admin" class="larger-checkbox">
         </td> -->
         <!-- Submit Button -->
         <div>
-            <button type="submit" [disabled]="!addUpdateForm.valid||submitButtonDisabled"
+            <button type="submit" [disabled]="!addUpdateForm.valid||!addUpdateForm.dirty"
                 (click)="updateEmployeeByEmployeeId(employee)" class="btn btn-primary mt-3">Submit</button>
         </div>
     </form>

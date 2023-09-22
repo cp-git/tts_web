@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from '../../class/company';
 import { Country } from '../../class/country';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
+import { environment } from 'src/environments/environment.dev';
 @Component({
   selector: 'app-update-employee',
   templateUrl: './update-employee.component.html',
@@ -28,6 +29,9 @@ export class UpdateEmployeeComponent {
   isAdmin: boolean = false;
   country: Country = new Country();
   company: Company = new Company();
+
+  selectedFileURL: string | undefined;
+  employeeURL: any;
   constructor(
     private employeeService: EmployeeService, // Injecting the EmployeeService dependency
     private location: Location, // Injecting the Location dependency to interact with the browser's history
@@ -38,13 +42,13 @@ export class UpdateEmployeeComponent {
     this.employee = new Employee(); // Initializing the 'employee' property with a new Employee object
     this.empDataFromSession = sessionStorage.getItem('empData')
     this.empData = JSON.parse(this.empDataFromSession);
-
+    this.employeeURL = environment.employeeUrl + '/employee/photos';
     this.companyId = this.empData.companyId;
     this.countryId = this.empData.countryId;
   }
 
   ngOnInit(): void {
-
+    console.log(this.employeeURL);
     this.isAdmin = this.empData.admin;
 
     // if (this.isAdmin) {
@@ -86,36 +90,37 @@ export class UpdateEmployeeComponent {
   // This function updates an employee's information, including an optional file upload.
   updateEmployeeByEmployeeId(updatedEmployee: Employee) {
     // Check if a file is selected for upload
+    const formData = new FormData();
     if (this.selectedFile) {
       // Log the name of the selected file
       console.log(this.selectedFile.name);
 
       // Create a FormData object to prepare the data for HTTP POST request
-      const formData = new FormData();
+
       formData.append('file', this.selectedFile); // Append the selected file to the FormData object
-
-      // Create a Blob containing the updatedEmployee data in JSON format
-      const employeeBlob = new Blob([JSON.stringify(updatedEmployee)], { type: 'application/json' });
-
-      // Append the employee data Blob to the FormData object
-      formData.append('employee', employeeBlob);
-      this.submitButtonDisabled = true;
-      // Call the employeeService to update the employee with the given employeeId
-      this.employeeService.updateEmployeeByEmployeeId(updatedEmployee.employeeId, formData).subscribe(
-        (response) => {
-          // Display a success alert indicating that the employee was updated successfully
-          this.dialogueBoxService.open('Employee updated successfully', 'information').then((response) => {
-            if (response) {
-              this.location.back(); // Refresh the page
-            }
-          });
-        },
-        (error) => {
-          // Display a warning alert indicating that there was an error updating the employee, possibly due to a duplicate email
-          this.dialogueBoxService.open('Error updating employee due to Email Already Exist', 'warning');
-        }
-      );
     }
+    // Create a Blob containing the updatedEmployee data in JSON format
+    const employeeBlob = new Blob([JSON.stringify(updatedEmployee)], { type: 'application/json' });
+
+    // Append the employee data Blob to the FormData object
+    formData.append('employee', employeeBlob);
+    this.submitButtonDisabled = true;
+    // Call the employeeService to update the employee with the given employeeId
+    this.employeeService.updateEmployeeByEmployeeId(updatedEmployee.employeeId, formData).subscribe(
+      (response) => {
+        // Display a success alert indicating that the employee was updated successfully
+        this.dialogueBoxService.open('Employee updated successfully', 'information').then((response) => {
+          if (response) {
+            this.location.back(); // Refresh the page
+          }
+        });
+      },
+      (error) => {
+        // Display a warning alert indicating that there was an error updating the employee, possibly due to a duplicate email
+        this.dialogueBoxService.open('Error updating employee due to Email Already Exist', 'warning');
+      }
+    );
+
   }
 
 
@@ -172,6 +177,13 @@ export class UpdateEmployeeComponent {
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedFileURL = e.target.result; // Update the selectedFileURL with the selected file's data URL
+      };
+      reader.readAsDataURL(this.selectedFile); // Read the selected file as a data URL
+    }
   }
 
   getCompanyByCompanyId() {
