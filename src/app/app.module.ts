@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CompanyModule } from './company/company.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CountryModule } from './country/country.module';
 import { LoginModule } from './login/login.module';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -16,6 +16,8 @@ import { TaskModule } from './task/task.module';
 import { HomeModule } from './home/home.module';
 import { ReasonModule } from './reason/reason.module';
 import { StatusModule } from './status/status.module';
+import { AuthLoginModule } from './auth-login/auth-login.module';
+import { AuthInterceptor } from './service/auth-interceptor/auth-interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,9 +37,16 @@ import { StatusModule } from './status/status.module';
     AdminModule,
     HeaderModule,
     TaskModule,
-    ReasonModule
+    ReasonModule,
+    AuthLoginModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

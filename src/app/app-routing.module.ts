@@ -18,6 +18,7 @@ import { HomeComponent } from './home/home/home.component';
 import { StatusComponent } from './status/components/status/status.component';
 import { AddStatusComponent } from './status/components/add-status/add-status.component';
 import { UpdateStatusComponent } from './status/components/update-status/update-status.component';
+import { AuthLoginComponent } from './auth-login/components/auth-login/auth-login.component';
 const routes: Routes = [
 
 
@@ -39,7 +40,7 @@ const routes: Routes = [
   { path: 'status', component: StatusComponent },
   { path: 'addStatus', component: AddStatusComponent },
   { path: 'updateStatus', component: UpdateStatusComponent },
-
+  { path: 'login2', component: AuthLoginComponent },
 
 ];
 
