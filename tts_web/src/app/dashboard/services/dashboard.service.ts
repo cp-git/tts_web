@@ -8,10 +8,11 @@ import { environment } from 'src/environments/environment.dev';
 })
 export class DashboardService {
   companyUrl: any;
-  private readonly EmployeeURL = `http://localhost:8090/employee/ttsms`;
+  EmployeeURL: any;
 
   constructor(private http: HttpClient) {
     this.companyUrl = `${environment.companyUrl}`; // Base URL for company-related API endpoints
+    this.EmployeeURL = `${environment.countryUrl}`
   }
 
 

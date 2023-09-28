@@ -14,8 +14,8 @@ export class LoginService {
   forgotUrl: any;
   employeeUrl: any;
   constructor(private http: HttpClient) {
-    this.passwordUrl = `http://localhost:8090/employee/ttsms/password`
-    this.forgotUrl = `http://localhost:8090/employee/ttsms/forgotpass`
+    this.passwordUrl = environment.passwordUrl;
+    this.forgotUrl = environment.forgotUrl;
     this.employeeUrl = environment.employeeUrl;
 
   }

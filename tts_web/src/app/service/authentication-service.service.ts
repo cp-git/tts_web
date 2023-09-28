@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationServiceService {
 
-  private baseUrl = 'http://localhost:8090/employee/ttsms/password'; // Your Spring Boot backend URL
+  private baseUrl = environment.passwordUrl; // Your Spring Boot backend URL
   constructor(private http: HttpClient) { }
 
   authenticate(username: string, password: string): Observable<any> {
