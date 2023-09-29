@@ -12,7 +12,7 @@ export class DashboardService {
 
   constructor(private http: HttpClient) {
     this.companyUrl = `${environment.companyUrl}`; // Base URL for company-related API endpoints
-    this.EmployeeURL = `${environment.countryUrl}`
+    this.EmployeeURL = `${environment.employeeUrl}`
   }
 
 
