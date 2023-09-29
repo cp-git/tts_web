@@ -14,7 +14,7 @@ export class ReasonService {
   constructor(private http: HttpClient) {
     // Initialize the URLs using values from the environment configuration.
     this.reasonUrl = environment.reasonUrl; // Base URL for reasons
-    this.statusUrl = environment.statusUrl; // Base URL for status
+    this.statusUrl = environment.statusURL; // Base URL for status
   }
 
   // Method to create a new reason.
@@ -37,5 +37,5 @@ export class ReasonService {
     return this.http.get<any>(`${this.statusUrl}/allstatus`);
   }
 
-  
+
 }

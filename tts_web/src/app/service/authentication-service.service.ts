@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment.dev';
 })
 export class AuthenticationServiceService {
 
-  private baseUrl = environment.passwordUrl; // Your Spring Boot backend URL
+  private baseUrl = environment.passwordUrl;
   constructor(private http: HttpClient) { }
 
   authenticate(username: string, password: string): Observable<any> {
