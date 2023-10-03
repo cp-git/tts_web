@@ -28,17 +28,18 @@ export class AddCompanyComponent implements OnInit {
 
   // This function adds a new company and uploads an optional file.
   addCompany(company: Company) {
+    const formData = new FormData();
     // Check if a file is selected for upload
     if (this.selectedFile) {
       // Log the name of the selected file
       console.log(this.selectedFile.name);
 
       // Create a FormData object to prepare the data for an HTTP POST request
-      const formData = new FormData();
+    
 
       // Append the selected file to the FormData object
       formData.append('file', this.selectedFile);
-
+    }
       // Create a Blob containing the company data in JSON format
       const companyBlob = new Blob([JSON.stringify(company)], { type: 'application/json' });
 
@@ -61,7 +62,7 @@ export class AddCompanyComponent implements OnInit {
           this.dialogueBoxService.open('Failed to add. Company already exists', 'warning');
         }
       );
-    }
+    
   }
 
 

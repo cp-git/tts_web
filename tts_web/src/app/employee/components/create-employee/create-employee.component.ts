@@ -92,41 +92,43 @@ export class CreateEmployeeComponent implements OnInit {
     }
 
     // Check if a file is selected for upload
+    const formData = new FormData();
+
     if (this.selectedFile) {
       // Create a FormData object to prepare the data for HTTP POST request
-      const formData = new FormData();
 
       // Append the selected file to the FormData object
       formData.append('file', this.selectedFile);
-
-      // Create a Blob containing the employee data in JSON format
-      const employeeBlob = new Blob([JSON.stringify(employee)], { type: 'application/json' });
-      //alert(JSON.stringify(employeeBlob));
-      // Append the employee data Blob to the FormData object
-      formData.append('employee', employeeBlob);
-
-      // Call the employeeService to create a new employee with the provided data
-      this.employeeService.createEmployees(formData).subscribe(
-        (response) => {
-          //alert(JSON.stringify(response));
-          console.log(JSON.stringify(response))
-          // Log a success message and display an information alert indicating that the employee was created successfully
-          console.log('Employee created successfully:', response);
-          this.dialogueBoxService.open('Employee Created Successfully', 'information').then((response) => {
-            if (response) {
-              this.location.back(); // Refresh the page
-            }
-          });
-
-          // Reset the form data for employee creation (if needed)
-          this.employeeData = new EmployeeAndPasswordDTO();
-        },
-        (error) => {
-          // Display a warning alert indicating that there was an error creating the employee, possibly due to a duplicate username or email
-          this.dialogueBoxService.open('Failed to Create Employee. UserName or Email Already Exist', 'warning');
-        }
-      );
     }
+    // Create a Blob containing the employee data in JSON format
+    const employeeBlob = new Blob([JSON.stringify(employee)], { type: 'application/json' });
+    //alert(JSON.stringify(employeeBlob));
+    // Append the employee data Blob to the FormData object
+    formData.append('employee', employeeBlob);
+
+    // Call the employeeService to create a new employee with the provided data
+    this.employeeService.createEmployees(formData).subscribe(
+      (response) => {
+        //alert(JSON.stringify(response));
+        console.log(JSON.stringify(response))
+        // Log a success message and display an information alert indicating that the employee was created successfully
+        console.log('Employee created successfully:', response);
+        this.dialogueBoxService.open('Employee Created Successfully', 'information').then((response) => {
+          if (response) {
+            this.location.back(); // Refresh the page
+          }
+        });
+
+        // Reset the form data for employee creation (if needed)
+        this.employeeData = new EmployeeAndPasswordDTO();
+      },
+      (error) => {
+        // Display a warning alert indicating that there was an error creating the employee, possibly due to a duplicate username or email
+        this.dialogueBoxService.open('Failed to Create Employee. UserName or Email Already Exist', 'warning');
+      }
+    );
+
+
   }
 
 

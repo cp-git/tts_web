@@ -31,7 +31,7 @@
             <div class="col-md-4">
                 <label class="label" for="companyContactEmail">Email:</label>
                 <input type="email" id="companyContactEmail" name="companyContactEmail"
-                    [(ngModel)]="company.companyContactEmail" [required]="true" pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}"
+                    [(ngModel)]="company.companyContactEmail" [required]="true" pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}"
                     class="form-control">
             </div>
 
@@ -55,7 +55,7 @@
             <div class="col-md-4">
                 <label class="label" for="photoFilename">Logo:</label>
                 <input type="file" id="photoFilename" name="photoFilename" (change)="onFileSelected($event)"
-                    class="form-control" ngModel [required]="true">
+                    class="form-control" ngModel [required]="false" disabled="true">
             </div>
         </div>
         <img *ngIf="selectedFile" [src]="selectedImageUrl" alt="Selected Image" class="img-fluid">
