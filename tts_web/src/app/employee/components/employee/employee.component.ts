@@ -8,6 +8,7 @@ import { Country } from '../../class/country';
 import { Company } from '../../class/company';
 import { JsonpInterceptor } from '@angular/common/http';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
+import { environment } from 'src/environments/environment.dev';
 
 @Component({
   selector: 'app-employee',
@@ -42,12 +43,14 @@ export class EmployeeComponent {
   companyEmployees: [] = [];
   employee: any;
   countryId: any;
+  employeeURL: any;
   // Constructor to inject EmployeeService and Router dependencies
   constructor(private employeeService: EmployeeService, private router: Router, private dialogueBoxService: DialogueBoxService) {
 
     this.employee = new Employee();
     this.empDataFromSession = sessionStorage.getItem('empData')
     this.empData = JSON.parse(this.empDataFromSession);
+    this.employeeURL = environment.employeeUrl + '/employee/photos';
   }
 
   //This method is called when the component is initialized

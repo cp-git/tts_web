@@ -3,7 +3,7 @@
 }
 
 .table-container {
-    max-height: 450px;
+    max-height: 550px;
     /* Adjust the height as needed */
     overflow-y: auto;
 }
@@ -31,4 +31,24 @@
 .larger-checkbox {
     transform: scale(2.0);
     /* Increase the size as needed */
+}
+
+
+/* CSS for circular image */
+.circle-image {
+    width: 40px;
+    /* Set the width and height to control the size of the circle */
+    height: 40px;
+    border-radius: 50%;
+    /* Make it circular by setting border-radius to 50% */
+    overflow: hidden;
+    background-size: cover;
+    /* Hide overflowing parts of the image */
+}
+.circle-image img {
+    width: 100%;
+    /* Make sure the image fills the circular container */
+    height: auto;
+    object-fit: cover;
+    /* Automatically adjust the height to maintain aspect ratio */
 }

@@ -54,11 +54,12 @@
                 <!-- Table header row -->
                 <tr>
                     <!-- Column headers -->
+                    <th>Profile</th>
                     <th>UserName</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>DOB</th>
-                    <th>Email</th>
+                    <!-- <th>DOB</th> -->
+                    <!-- <th>Email</th> -->
                     <th>Company</th>
                     <th>Country</th>
                     <th>Is Admin</th>
@@ -70,11 +71,16 @@
                 <tr
                     *ngFor="let employee of employees | filter:'countryId':selectedCountryId | filter:'companyId':selectedCompanyId">
                     <!-- Display employee data in each table cell -->
+                    <td>
+                        <div class="circle-image">
+                            <img src="{{employeeURL}}/{{employee.employeeId}}">
+                        </div>
+                    </td>
                     <td>{{employee.username}}</td>
                     <td>{{ employee.firstName }}</td>
                     <td>{{ employee.lastName }}</td>
-                    <td>{{ employee.birthDate | date:'yyyy-MM-dd'}}</td>
-                    <td>{{ employee.employeeEmail }}</td>
+                    <!-- <td>{{ employee.birthDate | date:'yyyy-MM-dd'}}</td>
+                    <td>{{ employee.employeeEmail }}</td> -->
                     <td>{{ getCompanyNameById(employee.companyId) }}</td>
                     <!-- Use method 'getCompanyNameById' to get the company name based on companyId -->
                     <td>{{ getCountryNameById(employee.countryId)}}</td>
