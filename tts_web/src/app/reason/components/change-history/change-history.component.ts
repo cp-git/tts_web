@@ -4,6 +4,9 @@ import { Employee } from 'src/app/employee/class/employee';
 import { EmployeeService } from 'src/app/employee/services/employee.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Company } from 'src/app/company/class/company';
+import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
+import { environment } from 'src/environments/environment.dev';
 @Component({
   selector: 'app-change-history',
   templateUrl: './change-history.component.html',
@@ -14,10 +17,36 @@ export class ChangeHistoryComponent implements OnInit {
   employees!: Employee[]; // Array to hold employee data
   statusList: any[] = []; // Array to hold status data
   taskId: any;
+  // Declare class properties
+  employee!: Employee;
+  company!: Company;
+  employeeId: any;
+  companyId: any;
 
-  constructor(private reasonService: ReasonService, private employeeService: EmployeeService, private location: Location,
+
+  displayCompanyLogo: any;
+  displayEmployeeLogo: any;
+
+
+
+  loggedInUserData: any;
+  // Define selected statuses as an array with a default value
+  selectedStatuses: string[] = ['ALL']; // Default value
+
+
+  constructor(private dashboardService: DashboardService, private router: Router, private reasonService: ReasonService, private employeeService: EmployeeService, private location: Location,
     private _activatedRoute: ActivatedRoute
-  ) { }
+  ) {  // Initialize properties and retrieve data from sessionStorage
+    this.displayCompanyLogo = `${environment.companyUrl}/photos`;
+    this.displayEmployeeLogo = `${environment.employeeUrl}/employee/photos`;
+    this.employeeId = sessionStorage.getItem('employeeId');
+    this.companyId = sessionStorage.getItem('companyId');
+    this.loggedInUserData = sessionStorage.getItem('empData');
+
+    this.loggedInUserData = JSON.parse(this.loggedInUserData); // Parse JSON data
+    console.log(this.loggedInUserData);
+    // this.getCompanyById(this.companyId); // Fetch company data
+  }
 
   ngOnInit(): void {
     this.taskId = this._activatedRoute.snapshot.paramMap.get('id');
@@ -85,5 +114,20 @@ export class ChangeHistoryComponent implements OnInit {
   // Method to perform actions to close the table
   close() {
     this.location.back();
+  }
+
+  // Logout method
+  logout() {
+
+    // Remove items from sessionStorage
+    sessionStorage.removeItem('selectedAssignedTo');
+    sessionStorage.removeItem('selectedCreatedBy');
+    sessionStorage.removeItem('selectedTask');
+    localStorage.removeItem('selectedDateFormat');
+    sessionStorage.removeItem('employeeId');
+    sessionStorage.removeItem('companyId');
+    sessionStorage.removeItem('empData');
+
+    this.router.navigate(['/']); // Navigate to the root URL
   }
 }

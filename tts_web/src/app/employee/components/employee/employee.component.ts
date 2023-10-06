@@ -240,7 +240,7 @@ export class EmployeeComponent {
 
   // Method to delete an employee when the "Delete" button is clicked for a specific employee
   deleteEmployee(employee: Employee) {
-    this.dialogueBoxService.open('Are you sure you want to delete this Employee ? ', 'decision').then((response) => {
+    this.dialogueBoxService.open('Are you sure to delete this employee? ', 'decision').then((response) => {
       if (response) {
         console.log('User clicked OK');
         // Do something if the user clicked OK

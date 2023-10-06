@@ -56,7 +56,7 @@ export class CompanyComponent implements OnInit {
 
   // Delete a company by its companyCode
   deleteCompany(companyCode: any) {
-    this.dialogueBoxService.open('Are you sure you want to delete this Company ? ', 'decision').then((response) => {
+    this.dialogueBoxService.open('Are you sure you want to delete this company? ', 'decision').then((response) => {
       if (response) {
         console.log('User clicked OK');
         // Do something if the user clicked OK

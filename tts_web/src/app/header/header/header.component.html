@@ -37,7 +37,14 @@
                     <h1 class="admin">Admin Dashboard</h1>
                 </li>
             </ul>
-
+            <div *ngIf="isAdmin" style="display: flex; align-items: center; ">
+                <!-- Display the company's photo -->
+                <img src="{{displayCompanyLogo}}/{{companyId}}"
+                    style="width: 100px; height: 60px; border: 2px solid; border-radius: 15px;margin-right: 30px;">
+                <!-- <label class="company" for="company" style="color: wheat; margin-left: 10px;">
+                    {{ company.companyName }}
+                </label> -->
+            </div>
             <span (click)="logout()" class="navbar-text fa-solid fa-power-off">
             </span>
         </div>

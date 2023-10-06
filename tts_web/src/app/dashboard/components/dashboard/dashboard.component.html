@@ -2,13 +2,13 @@
     <div class="container-fluid">
         <div style="display: flex; align-items: center;">
             <!-- Container for logo and name with margin-left -->
-            <div style="display: flex; align-items: center; margin-left: 100px;">
+            <div style="display: flex; align-items: center; ">
                 <!-- Display the company's photo -->
                 <img src="{{displayCompanyLogo}}/{{companyId}}"
                     style="width: 100px; height: 60px; border: 2px solid; border-radius: 15px;">
-                <label class="company" for="company" style="color: wheat; margin-left: 10px;">
+                <!-- <label class="company" for="company" style="color: wheat; margin-left: 10px;">
                     {{ company.companyName }}
-                </label>
+                </label> -->
             </div>
         </div>
 
@@ -18,11 +18,12 @@
         </div>
 
         <div style="display: flex; align-items: center; margin-right: 40px;">
-            <img src="{{displayEmployeeLogo}}/{{loggedInUserData.employeeId}} "
-                style="width: 60px; height: 60px; border: 2px solid; border-radius: 15px;">
             <label class="name" for="name" style="color: wheat; margin-left: 10px;">
-                {{loggedInUserData.firstName}} {{loggedInUserData.lastName}}
+                {{loggedInUserData.firstName}}
             </label>
+            <img src="{{displayEmployeeLogo}}/{{loggedInUserData.employeeId}} "
+                style="width: 60px; height: 60px; border: 2px solid; border-radius: 15px; margin-left: 15px;">
+
         </div>
 
         <div>
