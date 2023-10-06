@@ -1,43 +1,49 @@
 <app-header></app-header>
 <div class="container">
     <!-- Add button at the top right corner -->
-    <div class="d-flex justify-content-between align-items-center w-100">
-        <span [routerLink]="['/addCountry']" class="fa-solid fa-circle-plus"
-            style='font-size:30px;color:  rgb(33, 176, 40); margin-top: 10px;'></span>
 
-        <!-- <span [routerLink]="['/adminDash']" class="fa-solid fa-circle-arrow-left fa-lg"
+    <fieldset class="border rounded-3">
+        <legend class="float-none w-auto px-2">All Countries</legend>
+
+        <div class="d-flex justify-content-end align-items-center w-100">
+            <span [routerLink]="['/addCountry']" class="fa-solid fa-circle-plus"
+                style='font-size:30px;color:  rgb(33, 176, 40); padding-bottom: 1%;'></span>
+
+            <!-- <span [routerLink]="['/adminDash']" class="fa-solid fa-circle-arrow-left fa-lg"
             style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer; margin-top: 10px;"></span> -->
-    </div>
+        </div>
 
-    <div class="table-container">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <!-- <th>Country ID</th> -->
-                    <th>Country Name</th>
-                    <th>Country Code</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let country of countries">
-                    <!-- <td>{{ country.countryId }}</td> -->
-                    <td>{{ country.countryName }}</td>
-                    <td>{{ country.countryCode }}</td>
-                    <td>
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <!-- <th>Country ID</th> -->
+                        <th>Country Name</th>
+                        <th>Country Code</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let country of countries">
+                        <!-- <td>{{ country.countryId }}</td> -->
+                        <td>{{ country.countryName }}</td>
+                        <td>{{ country.countryCode }}</td>
+                        <td>
 
-                        <!-- Update Button -->
-                        <span (click)="redirectToUpdate(country)" class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
-                            style='font-size:23px;color: rgb(64, 109, 234);'></span>
-                        <!-- Delete Button -->
-                        &nbsp;
-                        &nbsp;
-                        <span (click)="deleteCountry(country.countryCode)" class='fa-solid fa-trash fa-xl'
-                            style='font-size:23px;color: red;'></span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                            <!-- Update Button -->
+                            <span (click)="redirectToUpdate(country)"
+                                class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
+                                style='font-size:23px;color: rgb(64, 109, 234);'></span>
+                            <!-- Delete Button -->
+                            &nbsp;
+                            &nbsp;
+                            <span (click)="deleteCountry(country.countryCode)" class='fa-solid fa-trash fa-xl'
+                                style='font-size:23px;color: red;'></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
 </div>
 <app-footer></app-footer>
