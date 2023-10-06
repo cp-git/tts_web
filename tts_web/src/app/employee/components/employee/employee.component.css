@@ -3,7 +3,7 @@
 }
 
 .table-container {
-    max-height: 550px;
+    max-height: 500px;
     /* Adjust the height as needed */
     overflow-y: auto;
 }
@@ -45,6 +45,7 @@
     background-size: cover;
     /* Hide overflowing parts of the image */
 }
+
 .circle-image img {
     width: 100%;
     /* Make sure the image fills the circular container */

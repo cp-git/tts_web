@@ -103,4 +103,21 @@ export class AddCompanyComponent implements OnInit {
     }
   }
 
+   limitZipCodeLength(event: any) {
+    const input = event.target;
+    const maxLength = 10; // desired maximum length
+
+    if (input.value.length > maxLength) {
+      input.value = input.value.slice(0, maxLength); // Truncate input if it exceeds the limit
+    }
+  }
+
+  limitPhoneLength(event: any) {
+    const input = event.target;
+    const maxLength = 20; //  desired maximum length for phone numbers
+
+    if (input.value.length > maxLength) {
+      input.value = input.value.slice(0, maxLength); // Truncate input if it exceeds the limit
+    }
+  }
 }

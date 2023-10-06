@@ -55,7 +55,7 @@
                 <input
                     [disabled]="(task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
                     type="text" class="form-control extra-light-placeholder" id="taskName" name="taskName"
-                    placeholder="Enter task name" [(ngModel)]="task.taskName" [required]="true">
+                    placeholder="Enter task name" [(ngModel)]="task.taskName" [required]="true" maxlength="100">
             </div>
 
         </div>
@@ -67,7 +67,7 @@
                 <textarea
                     [disabled]="(task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
                     class="form-control" id="taskDescription" name="taskDescription" [(ngModel)]="task.taskDescription"
-                    placeholder="Enter task description" [required]="true"></textarea>
+                    placeholder="Enter task description" [required]="true" maxlength="255"></textarea>
             </div>
         </div>
         <div class="row">
@@ -156,7 +156,7 @@
                 <textarea
                     [disabled]="(task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
                     class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
-                    placeholder="Enter reason" [required]="updateScreen"></textarea>
+                    placeholder="Enter reason" [required]="updateScreen" maxlength="250"></textarea>
             </div>
         </div>
         <div class="row">

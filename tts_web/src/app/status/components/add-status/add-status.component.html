@@ -9,12 +9,12 @@
             <div class="col-md-4">
                 <label class="label" for="statusCode">Status Code:</label>
                 <input type="text" id="statusCode" name="statusCode" [(ngModel)]="status.statusCode" required
-                    class="form-control">
+                    class="form-control" maxlength="25">
             </div>
             <div class="col-md-4">
                 <label class="label" for="statusDescription"> Description :</label>
                 <input type="text" id="statusDescription" name="statusDescription"
-                    [(ngModel)]="status.statusDescription" required class="form-control">
+                    [(ngModel)]="status.statusDescription" required class="form-control" maxlength="255">
             </div>
             <div class="col-md-4">
                 <label class="label" for="statusOrder"> Status Order :</label>

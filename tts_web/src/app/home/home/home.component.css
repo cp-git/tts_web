@@ -1,4 +1,3 @@
-/* Styling for Navbar */
 body {
     display: block;
     overflow-x: hidden;
@@ -14,31 +13,28 @@ nav {
 
 .navbar-brand {
     font-size: 24px;
-    /* / text-transform: uppercase; */
     font-weight: 900;
-    color: #683aa4;
+    color: #683AA4;
 }
 
 nav ul li a {
-    color: #a9a9a9;
+    color: #D2BCD6;
     font-size: 22px;
     margin: auto 10px;
 }
 
 nav ul li a:hover {
-    color: #683aa4;
+    color: #FFFFFF;
 }
 
-/* Styling for Hero Section */
 section {
     padding-top: 50px;
     padding-bottom: 50px;
 }
 
 section h1 {
-    /* text-transform: uppercase; */
     font-weight: 900;
-    color: #683aa4;
+    color: #683AA4;
     text-align: left;
     margin-bottom: 20px;
 }
@@ -54,11 +50,11 @@ button {
 }
 
 #hero .col {
+    margin-top: 50px;
     justify-content: center;
     flex-direction: column;
     display: flex;
 }
-
 
 #hero .img-col {
     justify-content: flex-end;
@@ -70,10 +66,9 @@ button {
     width: 100%;
 }
 
-
 /* Styling for the cards */
 #hero .card {
-    box-shadow: 11px 7px 16px #f9f9f9;
+    box-shadow: 11px 7px 16px #F9F9F9;
     border: 0;
     text-align: center;
 }
@@ -82,26 +77,27 @@ button {
     width: 18rem;
 }
 
-/* Styling for Icons if added */
 #hero .icon {
     width: 50px;
     height: 50px;
     margin-bottom: 20px;
 }
 
-/* Styling for the Project Section */
 #projects .projects {
     margin-bottom: 50px;
 }
 
-/* contact section styling */
 #contact {
     text-align: center;
-    background-color: #683aa4;
+    background-color: #683AA4;
     color: white;
 }
 
 #contact h1 {
     text-align: center;
     color: white;
+}
+
+.bg-purple {
+    background-color: purple;
 }
