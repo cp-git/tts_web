@@ -2,6 +2,13 @@
     max-height: 500px;
     /* Adjust the height as needed */
     overflow-y: auto;
+    
+    border: 1px solid black;
+  
+    padding: 0% 1% 1% 1%; 
+    /* top right botton left */
+
+    border-radius: 5px;
 }
 
 .table-container thead th {
@@ -23,3 +30,18 @@
     background-color: transparent;
     border-radius: 0.25em;
 }
+
+/* for fieldset */
+fieldset {
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    border: 2px solid black !important;
+
+}
+
+.p-5 {
+    padding: 1rem !important;
+}
+
+/* end - for fieldset */

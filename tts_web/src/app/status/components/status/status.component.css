@@ -1,7 +1,8 @@
 .table-container {
     border: 1px solid black;
     /* You can customize the border style and color here */
-    padding: 10px;
+    padding: 0% 1% 1% 1%; 
+    /* top right botton left */
     /* Add some padding to create space between the border and content */
     border-radius: 5px;
     /* Optionally, add rounded corners */
