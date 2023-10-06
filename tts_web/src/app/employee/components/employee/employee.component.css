@@ -5,13 +5,13 @@
 .table-container {
     margin-top: 20px;
 
-    max-height: 500px;
+    max-height: 450px;
     /* Adjust the height as needed */
     overflow-y: auto;
 
     border: 1px solid black;
     /* You can customize the border style and color here */
-    padding: 0% 1% 1% 1%; 
+    padding: 0% 1% 1% 1%;
     /* top right botton left */
 
     /* Add some padding to create space between the border and content */
