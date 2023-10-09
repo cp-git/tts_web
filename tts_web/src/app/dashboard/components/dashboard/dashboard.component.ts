@@ -170,6 +170,7 @@ export class DashboardComponent implements OnInit {
     sessionStorage.removeItem('employeeId');
     sessionStorage.removeItem('companyId');
     sessionStorage.removeItem('empData');
+    sessionStorage.removeItem('selectedStatuses');
 
     this.router.navigate(['/']); // Navigate to the root URL
   }

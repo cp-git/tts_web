@@ -35,7 +35,7 @@ export class StatusButtonsComponent implements OnInit {
 
     // Initialize selected values from SessionStorage or use default values
     const selectedStatusesJson = sessionStorage.getItem('selectedStatuses');
-    this.selectedStatuses = selectedStatusesJson ? JSON.parse(selectedStatusesJson) : ['ALL']; // Set "All" by default
+    this.selectedStatuses = selectedStatusesJson ? JSON.parse(selectedStatusesJson) : []; // Set "All" by default
     this.selectedCreatedBy = sessionStorage.getItem('selectedCreatedBy') || 0;
     this.selectedAssignedTo = sessionStorage.getItem('selectedAssignedTo') || 0;
 
