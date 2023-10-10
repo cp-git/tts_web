@@ -15,3 +15,7 @@ img {
     height: 200px;
     object-fit: contain;
 }
+
+.required-asterisk {
+    color: red;
+}

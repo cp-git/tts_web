@@ -53,21 +53,30 @@
                 <label for="taskName" class="form-label">Task Name<span class="required-asterisk"
                         *ngIf="!updateScreen">*</span></label>
                 <input
-                    [disabled]="(task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    [disabled]="(task.taskStatus === statusEnum.DONE || task.taskStatus === statusEnum.CANCELLED) || !(employeeId == backupTask.taskCreatedBy || employeeId == backupTask.taskAssignedTo)"
                     type="text" class="form-control extra-light-placeholder" id="taskName" name="taskName"
-                    placeholder="Enter task name" [(ngModel)]="task.taskName" [required]="true" maxlength="100">
+                    placeholder="Enter task name" [(ngModel)]="task.taskName" [required]="true" maxlength="100"
+                    #taskNameField="ngModel">
+                <div *ngIf="taskNameField.invalid && (taskNameField.dirty||taskNameField.touched) " class="text-danger">
+                    Task Name is required.
+                </div>
             </div>
 
         </div>
 
         <div class="row">
             <div class="col">
-                <label for="taskDescription" class="form-label">Task
-                    Description<span class="required-asterisk" *ngIf="!updateScreen">*</span></label>
+                <label for="taskDescription" class="form-label">Task Description<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label>
                 <textarea
-                    [disabled]="(task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    [disabled]="(task.taskStatus === statusEnum.DONE || task.taskStatus === statusEnum.CANCELLED) || !(employeeId == backupTask.taskCreatedBy || employeeId == backupTask.taskAssignedTo)"
                     class="form-control" id="taskDescription" name="taskDescription" [(ngModel)]="task.taskDescription"
-                    placeholder="Enter task description" [required]="true" maxlength="255"></textarea>
+                    placeholder="Enter task description" [required]="true" maxlength="255"
+                    #taskDescriptionField="ngModel"></textarea>
+                <div *ngIf="taskDescriptionField.invalid && (taskDescriptionField.dirty||taskDescriptionField.touched) "
+                    class="text-danger">
+                    Task Description is required.
+                </div>
             </div>
         </div>
         <div class="row">
@@ -131,23 +140,32 @@
                 <ng-container *ngIf="!updateScreen">
                     <ng-container *ngIf="task.taskStatus == statusEnum.INPROGRESS">
                         <input [disabled]="true" type="date" class="form-control" id="startDate" name="startDate"
-                            [(ngModel)]="todayForPlannedStartDate" [required]="true">
+                            [(ngModel)]="todayForPlannedStartDate" [required]="true" #startDateField="ngModel">
                     </ng-container>
 
                     <ng-container *ngIf="task.taskStatus != statusEnum.INPROGRESS">
                         <input
                             [disabled]="task.taskStatus === statusEnum.DONE || task.taskStatus === statusEnum.CANCELLED"
                             type="date" class="form-control" id="startDate" name="startDate"
-                            [(ngModel)]="task.taskStartDate" [required]="true" [disabled]="updateScreen"
-                            [min]="currentDate">
+                            [(ngModel)]="task.taskStartDate" [required]="true" [min]="currentDate"
+                            #startDateField="ngModel">
+                        <div *ngIf="startDateField.invalid && (startDateField.dirty||startDateField.touched)"
+                            class="text-danger">
+                            Start Date is required.
+                        </div>
                     </ng-container>
                 </ng-container>
 
                 <ng-container *ngIf="updateScreen">
                     <input [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
                         type="date" class="form-control " id="startDate" name="startDate"
-                        [(ngModel)]="task.taskStartDate" [required]="true" [disabled]="updateScreen"
-                        [min]="currentDate">
+                        [(ngModel)]="task.taskStartDate" [required]="true" [disabled]="updateScreen" [min]="currentDate"
+                        #startDateField="ngModel">
+
+                    <div *ngIf="startDateField.invalid && (startDateField.dirty||startDateField.touched)"
+                        class="text-danger">
+                        Start Date is required.
+                    </div>
                 </ng-container>
             </div>
             <div class="col-sm-3">
@@ -157,15 +175,26 @@
                     <input [disabled]="task.taskStatus === statusEnum.CANCELLED" type="date" class="form-control"
                         id="endDate" name="endDate" [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate"
                         [required]="true" [min]="todayForPlannedStartDate"
-                        [disabled]="task.taskStartDate==null || updateScreen || task.taskStatus == statusEnum.DONE">
+                        [disabled]="task.taskStartDate==null || updateScreen || task.taskStatus == statusEnum.DONE"
+                        #endDateField="ngModel">
+                    <div *ngIf="endDateField.invalid " class="text-danger">
+                        End Date is required.
+                    </div>
                 </ng-container>
                 <ng-container *ngIf="updateScreen">
                     <input [disabled]="task.taskStatus === statusEnum.CANCELLED" type="date" class="form-control"
                         id="endDate" name="endDate" [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate"
                         [required]="true"
-                        [disabled]="task.taskStartDate==null || updateScreen || task.taskStatus == statusEnum.DONE">
+                        [disabled]="task.taskStartDate==null || updateScreen || task.taskStatus == statusEnum.DONE"
+                        #endDateField="ngModel">
+
+                    <div *ngIf="endDateField.invalid " class="text-danger">
+                        End Date is required.
+                    </div>
                 </ng-container>
             </div>
+
+
 
             <div class="col-sm-3">
                 <label for="actualStartDate" class="form-label">Actual Start date</label>
@@ -181,15 +210,19 @@
                     [(ngModel)]="todayForEndDate" [min]="task.taskActualStartDate"
                     [required]="updateScreen && task.taskStatus == statusEnum.DONE" disabled>
             </div>
-        </div>
 
+        </div>
         <div class="row">
             <div class="col">
                 <label for="taskReason" class="form-label">Reason<span class="required-asterisk">*</span></label>
                 <textarea
-                    [disabled]="(task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    [disabled]="(task.taskStatus === statusEnum.DONE || task.taskStatus === statusEnum.CANCELLED) || !(employeeId == backupTask.taskCreatedBy || employeeId == backupTask.taskAssignedTo)"
                     class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
-                    placeholder="Enter reason" [required]="updateScreen" maxlength="250"></textarea>
+                    placeholder="Enter reason" [required]="true" maxlength="250" #taskReasonField="ngModel"></textarea>
+                <div *ngIf="taskReasonField.invalid && (taskReasonField.dirty||taskReasonField.touched)"
+                    class="text-danger">
+                    Reason is required.
+                </div>
             </div>
         </div>
         <div class="row">
