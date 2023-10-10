@@ -7,27 +7,31 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <label class="label" for="statusCode">Status Code:</label>
+                <label class="label" for="statusCode">Status Code:<span class="required-asterisk">*</span></label>
                 <input type="text" id="statusCode" name="statusCode" [(ngModel)]="status.statusCode" required
                     class="form-control" maxlength="25" #statusCodeField="ngModel">
-                <div *ngIf="statusCodeField.invalid " class="text-danger">
+                <div *ngIf="statusCodeField.invalid && (statusCodeField.dirty||statusCodeField.touched) "
+                    class="text-danger">
                     Status Code is required.
                 </div>
             </div>
             <div class="col-md-4">
-                <label class="label" for="statusDescription">Description:</label>
+                <label class="label" for="statusDescription">Description:<span
+                        class="required-asterisk">*</span></label>
                 <input type="text" id="statusDescription" name="statusDescription"
                     [(ngModel)]="status.statusDescription" required class="form-control" maxlength="255"
                     #statusDescriptionField="ngModel">
-                <div *ngIf="statusDescriptionField.invalid " class="text-danger">
+                <div *ngIf="statusDescriptionField.invalid && (statusDescriptionField.dirty||statusDescriptionField.touched)"
+                    class="text-danger">
                     Description is required.
                 </div>
             </div>
             <div class="col-md-4">
-                <label class="label" for="statusOrder">Status Order:</label>
+                <label class="label" for="statusOrder">Status Order:<span class="required-asterisk">*</span></label>
                 <input type="number" id="statusOrder" name="statusOrder" [(ngModel)]="status.statusOrder" required
                     class="form-control" #statusOrderField="ngModel">
-                <div *ngIf="statusOrderField.invalid " class="text-danger">
+                <div *ngIf="statusOrderField.invalid && (statusOrderField.dirty||statusOrderField.touched)"
+                    class="text-danger">
                     Status Order is required.
                 </div>
             </div>

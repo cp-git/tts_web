@@ -9,24 +9,27 @@
         <div class="row">
             <!-- Input field for the first name -->
             <div class="col-md-4">
-                <label for="firstName"><strong>First Name:</strong></label>
+                <label for="firstName"><strong>First Name:<span class="required-asterisk">*</span></strong></label>
                 <input type="text" id="firstName" name="firstName" [(ngModel)]="employeeData.firstName" required
                     class="form-control" maxlength="50" #firstNameField="ngModel">
-                <div *ngIf="firstNameField.invalid" class="text-danger">
+                <div *ngIf="firstNameField.invalid && (firstNameField.dirty|| firstNameField.touched)"
+                    class="text-danger">
                     First Name is required.</div>
             </div>
             <!-- Input field for the last name -->
             <div class="col-md-4">
-                <label for="lastName"><strong>Last Name:</strong></label>
+                <label for="lastName"><strong>Last Name:<span class="required-asterisk">*</span></strong></label>
                 <input type="text" id="lastName" name="lastName" [(ngModel)]="employeeData.lastName" required
                     class="form-control" maxlength="50" #lastNameField="ngModel">
-                <div *ngIf="lastNameField.invalid" class="text-danger">Last
+                <div *ngIf="lastNameField.invalid && (lastNameField.dirty|| lastNameField.touched)" class="text-danger">
+                    Last
                     Name is required.</div>
             </div>
 
             <!-- Dropdown to select the country -->
             <div class="col-md-4">
-                <label class="label" for="countryId"><strong>Country:</strong></label>
+                <label class="label" for="countryId"><strong>Country:<span
+                            class="required-asterisk">*</span></strong></label>
                 <select id="countryId" name="countryId" [(ngModel)]="employeeData.countryId" required
                     class="form-control" [disabled]="isAdmin" #countryField="ngModel">
                     <!-- Check if isAdmin is true -->
@@ -40,7 +43,7 @@
                         </option>
                     </ng-template>
                 </select>
-                <div *ngIf="countryField.invalid " class="text-danger">
+                <div *ngIf="countryField.invalid && (countryField.dirty||countryField.touched)" class="text-danger">
                     Country is required.</div>
             </div>
 
@@ -48,7 +51,8 @@
 
             <!-- Dropdown to select the company -->
             <div class="col-md-4">
-                <label class="label" for="companyId"><strong>Company:</strong></label>
+                <label class="label" for="companyId"><strong>Company:<span
+                            class="required-asterisk">*</span></strong></label>
                 <select id="companyId" name="companyId" [(ngModel)]="employeeData.companyId" required
                     class="form-control" [disabled]="isAdmin" #companyField="ngModel">
                     <ng-container *ngIf="isAdmin; else showCompanies">
@@ -62,7 +66,8 @@
                             {{ company.companyName }}</option>
                     </ng-template>
                 </select>
-                <div *ngIf="companyField.invalid" class="text-danger">Company is
+                <div *ngIf="companyField.invalid && (companyField.dirty||companyField.touched)" class="text-danger">
+                    Company is
                     required.</div>
             </div>
 
@@ -70,20 +75,22 @@
 
             <!-- Input field for the date of birth (DOB) -->
             <div class="col-md-4">
-                <label for="birthDate"><strong>DOB:</strong></label>
+                <label for="birthDate"><strong>DOB:<span class="required-asterisk">*</span></strong></label>
                 <input type="date" id="birthDate" name="birthDate" [(ngModel)]="employeeData.birthDate" required
                     class="form-control" max="{{ getMaxDate() }}" #birthDateField="ngModel">
-                <div *ngIf="birthDateField.invalid " class="text-danger">DOB is
+                <div *ngIf="birthDateField.invalid && (birthDateField.dirty||birthDateField.touched)"
+                    class="text-danger">DOB is
                     required.</div>
             </div>
 
             <!-- Input field for the employee's email -->
             <div class="col-md-4">
-                <label for="employeeEmail"><strong>Email:</strong></label>
+                <label for="employeeEmail"><strong>Email:<span class="required-asterisk">*</span></strong></label>
                 <input type="email" id="employeeEmail" name="employeeEmail" [(ngModel)]="employeeData.employeeEmail"
                     required pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}" class="form-control" maxlength="50"
                     #emailField="ngModel">
-                <div *ngIf="emailField.invalid " class="text-danger">Invalid Email
+                <div *ngIf="emailField.invalid && (emailField.dirty||emailField.touched)" class="text-danger">Invalid
+                    Email
                     Address.</div>
             </div>
         </div>
@@ -91,28 +98,32 @@
         <div class="row">
             <!-- Input field for the employee's username -->
             <div class="col-md-4">
-                <label for="username"><strong>UserName:</strong></label>
+                <label for="username"><strong>UserName:<span class="required-asterisk">*</span></strong></label>
                 <input type="text" id="username" name="username" [(ngModel)]="employeeData.username" required
                     class="form-control" maxlength="50" #usernameField="ngModel">
-                <div *ngIf="usernameField.invalid " class="text-danger">
+                <div *ngIf="usernameField.invalid && (usernameField.dirty || usernameField.touched) "
+                    class="text-danger">
                     Username is required.
                 </div>
             </div>
 
             <!-- Input field for the employee's password -->
             <div class="col-md-4">
-                <label for="password"><strong>Password:</strong></label>
+                <label for="password"><strong>Password:<span class="required-asterisk">*</span></strong></label>
                 <input type="text" id="password" name="password" [(ngModel)]="employeeData.password" required
                     class="form-control" #passwordField="ngModel">
-                <div *ngIf="passwordField.invalid " class="text-danger">
+                <div *ngIf="passwordField.invalid && (passwordField.dirty || passwordField.touched)"
+                    class="text-danger">
                     Password is required.</div>
             </div>
             <!-- Input field for the profile image -->
             <div class="col-md-4">
-                <label class="label" for="photoFilename"><strong>Profile:</strong></label>
+                <label class="label" for="photoFilename"><strong>Profile:<span
+                            class="required-asterisk">*</span></strong></label>
                 <input type="file" id="photoFilename" name="photoFilename" (change)="onFileSelected($event)"
                     class="form-control" ngModel [required]="true" #photoFilenameField="ngModel">
-                <div *ngIf="photoFilenameField.invalid " class="text-danger">Profile Image is required.</div>
+                <div *ngIf="photoFilenameField.invalid && (photoFilenameField.dirty || photoFilenameField.touched) "
+                    class="text-danger">Profile Image is required.</div>
             </div>
         </div>
 

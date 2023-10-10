@@ -29,7 +29,7 @@
                     <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}
                     </option>
                 </select>
-                <div *ngIf="countryField.invalid " class="text-danger">
+                <div *ngIf="countryField.invalid && (countryField.dirty||countryField.touched)" class="text-danger">
                     Country is required.
                 </div>
             </div>
@@ -45,7 +45,7 @@
                         [value]="company.companyId">
                         {{ company.companyName }}</option>
                 </select>
-                <div *ngIf="companyField.invalid " class="text-danger">
+                <div *ngIf="companyField.invalid && (companyField.dirty||companyField.touched)" class="text-danger">
                     Company is required.
                 </div>
             </div>
@@ -55,7 +55,8 @@
                 <label for="birthDate"><strong>DOB:</strong></label>
                 <input type="date" id="birthDate" name="birthDate" [ngModel]="employee.birthDate | date:'yyyy-MM-dd'"
                     required class="form-control" max="{{ getMaxDate() }}" #birthDateField="ngModel">
-                <div *ngIf="birthDateField.invalid " class="text-danger">
+                <div *ngIf="birthDateField.invalid && (birthDateField.dirty||birthDateField.touched) "
+                    class="text-danger">
                     DOB is required.
                 </div>
             </div>
@@ -65,7 +66,7 @@
                 <input type="email" id="employeeEmail" name="employeeEmail" [(ngModel)]="employee.employeeEmail"
                     required pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}" class="form-control" maxlength="50"
                     #emailField="ngModel">
-                <div *ngIf="emailField.invalid " class="text-danger">
+                <div *ngIf="emailField.invalid && (emailField.dirty||emailField.touched)" class="text-danger">
                     Invalid Email Address.
                 </div>
             </div>
@@ -73,7 +74,8 @@
                 <label class="label" for="photoFilename"><strong>Profile:</strong></label>
                 <input type="file" id="photoFilename" name="photoFilename" (change)="onFileSelected($event)"
                     class="form-control" ngModel #photoFilenameField="ngModel">
-                <div *ngIf="photoFilenameField.invalid " class="text-danger">
+                <div *ngIf="photoFilenameField.invalid && (photoFilenameField.dirty||photoFilenameField.touched) "
+                    class="text-danger">
                     Profile Image is required.
                 </div>
             </div>
