@@ -117,8 +117,15 @@
                     [(ngModel)]="task.taskStatus" [required]="true" (change)="onChangeStatus(task.taskStatus, task)">
                     <option value="undefined" disabled>Select Option</option>
                     <ng-container *ngFor="let status of allStatus">
-                        <option value="{{status.statusId}}">{{status.statusCode |titlecase}}
-                        </option>
+                        <ng-container *ngIf="updateScreen">
+                            <option value="{{status.statusId}}">{{status.statusCode |titlecase}}
+                            </option>
+                        </ng-container>
+                        <ng-container
+                            *ngIf="!updateScreen && (status.statusId !== statusEnum.DONE && status.statusId !== statusEnum.CANCELLED)">
+                            <option value="{{status.statusId}}">{{status.statusCode |titlecase}}
+                            </option>
+                        </ng-container>
                     </ng-container>
                 </select>
 
@@ -128,25 +135,44 @@
         <div class="row">
             <div class="col-sm-3">
                 <label for="startDate" class="form-label">Start date<span class="required-asterisk"
-                        *ngIf="!updateScreen"></span></label>
-                <input [disabled]="task.taskStatus === statusEnum.DONE || task.taskStatus === statusEnum.CANCELLED"
-                    type="date" class="form-control" id="startDate" name="startDate" [(ngModel)]="task.taskStartDate"
-                    [required]="true" [disabled]="updateScreen" [min]="currentDate" #startDateField="ngModel">
-                <div *ngIf="startDateField.invalid " class="text-danger">
-                    Start Date is required.
-                </div>
+                        *ngIf="!updateScreen">*</span></label>
+                <ng-container *ngIf="!updateScreen">
+                    <ng-container *ngIf="task.taskStatus == statusEnum.INPROGRESS">
+                        <input [disabled]="true" type="date" class="form-control" id="startDate" name="startDate"
+                            [(ngModel)]="todayForPlannedStartDate" [required]="true">
+                    </ng-container>
+
+                    <ng-container *ngIf="task.taskStatus != statusEnum.INPROGRESS">
+                        <input
+                            [disabled]="task.taskStatus === statusEnum.DONE || task.taskStatus === statusEnum.CANCELLED"
+                            type="date" class="form-control" id="startDate" name="startDate"
+                            [(ngModel)]="task.taskStartDate" [required]="true" [disabled]="updateScreen"
+                            [min]="currentDate">
+                    </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="updateScreen">
+                    <input [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
+                        type="date" class="form-control " id="startDate" name="startDate"
+                        [(ngModel)]="task.taskStartDate" [required]="true" [disabled]="updateScreen"
+                        [min]="currentDate">
+                </ng-container>
             </div>
             <div class="col-sm-3">
                 <label for="endDate" class="form-label">End date<span class="required-asterisk"
-                        *ngIf="!updateScreen"></span></label>
-                <input [disabled]="task.taskStatus === statusEnum.CANCELLED" type="date" class="form-control"
-                    id="endDate" name="endDate" [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate"
-                    [required]="true"
-                    [disabled]="task.taskStartDate == null || updateScreen || task.taskStatus == statusEnum.DONE"
-                    #endDateField="ngModel">
-                <div *ngIf="endDateField.invalid " class="text-danger">
-                    End Date is required.
-                </div>
+                        *ngIf="!updateScreen">*</span></label>
+                <ng-container *ngIf="!updateScreen">
+                    <input [disabled]="task.taskStatus === statusEnum.CANCELLED" type="date" class="form-control"
+                        id="endDate" name="endDate" [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate"
+                        [required]="true" [min]="todayForPlannedStartDate"
+                        [disabled]="task.taskStartDate==null || updateScreen || task.taskStatus == statusEnum.DONE">
+                </ng-container>
+                <ng-container *ngIf="updateScreen">
+                    <input [disabled]="task.taskStatus === statusEnum.CANCELLED" type="date" class="form-control"
+                        id="endDate" name="endDate" [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate"
+                        [required]="true"
+                        [disabled]="task.taskStartDate==null || updateScreen || task.taskStatus == statusEnum.DONE">
+                </ng-container>
             </div>
 
             <div class="col-sm-3">
