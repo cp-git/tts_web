@@ -135,7 +135,7 @@
         <div class="row">
             <div class="col-sm-3">
                 <label for="startDate" class="form-label">Start date<span class="required-asterisk"
-                        *ngIf="!updateScreen">*</span></label>
+                        *ngIf="!updateScreen"></span></label>
                 <ng-container *ngIf="!updateScreen">
                     <ng-container *ngIf="task.taskStatus == statusEnum.INPROGRESS">
                         <input [disabled]="true" type="date" class="form-control" id="startDate" name="startDate"
@@ -167,7 +167,7 @@
             </div>
             <div class="col-sm-3">
                 <label for="endDate" class="form-label">End date<span class="required-asterisk"
-                        *ngIf="!updateScreen">*</span></label>
+                        *ngIf="!updateScreen"></span></label>
                 <ng-container *ngIf="!updateScreen">
                     <input [disabled]="task.taskStatus === statusEnum.CANCELLED" type="date" class="form-control"
                         id="endDate" name="endDate" [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate"
@@ -211,7 +211,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <label for="taskReason" class="form-label">Reason<span class="required-asterisk">*</span></label>
+                <label for="taskReason" class="form-label">Reason<span class="required-asterisk"></span></label>
                 <textarea
                     [disabled]="(task.taskStatus === statusEnum.DONE || task.taskStatus === statusEnum.CANCELLED) || !(employeeId == backupTask.taskCreatedBy || employeeId == backupTask.taskAssignedTo)"
                     class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
