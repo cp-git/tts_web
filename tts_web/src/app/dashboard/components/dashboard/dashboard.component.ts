@@ -9,6 +9,7 @@ import { Company } from 'src/app/company/class/company';
 import { StatusService } from 'src/app/status/services/status.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.dev';
+import { Task2 } from 'src/app/classes/task2';
 
 // Define the component metadata, including the selector, template, and styles
 @Component({
@@ -98,39 +99,50 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+
+  // 
+  // getting all task based on created by, assigned to and status
   // Fetch parent tasks based on specified filters
-  // Fetch parent tasks based on specified filters
+  // getParentTask(data: any) {
+  //   console.log(data);
+  //   const createdBy = data.createdBy;
+  //   const assignedTo = data.assignedTo;
+  //   const companyId = data.companyId;
+  //   const parentId = data.parentId;
+
+  //   // Check if statuses array is empty
+  //   const statuses = data.statuses.length === 0
+  //     ? ["ALL"] // If empty, use "ALL" as the status
+  //     : data.statuses.map((status: any) => status.itemName); // Extract itemName values
+
+  //   this.taskService
+  //     .getTasksByStatusAndCreatorAndAssigneeOfCompanyByCompanyIdId(
+  //       parentId,
+  //       statuses,
+  //       createdBy,
+  //       assignedTo,
+  //       companyId
+  //     )
+  //     .subscribe(
+  //       (response) => {
+  //         this.parentTaskData = response;
+  //         console.log('Parent Task Data:', this.parentTaskData);
+  //       },
+  //       (error) => {
+  //         console.log('Failed to get parent tasks for statuses:', statuses);
+  //       }
+  //     );
+  // }
+
+  parentAndAllTask!: Task2;
+  // get all task by created by me or assigned to me
   getParentTask(data: any) {
-    console.log(data);
-    const createdBy = data.createdBy;
-    const assignedTo = data.assignedTo;
-    const companyId = data.companyId;
-    const parentId = data.parentId;
-
-    // Check if statuses array is empty
-    const statuses = data.statuses.length === 0
-      ? ["ALL"] // If empty, use "ALL" as the status
-      : data.statuses.map((status: any) => status.itemName); // Extract itemName values
-
-    this.taskService
-      .getTasksByStatusAndCreatorAndAssigneeOfCompanyByCompanyIdId(
-        parentId,
-        statuses,
-        createdBy,
-        assignedTo,
-        companyId
-      )
-      .subscribe(
-        (response) => {
-          this.parentTaskData = response;
-          console.log('Parent Task Data:', this.parentTaskData);
-        },
-        (error) => {
-          console.log('Failed to get parent tasks for statuses:', statuses);
-        }
-      );
+    this.taskService.getTaskCreatedByMeOrAssignedToMe(this.employeeId).subscribe(
+      (response) => {
+        this.parentAndAllTask = response;
+      }
+    );
   }
-
 
   // Fetch all statuses
   private getAllStatus() {
@@ -173,5 +185,13 @@ export class DashboardComponent implements OnInit {
     sessionStorage.removeItem('selectedStatuses');
 
     this.router.navigate(['/']); // Navigate to the root URL
+  }
+
+  filterdStatuses:Status[]=[];
+  onChangeStatusFilter(data: any) {
+    console.log(data);
+    this.filterdStatuses = data;
+    console.log(this.filterdStatuses);
+    
   }
 }

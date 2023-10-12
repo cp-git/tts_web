@@ -7,6 +7,7 @@ import { TaskService } from '../../services/task.service';
 import { StatusEnum } from 'src/app/status/enum/status.enum';
 import { StatusService } from 'src/app/status/services/status.service';
 import { CreateTaskComponent } from '../create-task/create-task.component';
+import { Task2 } from 'src/app/classes/task2';
 
 @Component({
   selector: 'app-task-table',
@@ -15,11 +16,17 @@ import { CreateTaskComponent } from '../create-task/create-task.component';
 })
 export class TaskTableComponent implements OnInit {
 
+
   @Input() parentTaskData: Task[] = [];
+
+  @Input() parentAndAllTask!: Task2;
+  @Input() filteredStatus!: Status[];
+
   @Input() employees: Employee[] = [];
   @Input() allStatus: Status[] = [];
   @Input() modalId: number = 0;
   @Input() task: Task = {} as Task;
+
   statusEnum = StatusEnum;
   employeeId: any;
   companyId: any;
@@ -71,6 +78,30 @@ export class TaskTableComponent implements OnInit {
     //   this.showChildTable = new Map();
     // }
 
+    if (changes['parentAndAllTask']) {
+
+      this.parentAndAllTask.parentTasks.forEach(task => {
+        console.log(this.parentAndAllTask.childTasks);
+
+
+        task.childTask = [];
+        task.childTask.push(task);
+        let childData = this.parentAndAllTask.childTasks;
+        console.log(childData);
+
+        childData.forEach(child => {
+          console.log(child);
+
+          if (task.taskId == child.taskParent) {
+            task.childTask.push(child);
+          }
+        })
+      });
+      console.log(this.parentAndAllTask);
+
+      // this.emptyTask = this.emptyTask;
+    }
+
     if (changes['emptyTask']) {
       console.log(this.emptyTask);
 
@@ -80,13 +111,18 @@ export class TaskTableComponent implements OnInit {
 
   // for opening/ closing child table for task
   toggleChildTable(task: Task): void {
-
+    if (task.isToggled == undefined)
+      task.isToggled = false;
     // updating showChildTable variable with toggled value
-    this.showChildTable.set(task.taskId, !this.showChildTable.get(task.taskId));
-
+    // this.showChildTable.set(task.taskId, !this.showChildTable.get(task.taskId));
+    // alert()
     // calling function to get child task
-    this.onClickChild(task);
+    if (task.isToggled == false) {
+      this.onClickChild(task);
+      task.isToggled = true;
+    }
   }
+
 
 
   // for getting child task using parent id
@@ -100,13 +136,40 @@ export class TaskTableComponent implements OnInit {
 
     // console.log("exist");
     // calling function to get child task using parent id
+
     this.taskService.getChildTaskByParentId(task.taskId).subscribe(
       (response) => {
-        this.childData = [];
-        this.childData = response;
+        console.log(this.parentAndAllTask);
+        // const uniqueKeys = new Set(this.parentAndAllTask.childTasks.map(item => item.taskId));
 
-        // setting child data to parent task
-        this.parentTaskData[this.parentTaskData.indexOf(task)].childTask = this.childData;
+        // // this.parentAndAllTask.childTasks.push(...response);
+        // response.forEach(item => {
+        //   if (!uniqueKeys.has(item.taskId)) {
+        //     this.parentAndAllTask.childTasks.push(item);
+        //     uniqueKeys.add(item.taskId);
+        //   }
+        // });
+        // console.log(this.parentAndAllTask);
+
+        const uniqueKeys = new Set(this.parentAndAllTask.childTasks.map(item => item.taskId));
+
+        // this.parentAndAllTask.childTasks.push(...response);
+        response.forEach(item => {
+          if (!uniqueKeys.has(item.taskId)) {
+            this.parentAndAllTask.childTasks.push(item);
+            task.childTask.push(item);
+            uniqueKeys.add(item.taskId);
+          }
+        });
+        console.log(task);
+        
+        console.log(this.parentAndAllTask);
+
+        // this.childData = [];
+        // this.childData = response;
+
+        // // setting child data to parent task
+        // this.parentTaskData[this.parentTaskData.indexOf(task)].childTask = this.childData;
 
 
       },
@@ -115,29 +178,6 @@ export class TaskTableComponent implements OnInit {
       }
     );
     // }     
-  }
-
-  // calls when we change status
-  onChangeStatus(task: Task) {
-    // const status = this.allStatus.find(status => task.taskStatus == status.statusId);
-    const status = this.statusEnum[task.taskStatus];
-    console.log("here " + status);
-    if (status) {
-      switch (status.toLowerCase()) {
-        case 'create':
-          break;
-
-        case 'inprogress':
-          break;
-
-        case 'done':
-          // when status is done then setting actual end date to current date
-          // task.taskActualEndDate = new Date();
-          break;
-
-      }
-    }
-
   }
 
   onClickCreateTask(task: Task, operation: string) {
@@ -198,5 +238,9 @@ export class TaskTableComponent implements OnInit {
         console.log("Failed to get all status");
       }
     );
+  }
+
+  onTriggered(data: Task) {
+    alert();
   }
 }

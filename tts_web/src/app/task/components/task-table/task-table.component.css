@@ -1,42 +1,65 @@
 span {
-    margin-bottom: 5px;
-    margin-top: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .icons {
-    padding: 0px 12px;
+  padding: 0px 12px;
 }
 
 .table-custom-font-size td,
 .table-custom-font-size th {
-    /* font-size: 15px;  */
+  /* font-size: 15px;  */
 }
 
 .table {
-    margin-top: 5px;
-    border-color: black;
-    border-width: 4px;
-    font-size: 14px;
+  margin-top: 5px;
+  /* border-color: black; */
+  /* border-width: 4px; */
+  font-size: 14px;
 }
 
 .taskTable {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .disabled-icon {
-    opacity: 0.5;
-    /* You can adjust the styling to visually indicate that it's disabled */
-    pointer-events: none;
-    /* Prevents clicks on the icon when disabled */
-    cursor: not-allowed;
-    /* Shows a "not-allowed" cursor when hovering over the icon */
+  opacity: 0.5;
+  /* You can adjust the styling to visually indicate that it's disabled */
+  pointer-events: none;
+  /* Prevents clicks on the icon when disabled */
+  cursor: not-allowed;
+  /* Shows a "not-allowed" cursor when hovering over the icon */
 }
 
 th {
-    line-height: 20px !important;
-
+  line-height: 20px !important;
 }
 
 .col-height {
-    line-height: 10px;
+  line-height: 10px;
+}
+
+.expansionrow {
+  margin-top: 1rem;
+}
+
+.align-right {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 3%;
+  margin-top: 0.1%;
+}
+
+.mat-expansion-panel-header {
+  margin: 0.6%;
+}
+
+
+.mainaddtaskbtn{
+  /* display: flex;
+  justify-content: flex-end; */
+  font-size:xx-large;
+  /* margin: 2%; */
+  /* padding: -100px */
 }

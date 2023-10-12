@@ -53,12 +53,13 @@
         <div class="container">
 
             <!-- status buttons (Created/ In-Progress/ Done) -->
-            <app-status-buttons (onChangeFilter)="getParentTask($event)"></app-status-buttons>
-
+            <!-- <app-status-buttons (onChangeFilter)="getParentTask($event)"></app-status-buttons> -->
+            <app-status-dropdown (onChangeStatusFilter)="onChangeStatusFilter($event)"></app-status-dropdown>
         </div>
 
         <!-- task table  -->
-        <app-task-table [parentTaskData]="parentTaskData" [employees]="employees"
+        <!-- {{parentAndAllTask|json}} -->
+        <app-task-table [parentTaskData]="parentTaskData" [parentAndAllTask]="parentAndAllTask" [filteredStatus]="filterdStatuses" [employees]="employees"
             [allStatus]="allStatus"></app-task-table>
 
     </div>

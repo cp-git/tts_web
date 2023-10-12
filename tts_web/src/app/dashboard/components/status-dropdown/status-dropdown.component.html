@@ -1,0 +1,17 @@
+<div class="row align-right">
+    <div class="col-md-3 border-around">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <b> Task :</b>
+            </div>
+            <div class="col">
+                <!-- Use the ng-multiselect-dropdown component for multi-select -->
+                <ng-multiselect-dropdown [placeholder]="'Select Statuses'" [data]="statusOptions"
+                    [(ngModel)]="selectedStatuses" [settings]="dropdownSettings" (onSelect)="onChangeFilterTask()"
+                    (onDeSelect)="onChangeFilterTask()" (onSelectAll)="onChangeFilterTask()"
+                    (onDeSelectAll)="onChangeFilterTask()">
+                </ng-multiselect-dropdown>
+            </div>
+        </div>
+    </div>
+</div>

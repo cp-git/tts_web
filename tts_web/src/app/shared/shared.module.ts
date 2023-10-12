@@ -5,13 +5,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FilterPipe } from './pipe/filter.pipe';
 import { AdvFilterPipe } from './pipe/adv-filter.pipe';
 import { MatIconModule } from '@angular/material/icon';
+import { StatusFilterPipe } from './pipe/status-filter.pipe';
 
 @NgModule({
   declarations: [
     DialogueBoxComponent,
 
     FilterPipe,
-    AdvFilterPipe
+    AdvFilterPipe,
+    StatusFilterPipe
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   exports: [
     FilterPipe,
-    AdvFilterPipe
+    AdvFilterPipe,
+    StatusFilterPipe
   ]
 })
 export class SharedModule { }

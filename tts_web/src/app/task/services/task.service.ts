@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Task } from '../class/task';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
+import { Task2 } from 'src/app/classes/task2';
 
 @Injectable({
   providedIn: 'root'
@@ -63,5 +64,9 @@ export class TaskService {
 
   downloadFileByTaskIdAndFileName(taskId: number, fileName: string): Observable<Blob> {
     return this.http.get(`${this.TaskURL}/download/${taskId}?filename=${fileName}`, { responseType: 'blob' });
+  }
+
+  getTaskCreatedByMeOrAssignedToMe(employeeId: number) {
+    return this.http.get<Task2>(`${this.TaskURL}/created/${employeeId}`);
   }
 }
