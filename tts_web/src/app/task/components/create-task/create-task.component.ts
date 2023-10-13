@@ -71,10 +71,10 @@ export class CreateTaskComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['parentTask']) {
-      console.log("parent Task " + JSON.stringify(this.parentTask));
-
-    }
+    // if (changes['parentTask']) {
+    //   console.log("parent Task " + JSON.stringify(this.parentTask));
+    //   alert()
+    // }
 
     if (changes['task']) {
       this.onChangeTaskObject();
@@ -85,6 +85,8 @@ export class CreateTaskComponent implements OnInit {
   private onChangeTaskObject() {
 
     this.task = this.task;
+    console.log(this.task);
+    
     this.backupTask = Object.assign({}, this.task);
     console.log(this.backupTask);
 

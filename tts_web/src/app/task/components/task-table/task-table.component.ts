@@ -180,13 +180,15 @@ export class TaskTableComponent implements OnInit {
     // }     
   }
 
-  onClickCreateTask(task: Task, operation: string) {
+  onClickCreateTask(task: Task, operation: string, event :Event) {
+    event.stopPropagation();
     this.emptyTask = {} as Task;
     this.updateScreen = false;
     this.parentTask = {} as Task;
 
     console.log(task);
-
+    console.log(operation);
+    
     if (operation == 'ADD') {
       this.updateScreen = false;
       this.parentTask = Object.assign({}, task);
