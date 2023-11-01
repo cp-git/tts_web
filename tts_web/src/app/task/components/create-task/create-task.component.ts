@@ -192,7 +192,9 @@ export class CreateTaskComponent implements OnInit {
       formData.append('file', this.selectedFile);   // adding file in header with key - 'file'
     }
 
-    const taskBlob = new Blob([JSON.stringify(task)], { type: 'application/json' });    // converting object into blob 
+    const tempTask = task;
+    tempTask.childTask = [];
+    const taskBlob = new Blob([JSON.stringify(tempTask)], { type: 'application/json' });    // converting object into blob 
     formData.append('task', taskBlob);    // adding task object in header with key - 'task'
 
     // calling service to create or update task and adding reason 
