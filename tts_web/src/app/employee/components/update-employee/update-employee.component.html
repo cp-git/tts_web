@@ -23,43 +23,61 @@
             <div class="col-md-4">
                 <label class="label" for="countryId"><strong>Country:</strong></label>
                 <select id="countryId" name="countryId" [(ngModel)]="employee.countryId" required class="form-control"
-                    [disabled]="isAdmin">
+                    [disabled]="isAdmin" #countryField="ngModel">
                     <option value="undefined" selected>Select a country</option>
                     <!-- Loop through the 'countries' array and display each country as an option -->
                     <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}
                     </option>
                 </select>
+                <div *ngIf="countryField.invalid && (countryField.dirty||countryField.touched)" class="text-danger">
+                    Country is required.
+                </div>
             </div>
 
             <!-- Dropdown to select the company -->
             <div class="col-md-4">
                 <label class="label" for="companyId"><strong>Company:</strong></label>
                 <select id="companyId" name="companyId" [(ngModel)]="employee.companyId" required class="form-control"
-                    [disabled]="isAdmin">
+                    [disabled]="isAdmin" #companyField="ngModel">
                     <option value="undefined" selected>Select a company</option>
                     <!-- Loop through the 'companies' array and display each company as an option -->
                     <option *ngFor="let company of companies | advFilter:'companyCountryId':employee.countryId"
                         [value]="company.companyId">
                         {{ company.companyName }}</option>
                 </select>
+                <div *ngIf="companyField.invalid && (companyField.dirty||companyField.touched)" class="text-danger">
+                    Company is required.
+                </div>
             </div>
 
             <!-- Date of Birth -->
             <div class="col-md-4">
                 <label for="birthDate"><strong>DOB:</strong></label>
                 <input type="date" id="birthDate" name="birthDate" [ngModel]="employee.birthDate | date:'yyyy-MM-dd'"
-                    required class="form-control" max="{{ getMaxDate() }}">
+                    required class="form-control" max="{{ getMaxDate() }}" #birthDateField="ngModel">
+                <div *ngIf="birthDateField.invalid && (birthDateField.dirty||birthDateField.touched) "
+                    class="text-danger">
+                    DOB is required.
+                </div>
             </div>
             <!-- Employee Email -->
             <div class="col-md-4">
                 <label for="employeeEmail"><strong>Email:</strong></label>
                 <input type="email" id="employeeEmail" name="employeeEmail" [(ngModel)]="employee.employeeEmail"
-                    required pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}" class="form-control" maxlength="50">
+                    required pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}" class="form-control" maxlength="50"
+                    #emailField="ngModel">
+                <div *ngIf="emailField.invalid && (emailField.dirty||emailField.touched)" class="text-danger">
+                    Invalid Email Address.
+                </div>
             </div>
             <div class="col-md-4">
                 <label class="label" for="photoFilename"><strong>Profile:</strong></label>
                 <input type="file" id="photoFilename" name="photoFilename" (change)="onFileSelected($event)"
-                    class="form-control" ngModel>
+                    class="form-control" ngModel #photoFilenameField="ngModel">
+                <div *ngIf="photoFilenameField.invalid && (photoFilenameField.dirty||photoFilenameField.touched) "
+                    class="text-danger">
+                    Profile Image is required.
+                </div>
             </div>
 
 
@@ -82,8 +100,8 @@
         </td> -->
         <!-- Submit Button -->
         <div>
-            <button type="submit" [disabled]="!addUpdateForm.valid||!addUpdateForm.dirty"
-                (click)="updateEmployeeByEmployeeId(employee)" class="btn btn-primary mt-3">Submit</button>
+            <button type="submit" [disabled]="!addUpdateForm.valid" (click)="updateEmployeeByEmployeeId(employee)"
+                class="btn btn-primary mt-3">Submit</button>
         </div>
     </form>
 </div>

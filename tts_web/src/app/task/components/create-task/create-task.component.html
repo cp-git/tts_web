@@ -58,19 +58,28 @@
                 <input
                     [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
                     type="text" class="form-control extra-light-placeholder" id="taskName" name="taskName"
-                    placeholder="Enter task name" [(ngModel)]="task.taskName" [required]="true" maxlength="100">
+                    placeholder="Enter task name" [(ngModel)]="task.taskName" [required]="true" maxlength="100"
+                    #taskNameField="ngModel">
+                <div *ngIf="taskNameField.invalid && (taskNameField.dirty||taskNameField.touched) " class="text-danger">
+                    Task Name is required.
+                </div>
             </div>
 
         </div>
 
         <div class="row">
             <div class="col">
-                <label for="taskDescription" class="form-label">Task
-                    Description<span class="required-asterisk" *ngIf="!updateScreen">*</span></label>
+                <label for="taskDescription" class="form-label">Task Description<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label>
                 <textarea
                     [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
                     class="form-control" id="taskDescription" name="taskDescription" [(ngModel)]="task.taskDescription"
-                    placeholder="Enter task description" [required]="true" maxlength="255"></textarea>
+                    placeholder="Enter task description" [required]="true" maxlength="255"
+                    #taskDescriptionField="ngModel"></textarea>
+                <div *ngIf="taskDescriptionField.invalid && (taskDescriptionField.dirty||taskDescriptionField.touched) "
+                    class="text-danger">
+                    Task Description is required.
+                </div>
             </div>
         </div>
         <div class="row">
@@ -135,7 +144,7 @@
                     <ng-container
                         *ngIf="(currentTaskStatus?.actualEndDate===false && currentTaskStatus?.actualStartDate===true)">
                         <input [disabled]="true" type="date" class="form-control" id="startDate" name="startDate"
-                            [(ngModel)]="todayForPlannedStartDate" [required]="true">
+                            [(ngModel)]="todayForPlannedStartDate" [required]="true" #startDateField="ngModel">
                     </ng-container>
 
                     <ng-container
@@ -186,6 +195,8 @@
                 </ng-container>
             </div>
 
+
+
             <div class="col-sm-3">
                 <label for="actualStartDate" class="form-label">Actual Start date</label>
 
@@ -202,15 +213,15 @@
                     [required]="updateScreen && (currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)"
                     disabled>
             </div>
-        </div>
 
+        </div>
         <div class="row">
             <div class="col">
                 <label for="taskReason" class="form-label">Reason<span class="required-asterisk">*</span></label>
                 <textarea
                     [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
                     class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
-                    placeholder="Enter reason" [required]="updateScreen" maxlength="250"
+                    placeholder="Enter reason" [required]="true" maxlength="250"
                     #taskReasonField="ngModel"></textarea>
 
                 <div *ngIf="taskReasonField.invalid && (taskReasonField.dirty||taskReasonField.touched)"
