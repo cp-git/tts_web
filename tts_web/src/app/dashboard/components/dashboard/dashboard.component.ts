@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
   loggedInUserData: any;
   // Define selected statuses as an array with a default value
   selectedStatuses: string[] = ['ALL']; // Default value
-
+  filteredStatuses: Status[] = [];
 
   // Constructor - executed when an instance of the component is created
   constructor(
@@ -62,7 +62,6 @@ export class DashboardComponent implements OnInit {
 
     this.initialization(); // Call the initialization method
 
-
   }
 
   // Initialization method
@@ -80,7 +79,8 @@ export class DashboardComponent implements OnInit {
     };
 
     this.getParentTask(data); // Fetch parent tasks
-    this.getAllStatus(); // Fetch all statuses
+    // this.getAllStatus(); // Fetch all statuses
+    this.getStatusesByCompanyId();
   }
 
 
@@ -187,11 +187,24 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/']); // Navigate to the root URL
   }
 
-  filterdStatuses:Status[]=[];
   onChangeStatusFilter(data: any) {
     console.log(data);
-    this.filterdStatuses = data;
-    console.log(this.filterdStatuses);
-    
+    this.filteredStatuses = data;
+    console.log(this.filteredStatuses);
+
+  }
+
+  // Fetch all statuses by company Id
+  private getStatusesByCompanyId() {
+    this.statusService.getStatusesByCompanyId(this.companyId).subscribe(
+      (response) => {
+        // Store all statuses
+        this.allStatus = response;
+        console.log(this.allStatus);
+      },
+      (error) => {
+        console.log('Failed to get all statuses by company');
+      }
+    );
   }
 }

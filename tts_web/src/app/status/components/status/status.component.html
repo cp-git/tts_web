@@ -17,9 +17,12 @@
                 <thead>
                     <tr>
                         <!-- <th>Country ID</th> -->
-                        <th>Status Code</th>
+                        <th>Status</th>
                         <th>Description</th>
                         <th>Status Order</th>
+                        <th>ActualStartDate</th>
+                        <th>ActualEndDate</th>
+                        <th>FinalStatus</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -29,6 +32,24 @@
                         <td>{{ status.statusCode }}</td>
                         <td>{{ status.statusDescription }}</td>
                         <td>{{status.statusOrder}}</td>
+                        <td>
+                            <span *ngIf="status.actualStartDate" class="fa-solid fa-check-square fa-lg"
+                                style='font-size: 23px;color: green;'></span>
+                            <span *ngIf="!status.actualStartDate" class="fa-solid fa-square fa-lg"
+                                style='font-size: 23px;color: grey;'></span>
+                        </td>
+                        <td>
+                            <span *ngIf="status.actualEndDate" class="fa-solid fa-check-square fa-lg"
+                                style='font-size: 23px;color: green;'></span>
+                            <span *ngIf="!status.actualEndDate" class="fa-solid fa-square fa-lg"
+                                style='font-size: 23px;color: grey;'></span>
+                        </td>
+                        <td>
+                            <span *ngIf="status.finalStatus" class="fa-solid fa-check-square fa-lg"
+                                style='font-size: 23px;color: green;'></span>
+                            <span *ngIf="!status.finalStatus" class="fa-solid fa-square fa-lg"
+                                style='font-size: 23px;color: grey;'></span>
+                        </td>
                         <td>
 
                             <!-- Update Button -->

@@ -14,8 +14,8 @@ export class StatusDropdownComponent {
   selectedStatuses: any[] = [];
   statusOptions: any[] = [];
 
-  employeeId: string | null;
-  companyId: string | null;
+  employeeId: any
+  companyId: any
 
   // Define dropdown settings for multiselect
   dropdownSettings: IDropdownSettings = {};
@@ -50,7 +50,7 @@ export class StatusDropdownComponent {
 
 
   getStatuses() {
-    this.statusService.getAllStatus().subscribe((statuses: any[]) => {
+    this.statusService.getStatusesByCompanyId(this.companyId).subscribe((statuses: any[]) => {
       this.statusOptions = statuses.map((status) => ({
         id: status.statusId,
         itemName: status.statusCode,
@@ -68,6 +68,8 @@ export class StatusDropdownComponent {
       statuses: this.selectedStatuses
     };
     console.log(data);
+    console.log(this.selectedStatuses);
+    
     this.onChangeStatusFilter.emit(this.selectedStatuses);
   }
 }

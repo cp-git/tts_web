@@ -43,4 +43,12 @@ export class StatusService {
   deleteStatus(statusId: number): Observable<void> {
     return this.http.delete<void>(`${this.statusURL}/status/${statusId}`);
   }
+
+  // Get statuses by company ID
+  getStatusesByCompanyId(companyId: number): Observable<Status[]> {
+    return this.http.get<Status[]>(`${this.statusURL}/statuses/${companyId}`)
+      .pipe(
+        map((statuses: any[]) => statuses.sort((a, b) => a.statusOrder - b.statusOrder)) // Sort the statuses by statusOrder
+      );
+  }
 }

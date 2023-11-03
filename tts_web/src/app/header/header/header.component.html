@@ -30,7 +30,7 @@
                 <li class="nav-item">
                     <a class=" nav-link" routerLinkActive="active" [routerLink]="['/employee']">Employee</a>
                 </li>
-                <li class="nav-item" *ngIf="!isAdmin">
+                <li class="nav-item" *ngIf="isAdmin">
                     <a class=" nav-link" routerLinkActive="active" [routerLink]="['/status']">App Config</a>
                 </li>
                 <li class="nav-item">

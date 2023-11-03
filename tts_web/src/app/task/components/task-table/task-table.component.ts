@@ -197,7 +197,7 @@ export class TaskTableComponent implements OnInit {
       this.emptyTask.taskParent = this.parentTask.taskId;
       this.emptyTask.taskCreatedBy = this.employeeId;
       this.emptyTask.taskAssignedTo = this.employeeId;
-      this.emptyTask.taskStatus = this.statusEnum.CREATED;
+      this.emptyTask.taskStatus =  this.allStatus[0].statusId;
       this.emptyTask.taskActualStartDate = null as unknown as Date;
       this.emptyTask.taskActualEndDate = null as unknown as Date;
 

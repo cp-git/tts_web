@@ -12,17 +12,36 @@ import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service
 export class StatusComponent implements OnInit {
 
   statuses: Status[];
+  empDataFromSession: any;
+  empData: any;
+  companyId!: number;
 
   constructor(private statusService: StatusService, private route: Router, private dialogueBoxService: DialogueBoxService) {
     this.statuses = [];
   }
 
   ngOnInit(): void {
-    this.getAllStatus();
+    this.empDataFromSession = sessionStorage.getItem('empData')
+    this.empData = JSON.parse(this.empDataFromSession);
+
+    // this.getAllStatus();
+
+    this.companyId = this.empData.companyId;
+    this.getStatusesByCompanyId();
   }
 
+  getStatusesByCompanyId() {
+    this.statusService.getStatusesByCompanyId(this.companyId).subscribe(
+      (data: Status[]) => {
+        this.statuses = data;
+      },
+      (error) => {
+        console.error('Error fetching status records: ', error);
+      }
+    );
+  }
 
-  getAllStatus() {
+  private getAllStatus() {
     this.statusService.getAllStatus().subscribe(
       (data: Status[]) => {
         this.statuses = data;
@@ -45,7 +64,7 @@ export class StatusComponent implements OnInit {
           () => {
             this.dialogueBoxService.open('Status deleted successfully', 'information');
             console.log('Status deleted successfully'); // Log success
-            this.getAllStatus(); // Refresh the status list
+            // this.getAllStatus(); // Refresh the status list
           },
           (error) => {
             this.dialogueBoxService.open('Error deleting status', 'warning');
