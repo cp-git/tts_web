@@ -50,6 +50,8 @@ export class CreateTaskComponent implements OnInit {
   todayForPlannedStartDate: string = '';
   todayForPlannedEndDate: string = ''
 
+  parentTaskStatus: any;
+
   constructor(
 
     private taskService: TaskService,
@@ -59,7 +61,6 @@ export class CreateTaskComponent implements OnInit {
     private dialogueBoxService: DialogueBoxService,
     private employeeService: EmployeeService
   ) { }
-
   ngOnInit(): void {
     this.taskName = this.parentTask.taskName;
     console.log(this.taskName);
@@ -68,6 +69,8 @@ export class CreateTaskComponent implements OnInit {
     this.companyId = sessionStorage.getItem("companyId");
     //alert(this.companyId);
     this.loadCompanyEmployees();
+
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -78,6 +81,8 @@ export class CreateTaskComponent implements OnInit {
 
     if (changes['task']) {
       this.onChangeTaskObject();
+
+  
     }
   }
 
@@ -86,6 +91,15 @@ export class CreateTaskComponent implements OnInit {
 
     this.task = this.task;
     console.log(this.task);
+
+    this.taskService.getTaskByTaskId(this.task.taskParent).subscribe(
+      response => {
+        console.log(response);
+        this.parentTaskStatus = this.allStatus.find(s => s.statusId == response.taskStatus);
+        console.log(this.parentTaskStatus);
+
+      }
+    );
     this.getCurrentTaskStatus();
     this.backupTask = Object.assign({}, this.task);
     console.log(this.backupTask);
@@ -231,7 +245,7 @@ export class CreateTaskComponent implements OnInit {
   // calling function when use change the status on add task screen
   onChangeStatus(statusId: any, task: Task) {
     console.log(this.backupTask);
-    
+
     // const status = this.allStatus.find(status => statusId == status.statusId);
     // const status = this.statusEnum[statusId];
     //alert("hi" + this.statusEnum.CANCELLED.toString());
@@ -333,7 +347,7 @@ export class CreateTaskComponent implements OnInit {
       //   }
       // }
 
-    
+
     }
     console.log(this.backupTask);
 

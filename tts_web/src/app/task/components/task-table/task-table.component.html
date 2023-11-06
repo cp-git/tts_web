@@ -52,6 +52,8 @@
                             <!-- Main Rows with Expandable Child Panels -->
                             <ng-container
                                 *ngFor="let childTaskData of parentTaskData.childTask | statusFilter: filteredStatus; let i = index">
+
+                                <!-- if child's parent id and parent id is same OR child's task id and parent task id is same(means it is parent task ) -->
                                 <ng-container
                                     *ngIf="childTaskData.taskParent == parentTaskData.taskId || (childTaskData.taskId == parentTaskData.taskId)">
                                     <ng-container
@@ -104,8 +106,8 @@
 
 
 <ng-template #tableRows let-taskData>
-    <ng-container *ngIf="taskData.taskCreatedBy==employeeId || taskData.taskAssignedTo==employeeId">
-
+   
+    <ng-container *ngIf="(taskData.taskCreatedBy==employeeId || taskData.taskAssignedTo==employeeId)">
         <tr [ngClass]="{'table-info':taskData.taskParent==0}" class="col-height">
             <!-- <td scope="row" (click)="toggleChildTable(task)" class="text-center">
             <ng-container *ngIf="task.havingChild">
@@ -115,7 +117,7 @@
 
         </td> -->
             <td for="taskName" data-toggle="tooltip" data-placement="right" title="{{taskData.taskName}}">{{
-                taskData.taskName | slice:0:20 }}</td>
+                taskData.taskName | slice:0:20 }} </td>
             <td for="taskDescription" data-toggle="tooltip" data-placement="right" title="{{taskData.taskDescription}}">
                 {{
                 taskData.taskDescription | slice:0:20 }}</td>

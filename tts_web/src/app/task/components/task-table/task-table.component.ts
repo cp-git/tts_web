@@ -162,7 +162,7 @@ export class TaskTableComponent implements OnInit {
           }
         });
         console.log(task);
-        
+
         console.log(this.parentAndAllTask);
 
         // this.childData = [];
@@ -180,15 +180,19 @@ export class TaskTableComponent implements OnInit {
     // }     
   }
 
-  onClickCreateTask(task: Task, operation: string, event :Event) {
+
+  onClickCreateTask(task: Task, operation: string, event: Event) {
     event.stopPropagation();
+
+    // console.log(taskData);
+
     this.emptyTask = {} as Task;
     this.updateScreen = false;
     this.parentTask = {} as Task;
 
     console.log(task);
     console.log(operation);
-    
+
     if (operation == 'ADD') {
       this.updateScreen = false;
       this.parentTask = Object.assign({}, task);
@@ -197,7 +201,7 @@ export class TaskTableComponent implements OnInit {
       this.emptyTask.taskParent = this.parentTask.taskId;
       this.emptyTask.taskCreatedBy = this.employeeId;
       this.emptyTask.taskAssignedTo = this.employeeId;
-      this.emptyTask.taskStatus =  this.allStatus[0].statusId;
+      this.emptyTask.taskStatus = this.allStatus[0].statusId;
       this.emptyTask.taskActualStartDate = null as unknown as Date;
       this.emptyTask.taskActualEndDate = null as unknown as Date;
 
