@@ -42,6 +42,7 @@ th {
 
 .expansionrow {
   margin-top: 1rem;
+  border: 1px solid grey; 
 }
 
 .align-right {
@@ -62,4 +63,12 @@ th {
   font-size:xx-large;
   /* margin: 2%; */
   /* padding: -100px */
+}
+
+.-mt35px{
+  margin-top: -35px !important;
+}
+
+.disableAddBtn {
+  pointer-events: none;
 }

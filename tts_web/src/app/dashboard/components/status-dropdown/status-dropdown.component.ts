@@ -32,7 +32,7 @@ export class StatusDropdownComponent {
     // Initialize selected values from SessionStorage or use default values
     const selectedStatusesJson = sessionStorage.getItem('selectedStatuses');
     this.selectedStatuses = selectedStatusesJson ? JSON.parse(selectedStatusesJson) : []; // Set "All" by default
-    console.log(this.selectedStatuses);
+    //console.log(this.selectedStatuses);
     
     // Configure dropdown settings
     this.dropdownSettings = {
@@ -67,8 +67,8 @@ export class StatusDropdownComponent {
     const data = {
       statuses: this.selectedStatuses
     };
-    console.log(data);
-    console.log(this.selectedStatuses);
+    //console.log(data);
+    //console.log(this.selectedStatuses);
     
     this.onChangeStatusFilter.emit(this.selectedStatuses);
   }

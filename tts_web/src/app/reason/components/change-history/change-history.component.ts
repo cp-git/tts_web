@@ -44,7 +44,7 @@ export class ChangeHistoryComponent implements OnInit {
     this.loggedInUserData = sessionStorage.getItem('empData');
 
     this.loggedInUserData = JSON.parse(this.loggedInUserData); // Parse JSON data
-    console.log(this.loggedInUserData);
+    //console.log(this.loggedInUserData);
     // this.getCompanyById(this.companyId); // Fetch company data
   }
 
@@ -104,7 +104,7 @@ export class ChangeHistoryComponent implements OnInit {
   // Method to get the name of an employee by their ID
   getEmployeeNameById(employeeId: number): string {
     // Find the employee in the employees array based on the provided employeeId
-    const employee = this.employees.find((e) => e.employeeId === employeeId);
+    const employee = this.employees?.find((e) => e.employeeId === employeeId);
 
     // Return the full name (first name + last name) if found, otherwise an empty string
     return employee ? `${employee.firstName} ${employee.lastName}` : '';

@@ -51,14 +51,14 @@ export class DashboardComponent implements OnInit {
     this.loggedInUserData = sessionStorage.getItem('empData');
 
     this.loggedInUserData = JSON.parse(this.loggedInUserData); // Parse JSON data
-    console.log(this.loggedInUserData);
+    //console.log(this.loggedInUserData);
     this.getCompanyById(this.companyId); // Fetch company data
   }
 
   //ngOnInit is executed after the constructor
   ngOnInit(): void {
 
-    console.log(this.allStatus);
+    //console.log(this.allStatus);
 
     this.initialization(); // Call the initialization method
 
@@ -91,10 +91,10 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getAllEmployees().subscribe(
       (response) => {
         this.employees = response;
-        console.log(this.employees);
+        //console.log(this.employees);
       },
       (error) => {
-        console.log('Failed to get all employees');
+        //console.log('Failed to get all employees');
       }
     );
   }
@@ -104,7 +104,7 @@ export class DashboardComponent implements OnInit {
   // getting all task based on created by, assigned to and status
   // Fetch parent tasks based on specified filters
   // getParentTask(data: any) {
-  //   console.log(data);
+  //   //console.log(data);
   //   const createdBy = data.createdBy;
   //   const assignedTo = data.assignedTo;
   //   const companyId = data.companyId;
@@ -126,10 +126,10 @@ export class DashboardComponent implements OnInit {
   //     .subscribe(
   //       (response) => {
   //         this.parentTaskData = response;
-  //         console.log('Parent Task Data:', this.parentTaskData);
+  //         //console.log('Parent Task Data:', this.parentTaskData);
   //       },
   //       (error) => {
-  //         console.log('Failed to get parent tasks for statuses:', statuses);
+  //         //console.log('Failed to get parent tasks for statuses:', statuses);
   //       }
   //     );
   // }
@@ -150,10 +150,10 @@ export class DashboardComponent implements OnInit {
       (response) => {
         // Store all statuses
         this.allStatus = response;
-        console.log(this.allStatus);
+        //console.log(this.allStatus);
       },
       (error) => {
-        console.log('Failed to get all statuses');
+        //console.log('Failed to get all statuses');
       }
     );
   }
@@ -163,7 +163,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getCompanyById(companyId).subscribe(
       (data) => {
         this.company = data; // Store the retrieved company data
-        console.log('Retrieved company:', this.company);
+        //console.log('Retrieved company:', this.company);
       },
       (error) => {
         console.error('Error retrieving company:', error);
@@ -188,9 +188,9 @@ export class DashboardComponent implements OnInit {
   }
 
   onChangeStatusFilter(data: any) {
-    console.log(data);
+    //console.log(data);
     this.filteredStatuses = data;
-    console.log(this.filteredStatuses);
+    //console.log(this.filteredStatuses);
 
   }
 
@@ -200,10 +200,10 @@ export class DashboardComponent implements OnInit {
       (response) => {
         // Store all statuses
         this.allStatus = response;
-        console.log(this.allStatus);
+        //console.log(this.allStatus);
       },
       (error) => {
-        console.log('Failed to get all statuses by company');
+        //console.log('Failed to get all statuses by company');
       }
     );
   }

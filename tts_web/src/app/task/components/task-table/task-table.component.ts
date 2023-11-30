@@ -80,30 +80,32 @@ export class TaskTableComponent implements OnInit {
 
     if (changes['parentAndAllTask']) {
 
-      this.parentAndAllTask.parentTasks.forEach(task => {
-        console.log(this.parentAndAllTask.childTasks);
+      if (this.parentAndAllTask && this.parentAndAllTask.parentTasks) {
+        this.parentAndAllTask.parentTasks?.forEach(task => {
+          //console.log(this.parentAndAllTask.childTasks);
 
 
-        task.childTask = [];
-        task.childTask.push(task);
-        let childData = this.parentAndAllTask.childTasks;
-        console.log(childData);
+          task.childTask = [];
+          task.childTask.push(task);
+          let childData = this.parentAndAllTask.childTasks;
+          //console.log(childData);
 
-        childData.forEach(child => {
-          console.log(child);
+          childData.forEach(child => {
+            //console.log(child);
 
-          if (task.taskId == child.taskParent) {
-            task.childTask.push(child);
-          }
-        })
-      });
-      console.log(this.parentAndAllTask);
+            if (task.taskId == child.taskParent) {
+              task.childTask.push(child);
+            }
+          })
+        });
+      }
+      //console.log(this.parentAndAllTask);
 
       // this.emptyTask = this.emptyTask;
     }
 
     if (changes['emptyTask']) {
-      console.log(this.emptyTask);
+      //console.log(this.emptyTask);
 
       this.emptyTask = this.emptyTask;
     }
@@ -121,6 +123,13 @@ export class TaskTableComponent implements OnInit {
       this.onClickChild(task);
       task.isToggled = true;
     }
+
+    // for toggle
+    // this.onClickChild(task);
+
+    // if (task.isToggled == false) {
+    //   task.isToggled = true;
+    // }
   }
 
 
@@ -129,17 +138,17 @@ export class TaskTableComponent implements OnInit {
   private onClickChild(task: Task) {
 
     // if (this.parentTaskData[this.parentTaskData.indexOf(task)].childTask) {
-    //   console.log("exist");
+    //   //console.log("exist");
 
     // } else {
-    console.log(task);
+    //console.log(task);
 
-    // console.log("exist");
+    // //console.log("exist");
     // calling function to get child task using parent id
 
     this.taskService.getChildTaskByParentId(task.taskId).subscribe(
       (response) => {
-        console.log(this.parentAndAllTask);
+        //console.log(this.parentAndAllTask);
         // const uniqueKeys = new Set(this.parentAndAllTask.childTasks.map(item => item.taskId));
 
         // // this.parentAndAllTask.childTasks.push(...response);
@@ -149,7 +158,7 @@ export class TaskTableComponent implements OnInit {
         //     uniqueKeys.add(item.taskId);
         //   }
         // });
-        // console.log(this.parentAndAllTask);
+        // //console.log(this.parentAndAllTask);
 
         const uniqueKeys = new Set(this.parentAndAllTask.childTasks.map(item => item.taskId));
 
@@ -161,9 +170,9 @@ export class TaskTableComponent implements OnInit {
             uniqueKeys.add(item.taskId);
           }
         });
-        console.log(task);
+        //console.log(task);
 
-        console.log(this.parentAndAllTask);
+        //console.log(this.parentAndAllTask);
 
         // this.childData = [];
         // this.childData = response;
@@ -174,31 +183,48 @@ export class TaskTableComponent implements OnInit {
 
       },
       (error) => {
-        console.log("Failed to load child task!");
+        //console.log("Failed to load child task!");
       }
     );
     // }     
   }
 
+  parentTaskStatus: any;
 
   onClickCreateTask(task: Task, operation: string, event: Event) {
     event.stopPropagation();
 
-    // console.log(taskData);
+    this.taskService.getTaskByTaskId(task.taskId).subscribe(
+      response => {
+        console.log(response);
+        this.parentTaskStatus = this.allStatus.find(s => s.statusId == response.taskStatus);
+        console.log(this.parentTaskStatus);
+
+      }
+    );
+
+    // //console.log(taskData);
 
     this.emptyTask = {} as Task;
     this.updateScreen = false;
     this.parentTask = {} as Task;
 
-    console.log(task);
-    console.log(operation);
+    //console.log(task);
+    //console.log(operation);
 
     if (operation == 'ADD') {
       this.updateScreen = false;
       this.parentTask = Object.assign({}, task);
 
       this.emptyTask.companyId = this.companyId;
-      this.emptyTask.taskParent = this.parentTask.taskId;
+
+      if (this.parentTask.taskParent == undefined || this.parentTask.taskParent == null) {
+        this.emptyTask.taskParent = 0;
+      }
+      else {
+        this.emptyTask.taskParent = this.parentTask.taskId;
+      }
+
       this.emptyTask.taskCreatedBy = this.employeeId;
       this.emptyTask.taskAssignedTo = this.employeeId;
       this.emptyTask.taskStatus = this.allStatus[0].statusId;
@@ -208,14 +234,14 @@ export class TaskTableComponent implements OnInit {
     }
     else if (operation == 'UPDATE') {
       this.updateScreen = true;
-      console.log(task);
+      //console.log(task);
 
       if (task.taskParent > 0) {
         this.taskService.getTaskByTaskId(task.taskParent).subscribe(
           (response) => {
             // on success 
             this.parentTask = response;
-            console.log(this.parentTask);
+            //console.log(this.parentTask);
           }
         );
       }
@@ -237,11 +263,11 @@ export class TaskTableComponent implements OnInit {
 
         // stroign all status
         this.allStatus = response;
-        console.log(this.allStatus);
+        //console.log(this.allStatus);
 
       },
       (error) => {
-        console.log("Failed to get all status");
+        //console.log("Failed to get all status");
       }
     );
   }

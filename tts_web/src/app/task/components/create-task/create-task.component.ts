@@ -63,8 +63,8 @@ export class CreateTaskComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.taskName = this.parentTask.taskName;
-    console.log(this.taskName);
-    console.log("parent Task " + JSON.stringify(this.parentTask));
+    //console.log(this.taskName);
+    //console.log("parent Task " + JSON.stringify(this.parentTask));
     this.employeeId = sessionStorage.getItem("employeeId");
     this.companyId = sessionStorage.getItem("companyId");
     //alert(this.companyId);
@@ -75,14 +75,14 @@ export class CreateTaskComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     // if (changes['parentTask']) {
-    //   console.log("parent Task " + JSON.stringify(this.parentTask));
+    //   //console.log("parent Task " + JSON.stringify(this.parentTask));
     //   alert()
     // }
 
     if (changes['task']) {
       this.onChangeTaskObject();
 
-  
+
     }
   }
 
@@ -90,19 +90,23 @@ export class CreateTaskComponent implements OnInit {
   private onChangeTaskObject() {
 
     this.task = this.task;
-    console.log(this.task);
+    //console.log(this.task);
+    // if(this.task.taskParent==undefined||this.task.taskParent==null){
+    //   this.task.taskParent = 0;
+    // }
+    if (this.task && this.task.taskParent) {
+      this.taskService.getTaskByTaskId(this.task.taskParent).subscribe(
+        response => {
+          //console.log(response);
+          this.parentTaskStatus = this.allStatus.find(s => s.statusId == response.taskStatus);
+          //console.log(this.parentTaskStatus);
 
-    this.taskService.getTaskByTaskId(this.task.taskParent).subscribe(
-      response => {
-        console.log(response);
-        this.parentTaskStatus = this.allStatus.find(s => s.statusId == response.taskStatus);
-        console.log(this.parentTaskStatus);
-
-      }
-    );
+        }
+      );
+    }
     this.getCurrentTaskStatus();
     this.backupTask = Object.assign({}, this.task);
-    console.log(this.backupTask);
+    //console.log(this.backupTask);
 
     // if task exist 
     if (this.task.taskId > 0) {
@@ -192,7 +196,7 @@ export class CreateTaskComponent implements OnInit {
       },
       (error) => {
         this.showErrorMessage = true;
-        console.log("Faild to create task!");
+        //console.log("Faild to create task!");
       }
     ).add(() => {
       this.isLoading = false;
@@ -234,7 +238,7 @@ export class CreateTaskComponent implements OnInit {
       },
       (error) => {
         this.showErrorMessage = true;
-        console.log("Faild to create task!");
+        //console.log("Faild to create task!");
       }
     ).add(() => {
       this.isLoading = false;
@@ -244,7 +248,7 @@ export class CreateTaskComponent implements OnInit {
   currentStatus!: any;
   // calling function when use change the status on add task screen
   onChangeStatus(statusId: any, task: Task) {
-    console.log(this.backupTask);
+    //console.log(this.backupTask);
 
     // const status = this.allStatus.find(status => statusId == status.statusId);
     // const status = this.statusEnum[statusId];
@@ -256,7 +260,7 @@ export class CreateTaskComponent implements OnInit {
       // for created
       if (this.currentTaskStatus.actualStartDate == false && this.currentTaskStatus.actualEndDate == false) {
 
-        // console.log("hey");
+        // //console.log("hey");
         this.todayForStartDate = '';
         this.task.taskActualStartDate = null as unknown as Date;
 
@@ -285,7 +289,7 @@ export class CreateTaskComponent implements OnInit {
 
         this.todayForEndDate = '';
         this.task.taskActualEndDate = null as unknown as Date;
-        console.log(this.task);
+        //console.log(this.task);
 
 
         // when task is inprogress then set start to current date and end date to null (user will select end date)
@@ -308,7 +312,7 @@ export class CreateTaskComponent implements OnInit {
 
       // for done and cancelled
       if (this.currentTaskStatus.actualStartDate == true && this.currentTaskStatus.actualEndDate == true) {
-        console.log(new Date().toString());
+        //console.log(new Date().toString());
 
         // when status is done then setting actual end date to current date
         this.todayForEndDate = new Date().toISOString().split('T')[0];
@@ -322,13 +326,13 @@ export class CreateTaskComponent implements OnInit {
           this.task.taskActualStartDate = new Date();
         } else {
           this.todayForStartDate = new Date(this.task.taskActualStartDate).toISOString().split('T')[0];
-          console.log(this.todayForStartDate);
+          //console.log(this.todayForStartDate);
 
         }
       }
       // for done
       // if (this.currentTaskStatus.actualStartDate == true && this.currentTaskStatus.actualEndDate == true) {
-      //   console.log(new Date().toString());
+      //   //console.log(new Date().toString());
 
       //   // when status is done then setting actual end date to current date
       //   this.todayForEndDate = new Date().toISOString().split('T')[0];
@@ -342,14 +346,14 @@ export class CreateTaskComponent implements OnInit {
       //     this.task.taskActualStartDate = new Date();
       //   } else {
       //     this.todayForStartDate = new Date(this.task.taskActualStartDate).toISOString().split('T')[0];
-      //     console.log(this.todayForStartDate);
+      //     //console.log(this.todayForStartDate);
 
       //   }
       // }
 
 
     }
-    console.log(this.backupTask);
+    //console.log(this.backupTask);
 
   }
 
@@ -358,7 +362,7 @@ export class CreateTaskComponent implements OnInit {
 
   // onDateSelect(event: any) {
   //   this.selectedDate = new Date(event.target.value);
-  //   console.log(this.selectedDate);
+  //   //console.log(this.selectedDate);
 
   // }
 
@@ -373,7 +377,7 @@ export class CreateTaskComponent implements OnInit {
     this.taskService.getFilesByTaskId(taskId).subscribe(
       (response) => {
         this.fileNames = response;
-        console.log(this.fileNames);
+        //console.log(this.fileNames);
 
       }
     );

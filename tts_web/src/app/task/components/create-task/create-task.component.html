@@ -29,14 +29,13 @@
         <div class="row" border-color="black">
             <div class="col">
                 <label for="parentTaskId" class="form-label">Parent Task</label><br>
-
                 <select class="form-control form-select" name="parentTaskId" id="parentTaskId" name="parentTaskId"
                     [(ngModel)]="task.taskParent" [required]="true"
                     [disabled]="updateScreen || (backupTask.taskParent>=0)">
-                    <option *ngIf="!updateScreen" value="undefined" disabled>Select Option</option>
-                    <option *ngIf="!updateScreen && !(backupTask.taskParent>=0)" value="0">Create As Parent</option>
+                    <!-- <option *ngIf="!updateScreen" value="undefined" disabled>Select Option</option> -->
+                    <option *ngIf="!updateScreen && !(backupTask.taskParent>0)" value="0">Create As Parent</option>
                     <!-- <ng-container *ngFor="let parentTaskObject of parentTaskList"> -->
-
+                    <!-- <option *ngIf="updateScreen" value="0">Parent Task</option> -->
                     <option
                         *ngIf="!(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) && parentTask.taskName!=undefined"
                         value="{{parentTask.taskId}}">{{parentTask.taskName}}</option>
@@ -52,11 +51,11 @@
 
             </div>
             <div class="col">
-               
+
                 <label for="taskName" class="form-label">Task Name<span class="required-asterisk"
                         *ngIf="!updateScreen">*</span></label>
                 <input
-                    [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
                     type="text" class="form-control extra-light-placeholder" id="taskName" name="taskName"
                     placeholder="Enter task name" [(ngModel)]="task.taskName" [required]="true" maxlength="100"
                     #taskNameField="ngModel">
@@ -72,7 +71,7 @@
                 <label for="taskDescription" class="form-label">Task Description<span class="required-asterisk"
                         *ngIf="!updateScreen">*</span></label>
                 <textarea
-                    [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
                     class="form-control" id="taskDescription" name="taskDescription" [(ngModel)]="task.taskDescription"
                     placeholder="Enter task description" [required]="true" maxlength="255"
                     #taskDescriptionField="ngModel"></textarea>
@@ -101,7 +100,7 @@
             <div class="col-sm-4">
                 <label for="taskAssignedTo" class="form-label">Assigned To</label><br>
                 <select
-                    [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
                     class="form-control form-select" name="taskAssignedTo" id="taskAssignedTo" name="taskAssignedTo"
                     [(ngModel)]="task.taskAssignedTo" [required]="true">
                     <option value="undefined" disabled>Select Option</option>
@@ -116,7 +115,7 @@
             <div class="col-sm-3">
                 <label for="taskStatus" class="form-label">Status</label><br>
                 <select
-                    [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)  || parentTaskStatus?.finalStatus == true"
                     class="form-control form-select" name="taskStatus" id="taskStatus" name="taskStatus"
                     [(ngModel)]="task.taskStatus" [required]="true" (change)="onChangeStatus(task.taskStatus, task)">
                     <option value="undefined" disabled>Select Option</option>
@@ -153,7 +152,8 @@
                             [disabled]="(currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)"
                             type="date" class="form-control" id="startDate" name="startDate"
                             [(ngModel)]="task.taskStartDate" [required]="true" [min]="currentDate"
-                            #startDateField="ngModel">
+                            #startDateField="ngModel"
+                            [disabled]="parentTaskStatus && parentTaskStatus?.finalStatus == true">
                         <div *ngIf="startDateField.invalid && (startDateField.dirty||startDateField.touched)"
                             class="text-danger">
                             Start Date is required.
@@ -219,10 +219,9 @@
             <div class="col">
                 <label for="taskReason" class="form-label">Reason<span class="required-asterisk">*</span></label>
                 <textarea
-                    [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)  || parentTaskStatus?.finalStatus == true"
                     class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
-                    placeholder="Enter reason" [required]="true" maxlength="250"
-                    #taskReasonField="ngModel"></textarea>
+                    placeholder="Enter reason" [required]="true" maxlength="250" #taskReasonField="ngModel"></textarea>
 
                 <div *ngIf="taskReasonField.invalid && (taskReasonField.dirty||taskReasonField.touched)"
                     class="text-danger">
@@ -236,7 +235,7 @@
                 <input
                     [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
                     type="file" id="uploadFile" name="uploadFile" (change)="onFileSelected($event)" class="form-control"
-                    [required]="true">
+                    [required]="true" [disabled]="parentTaskStatus && parentTaskStatus?.finalStatus == true">
             </div>
         </div>
         <div class="row">
@@ -256,6 +255,10 @@
             </div>
         </div>
         <div class="modal-footer mt-3">
+            <!-- <ng-container *ngIf="parentTaskStatus && parentTaskStatus?.finalStatus == true">
+                                <label style="color: red;">* Parent Task's status is final status, (Not allowed to create sub
+                                    task)</label>
+                           </ng-container> -->
             <!-- Move the success message here and apply centering classes -->
             <div class="text-center mx-auto">
                 <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
@@ -284,10 +287,12 @@
                 <label style="color: red;">* Update only allowed to Creator/ Assignee</label>
             </ng-container>
 
+            <!-- <ng-container *ngIf="parentTaskStatus && parentTaskStatus?.finalStatus == false"> -->
             <button
                 [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true)"
                 *ngIf="!isLoading && !updateScreen" type="submit" class="btn btn-primary"
                 (click)="onClickSave(task)">Save</button>
+            <!-- </ng-container> -->
             <button type="button" class="btn btn-secondary" (click)="closeModal()" id="closeButton">Close</button>
             <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close"
                 (click)="closeModal()">Close</button> -->
