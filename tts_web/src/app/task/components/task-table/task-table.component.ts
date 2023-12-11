@@ -2,12 +2,12 @@ import { Component, ElementRef, Input, OnInit, SimpleChange, SimpleChanges, View
 import { Task } from '../../class/task';
 import { Status } from 'src/app/status/class/status';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
-import { Employee } from 'src/app/classes/employee';
 import { TaskService } from '../../services/task.service';
 import { StatusEnum } from 'src/app/status/enum/status.enum';
 import { StatusService } from 'src/app/status/services/status.service';
 import { CreateTaskComponent } from '../create-task/create-task.component';
 import { Task2 } from 'src/app/classes/task2';
+import { Employee } from 'src/app/employee/class/employee';
 
 @Component({
   selector: 'app-task-table',
@@ -21,11 +21,12 @@ export class TaskTableComponent implements OnInit {
 
   @Input() parentAndAllTask!: Task2;
   @Input() filteredStatus!: Status[];
-
+  @Input() filteredEmployees!: Employee[];
   @Input() employees: Employee[] = [];
   @Input() allStatus: Status[] = [];
   @Input() modalId: number = 0;
   @Input() task: Task = {} as Task;
+  @Input() loggedInUserData!: Employee;
 
   statusEnum = StatusEnum;
   employeeId: any;
@@ -41,12 +42,11 @@ export class TaskTableComponent implements OnInit {
 
   childTask: Task[] = [];
   updateScreen: boolean = false;
+  toggledTasksIds: Set<any> = new Set<any>();;
 
   constructor(
-    private dashboardService: DashboardService,
     private taskService: TaskService,
     private statusService: StatusService,
-    // private reasonService:Rea
   ) {
 
     this.employeeId = sessionStorage.getItem("employeeId");
@@ -78,6 +78,10 @@ export class TaskTableComponent implements OnInit {
     //   this.showChildTable = new Map();
     // }
 
+    if (changes['loggedInUserData']) {
+      this.loggedInUserData = this.loggedInUserData;
+    }
+
     if (changes['parentAndAllTask']) {
 
       if (this.parentAndAllTask && this.parentAndAllTask.parentTasks) {
@@ -102,6 +106,14 @@ export class TaskTableComponent implements OnInit {
       //console.log(this.parentAndAllTask);
 
       // this.emptyTask = this.emptyTask;
+
+      //toggle exapansion row 
+      let toggleIds = new Set<any>();
+      const data = sessionStorage.getItem('toggle');
+      if (data) {
+        toggleIds = JSON.parse(data);
+        this.toggledTasksIds = new Set(toggleIds);
+      }
     }
 
     if (changes['emptyTask']) {
@@ -113,25 +125,27 @@ export class TaskTableComponent implements OnInit {
 
   // for opening/ closing child table for task
   toggleChildTable(task: Task): void {
-    if (task.isToggled == undefined)
-      task.isToggled = false;
-    // updating showChildTable variable with toggled value
-    // this.showChildTable.set(task.taskId, !this.showChildTable.get(task.taskId));
-    // alert()
-    // calling function to get child task
-    if (task.isToggled == false) {
-      this.onClickChild(task);
-      task.isToggled = true;
+
+    // Checking parent task is toggled or not (maintained set for expanded parent task i.e. toggledTasksIds)
+    if (!this.toggledTasksIds.has(task.taskId)) {
+
+      // if logged is user is owner of task then he can see all child tasks
+      if (task.taskCreatedBy == this.employeeId) {
+        this.onClickChild(task);
+      }
+      this.toggledTasksIds.add(task.taskId);
+
+    } else {
+      this.toggledTasksIds.delete(task.taskId);
     }
 
-    // for toggle
-    // this.onClickChild(task);
+    // converting set into string
+    const stringToggledIds = Array.from(this.toggledTasksIds);
 
-    // if (task.isToggled == false) {
-    //   task.isToggled = true;
-    // }
+    // setting toggled tasks ids in session strorage
+    sessionStorage.setItem("toggle", JSON.stringify(stringToggledIds));
+
   }
-
 
 
   // for getting child task using parent id
@@ -261,7 +275,7 @@ export class TaskTableComponent implements OnInit {
     this.statusService.getAllStatus().subscribe(
       (response) => {
 
-        // stroign all status
+        // store all status
         this.allStatus = response;
         //console.log(this.allStatus);
 

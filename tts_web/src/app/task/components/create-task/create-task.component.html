@@ -221,7 +221,7 @@
                 <textarea
                     [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)  || parentTaskStatus?.finalStatus == true"
                     class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
-                    placeholder="Enter reason" [required]="true" maxlength="250" #taskReasonField="ngModel"></textarea>
+                    placeholder="Enter reason" [required]="true" #taskReasonField="ngModel"></textarea>
 
                 <div *ngIf="taskReasonField.invalid && (taskReasonField.dirty||taskReasonField.touched)"
                     class="text-danger">

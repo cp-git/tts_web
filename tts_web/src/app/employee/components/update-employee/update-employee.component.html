@@ -82,18 +82,29 @@
 
 
             <div class="col-md-4">
-                <label class="form-check-label" for="isadmin"><strong>Is Admin:</strong></label>
-
-                <input type="checkbox" id="isadmin" name="isadmin" [(ngModel)]="employee.admin"
-                    class="custom-checkbox form-check-input">
+                <label class="form-check-label" for="isadmin"><strong>Is Admin?</strong></label>
+                <div>
+                    <input type="checkbox" id="isadmin" name="isadmin" [(ngModel)]="employee.admin"
+                        class="custom-checkbox form-check-input">
+                </div>
             </div>
+
+            <div class="col-md-4">
+                <label class="form-check-label" for="showalltasks"><strong>Can view all tasks?</strong></label>
+                <div>
+                    <input type="checkbox" id="showalltasks" name="showalltasks" [(ngModel)]="employee.showAllTasks"
+                        class="custom-checkbox form-check-input">
+                </div>
+            </div>
+
+
             <div>
                 <img *ngIf="!selectedFile" src="{{employeeURL}}/{{employee.employeeId}}">
 
                 <img *ngIf="selectedFile" [src]="selectedFile ? selectedFileURL : ''" id="selectedProfilePic">
+
             </div>
         </div>
-
 
         <!-- <td>
             <input type="checkbox" [checked]="employeeData.admin" class="larger-checkbox">

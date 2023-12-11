@@ -6,6 +6,7 @@ import { FilterPipe } from './pipe/filter.pipe';
 import { AdvFilterPipe } from './pipe/adv-filter.pipe';
 import { MatIconModule } from '@angular/material/icon';
 import { StatusFilterPipe } from './pipe/status-filter.pipe';
+import { EmployeeTaskFilterPipe } from './pipe/employeeTaskFilter/employee-task-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { StatusFilterPipe } from './pipe/status-filter.pipe';
 
     FilterPipe,
     AdvFilterPipe,
-    StatusFilterPipe
+    StatusFilterPipe,
+    EmployeeTaskFilterPipe
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { StatusFilterPipe } from './pipe/status-filter.pipe';
   exports: [
     FilterPipe,
     AdvFilterPipe,
-    StatusFilterPipe
+    StatusFilterPipe,
+    EmployeeTaskFilterPipe
   ]
 })
 export class SharedModule { }

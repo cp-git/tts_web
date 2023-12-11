@@ -8,13 +8,15 @@ import { FooterModule } from '../footer/footer.module';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { StatusDropdownComponent } from './components/status-dropdown/status-dropdown.component';
 import { SharedModule } from "../shared/shared.module";
+import { EmployeeFilterComponent } from './components/employee-filter/employee-filter.component';
 
 
 @NgModule({
     declarations: [
         DashboardComponent,
         StatusButtonsComponent,
-        StatusDropdownComponent
+        StatusDropdownComponent,
+        EmployeeFilterComponent
     ],
     imports: [
         CommonModule,

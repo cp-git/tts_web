@@ -72,3 +72,10 @@ th {
 .disableAddBtn {
   pointer-events: none;
 }
+
+.instructions {
+  margin-bottom: 15px;
+}
+.step {
+  margin-bottom: 10px;
+}

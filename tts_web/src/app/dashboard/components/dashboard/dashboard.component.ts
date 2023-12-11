@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 import { Task } from 'src/app/task/class/task';
-import { Employee } from 'src/app/classes/employee';
 import { TaskService } from 'src/app/task/services/task.service';
 import { Status } from 'src/app/status/class/status';
 import { Company } from 'src/app/company/class/company';
@@ -10,6 +9,7 @@ import { StatusService } from 'src/app/status/services/status.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.dev';
 import { Task2 } from 'src/app/classes/task2';
+import { Employee } from 'src/app/employee/class/employee';
 
 // Define the component metadata, including the selector, template, and styles
 @Component({
@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
   // Define selected statuses as an array with a default value
   selectedStatuses: string[] = ['ALL']; // Default value
   filteredStatuses: Status[] = [];
+  displayAllTask: boolean = false;
 
   // Constructor - executed when an instance of the component is created
   constructor(
@@ -51,6 +52,8 @@ export class DashboardComponent implements OnInit {
     this.loggedInUserData = sessionStorage.getItem('empData');
 
     this.loggedInUserData = JSON.parse(this.loggedInUserData); // Parse JSON data
+    this.displayAllTask = this.loggedInUserData.showAllTasks
+
     //console.log(this.loggedInUserData);
     this.getCompanyById(this.companyId); // Fetch company data
   }
@@ -79,19 +82,18 @@ export class DashboardComponent implements OnInit {
     };
 
     this.getParentTask(data); // Fetch parent tasks
+
     // this.getAllStatus(); // Fetch all statuses
     this.getStatusesByCompanyId();
   }
 
 
-
-
   // Fetch all employees
   private getAllEmployees() {
-    this.dashboardService.getAllEmployees().subscribe(
+    this.dashboardService.getAllEmployees(this.companyId).subscribe(
       (response) => {
         this.employees = response;
-        //console.log(this.employees);
+        console.log(this.employees);
       },
       (error) => {
         //console.log('Failed to get all employees');
@@ -137,11 +139,21 @@ export class DashboardComponent implements OnInit {
   parentAndAllTask!: Task2;
   // get all task by created by me or assigned to me
   getParentTask(data: any) {
-    this.taskService.getTaskCreatedByMeOrAssignedToMe(this.employeeId).subscribe(
-      (response) => {
-        this.parentAndAllTask = response;
-      }
-    );
+    if (this.loggedInUserData.showAllTasks) {
+      this.taskService.getAllParentTasksByCompanyId(this.companyId).subscribe(
+        (response) => {
+          console.log(response);
+
+          this.parentAndAllTask = response;
+        }
+      );
+    } else {
+      this.taskService.getTaskCreatedByMeOrAssignedToMe(this.employeeId).subscribe(
+        (response) => {
+          this.parentAndAllTask = response;
+        }
+      );
+    }
   }
 
   // Fetch all statuses
@@ -190,8 +202,25 @@ export class DashboardComponent implements OnInit {
   onChangeStatusFilter(data: any) {
     //console.log(data);
     this.filteredStatuses = data;
-    //console.log(this.filteredStatuses);
+    console.log(this.filteredStatuses);
 
+  }
+
+  filteredEmployees: any[] = [];
+  onChangeEmployeeFilter(data: any) {
+    // console.log(data);
+    this.filteredEmployees = data;
+    console.log(this.filteredEmployees);
+
+  }
+  onCheckedNormalEmployee(event: any) {
+    if (event.target.checked) {
+      this.filteredEmployees = [{ id: this.loggedInUserData.employeeId, itemName: this.loggedInUserData.firstName }];
+      this.loggedInUserData.showAllTasks = true;
+    } else {
+      this.filteredEmployees = [];
+      this.loggedInUserData.showAllTasks = false;
+    }
   }
 
   // Fetch all statuses by company Id

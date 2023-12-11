@@ -21,11 +21,12 @@
                 (click)="onClickCreateTask(task, 'ADD', $event)"></span>
         </div>
         <ng-container *ngFor="let parentTaskData of parentAndAllTask.parentTasks; let i = index">
-            <ng-container *ngIf="(parentTaskData.childTask | statusFilter:filteredStatus).length>0">
+            <ng-container
+                *ngIf="(parentTaskData.childTask | statusFilter:filteredStatus | employeeTaskFilter:filteredEmployees).length>0">
 
                 <!-- called on click function when logged employee is creator -->
                 <mat-expansion-panel class="expansionrow" hideToggle="false"
-                    (click)="(parentTaskData.taskCreatedBy ==employeeId) && toggleChildTable(parentTaskData)">
+                    (click)="toggleChildTable(parentTaskData)" [expanded]="toggledTasksIds.has(parentTaskData.taskId)">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <b>{{parentTaskData.taskName}}</b>
@@ -52,7 +53,7 @@
 
                             <!-- Main Rows with Expandable Child Panels -->
                             <ng-container
-                                *ngFor="let childTaskData of parentTaskData.childTask | statusFilter: filteredStatus; let i = index">
+                                *ngFor="let childTaskData of parentTaskData.childTask | statusFilter: filteredStatus| employeeTaskFilter:filteredEmployees; let i = index">
 
                                 <!-- if child's parent id and parent id is same OR child's task id and parent task id is same(means it is parent task ) -->
                                 <ng-container
@@ -110,7 +111,7 @@
 
     <!-- <ng-container *ngIf="(taskData.taskCreatedBy==employeeId || taskData.taskAssignedTo==employeeId)"> -->
     <ng-container
-        *ngIf="taskData.taskParent>0 || (taskData.taskCreatedBy==employeeId || taskData.taskAssignedTo==employeeId)">
+        *ngIf="taskData.taskParent>0 || (taskData.taskCreatedBy==employeeId || taskData.taskAssignedTo==employeeId || loggedInUserData.showAllTasks == true)">
         <tr [ngClass]="{'table-info':taskData.taskParent==0}" class="col-height">
             <!-- <td scope="row" (click)="toggleChildTable(task)" class="text-center">
             <ng-container *ngIf="task.havingChild">
@@ -215,4 +216,28 @@
             data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
             (click)="onClickCreateTask(task, 'ADD', $event)"></span>
     </div>
+    <h4>📋Task Creation Guide</h4>
+    <div class="instructions">
+        <p>Hey Task Titan! 🚀 Ready to conquer your first task? Follow these quick steps:</p>
+    </div>
+    <div class="step">
+        <p>1. 🌟 Click the
+            <span title="Add Task" class="fa-solid fa-circle-plus fa-xl " style="color: #03a300;" data-bs-toggle="modal"
+                attr.data-bs-target="#createTask{{modalId + 1}}"
+                (click)="onClickCreateTask(task, 'ADD', $event)"></span>
+            sign in the top right corner.
+        </p>
+    </div>
+
+    <div class="step">
+        <p>2. ✏️ Fill in your task details</p>
+    </div>
+
+    <div class="step">
+        <p>3. 🚀 Hit 'Save' like launching a rocket.</p>
+    </div>
+    <!-- 
+    <p>Voila! Task created. You're the boss of your to-dos! 💪 #TaskMastery 🎉</p> -->
+
+
 </ng-template>

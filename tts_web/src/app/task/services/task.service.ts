@@ -69,4 +69,9 @@ export class TaskService {
   getTaskCreatedByMeOrAssignedToMe(employeeId: number) {
     return this.http.get<Task2>(`${this.TaskURL}/created/${employeeId}`);
   }
+
+  getAllParentTasksByCompanyId(companyId:number):Observable<Task2>{
+    return this.http.get<Task2>(`${this.TaskURL}/allparents?companyid=${companyId}`);
+
+  }
 }

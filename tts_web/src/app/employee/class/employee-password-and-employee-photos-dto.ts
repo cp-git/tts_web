@@ -7,6 +7,7 @@ export class EmployeePasswordAndEmployeePhotosDTO {
     birthDate!: Date;
     employeeEmail!: string;
     admin!: boolean;
+    showAllTasks!:boolean;
     passwordId!: number;
     username!: string;
     password!: string;

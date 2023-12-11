@@ -1,6 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
 import { Task } from '../../class/task';
-import { Employee } from 'src/app/classes/employee';
 import { Status } from 'src/app/status/class/status';
 import { TaskService } from '../../services/task.service';
 import { StatusEnum } from 'src/app/status/enum/status.enum';
@@ -9,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 import { EmployeeService } from 'src/app/employee/services/employee.service';
 import { last } from 'rxjs';
+import { Employee } from 'src/app/employee/class/employee';
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',

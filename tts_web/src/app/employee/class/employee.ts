@@ -10,6 +10,6 @@ export class Employee {
     employeeEmail!: string;
     username!: string;
     admin!: boolean;
-
+    showAllTasks!:boolean;
 }
 

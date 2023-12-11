@@ -127,23 +127,29 @@
             </div>
         </div>
 
-        <div class="col-md-4">
-            <label class="form-check-label" for="isadmin"><strong>Is Admin:</strong></label>
-        </div>
-        <div>
-            <input type="checkbox" id="isadmin" name="isadmin" [(ngModel)]="employeeData.admin"
-                class="custom-checkbox form-check-input">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="form-check-label" for="isadmin"><strong>Is Admin?</strong></label>
+                <div>
+                    <input type="checkbox" id="isadmin" name="isadmin" [(ngModel)]="employeeData.admin"
+                        class="custom-checkbox form-check-input">
+                </div>
+            </div>
+           
+            <div class="col-md-4">
+                <label class="form-check-label" for="showalltasks"><strong>Can view all tasks?</strong></label>
+                <div>
+                    <input type="checkbox" id="showalltasks" name="showalltasks" [(ngModel)]="employeeData.showAllTasks"
+                        class="custom-checkbox form-check-input">
+                </div>
+            </div>
         </div>
         <img *ngIf="selectedFile" [src]="selectedImageUrl" alt="Selected Image" class="img-fluid">
-
-
-
-
-
+        
         <!-- Submit button to add the new employee -->
         <div>
             <button type="submit" [disabled]="!addUpdateForm.valid" (click)="createEmployee(employeeData)"
                 class="btn btn-primary mt-3">Submit</button>
         </div>
     </form>
-</div>
+</div>0

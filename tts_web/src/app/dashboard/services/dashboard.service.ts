@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Employee } from 'src/app/classes/employee';
+import { Employee } from 'src/app/employee/class/employee';
 import { environment } from 'src/environments/environment.dev';
 @Injectable({
   providedIn: 'root'
@@ -25,8 +25,8 @@ export class DashboardService {
 
 
   // for getting all employees
-  getAllEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(`${this.EmployeeURL}/allemployee`);
+  getAllEmployees(companyId:any): Observable<Employee[]> {
+    return this.http.get<Employee[]>(`${this.EmployeeURL}/companyemp/${companyId}`);
   }
 
   // getCompanyById(companyId: number) {
