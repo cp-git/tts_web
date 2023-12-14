@@ -15,6 +15,11 @@ import { Employee } from 'src/app/employee/class/employee';
   styleUrls: ['./create-task.component.css']
 })
 export class CreateTaskComponent implements OnInit {
+
+  INTERNAL_PLACEMENT_ID: number = 1;
+  EXTERNAL_PLACEMENT_ID: number = 2;
+  PLACEMENT_ID: number = 1;
+
   @ViewChild('createTaskModal') createTaskModal!: ElementRef;
 
   @Input() parentTask: Task = {} as Task;
