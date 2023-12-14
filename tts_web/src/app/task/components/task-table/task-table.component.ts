@@ -8,6 +8,14 @@ import { StatusService } from 'src/app/status/services/status.service';
 import { CreateTaskComponent } from '../create-task/create-task.component';
 import { Task2 } from 'src/app/classes/task2';
 import { Employee } from 'src/app/employee/class/employee';
+import { Visa } from 'src/app/visa/class/visa';
+import { VisaService } from 'src/app/visa/services/visa.service';
+import { JoblocationService } from 'src/app/joblocation/services/joblocation.service';
+import { TextypeService } from 'src/app/taxtype/services/textype.service';
+import { Taxtype } from 'src/app/taxtype/classes/taxtype';
+import { Joblocation } from 'src/app/joblocation/classes/joblocation';
+import { Jobportal } from 'src/app/jobportal/classes/jobportal';
+import { JobportalService } from 'src/app/jobportal/services/jobportal.service';
 
 @Component({
   selector: 'app-task-table',
@@ -41,12 +49,22 @@ export class TaskTableComponent implements OnInit {
   showChildTable: Map<number, boolean> = new Map();    // for opening/ closing child table for task
 
   childTask: Task[] = [];
+
+  visas: Visa[] = [];
+  allTaxTypes: Taxtype[] = [];
+  allJobLocations: Joblocation[] = [];
+  allJobPortals: Jobportal[] = [];
+
   updateScreen: boolean = false;
   toggledTasksIds: Set<any> = new Set<any>();;
 
   constructor(
     private taskService: TaskService,
     private statusService: StatusService,
+    private visaService: VisaService,
+    private taxTypeService: TextypeService,
+    private jobLocationService: JoblocationService,
+    private jobPortalService: JobportalService
   ) {
 
     this.employeeId = sessionStorage.getItem("employeeId");
@@ -56,6 +74,11 @@ export class TaskTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.visas = this.visaService.getAllVisas();
+    this.allTaxTypes = this.taxTypeService.getAllTaxTypes();
+    this.allJobLocations = this.jobLocationService.getAllJobLocations();
+    this.allJobPortals = this.jobPortalService.getAllPortals();
 
     // Attempt to retrieve the selected date format from localStorage
     const storedFormat = localStorage.getItem('selectedDateFormat');
