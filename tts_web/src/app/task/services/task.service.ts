@@ -49,7 +49,7 @@ export class TaskService {
   }
 
   createOrUpdateTaskAndAddReason(formData: FormData): Observable<Task> {
-    return this.http.post<Task>(`${this.TaskURL}/savetask`, formData);
+    return this.http.post<Task>(`${this.TaskURL}/addtask`, formData);
   }
 
   getTaskByTaskId(taskId: number): Observable<Task> {

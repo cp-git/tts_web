@@ -95,6 +95,9 @@ export class CreateTaskComponent implements OnInit {
   private onChangeTaskObject() {
 
     this.task = this.task;
+    if(this.task.placementId==undefined || this.task.placementId==null){
+      this.task.placementId = this.INTERNAL_PLACEMENT_ID;
+    }
     //console.log(this.task);
     // if(this.task.taskParent==undefined||this.task.taskParent==null){
     //   this.task.taskParent = 0;
