@@ -8,7 +8,7 @@ export const environment = {
   // accessPrivilegeUrl: `http://localhost:8090/accessprivilege/uhpocms`,
 
   // countryUrl: `http://localhost:8090/country/ttsms/country`,
-  employeeUrl: `http://localhost:8090/ttsms`,
+  //employeeUrl: `http://localhost:8090/ttsms`,
   // companyUrl: `http://localhost:8090/company/ttsms/company`,
   // reasonUrl: `http://localhost:8090/reason/ttsms`,
   // statusUrl: `http://localhost:8090/status/ttsms`,
@@ -18,7 +18,7 @@ export const environment = {
   // statusURL: `http://localhost:8090/status/ttsms`,
 
   countryUrl: `${commonEnv.baseUrl}/country/ttsms/country`,
-  //employeeUrl: `${commonEnv.baseUrl}/employee/ttsms`,
+  employeeUrl: `${commonEnv.baseUrl}/employee/ttsms`,
   companyUrl: `${commonEnv.baseUrl}/company/ttsms/company`,
   reasonUrl: `${commonEnv.baseUrl}/reason/ttsms`,
   statusURL: `${commonEnv.baseUrl}/status/ttsms`,
