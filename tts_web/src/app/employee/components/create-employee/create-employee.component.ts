@@ -86,6 +86,7 @@ export class CreateEmployeeComponent implements OnInit {
   // This function creates a new employee and uploads an optional file.
   createEmployee(employee: Employee) {
     // Check if a file is selected for upload
+    alert(JSON.stringify(employee));
     if (this.isAdmin) {
       employee.companyId = this.companyId
       employee.countryId = this.countryId
@@ -98,12 +99,14 @@ export class CreateEmployeeComponent implements OnInit {
 
       // Append the selected file to the FormData object
       formData.append('file', this.selectedFile);
+      console.log(employee);
 
       // Create a Blob containing the employee data in JSON format
       const employeeBlob = new Blob([JSON.stringify(employee)], { type: 'application/json' });
-      //alert(JSON.stringify(employeeBlob));
+      console.log(employeeBlob);
       // Append the employee data Blob to the FormData object
       formData.append('employee', employeeBlob);
+      console.log(formData.get('employee'));
 
       // Call the employeeService to create a new employee with the provided data
       this.employeeService.createEmployees(formData).subscribe(

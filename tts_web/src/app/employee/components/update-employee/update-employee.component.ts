@@ -90,6 +90,8 @@ export class UpdateEmployeeComponent {
   // This function updates an employee's information, including an optional file upload.
   updateEmployeeByEmployeeId(updatedEmployee: Employee) {
     // Check if a file is selected for upload
+
+    alert(JSON.stringify(updatedEmployee));
     const formData = new FormData();
     if (this.selectedFile) {
       // Log the name of the selected file
@@ -99,6 +101,8 @@ export class UpdateEmployeeComponent {
 
       formData.append('file', this.selectedFile); // Append the selected file to the FormData object
     }
+    console.log(updatedEmployee);
+
     // Create a Blob containing the updatedEmployee data in JSON format
     const employeeBlob = new Blob([JSON.stringify(updatedEmployee)], { type: 'application/json' });
 

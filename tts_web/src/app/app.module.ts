@@ -16,9 +16,11 @@ import { TaskModule } from './task/task.module';
 import { HomeModule } from './home/home.module';
 import { ReasonModule } from './reason/reason.module';
 import { StatusModule } from './status/status.module';
+
 @NgModule({
   declarations: [
     AppComponent,
+
   ],
   imports: [
     BrowserModule,

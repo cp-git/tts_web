@@ -33,6 +33,8 @@ export class EmployeeService {
   // This function sends a POST request to the API to create a new employee with the provided data in a FormData object.
   createEmployees(formData: FormData): Observable<any> {
     // Send a POST request to the API endpoint for creating a new employee
+    console.log(formData);
+
     return this._http.post<any>(`${this.employeeUrl}/employee`, formData);
   }
 

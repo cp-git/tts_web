@@ -135,7 +135,7 @@
                         class="custom-checkbox form-check-input">
                 </div>
             </div>
-           
+
             <div class="col-md-4">
                 <label class="form-check-label" for="showalltasks"><strong>Can view all tasks?</strong></label>
                 <div>
@@ -143,9 +143,17 @@
                         class="custom-checkbox form-check-input">
                 </div>
             </div>
+
+            <div class="col-md-4">
+                <label class="form-check-label" for="isonbech"><strong>Is on bench?</strong></label>
+                <div>
+                    <input type="checkbox" id="onbech" name="onbench" [(ngModel)]="employeeData.onBench"
+                        class="custom-checkbox form-check-input">
+                </div>
+            </div>
         </div>
         <img *ngIf="selectedFile" [src]="selectedImageUrl" alt="Selected Image" class="img-fluid">
-        
+
         <!-- Submit button to add the new employee -->
         <div>
             <button type="submit" [disabled]="!addUpdateForm.valid" (click)="createEmployee(employeeData)"

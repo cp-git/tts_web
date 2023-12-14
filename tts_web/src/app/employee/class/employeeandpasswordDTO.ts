@@ -8,7 +8,8 @@ export class EmployeeAndPasswordDTO {
     birthDate!: Date;
     employeeEmail!: string;
     admin!: boolean;
-    showAllTasks!:boolean;
+    showAllTasks!: boolean;
+    onBench!: boolean;
     passwordId!: number;
     username!: string;
     password!: string;
