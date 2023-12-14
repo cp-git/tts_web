@@ -19,7 +19,7 @@ export class TextypeService {
       taxTypeDescription: 'C2C Desc'
     },
     {
-      taxTypeId: 2,
+      taxTypeId: 3,
       taxTypeName: 'C2H',
       taxTypeDescription: 'C2H Desc'
     },

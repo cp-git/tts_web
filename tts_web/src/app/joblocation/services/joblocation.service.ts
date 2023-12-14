@@ -18,7 +18,7 @@ export class JoblocationService {
       locationDescription: 'Remote work location'
     },
     {
-      locationId: 2,
+      locationId: 3,
       locationType: 'On-site',
       locationDescription: 'On-site  location'
     },
