@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Employee } from 'src/app/employee/class/employee';
+import { Task } from 'src/app/task/class/task';
 import { environment } from 'src/environments/environment.dev';
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class DashboardService {
 
 
   // for getting all employees
-  getAllEmployees(companyId:any): Observable<Employee[]> {
+  getAllEmployees(companyId: any): Observable<Employee[]> {
     return this.http.get<Employee[]>(`${this.EmployeeURL}/companyemp/${companyId}`);
   }
 
@@ -48,4 +49,10 @@ export class DashboardService {
     const url = `${this.companyUrl}/${companyId}`;
     return this.http.get(url);
   }
+
+
+  getTaskCreatedByMeOrAssignedToMe(employeeId: number) {
+    return this.http.get<Task[]>(`http://localhost:8080/ttsms/createdby/${employeeId}`);
+  }
+
 }

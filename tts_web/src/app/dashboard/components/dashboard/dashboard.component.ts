@@ -25,10 +25,13 @@ export class DashboardComponent implements OnInit {
   companyId: any;
   // to store all parent tasks
   parentTaskData: Task[] = [];
+  ChildTaskData1: Task[] = [];
+
   allParentTaskData = new Map();
   displayCompanyLogo: any;
   displayEmployeeLogo: any;
   employees: Employee[] = [];
+  task: Task[] = [];
   allStatus: Status[] = [];
   childTaskData = new Map();
   loggedInUserData: any;
@@ -64,6 +67,17 @@ export class DashboardComponent implements OnInit {
     //console.log(this.allStatus);
 
     this.initialization(); // Call the initialization method
+
+    this.dashboardService.getTaskCreatedByMeOrAssignedToMe(this.employeeId).subscribe(
+      response => {
+
+        console.log("In Response...");
+
+        console.log(response);
+        this.task = response;
+
+      }
+    )
 
   }
 
@@ -150,6 +164,8 @@ export class DashboardComponent implements OnInit {
     } else {
       this.taskService.getTaskCreatedByMeOrAssignedToMe(this.employeeId).subscribe(
         (response) => {
+          console.log(response);
+
           this.parentAndAllTask = response;
         }
       );
@@ -236,4 +252,53 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
+  onChangeData() {
+    this.router.navigate(['taskStatus'])
+  }
+
+
+  toggleChildTable(task: Task): void {
+
+    // Checking parent task is toggled or not (maintained set for expanded parent task i.e. toggledTasksIds)
+
+
+    // if logged is user is owner of task then he can see all child tasks
+    if (task.taskCreatedBy == this.employeeId) {
+      this.onClickChild(task);
+    }
+
+
+  }
+
+
+  private onClickChild(task: Task) {
+
+    // if (this.parentTaskData[this.parentTaskData.indexOf(task)].childTask) {
+    //   //console.log("exist");
+
+    // } else {
+    //console.log(task);
+
+    // //console.log("exist");
+    // calling function to get child task using parent id
+
+    this.taskService.getChildTaskByParentId(task.taskId).subscribe(
+      (response) => {
+        console.log(response);
+        this.ChildTaskData1 = response
+
+
+
+
+
+      },
+      (error) => {
+        //console.log("Failed to load child task!");
+      }
+    );
+    // }     
+  }
+
+
 }

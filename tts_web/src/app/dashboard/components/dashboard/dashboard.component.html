@@ -77,13 +77,101 @@
         </div>
 
         <!-- task table  -->
-        <!-- {{parentAndAllTask|json}} -->
-        
-        <app-task-table [parentTaskData]="parentTaskData" [parentAndAllTask]="parentAndAllTask"
+
+
+        <table class="table table-striped">
+            <tr>
+            </tr>
+            <tr *ngFor="let emp of task">
+                <!-- <li>{{emp | json}}</li> -->
+                <!-- <td>{{emp.taskId}}</td>
+                <td>{{emp.taskName}}</td>
+                <td>{{emp.taskDescription}}</td>
+                <td>{{emp.taskCreatedBy}}</td>
+                <td>{{emp.taskAssignedTo}}</td>
+                <td>{{emp.taskStatus}}</td>
+                <td>{{emp.taskStartDate}}</td>
+                <td>{{emp.taskEndDate}}</td> -->
+
+
+                <mat-expansion-panel class="expansionrow" hideToggle="false" (click)="toggleChildTable(emp)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <b>{{emp.taskName}}</b>
+                        </mat-panel-title>
+                        <mat-panel-description class="align-right">
+                            <!-- <div class="row">
+                                                <div class="col icons addtask"> -->
+                            <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask"
+                                style="color: #03a300;"></span>
+                            <!-- </div>
+                                            </div> -->
+                            <!-- This is a summary of the content -->
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <table class="table table-striped table-bordered table-custom-font-size">
+                        <thead>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>CreatedBy</th>
+                            <th>AssignedTo</th>
+                            <th>taskStatus</th>
+                            <th>taskStartDate</th>
+                            <th>taskEndDate</th>
+
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{emp.taskName}}</td>
+                                <td>{{emp.taskDescription}}</td>
+                                <td>{{emp.taskCreatedBy}}</td>
+                                <td>{{emp.taskAssignedTo}}</td>
+                                <td>{{emp.taskStatus}}</td>
+                                <td>{{emp.taskStartDate}}</td>
+                                <td>{{emp.taskEndDate}}</td>
+                            </tr>
+
+                            <tr>
+                                <ng-container *ngFor="let childData of ChildTaskData1">
+
+                                    <!-- if child's parent id and parent id is same OR child's task id and parent task id is same(means it is parent task ) -->
+                                    <ng-container
+                                        *ngIf="childData.taskParent == emp.taskId || (childData.taskId == emp.taskId)">
+                                        <td>{{childData.taskName}}</td>
+                                        <td>{{childData.taskDescription}}</td>
+                                        <td>{{childData.taskCreatedBy}}</td>
+                                        <td>{{childData.taskAssignedTo}}</td>
+                                        <td>{{childData.taskStatus}}</td>
+                                        <td>{{childData.taskStartDate}}</td>
+                                        <td>{{childData.taskEndDate}}</td>
+
+                                    </ng-container>
+                                </ng-container>
+                            </tr>
+
+
+
+
+
+
+                        </tbody>
+                    </table>
+
+                </mat-expansion-panel>
+
+
+
+
+        </table>
+
+        <!-- <app-task-table [parentTaskData]="parentTaskData" [parentAndAllTask]="parentAndAllTask"
             [filteredStatus]="filteredStatuses" [filteredEmployees]="filteredEmployees" [employees]="employees" [allStatus]="allStatus"
             [loggedInUserData]="loggedInUserData"
-            ></app-task-table>
+            ></app-task-table> -->
 
     </div>
+
+
 
 </div>

@@ -9,6 +9,9 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { StatusDropdownComponent } from './components/status-dropdown/status-dropdown.component';
 import { SharedModule } from "../shared/shared.module";
 import { EmployeeFilterComponent } from './components/employee-filter/employee-filter.component';
+import { TaskRoutingModule } from '../task/task-routing.module';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -24,6 +27,12 @@ import { EmployeeFilterComponent } from './components/employee-filter/employee-f
         TaskModule,
         FooterModule,
         NgMultiSelectDropDownModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        TaskRoutingModule,
+        FormsModule,
+        MatExpansionModule,
+        BrowserAnimationsModule,
         SharedModule
     ]
 })

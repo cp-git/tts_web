@@ -18,6 +18,10 @@ import { HomeComponent } from './home/home/home.component';
 import { StatusComponent } from './status/components/status/status.component';
 import { AddStatusComponent } from './status/components/add-status/add-status.component';
 import { UpdateStatusComponent } from './status/components/update-status/update-status.component';
+import { CreateTaskComponent } from './task/components/create-task/create-task.component';
+import { TaskTableComponent } from './task/components/task-table/task-table.component';
+import { takeLast } from 'rxjs';
+import { TaskDataComponent } from './task-data/task-data.component';
 const routes: Routes = [
 
 
@@ -39,6 +43,9 @@ const routes: Routes = [
   { path: 'status', component: StatusComponent },
   { path: 'addStatus', component: AddStatusComponent },
   { path: 'updateStatus', component: UpdateStatusComponent },
+
+  //Add task Module
+  { path: 'taskStatus', component: CreateTaskComponent }
 
 
 ];
