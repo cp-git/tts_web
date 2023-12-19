@@ -1,5 +1,5 @@
 // Import necessary Angular modules and classes
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 import { Task } from 'src/app/task/class/task';
 import { TaskService } from 'src/app/task/services/task.service';
@@ -35,10 +35,16 @@ export class DashboardComponent implements OnInit {
   allStatus: Status[] = [];
   childTaskData = new Map();
   loggedInUserData: any;
+  @Input() task1: Task = {} as Task;
   // Define selected statuses as an array with a default value
   selectedStatuses: string[] = ['ALL']; // Default value
   filteredStatuses: Status[] = [];
   displayAllTask: boolean = false;
+  @Input() modalId: number = 0;
+  emptyTask: Task = {} as Task;
+  updateScreen: boolean = false;
+  parentTask: Task = {} as Task;
+
 
   // Constructor - executed when an instance of the component is created
   constructor(
@@ -298,6 +304,69 @@ export class DashboardComponent implements OnInit {
       }
     );
     // }     
+  }
+
+  parentTaskStatus: any;
+  onClickCreateTask(task1: Task, operation: string, event: Event) {
+    event.stopPropagation();
+
+    this.taskService.getTaskByTaskId(task1.taskId).subscribe(
+      response => {
+        console.log(response);
+        this.parentTaskStatus = this.allStatus.find(s => s.statusId == response.taskStatus);
+        console.log(this.parentTaskStatus);
+
+      }
+    );
+
+    // //console.log(taskData);
+
+    this.emptyTask = {} as Task;
+    this.updateScreen = false;
+    this.parentTask = {} as Task;
+
+    //console.log(task);
+    //console.log(operation);
+
+    if (operation == 'ADD') {
+      this.updateScreen = false;
+      this.parentTask = Object.assign({}, task1);
+
+      this.emptyTask.companyId = this.companyId;
+
+      if (this.parentTask.taskParent == undefined || this.parentTask.taskParent == null) {
+        this.emptyTask.taskParent = 0;
+      }
+      else {
+        this.emptyTask.taskParent = this.parentTask.taskId;
+      }
+
+      this.emptyTask.taskCreatedBy = this.employeeId;
+      this.emptyTask.taskAssignedTo = this.employeeId;
+      this.emptyTask.taskStatus = this.allStatus[0].statusId;
+      this.emptyTask.taskActualStartDate = null as unknown as Date;
+      this.emptyTask.taskActualEndDate = null as unknown as Date;
+
+    }
+    else if (operation == 'UPDATE') {
+      this.updateScreen = true;
+      //console.log(task);
+
+      if (task1.taskParent > 0) {
+        this.taskService.getTaskByTaskId(task1.taskParent).subscribe(
+          (response) => {
+            // on success 
+            this.parentTask = response;
+            //console.log(this.parentTask);
+          }
+        );
+      }
+      this.emptyTask = Object.assign({}, task1);
+    }
+  }
+
+  afterCreateTask() {
+    location.reload();
   }
 
 
