@@ -4,8 +4,9 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 *ngIf="!updateScreen" class="modal-title fs-5" id="createTaskLabel">Create Task </h1> <ng-container *ngIf="task.taskParent!=0">
-                    <h1 class="modal-title fs-5">&nbsp;- {{parentTask.taskName}}</h1>
+                <h1 *ngIf="!updateScreen" class="modal-title fs-5" id="createTaskLabel">Create Task </h1> <ng-container
+                    *ngIf="task.taskParent!=0">
+                    <h1 class="modal-title fs-5">&nbsp;for - {{parentTask.taskName}}</h1>
                 </ng-container>
                 <h1 *ngIf="updateScreen" class="modal-title fs-5" id="createTaskLabel">Update Task</h1>
 
@@ -178,7 +179,7 @@
                     <ng-container
                         *ngIf="(currentTaskStatus?.actualEndDate===false && currentTaskStatus?.actualStartDate===true)">
                         <input [disabled]="true" type="date" class="form-control" id="startDate" name="startDate"
-                            [(ngModel)]="todayForPlannedStartDate" [required]="true" #startDateField="ngModel">
+                            [(ngModel)]="todayForPlannedStartDate" [required]="true" #startDateField="ngModel" onkeydown="return false">
                     </ng-container>
 
                     <ng-container
@@ -188,7 +189,7 @@
                             type="date" class="form-control" id="startDate" name="startDate"
                             [(ngModel)]="task.taskStartDate" [required]="true" [min]="currentDate"
                             #startDateField="ngModel"
-                            [disabled]="parentTaskStatus && parentTaskStatus?.finalStatus == true">
+                            [disabled]="parentTaskStatus && parentTaskStatus?.finalStatus == true" onkeydown="return false">
                         <div *ngIf="startDateField.invalid && (startDateField.dirty||startDateField.touched)"
                             class="text-danger">
                             Start Date is required.
@@ -199,7 +200,7 @@
                 <ng-container *ngIf="updateScreen">
                     <input [disabled]="true" type="date" class="form-control " id="startDate" name="startDate"
                         [(ngModel)]="task.taskStartDate" [required]="true" [min]="currentDate"
-                        #startDateField="ngModel">
+                        #startDateField="ngModel" onkeydown="return false">
                     <div *ngIf="startDateField.invalid && (startDateField.dirty||startDateField.touched)"
                         class="text-danger">
                         Start Date is required.
@@ -213,7 +214,7 @@
                     <input type="date" class="form-control" id="endDate" name="endDate" [min]="task.taskStartDate"
                         [(ngModel)]="task.taskEndDate" [required]="true" [min]="todayForPlannedStartDate"
                         [disabled]="task.taskStartDate==null || updateScreen || (currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)"
-                        #endDateField="ngModel">
+                        #endDateField="ngModel" onkeydown="return false">
 
                     <div *ngIf="endDateField.invalid " class="text-danger">
                         End Date is required.
@@ -222,7 +223,7 @@
                 <ng-container *ngIf="updateScreen">
                     <input [disabled]="true" type="date" class="form-control" id="endDate" name="endDate"
                         [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate" [required]="true"
-                        #endDateField="ngModel">
+                        #endDateField="ngModel" onkeydown="return false">
 
                     <div *ngIf="endDateField.invalid " class="text-danger">
                         End Date is required.
@@ -238,7 +239,7 @@
                 <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
                     [min]="task.taskStartDate" [(ngModel)]="todayForStartDate"
                     [required]="updateScreen && (currentTaskStatus?.actualEndDate===false && currentTaskStatus?.actualStartDate===true)"
-                    disabled>
+                    disabled >
             </div>
 
             <div class="col-sm-3">
@@ -250,6 +251,10 @@
             </div>
 
         </div>
+
+        <!-- Sourcing Candidate **************************************************************************** -->
+
+
         <ng-container *ngIf="task.placementId==EXTERNAL_PLACEMENT_ID; else benchApplicant">
             <div class="row">
 
@@ -267,24 +272,26 @@
                     </div>
                 </div> -->
                 <div class="col-sm-4">
-                    <label for="visaId" class="form-label">Visa Type</label><br>
+                    <label for="visaId" class="form-label">Visa Type<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label><br>
                     <select class="form-control form-select" name="visaId" id="visaId" name="visaId"
                         [(ngModel)]="task.visaId" [required]="true">
                         <option value="undefined" disabled>Select Option</option>
-                        <option value="1" selected="true">H1B</option>
-                        <option value="2" selected="true">GC</option>
-                        <option value="3" selected="true">EAD</option>
-                        <option value="4" selected="true">OPT</option>
+                        <ng-container *ngFor="let visa of allVisas">
+                            <option value="{{visa.visaId}}">{{visa.visaType}}</option>
+                        </ng-container>
 
                     </select>
                 </div>
                 <div class="col-sm-4">
-                    <label for="taxTypeId" class="form-label">Tax Type</label><br>
+                    <label for="taxTypeId" class="form-label">Tax Type<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label><br>
                     <select class="form-control form-select" name="taxTypeId" id="taxTypeId" name="taxTypeId"
                         [(ngModel)]="task.taxTypeId" [required]="true">
                         <option value="undefined" disabled>Select Option</option>
-                        <option value="1" selected="true">W2</option>
-                        <option value="2" selected="true">1099</option>
+                        <ng-container *ngFor="let taxType of allTaxTypes">
+                            <option value="{{taxType.taxTypeId}}">{{taxType.taxTypeName}}</option>
+                        </ng-container>
 
                     </select>
                 </div>
@@ -318,43 +325,37 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label for="hrName" class="form-label">HR Name<span class="required-asterisk"
-                            *ngIf="!updateScreen">*</span></label>
+                    <label for="hrName" class="form-label">HR Name</label>
                     <input
                         [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
                         type="text" class="form-control extra-light-placeholder" id="hrName" name="hrName"
-                        placeholder="Enter HR name" [(ngModel)]="task.hrName" [required]="true" maxlength="100"
-                        #hrName="ngModel">
-                    <div *ngIf="hrName.invalid && (hrName.dirty||hrName.touched) " class="text-danger">
+                        placeholder="Enter HR name" [(ngModel)]="task.hrName" maxlength="100" #hrName="ngModel">
+                    <!-- <div *ngIf="hrName.invalid && (hrName.dirty||hrName.touched) " class="text-danger">
                         HR name is required.
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <label for="hrEmail" class="form-label">HR email<span class="required-asterisk"
-                            *ngIf="!updateScreen">*</span></label>
+                    <label for="hrEmail" class="form-label">HR email</label>
                     <input
                         [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
                         type="text" class="form-control extra-light-placeholder" id="hrEmail" name="hrEmail"
-                        placeholder="Enter HR name" [(ngModel)]="task.hrEmail" [required]="true" maxlength="100"
-                        #hrEmail="ngModel">
-                    <div *ngIf="hrEmail.invalid && (hrEmail.dirty||hrEmail.touched) " class="text-danger">
+                        placeholder="Enter HR name" [(ngModel)]="task.hrEmail" maxlength="100" #hrEmail="ngModel">
+                    <!-- <div *ngIf="hrEmail.invalid && (hrEmail.dirty||hrEmail.touched) " class="text-danger">
                         HR email is required.
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-md-4">
-                    <label for="hrPhone" class="form-label">HR phone<span class="required-asterisk"
-                            *ngIf="!updateScreen">*</span></label>
+                    <label for="hrPhone" class="form-label">HR phone</label>
                     <input
                         [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
                         type="text" class="form-control extra-light-placeholder" id="hrPhone" name="hrPhone"
-                        placeholder="Enter HR name" [(ngModel)]="task.hrPhone" [required]="true" maxlength="100"
-                        #hrPhone="ngModel">
-                    <div *ngIf="hrPhone.invalid && (hrPhone.dirty||hrPhone.touched) " class="text-danger">
+                        placeholder="Enter HR name" [(ngModel)]="task.hrPhone" maxlength="100" #hrPhone="ngModel">
+                    <!-- <div *ngIf="hrPhone.invalid && (hrPhone.dirty||hrPhone.touched) " class="text-danger">
                         HR phone number is required.
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="col-md-4">
@@ -386,14 +387,14 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <label for="jobPortalId" class="form-label">Job portal</label><br>
+                    <label for="jobPortalId" class="form-label">Job portal<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label><br>
                     <select class="form-control form-select" name="jobPortalId" id="jobPortalId" name="jobPortalId"
                         [(ngModel)]="task.jobPortalId" [required]="true">
                         <option value="undefined" disabled>Select Option</option>
-                        <option value="1" selected="true">Company portal</option>
-                        <option value="2" selected="true">LinkedIn</option>
-                        <option value="3" selected="true">Indeed</option>
-                        <option value="4" selected="true">Naukari</option>
+                        <ng-container *ngFor="let portal of allJobPortals">
+                            <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                        </ng-container>
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -410,10 +411,11 @@
                 </div>
 
                 <div class="col-sm-3">
-                    <label for="datePosted" class="form-label">Job posted</label>
+                    <label for="datePosted" class="form-label">Job posted date<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label>
 
-                    <input type="date" class="form-control" id="datePosted" name="datePosted" [max]="todayForStartDate"
-                        [(ngModel)]="task.datePosted">
+                    <input type="date" class="form-control" id="datePosted" name="datePosted" [max]="todayDate"
+                        [(ngModel)]="task.datePosted" onkeydown="return false">
                 </div>
 
                 <div class="col-md-4">
@@ -462,24 +464,25 @@
                 </div>
 
                 <div class="col-sm-3">
-                    <label for="jobLocationId" class="form-label">Job location</label><br>
+                    <label for="jobLocationId" class="form-label">Job location<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label><br>
                     <select class="form-control form-select" name="jobLocationId" id="jobLocationId"
                         [(ngModel)]="task.jobLocationId" [required]="true">
                         <option value="undefined" disabled>Select Option</option>
-                        <option value="1" selected="true">Remote</option>
-                        <option value="2" selected="true">On-Site</option>
-                        <option value="3" selected="true">Hybrid</option>
+                        <ng-container *ngFor="let location of allJobLocations">
+                            <option value="{{location.locationId}}">{{location.locationType}}</option>
+                        </ng-container>
                     </select>
                 </div>
                 <div class="col-sm-3">
-                    <label for="jobSubmissionPortalId" class="form-label">Job submission portal</label><br>
+                    <label for="jobSubmissionPortalId" class="form-label">Job submission portal<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label><br>
                     <select class="form-control form-select" name="jobSubmissionPortalId" id="jobPortalId"
                         [(ngModel)]="task.jobSubmissionPortalId" [required]="true">
                         <option value="undefined" disabled>Select Option</option>
-                        <option value="1" selected="true">Company portal</option>
-                        <option value="2" selected="true">LinkedIn</option>
-                        <option value="3" selected="true">Indeed</option>
-                        <option value="4" selected="true">Naukari</option>
+                        <ng-container *ngFor="let portal of allJobPortals">
+                            <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                        </ng-container>
                     </select>
                 </div>
             </div>
@@ -503,7 +506,7 @@
                             *ngIf="!updateScreen">*</span></label>
                     <input
                         [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
-                        type="text" class="form-control extra-light-placeholder" id="recruiterEmail"
+                        type="email" required pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}" class="form-control extra-light-placeholder" id="recruiterEmail"
                         name="recruiterEmail" placeholder="Recruiter email" [(ngModel)]="task.recruiterEmail"
                         [required]="true" maxlength="100" #recruiterEmail="ngModel">
                     <div *ngIf="recruiterEmail.invalid && (recruiterEmail.dirty||recruiterEmail.touched) "
@@ -516,7 +519,7 @@
                             *ngIf="!updateScreen">*</span></label>
                     <input
                         [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
-                        type="text" class="form-control extra-light-placeholder" id="recruiterPhone"
+                        type="number" pattern="^[0-9]{10}$" class="form-control extra-light-placeholder" id="recruiterPhone"
                         name="recruiterPhone" placeholder="Recruiter phone number" [(ngModel)]="task.recruiterPhone"
                         [required]="true" maxlength="100" #recruiterPhone="ngModel">
                     <div *ngIf="recruiterPhone.invalid && (recruiterPhone.dirty||recruiterPhone.touched) "
@@ -527,6 +530,7 @@
             </div>
         </ng-container>
 
+        <!-- Bench applicant **************************************************************************** -->
         <ng-template #benchApplicant>
             <div class="row">
                 <!-- <div class="col-sm-4">
@@ -554,12 +558,14 @@
                     </select>
                 </div> -->
                 <div class="col-sm-4">
-                    <label for="taxTypeId" class="form-label">Tax Type</label><br>
+                    <label for="taxTypeId" class="form-label">Tax Type<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label><br>
                     <select class="form-control form-select" name="taxTypeId" id="taxTypeId" name="taxTypeId"
                         [(ngModel)]="task.taxTypeId" [required]="true">
                         <option value="undefined" disabled>Select Option</option>
-                        <option value="1" selected="true">W2</option>
-                        <option value="2" selected="true">1099</option>
+                        <ng-container *ngFor="let taxType of allTaxTypes">
+                            <option *ngIf="taxType.forBench" value="{{taxType.taxTypeId}}">{{taxType.taxTypeName}}</option>
+                        </ng-container>
 
                     </select>
                 </div>
@@ -663,14 +669,14 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <label for="jobPortalId" class="form-label">Job portal</label><br>
+                    <label for="jobPortalId" class="form-label">Job portal<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label><br>
                     <select class="form-control form-select" name="jobPortalId" id="jobPortalId" name="jobPortalId"
                         [(ngModel)]="task.jobPortalId" [required]="true">
                         <option value="undefined" disabled>Select Option</option>
-                        <option value="1" selected="true">Company portal</option>
-                        <option value="2" selected="true">LinkedIn</option>
-                        <option value="3" selected="true">Indeed</option>
-                        <option value="4" selected="true">Naukari</option>
+                        <ng-container *ngFor="let portal of allJobPortals">
+                            <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                        </ng-container>
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -686,10 +692,11 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <label for="datePosted" class="form-label">Job posted</label>
+                    <label for="datePosted" class="form-label">Job posted date<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label>
 
-                    <input type="date" class="form-control" id="datePosted" name="datePosted" [max]="todayForStartDate"
-                        [(ngModel)]="task.datePosted">
+                    <input type="date" class="form-control" id="datePosted" name="datePosted" [max]="todayDate"
+                        [(ngModel)]="task.datePosted" onkeydown="return false">
                 </div>
                 <div class="col-md-4">
                     <label for="hiringCompanyName" class="form-label">Hiring company Name<span class="required-asterisk"
@@ -737,24 +744,25 @@
                 </div>
 
                 <div class="col-sm-3">
-                    <label for="jobLocationId" class="form-label">Job location</label><br>
+                    <label for="jobLocationId" class="form-label">Job location<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label><br>
                     <select class="form-control form-select" name="jobLocationId" id="jobLocationId"
                         [(ngModel)]="task.jobLocationId" [required]="true">
                         <option value="undefined" disabled>Select Option</option>
-                        <option value="1" selected="true">Remote</option>
-                        <option value="2" selected="true">On-Site</option>
-                        <option value="3" selected="true">Hybrid</option>
+                        <ng-container *ngFor="let location of allJobLocations">
+                            <option value="{{location.locationId}}">{{location.locationType}}</option>
+                        </ng-container>
                     </select>
                 </div>
                 <div class="col-sm-3">
-                    <label for="jobSubmissionPortalId" class="form-label">Job submission portal</label><br>
+                    <label for="jobSubmissionPortalId" class="form-label">Job submission portal<span class="required-asterisk"
+                            *ngIf="!updateScreen">*</span></label><br>
                     <select class="form-control form-select" name="jobSubmissionPortalId" id="jobPortalId"
                         [(ngModel)]="task.jobSubmissionPortalId" [required]="true">
                         <option value="undefined" disabled>Select Option</option>
-                        <option value="1" selected="true">Company portal</option>
-                        <option value="2" selected="true">LinkedIn</option>
-                        <option value="3" selected="true">Indeed</option>
-                        <option value="4" selected="true">Naukari</option>
+                        <ng-container *ngFor="let portal of allJobPortals">
+                            <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                        </ng-container>
                     </select>
                 </div>
             </div>
@@ -778,7 +786,7 @@
                             *ngIf="!updateScreen">*</span></label>
                     <input
                         [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
-                        type="text" class="form-control extra-light-placeholder" id="recruiterEmail"
+                        type="email" required pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}" class="form-control extra-light-placeholder" id="recruiterEmail"
                         name="recruiterEmail" placeholder="Recruiter email" [(ngModel)]="task.recruiterEmail"
                         [required]="true" maxlength="100" #recruiterEmail="ngModel" [min]="0" [max]="50">
                     <div *ngIf="recruiterEmail.invalid && (recruiterEmail.dirty||recruiterEmail.touched) "
@@ -791,7 +799,7 @@
                             *ngIf="!updateScreen">*</span></label>
                     <input
                         [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
-                        type="text" class="form-control extra-light-placeholder" id="recruiterPhone"
+                        type="number" pattern="^[0-9]{10}$" class="form-control extra-light-placeholder" id="recruiterPhone"
                         name="recruiterPhone" placeholder="Recruiter phone number" [(ngModel)]="task.recruiterPhone"
                         [required]="true" maxlength="100" #recruiterPhone="ngModel" [min]="0" [max]="50">
                     <div *ngIf="recruiterPhone.invalid && (recruiterPhone.dirty||recruiterPhone.touched) "

@@ -9,6 +9,10 @@ import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service
 import { EmployeeService } from 'src/app/employee/services/employee.service';
 import { last } from 'rxjs';
 import { Employee } from 'src/app/employee/class/employee';
+import { Visa } from 'src/app/visa/class/visa';
+import { Joblocation } from 'src/app/joblocation/classes/joblocation';
+import { Jobportal } from 'src/app/jobportal/classes/jobportal';
+import { Taxtype } from 'src/app/taxtype/classes/taxtype';
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
@@ -28,7 +32,10 @@ export class CreateTaskComponent implements OnInit {
   @Input() task: Task = {} as Task;
   @Input() updateScreen: boolean = false;
   @Input() modalId: any;
-
+  @Input() allVisas: Visa[] = [];
+  @Input() allJobLocations: Joblocation[] = [];
+  @Input() allJobPortals: Jobportal[] = [];
+  @Input() allTaxTypes: Taxtype[] = [];
 
   @Output() afterCreateTask: EventEmitter<any> = new EventEmitter();
   employeeId: any;
@@ -54,7 +61,7 @@ export class CreateTaskComponent implements OnInit {
   todayForEndDate: string = '';
   todayForPlannedStartDate: string = '';
   todayForPlannedEndDate: string = ''
-
+  todayDate!: string;
   parentTaskStatus: any;
 
   constructor(
@@ -75,7 +82,7 @@ export class CreateTaskComponent implements OnInit {
     //alert(this.companyId);
     this.loadCompanyEmployees();
 
-
+    this.todayDate = new Date().toISOString().split('T')[0];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -85,7 +92,7 @@ export class CreateTaskComponent implements OnInit {
     // }
 
     if (changes['task']) {
-      
+
       this.onChangeTaskObject();
     }
   }
@@ -149,7 +156,7 @@ export class CreateTaskComponent implements OnInit {
 
         }
       }
-     
+
     }
   }
 
