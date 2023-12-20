@@ -74,4 +74,5 @@ export class TaskService {
     return this.http.get<Task2>(`${this.TaskURL}/allparents?companyid=${companyId}`);
 
   }
+  
 }
