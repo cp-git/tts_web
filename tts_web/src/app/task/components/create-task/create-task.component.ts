@@ -221,6 +221,8 @@ export class CreateTaskComponent implements OnInit {
     // calling service to create or update task and adding reason 
     this.taskService.createOrUpdateTaskAndAddReason(formData).subscribe(
       (response) => {
+        console.log(response);
+
         this.showSuccessMessage = true;
         // alert("Task updated successfully");
 
@@ -369,7 +371,10 @@ export class CreateTaskComponent implements OnInit {
   selectedFile!: File;
   // called on file selected
   onFileSelected(event: any) {
+    console.log("file");
     this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile);
+
   }
 
   // for getting files by task id

@@ -82,6 +82,14 @@ export class DashboardComponent implements OnInit {
         console.log(response);
         this.task = response;
 
+
+        sessionStorage.setItem('task', JSON.stringify(this.task));
+
+        var taskData = sessionStorage.getItem('task'); // This is the json string we stored
+
+
+        console.log(taskData); // access properties as usual
+
       }
     )
 
@@ -162,7 +170,7 @@ export class DashboardComponent implements OnInit {
     if (this.loggedInUserData.showAllTasks) {
       this.taskService.getAllParentTasksByCompanyId(this.companyId).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
 
           this.parentAndAllTask = response;
         }
@@ -170,7 +178,7 @@ export class DashboardComponent implements OnInit {
     } else {
       this.taskService.getTaskCreatedByMeOrAssignedToMe(this.employeeId).subscribe(
         (response) => {
-          console.log(response);
+          //  console.log(response);
 
           this.parentAndAllTask = response;
         }
@@ -292,7 +300,13 @@ export class DashboardComponent implements OnInit {
     this.taskService.getChildTaskByParentId(task.taskId).subscribe(
       (response) => {
         console.log(response);
-        this.ChildTaskData1 = response
+        this.ChildTaskData1 = response;
+        sessionStorage.setItem('getDataByTask', JSON.stringify(this.ChildTaskData1));
+
+        var jsonStringObj = sessionStorage.getItem('getDataByTask'); // This is the json string we stored
+
+
+        console.log(jsonStringObj); // access properties as usual
 
 
 

@@ -177,10 +177,11 @@
 
                             </tr>
 
-                            <tr>
-                                <ng-container *ngFor="let childData of ChildTaskData1">
 
-                                    <!-- if child's parent id and parent id is same OR child's task id and parent task id is same(means it is parent task ) -->
+                            <ng-container *ngFor="let childData of ChildTaskData1">
+                                <tr>
+                                    <!-- if child's parent id and parent id is same OR child's task id and parent task id is
+                                    same(means it is parent task )-->
                                     <ng-container
                                         *ngIf="childData.taskParent == emp.taskId || (childData.taskId == emp.taskId)">
                                         <td>{{childData.taskName}}</td>
@@ -230,9 +231,11 @@
                                             </div>
                                         </td>
 
+
                                     </ng-container>
-                                </ng-container>
-                            </tr>
+                                </tr>
+                            </ng-container>
+
 
 
 

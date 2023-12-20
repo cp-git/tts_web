@@ -49,7 +49,7 @@ export class TaskService {
   }
 
   createOrUpdateTaskAndAddReason(formData: FormData): Observable<Task> {
-    return this.http.post<Task>(`${this.TaskURL}/savetask`, formData);
+    return this.http.post<Task>(`http://localhost:8080/ttsms/savetask`, formData);
   }
 
   getTaskByTaskId(taskId: number): Observable<Task> {
@@ -70,7 +70,7 @@ export class TaskService {
     return this.http.get<Task2>(`${this.TaskURL}/created/${employeeId}`);
   }
 
-  getAllParentTasksByCompanyId(companyId:number):Observable<Task2>{
+  getAllParentTasksByCompanyId(companyId: number): Observable<Task2> {
     return this.http.get<Task2>(`${this.TaskURL}/allparents?companyid=${companyId}`);
 
   }
