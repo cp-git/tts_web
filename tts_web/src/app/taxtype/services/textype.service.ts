@@ -11,17 +11,26 @@ export class TextypeService {
     {
       taxTypeId: 1,
       taxTypeName: 'W2',
-      taxTypeDescription: 'W2 Desc'
+      taxTypeDescription: 'W2 Desc',
+      companyId: 1,
+      forBench: true,
+      forSourcing: false,
     },
     {
       taxTypeId: 2,
       taxTypeName: 'C2C',
-      taxTypeDescription: 'C2C Desc'
+      taxTypeDescription: 'C2C Desc',
+      companyId: 1,
+      forBench: true,
+      forSourcing: false,
     },
     {
       taxTypeId: 3,
       taxTypeName: 'C2H',
-      taxTypeDescription: 'C2H Desc'
+      taxTypeDescription: 'C2H Desc',
+      companyId: 1,
+      forBench: true,
+      forSourcing: false,
     },
     // Add more data as needed
   ];

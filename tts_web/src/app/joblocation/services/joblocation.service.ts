@@ -10,17 +10,26 @@ export class JoblocationService {
     {
       locationId: 1,
       locationType: 'Office',
-      locationDescription: 'Main office location'
+      locationDescription: 'Main office location',
+      companyId: 1,
+      forBench: true,
+      forSourcing: false,
     },
     {
       locationId: 2,
       locationType: 'Remote',
-      locationDescription: 'Remote work location'
+      locationDescription: 'Remote work location',
+      companyId: 1,
+      forBench: true,
+      forSourcing: false,
     },
     {
       locationId: 3,
       locationType: 'On-site',
-      locationDescription: 'On-site  location'
+      locationDescription: 'On-site  location',
+      companyId: 1,
+      forBench: true,
+      forSourcing: false,
     },
     // Add more data as needed
   ];
