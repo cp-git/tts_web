@@ -15,6 +15,11 @@ import { Employee } from 'src/app/employee/class/employee';
   styleUrls: ['./create-task.component.css']
 })
 export class CreateTaskComponent implements OnInit {
+
+  INTERNAL_PLACEMENT_ID: number = 1;
+  EXTERNAL_PLACEMENT_ID: number = 2;
+  PLACEMENT_ID: number = 1;
+
   @ViewChild('createTaskModal') createTaskModal!: ElementRef;
 
   @Input() parentTask: Task = {} as Task;
@@ -80,9 +85,8 @@ export class CreateTaskComponent implements OnInit {
     // }
 
     if (changes['task']) {
+      
       this.onChangeTaskObject();
-
-
     }
   }
 
@@ -110,6 +114,9 @@ export class CreateTaskComponent implements OnInit {
 
     // if task exist 
     if (this.task.taskId > 0) {
+
+      // date posted string to date
+      // this.task.datePosted = new Date(this.task.datePosted);
       this.getFilesByTaskId(this.task.taskId);
 
       // Get the current status based on the task status ID
@@ -142,6 +149,7 @@ export class CreateTaskComponent implements OnInit {
 
         }
       }
+     
     }
   }
 

@@ -23,7 +23,8 @@ import { JobportalService } from 'src/app/jobportal/services/jobportal.service';
   styleUrls: ['./task-table.component.css']
 })
 export class TaskTableComponent implements OnInit {
-
+  INTERNAL_PLACEMENT_ID: number = 1;
+  EXTERNAL_PLACEMENT_ID: number = 2;
 
   @Input() parentTaskData: Task[] = [];
 
@@ -228,15 +229,14 @@ export class TaskTableComponent implements OnInit {
 
   parentTaskStatus: any;
 
+  // for create and Update task
   onClickCreateTask(task: Task, operation: string, event: Event) {
     event.stopPropagation();
 
+    // for getting update task status
     this.taskService.getTaskByTaskId(task.taskId).subscribe(
       response => {
-        console.log(response);
         this.parentTaskStatus = this.allStatus.find(s => s.statusId == response.taskStatus);
-        console.log(this.parentTaskStatus);
-
       }
     );
 
@@ -246,10 +246,13 @@ export class TaskTableComponent implements OnInit {
     this.updateScreen = false;
     this.parentTask = {} as Task;
 
-    //console.log(task);
+    console.log(task);
     //console.log(operation);
 
     if (operation == 'ADD') {
+
+      console.log(task);
+
       this.updateScreen = false;
       this.parentTask = Object.assign({}, task);
 
@@ -267,11 +270,14 @@ export class TaskTableComponent implements OnInit {
       this.emptyTask.taskStatus = this.allStatus[0].statusId;
       this.emptyTask.taskActualStartDate = null as unknown as Date;
       this.emptyTask.taskActualEndDate = null as unknown as Date;
+      this.emptyTask.placementId = this.INTERNAL_PLACEMENT_ID;
+      this.emptyTask.taxTypeId = 1;
 
     }
     else if (operation == 'UPDATE') {
+
       this.updateScreen = true;
-      //console.log(task);
+      console.log(task);
 
       if (task.taskParent > 0) {
         this.taskService.getTaskByTaskId(task.taskParent).subscribe(
@@ -282,7 +288,20 @@ export class TaskTableComponent implements OnInit {
           }
         );
       }
+
+      // get task and internal/external task data by task id
+      this.taskService.getTaskByTaskId(task.taskId).subscribe(
+        (response) => {
+          // on success 
+          task = response;
+          console.log(task);
+          this.emptyTask = Object.assign({}, task);
+        }
+      );
+
       this.emptyTask = Object.assign({}, task);
+      console.log(this.emptyTask);
+
     }
   }
 
