@@ -36,6 +36,7 @@ export interface Task {
     jobSubmissionPortalId: number;
     datePosted: Date;
     jobLink: string;
+    candidateId: number;
     candidateName: string;
     candidateCompany: string;
     companyAddress: string;

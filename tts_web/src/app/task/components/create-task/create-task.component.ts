@@ -85,9 +85,8 @@ export class CreateTaskComponent implements OnInit {
     // }
 
     if (changes['task']) {
+      
       this.onChangeTaskObject();
-
-
     }
   }
 
@@ -95,9 +94,6 @@ export class CreateTaskComponent implements OnInit {
   private onChangeTaskObject() {
 
     this.task = this.task;
-    if(this.task.placementId==undefined || this.task.placementId==null){
-      this.task.placementId = this.INTERNAL_PLACEMENT_ID;
-    }
     //console.log(this.task);
     // if(this.task.taskParent==undefined||this.task.taskParent==null){
     //   this.task.taskParent = 0;
@@ -118,6 +114,9 @@ export class CreateTaskComponent implements OnInit {
 
     // if task exist 
     if (this.task.taskId > 0) {
+
+      // date posted string to date
+      // this.task.datePosted = new Date(this.task.datePosted);
       this.getFilesByTaskId(this.task.taskId);
 
       // Get the current status based on the task status ID
@@ -150,6 +149,7 @@ export class CreateTaskComponent implements OnInit {
 
         }
       }
+     
     }
   }
 

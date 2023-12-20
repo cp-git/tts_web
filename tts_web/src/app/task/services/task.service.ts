@@ -53,7 +53,7 @@ export class TaskService {
   }
 
   getTaskByTaskId(taskId: number): Observable<Task> {
-    return this.http.get<Task>(`${this.TaskURL}/task/${taskId}`);
+    return this.http.get<Task>(`${this.TaskURL}/taskby/${taskId}`); 
 
   }
 

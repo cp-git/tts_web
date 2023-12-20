@@ -25,8 +25,8 @@
                 *ngIf="(parentTaskData.childTask | statusFilter:filteredStatus | employeeTaskFilter:filteredEmployees).length>0">
 
                 <!-- called on click function when logged employee is creator -->
-                <mat-expansion-panel class="expansionrow" hideToggle="false"
-                    (click)="toggleChildTable(parentTaskData)" [expanded]="toggledTasksIds.has(parentTaskData.taskId)">
+                <mat-expansion-panel class="expansionrow" hideToggle="false" (click)="toggleChildTable(parentTaskData)"
+                    [expanded]="toggledTasksIds.has(parentTaskData.taskId)">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <b>{{parentTaskData.taskName}}</b>
