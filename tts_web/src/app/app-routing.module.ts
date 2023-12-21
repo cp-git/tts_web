@@ -18,6 +18,15 @@ import { HomeComponent } from './home/home/home.component';
 import { StatusComponent } from './status/components/status/status.component';
 import { AddStatusComponent } from './status/components/add-status/add-status.component';
 import { UpdateStatusComponent } from './status/components/update-status/update-status.component';
+import { AddportalComponent } from './jobportal/components/addportal/addportal.component';
+import { JobportalComponent } from './jobportal/components/jobportal/jobportal.component';
+import { UpdateportalComponent } from './jobportal/components/updateportal/updateportal.component';
+import { UpdatevisaComponent } from './visa/component/updatevisa/updatevisa.component';
+import { AddvisaComponent } from './visa/component/addvisa/addvisa.component';
+import { AddtaxtypeComponent } from './taxtype/components/addtaxtype/addtaxtype.component';
+import { UpdatetaxtypeComponent } from './taxtype/components/updatetaxtype/updatetaxtype.component';
+import { UpdatejoblocationComponent } from './joblocation/components/updatejoblocation/updatejoblocation.component';
+import { AddjoblocationComponent } from './joblocation/components/addjoblocation/addjoblocation.component';
 const routes: Routes = [
 
 
@@ -39,6 +48,15 @@ const routes: Routes = [
   { path: 'status', component: StatusComponent },
   { path: 'addStatus', component: AddStatusComponent },
   { path: 'updateStatus', component: UpdateStatusComponent },
+  { path: 'addPortal', component: AddportalComponent },
+  { path: 'portal', component: JobportalComponent },
+  { path: 'updatePortal', component: UpdateportalComponent },
+  { path: 'updateVisa', component: UpdatevisaComponent },
+  { path: 'addVisa', component: AddvisaComponent },
+  { path: 'addTaxType', component: AddtaxtypeComponent },
+  { path: 'updateTaxType', component: UpdatetaxtypeComponent },
+  { path: 'addLocation', component: AddjoblocationComponent },
+  { path: 'updateLocation', component: UpdatejoblocationComponent }
 
 
 ];

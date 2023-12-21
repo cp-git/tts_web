@@ -10,6 +10,11 @@ import { RouterModule } from '@angular/router';
 import { AdminModule } from '../adminDashboard/admin/admin.module';
 import { FooterModule } from '../footer/footer.module';
 import { HeaderModule } from '../header/header.module';
+import { JobportalModule } from '../jobportal/jobportal.module';
+import { VisaModule } from '../visa/module/visa.module';
+import { TaxtypeModule } from '../taxtype/taxtype/taxtype.module';
+import { Joblocation } from '../joblocation/classes/joblocation';
+import { JoblocationModule } from '../joblocation/joblocation/joblocation.module';
 
 
 
@@ -25,7 +30,13 @@ import { HeaderModule } from '../header/header.module';
     RouterModule,
     AdminModule,
     FooterModule,
-    HeaderModule
+    HeaderModule,
+    JobportalModule,
+    VisaModule,
+    TaxtypeModule,
+    JoblocationModule
+
+
   ]
 })
 export class StatusModule { }

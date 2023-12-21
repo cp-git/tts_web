@@ -1,43 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Taxtype } from '../classes/taxtype';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TextypeService {
 
-  constructor() { }
-  private taxTypes: Taxtype[] = [
-    {
-      taxTypeId: 1,
-      taxTypeName: 'W2',
-      taxTypeDescription: 'W2 Desc',
-      companyId: 1,
-      forBench: true,
-      forSourcing: false,
-    },
-    {
-      taxTypeId: 2,
-      taxTypeName: 'C2C',
-      taxTypeDescription: 'C2C Desc',
-      companyId: 1,
-      forBench: true,
-      forSourcing: false,
-    },
-    {
-      taxTypeId: 3,
-      taxTypeName: 'C2H',
-      taxTypeDescription: 'C2H Desc',
-      companyId: 1,
-      forBench: true,
-      forSourcing: false,
-    },
-    // Add more data as needed
-  ];
+  private readonly taxTypeURL = `http://localhost:8080/taxtype/ttsms/`
+  constructor(
+    private http: HttpClient
+  ) { }
 
 
-
-  getAllTaxTypes(): Taxtype[] {
-    return this.taxTypes;
+  getAllTaxTypeByCompanyId(taxTypeId: number): Observable<Taxtype[]> {
+    return this.http.get<Taxtype[]>(`${this.taxTypeURL}taxtypes/${taxTypeId}`);
   }
+
+  addTaxType(taxType: Taxtype): Observable<Taxtype> {
+    return this.http.post<Taxtype>(`${this.taxTypeURL}taxtype`, taxType);
+  }
+
+  updateTaxType(taxTypeId: number, taxType: Taxtype): Observable<Taxtype> {
+    return this.http.put<Taxtype>(`${this.taxTypeURL}taxtype/${taxTypeId}`, taxType);
+  }
+
+  deleteTaxType(taxTypeId: number): Observable<void> {
+    return this.http.delete<void>(`${this.taxTypeURL}taxtype/${taxTypeId}`);
+  }
+
 }
