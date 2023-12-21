@@ -64,6 +64,8 @@ export class CreateTaskComponent implements OnInit {
   todayDate!: string;
   parentTaskStatus: any;
 
+  c2c: string[] = ['C2C', 'C 2 C', 'CTOC', 'C TO C'];
+  currectTaxTypeObject!: Taxtype;
   constructor(
 
     private taskService: TaskService,
@@ -97,10 +99,24 @@ export class CreateTaskComponent implements OnInit {
     }
   }
 
+  onChangeTaxType(taxTypeId: any) {
+    const currentTaxType = this.allTaxTypes.find(tax => tax.taxTypeId == taxTypeId);
+    if (currentTaxType) {
+      this.currectTaxTypeObject = currentTaxType;
+    }
+  }
+
+  onChangeCandidateType() {
+    this.task.taxTypeId = 0;
+  }
+  
   // called when current task object changed
   private onChangeTaskObject() {
 
     this.task = this.task;
+
+    this.onChangeTaxType(this.task.taxTypeId);
+
     //console.log(this.task);
     // if(this.task.taskParent==undefined||this.task.taskParent==null){
     //   this.task.taskParent = 0;
