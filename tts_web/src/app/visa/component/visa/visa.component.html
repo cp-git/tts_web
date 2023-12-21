@@ -1,0 +1,61 @@
+<div class="container">
+    <fieldset class="border rounded-3">
+        <legend class="float-none w-auto px-2">Visa</legend>
+
+        <!-- Add button at the top right corner -->
+        <div class="d-flex justify-content-end align-items-center w-100">
+            <span class="fa-solid fa-circle-plus" (click)="navigateToAddVisa()"
+                style='font-size:30px;color:  rgb(33, 176, 40); padding-bottom: 1%;'></span>
+
+            <!-- <span [routerLink]="['/adminDash']" class="fa-solid fa-circle-arrow-left fa-lg"
+                style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;padding-bottom: 1%;"></span> -->
+        </div>
+
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <!-- <th>Country ID</th> -->
+
+                        <th>Visa Type</th>
+                        <th>Visa Description</th>
+                        <th>Is For Bench</th>
+                        <th>Is for Sourcing</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let visa of visas">
+                        <td>{{visa.visaType}}</td>
+                        <td>{{ visa.visaDescription }}</td>
+
+                        <td>
+                            <span *ngIf="visa.forBench" class="fa-solid fa-check-square fa-lg"
+                                style='font-size: 23px;color: green;'></span>
+                            <span *ngIf="!visa.forBench" class="fa-solid fa-square fa-lg"
+                                style='font-size: 23px;color: grey;'></span>
+                        </td>
+                        <td>
+                            <span *ngIf="visa.forSourcing" class="fa-solid fa-check-square fa-lg"
+                                style='font-size: 23px;color: green;'></span>
+                            <span *ngIf="!visa.forSourcing" class="fa-solid fa-square fa-lg"
+                                style='font-size: 23px;color: grey;'></span>
+                        </td>
+
+                        <td>
+
+                            <!-- Update Button -->
+                            <span class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
+                                style='font-size:23px;color: rgb(64, 109, 234);'
+                                (click)="redirectToUpdate(visa)"></span>
+                            <!-- Delete Button -->
+                            &nbsp;
+                            &nbsp;
+                            <span class='fa-solid fa-trash fa-xl' style='font-size:23px;color: red;'
+                                (click)="onDeleteStatus(visa.visaId)"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+</div>

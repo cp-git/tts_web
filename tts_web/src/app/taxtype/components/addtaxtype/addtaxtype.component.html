@@ -1,0 +1,59 @@
+<div class="container">
+    <fieldset class="border rounded-3">
+        <legend class="float-none w-auto px-2">Add Tax Type</legend>
+        <form #addPort="ngForm">
+
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <h2></h2>
+                <span (click)="navigateToPortal()" class="fa-solid fa-circle-arrow-left fa-lg"
+                    style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
+
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="label" for="taxtypename">Tax Type Name:<span
+                            class="required-asterisk">*</span></label>
+                    <input type="text" id="taxtypename" name="taxtypename" [(ngModel)]="taxType.taxTypeName" required
+                        class="form-control" maxlength="25" #typeName="ngModel">
+                    <div *ngIf="typeName.invalid && (typeName.dirty||typeName.touched) " class="text-danger">
+                        tax type name is required.
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <label class="label" for="statusDescription">Tax Type Description:<span
+                            class="required-asterisk">*</span></label>
+
+                    <input type="text" id="taxTypeDescription" name="taxTypeDescription"
+                        [(ngModel)]="taxType.taxTypeDescription" required class="form-control" maxlength="255"
+                        #taxTypeDescription="ngModel">
+                    <div *ngIf="taxTypeDescription.invalid && (taxTypeDescription.dirty||taxTypeDescription.touched)"
+                        class="text-danger">
+                        Description is required.
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="label" for="actualStartDate">Is for bench?</label>
+                    <div>
+                        <input type="checkbox" id="bench" name="bench" [(ngModel)]="taxType.forBench"
+                            class="custom-checkbox form-check-input">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="label" for="actualEndDate">Is for sourcing ?</label>
+                    <div>
+                        <input type="checkbox" id="sourcing" name="sourcing" [(ngModel)]="taxType.forSourcing"
+                            class="custom-checkbox form-check-input">
+                    </div>
+                </div>
+
+            </div>
+
+            <div>
+                <button type="submit" [disabled]="!addPort.valid" (click)="addTaxType(taxType)"
+                    class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+<app-footer></app-footer>

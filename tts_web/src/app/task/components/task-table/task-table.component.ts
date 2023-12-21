@@ -76,10 +76,10 @@ export class TaskTableComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.visas = this.visaService.getAllVisas();
-    this.allTaxTypes = this.taxTypeService.getAllTaxTypes();
-    this.allJobLocations = this.jobLocationService.getAllJobLocations();
-    this.allJobPortals = this.jobPortalService.getAllPortals();
+    // this.visas = this.visaService.getAllVisas();
+    // this.allTaxTypes = this.taxTypeService.getAllTaxTypes();
+    // this.allJobLocations = this.jobLocationService.getAllJobLocations();
+    // this.allJobPortals = this.jobPortalService.getAllPortals();
 
     // Attempt to retrieve the selected date format from localStorage
     const storedFormat = localStorage.getItem('selectedDateFormat');
