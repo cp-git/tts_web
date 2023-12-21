@@ -1,42 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Joblocation } from '../classes/joblocation';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JoblocationService {
 
-  private jobLocations: Joblocation[] = [
-    {
-      locationId: 1,
-      locationType: 'Office',
-      locationDescription: 'Main office location',
-      companyId: 1,
-      forBench: true,
-      forSourcing: false,
-    },
-    {
-      locationId: 2,
-      locationType: 'Remote',
-      locationDescription: 'Remote work location',
-      companyId: 1,
-      forBench: true,
-      forSourcing: false,
-    },
-    {
-      locationId: 3,
-      locationType: 'On-site',
-      locationDescription: 'On-site  location',
-      companyId: 1,
-      forBench: true,
-      forSourcing: false,
-    },
-    // Add more data as needed
-  ];
+  private readonly jobLocationURL = `http://localhost:8080/joblocation/ttsms/`
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  constructor() { }
 
-  getAllJobLocations(): Joblocation[] {
-    return this.jobLocations;
+  getAllJobLocationByCompanyId(companyId: number): Observable<Joblocation[]> {
+    return this.http.get<Joblocation[]>(`${this.jobLocationURL}locations/${companyId}`);
   }
+
+  addJobLocation(jobLocation: Joblocation): Observable<Joblocation> {
+    return this.http.post<Joblocation>(`${this.jobLocationURL}joblocation`, jobLocation);
+  }
+
+  updateJobLocation(locationId: number, jobLocation: Joblocation): Observable<Joblocation> {
+    return this.http.put<Joblocation>(`${this.jobLocationURL}joblocation/${locationId}`, jobLocation);
+  }
+
+  deleteJobLocation(locationId: number): Observable<void> {
+    return this.http.delete<void>(`${this.jobLocationURL}joblocation/${locationId}`);
+  }
+
 }

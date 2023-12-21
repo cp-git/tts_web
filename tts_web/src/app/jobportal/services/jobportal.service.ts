@@ -1,58 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Jobportal } from '../classes/jobportal';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobportalService {
 
-  private portals: Jobportal[] = [
-    {
-      portalId: 1,
-      portalName: 'LinkedIn',
-      portalDescription: 'from linkedin',
-      companyId: 1,
-      forBench: true,
-      forSourcing: false,
-    },
-    {
-      portalId: 2,
-      portalName: 'Naukari.com',
-      portalDescription: 'from naukari.com',
-      companyId: 1,
-      forBench: true,
-      forSourcing: false,
-    },
-    {
-      portalId: 3,
-      portalName: 'Indeed',
-      portalDescription: 'from indeed',
-      companyId: 1,
-      forBench: true,
-      forSourcing: false,
-    },
-    {
-      portalId: 4,
-      portalName: 'Glassdoor',
-      portalDescription: 'from Glassdoor',
-      companyId: 1,
-      forBench: true,
-      forSourcing: false,
-    },
-    {
-      portalId: 5,
-      portalName: 'Upword',
-      portalDescription: 'from upword',
-      companyId: 1,
-      forBench: true,
-      forSourcing: false,
-    },
-    // Add more data as needed
-  ];
+  private readonly jobPortalURL = `http://localhost:8080/jobportal/ttsms/`
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  constructor() { }
 
-  getAllPortals(): Jobportal[] {
-    return this.portals;
+  getAllJobPortalsByCompanyId(companyId: number): Observable<Jobportal[]> {
+    return this.http.get<Jobportal[]>(`${this.jobPortalURL}jobportals/${companyId}`);
   }
+
+  addJobPortal(jobPortal: Jobportal): Observable<Jobportal> {
+    return this.http.post<Jobportal>(`${this.jobPortalURL}jobportal`, jobPortal);
+  }
+
+  updateJobPortal(portalId: number, jobPortal: Jobportal): Observable<Jobportal> {
+    return this.http.put<Jobportal>(`${this.jobPortalURL}jobportal/${portalId}`, jobPortal);
+  }
+
+  deleteJobPortal(portalId: number): Observable<void> {
+    return this.http.delete<void>(`${this.jobPortalURL}jobportal/${portalId}`);
+  }
+
 }

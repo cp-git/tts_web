@@ -16,10 +16,21 @@ import { TaskModule } from './task/task.module';
 import { HomeModule } from './home/home.module';
 import { ReasonModule } from './reason/reason.module';
 import { StatusModule } from './status/status.module';
+import { JobportalModule } from './jobportal/jobportal.module';
+import { VisaComponent } from './visa/component/visa/visa.component';
+import { AddvisaComponent } from './visa/component/addvisa/addvisa.component';
+import { UpdatevisaComponent } from './visa/component/updatevisa/updatevisa.component';
+import { TaxtypeComponent } from './taxtype/components/taxtype/taxtype.component';
+import { AddtaxtypeComponent } from './taxtype/components/addtaxtype/addtaxtype.component';
+import { UpdatetaxtypeComponent } from './taxtype/components/updatetaxtype/updatetaxtype.component';
+import { JoblocationComponent } from './joblocation/components/joblocation/joblocation.component';
+import { AddjoblocationComponent } from './joblocation/components/addjoblocation/addjoblocation.component';
+import { UpdatejoblocationComponent } from './joblocation/components/updatejoblocation/updatejoblocation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+
 
   ],
   imports: [
@@ -37,7 +48,7 @@ import { StatusModule } from './status/status.module';
     AdminModule,
     HeaderModule,
     TaskModule,
-    ReasonModule
+    ReasonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
