@@ -4,6 +4,10 @@ import { Task } from '../class/task';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.dev';
 import { Task2 } from 'src/app/classes/task2';
+import { Joblocation } from 'src/app/joblocation/classes/joblocation';
+import { Jobportal } from 'src/app/jobportal/classes/jobportal';
+import { Taxtype } from 'src/app/taxtype/classes/taxtype';
+import { Visa } from 'src/app/visa/class/visa';
 
 @Injectable({
   providedIn: 'root'
@@ -74,4 +78,28 @@ export class TaskService {
     return this.http.get<Task2>(`${this.TaskURL}/allparents?companyid=${companyId}`);
 
   }
+  
+
+  // ---------------------------------------------------------------------------
+  private readonly jobLocationURL = `http://localhost:8080/joblocation/ttsms/locations/`;
+  private readonly jobPortalURL = `http://localhost:8080/jobportal/ttsms/jobportals/`
+  private readonly jobTypeURL = `http://localhost:8080/taxtype/ttsms/taxtypes/`
+  private readonly visaURL = `http://localhost:8080/visa/ttsms/visas/`
+  
+  getAllJobLocationsByCompanyId(companyId:number):Observable<Joblocation[]>{
+    return this.http.get<Joblocation[]>(`${this.jobLocationURL}${companyId}`);
+  }
+
+  getAllJobPortalsByCompanyId(companyId:number):Observable<Jobportal[]>{
+    return this.http.get<Jobportal[]>(`${this.jobPortalURL}${companyId}`);
+  }
+
+  getAllTaxTypesByCompanyId(companyId:number):Observable<Taxtype[]>{
+    return this.http.get<Taxtype[]>(`${this.jobTypeURL}${companyId}`);
+  }
+
+  getAllVisasByCompanyId(companyId:number):Observable<Visa[]>{
+    return this.http.get<Visa[]>(`${this.visaURL}${companyId}`);
+  }
+
 }

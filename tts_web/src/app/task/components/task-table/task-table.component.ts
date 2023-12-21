@@ -51,7 +51,7 @@ export class TaskTableComponent implements OnInit {
 
   childTask: Task[] = [];
 
-  visas: Visa[] = [];
+  allVisas: Visa[] = [];
   allTaxTypes: Taxtype[] = [];
   allJobLocations: Joblocation[] = [];
   allJobPortals: Jobportal[] = [];
@@ -76,10 +76,7 @@ export class TaskTableComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.visas = this.visaService.getAllVisas();
-    // this.allTaxTypes = this.taxTypeService.getAllTaxTypes();
-    // this.allJobLocations = this.jobLocationService.getAllJobLocations();
-    // this.allJobPortals = this.jobPortalService.getAllPortals();
+    this.getDataForDropdowns();
 
     // Attempt to retrieve the selected date format from localStorage
     const storedFormat = localStorage.getItem('selectedDateFormat');
@@ -88,6 +85,29 @@ export class TaskTableComponent implements OnInit {
     this.selectedDateFormat = storedFormat || 'MM-dd-yyyy';
     // this.getAllStatus();
 
+  }
+
+  getDataForDropdowns() {
+    this.taskService.getAllVisasByCompanyId(this.companyId).subscribe(
+      (response) => {
+        this.allVisas = response;
+      }
+    );
+    this.taskService.getAllTaxTypesByCompanyId(this.companyId).subscribe(
+      (response) => {
+        this.allTaxTypes = response;
+      }
+    );
+    this.taskService.getAllJobLocationsByCompanyId(this.companyId).subscribe(
+      (response) => {
+        this.allJobLocations = response;
+      }
+    );
+    this.taskService.getAllJobPortalsByCompanyId(this.companyId).subscribe(
+      (response) => {
+        this.allJobPortals = response;
+      }
+    )
   }
   // Function to handle changes to the selected date format
   onDateFormatChange() {
@@ -271,7 +291,7 @@ export class TaskTableComponent implements OnInit {
       this.emptyTask.taskActualStartDate = null as unknown as Date;
       this.emptyTask.taskActualEndDate = null as unknown as Date;
       this.emptyTask.placementId = this.INTERNAL_PLACEMENT_ID;
-      this.emptyTask.taxTypeId = 1;
+      // this.emptyTask.taxTypeId = this.allTaxTypes[0].taxTypeId;
 
     }
     else if (operation == 'UPDATE') {
