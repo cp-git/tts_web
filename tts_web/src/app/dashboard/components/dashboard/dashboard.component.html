@@ -77,12 +77,11 @@
         </div>
 
         <!-- task table  -->
-        <!-- {{parentAndAllTask|json}} -->
-        
-        <app-task-table [parentTaskData]="parentTaskData" [parentAndAllTask]="parentAndAllTask"
-            [filteredStatus]="filteredStatuses" [filteredEmployees]="filteredEmployees" [employees]="employees" [allStatus]="allStatus"
-            [loggedInUserData]="loggedInUserData"
-            ></app-task-table>
+
+
+        <app-task-table [parentData]="parentData" [parentAndAllTask]="parentAndAllTask"
+            [filteredStatus]="filteredStatuses" [filteredEmployees]="filteredEmployees" [employees]="employees"
+            [allStatus]="allStatus" [loggedInUserData]="loggedInUserData"></app-task-table>
 
     </div>
 

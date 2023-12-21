@@ -37,6 +37,8 @@ export class DashboardComponent implements OnInit {
   filteredStatuses: Status[] = [];
   displayAllTask: boolean = false;
 
+  parentData: Task[] = [];
+
   // Constructor - executed when an instance of the component is created
   constructor(
     private dashboardService: DashboardService,
@@ -85,6 +87,16 @@ export class DashboardComponent implements OnInit {
 
     // this.getAllStatus(); // Fetch all statuses
     this.getStatusesByCompanyId();
+
+    // this.taskService.getTaskCreatedByMeOrAssignedToMeUpdated(this.employeeId).subscribe(
+    //   response => {
+    //     console.log(response);
+    //     this.parentData = response;
+
+
+    //   }
+    // )
+
   }
 
 
@@ -148,9 +160,11 @@ export class DashboardComponent implements OnInit {
         }
       );
     } else {
-      this.taskService.getTaskCreatedByMeOrAssignedToMe(this.employeeId).subscribe(
+      this.taskService.getTaskCreatedByMeOrAssignedToMeUpdated(this.employeeId).subscribe(
         (response) => {
-          this.parentAndAllTask = response;
+          console.log(response);
+
+          this.parentData = response;
         }
       );
     }

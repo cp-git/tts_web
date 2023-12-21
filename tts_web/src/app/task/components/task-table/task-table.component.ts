@@ -28,6 +28,10 @@ export class TaskTableComponent implements OnInit {
 
   @Input() parentTaskData: Task[] = [];
 
+  @Input() childTaskData: Task[] = [];
+
+
+
   @Input() parentAndAllTask!: Task2;
   @Input() filteredStatus!: Status[];
   @Input() filteredEmployees!: Employee[];
@@ -36,6 +40,8 @@ export class TaskTableComponent implements OnInit {
   @Input() modalId: number = 0;
   @Input() task: Task = {} as Task;
   @Input() loggedInUserData!: Employee;
+  @Input() parentData: Task[] = [];
+
 
   statusEnum = StatusEnum;
   employeeId: any;
@@ -84,6 +90,25 @@ export class TaskTableComponent implements OnInit {
     // If a format is found in localStorage, use it; otherwise, use the default format
     this.selectedDateFormat = storedFormat || 'MM-dd-yyyy';
     // this.getAllStatus();
+
+    this.taskService.getTaskCreatedByMeOrAssignedToMeUpdated(this.employeeId).subscribe(
+      response => {
+        console.log(response);
+        this.parentData = response;
+        console.log(this.parentData);
+
+
+
+      }
+    )
+
+    this.taskService.getAllVisasByCompanyId(this.companyId).subscribe(
+      (response) => {
+        console.log(response);
+
+        this.allVisas = response;
+      }
+    );
 
   }
 
@@ -206,6 +231,9 @@ export class TaskTableComponent implements OnInit {
 
     this.taskService.getChildTaskByParentId(task.taskId).subscribe(
       (response) => {
+        console.log(response);
+        this.childTaskData = response;
+
         //console.log(this.parentAndAllTask);
         // const uniqueKeys = new Set(this.parentAndAllTask.childTasks.map(item => item.taskId));
 
