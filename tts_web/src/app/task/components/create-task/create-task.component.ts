@@ -107,7 +107,7 @@ export class CreateTaskComponent implements OnInit {
   }
 
   onChangeCandidateType() {
-    this.task.taxTypeId = 0;
+    this.task.taxTypeId = undefined;
   }
   
   // called when current task object changed
