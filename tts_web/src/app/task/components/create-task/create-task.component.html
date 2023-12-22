@@ -26,7 +26,7 @@
                             <div class="col">
                                 <input type="radio" name="placement" id="internalplacement"
                                     [(ngModel)]="task.placementId" [value]="INTERNAL_PLACEMENT_ID"
-                                    [disabled]="updateScreen">&nbsp;
+                                    [disabled]="updateScreen" (change)="onChangeCandidateType()">&nbsp;
                                 <label for="internalplacement"
                                     [ngClass]="{'selectedPlacement': task.placementId === INTERNAL_PLACEMENT_ID}">Bench
                                     applicant</label>
@@ -34,7 +34,7 @@
                             <div class="col">
                                 <input type="radio" name="placement" id="externalplacement"
                                     [(ngModel)]="task.placementId" [value]="EXTERNAL_PLACEMENT_ID"
-                                    [disabled]="updateScreen">&nbsp;
+                                    [disabled]="updateScreen" (change)="onChangeCandidateType()">&nbsp;
                                 <label for="externalplacement"
                                     [ngClass]="{'selectedPlacement': task.placementId === EXTERNAL_PLACEMENT_ID}">Sourcing
                                     candidate</label>
@@ -118,10 +118,12 @@
                             <label for="taxTypeId" class="form-label">Tax Type<span class="required-asterisk"
                                     *ngIf="!updateScreen">*</span></label><br>
                             <select class="form-control form-select" name="taxTypeId" id="taxTypeId" name="taxTypeId"
-                                [(ngModel)]="task.taxTypeId" [required]="true">
+                                [(ngModel)]="task.taxTypeId" [required]="true"
+                                (change)="onChangeTaxType(task.taxTypeId)">
                                 <option value="undefined" disabled>Select Option</option>
                                 <ng-container *ngFor="let taxType of allTaxTypes">
-                                    <option *ngIf="taxType.forSourcing" value="{{taxType.taxTypeId}}">{{taxType.taxTypeName}}</option>
+                                    <option *ngIf="taxType.forSourcing" value="{{taxType.taxTypeId}}">
+                                        {{taxType.taxTypeName}}</option>
                                 </ng-container>
 
                             </select>
@@ -131,10 +133,12 @@
                             <label for="taxTypeId" class="form-label">Tax Type<span class="required-asterisk"
                                     *ngIf="!updateScreen">*</span></label><br>
                             <select class="form-control form-select" name="taxTypeId" id="taxTypeId" name="taxTypeId"
-                                [(ngModel)]="task.taxTypeId" [required]="true">
+                                [(ngModel)]="task.taxTypeId" [required]="true"
+                                (change)="onChangeTaxType(task.taxTypeId)">
                                 <option value="undefined" disabled>Select Option</option>
                                 <ng-container *ngFor="let taxType of allTaxTypes">
-                                    <option *ngIf="taxType.forBench" value="{{taxType.taxTypeId}}">{{taxType.taxTypeName}}</option>
+                                    <option *ngIf="taxType.forBench" value="{{taxType.taxTypeId}}">
+                                        {{taxType.taxTypeName}}</option>
                                 </ng-container>
 
                             </select>
@@ -266,10 +270,10 @@
                                 type="text" class="form-control extra-light-placeholder" id="jobReferenceNumber"
                                 name="jobReferenceNumber" placeholder="Enter job reference number"
                                 [(ngModel)]="task.jobReferenceNumber" maxlength="100" #jobReferenceNumber="ngModel">
-                            <!-- <div *ngIf="jobReferenceNumber.invalid && (jobReferenceNumber.dirty||jobReferenceNumber.touched) "
+                            <div *ngIf="jobReferenceNumber.invalid && (jobReferenceNumber.dirty||jobReferenceNumber.touched) "
                                 class="text-danger">
                                 Job reference number is required.
-                            </div> -->
+                            </div>
                         </div>
                     </div>
 
@@ -282,23 +286,23 @@
                                 type="text" class="form-control extra-light-placeholder" id="recruiterName"
                                 name="recruiterName" placeholder="Vendor name" [(ngModel)]="task.recruiterName"
                                 maxlength="100" #recruiterName="ngModel">
-                            <!-- <div *ngIf="recruiterName.invalid && (recruiterName.dirty||recruiterName.touched) "
+                            <div *ngIf="recruiterName.invalid && (recruiterName.dirty||recruiterName.touched) "
                                 class="text-danger">
                                 Enter recruiter name.
-                            </div> -->
+                            </div>
                         </div>
                         <div class="col">
                             <label for="recruiterEmail" class="form-label">Vendor email</label>
                             <input
                                 [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
-                                type="email" required pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}"
+                                type="email" pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}"
                                 class="form-control extra-light-placeholder" id="recruiterEmail" name="recruiterEmail"
                                 placeholder="Vendor email" [(ngModel)]="task.recruiterEmail" maxlength="100"
                                 #recruiterEmail="ngModel">
-                            <!-- <div *ngIf="recruiterEmail.invalid && (recruiterEmail.dirty||recruiterEmail.touched) "
+                            <div *ngIf="recruiterEmail.invalid && (recruiterEmail.dirty||recruiterEmail.touched) "
                                 class="text-danger">
                                 Enter correct email.
-                            </div> -->
+                            </div>
                         </div>
                         <div class="col">
                             <label for="recruiterPhone" class="form-label">Vendor phone</label>
@@ -307,10 +311,10 @@
                                 type="number" pattern="^[0-9]{10}$" class="form-control extra-light-placeholder"
                                 id="recruiterPhone" name="recruiterPhone" placeholder="Vendor phone number"
                                 [(ngModel)]="task.recruiterPhone" maxlength="100" #recruiterPhone="ngModel">
-                            <!-- <div *ngIf="recruiterPhone.invalid && (recruiterPhone.dirty||recruiterPhone.touched) "
+                            <div *ngIf="recruiterPhone.invalid && (recruiterPhone.dirty||recruiterPhone.touched) "
                                 class="text-danger">
                                 Enter correct phone.
-                            </div> -->
+                            </div>
                         </div>
                     </div>
 
@@ -337,7 +341,8 @@
             <!-- TASK NAME AND TASK DESCRIPTION  -->
             <div class="col">
                 <!-- // company detail  -->
-                <fieldset class="border rounded-3" *ngIf="task.placementId==EXTERNAL_PLACEMENT_ID">
+                <fieldset class="border rounded-3"
+                    *ngIf="task.placementId==EXTERNAL_PLACEMENT_ID && (currectTaxTypeObject!=undefined && currectTaxTypeObject!=null && c2c.includes(currectTaxTypeObject.taxTypeName))">
                     <legend class="float-none w-auto px-2">Company Details</legend>
                     <!-- candidate company and company address  -->
                     <div class="row">

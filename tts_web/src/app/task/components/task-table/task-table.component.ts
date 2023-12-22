@@ -254,12 +254,13 @@ export class TaskTableComponent implements OnInit {
     event.stopPropagation();
 
     // for getting update task status
-    this.taskService.getTaskByTaskId(task.taskId).subscribe(
-      response => {
-        this.parentTaskStatus = this.allStatus.find(s => s.statusId == response.taskStatus);
-      }
-    );
-
+    if (task != null && task.taskId != undefined) {
+      this.taskService.getTaskByTaskId(task.taskId).subscribe(
+        response => {
+          this.parentTaskStatus = this.allStatus.find(s => s.statusId == response.taskStatus);
+        }
+      );
+    }
     // //console.log(taskData);
 
     this.emptyTask = {} as Task;
@@ -291,7 +292,7 @@ export class TaskTableComponent implements OnInit {
       this.emptyTask.taskActualStartDate = null as unknown as Date;
       this.emptyTask.taskActualEndDate = null as unknown as Date;
       this.emptyTask.placementId = this.INTERNAL_PLACEMENT_ID;
-      // this.emptyTask.taxTypeId = this.allTaxTypes[0].taxTypeId;
+      // this.emptyTask.taxTypeId = 0;
 
     }
     else if (operation == 'UPDATE') {

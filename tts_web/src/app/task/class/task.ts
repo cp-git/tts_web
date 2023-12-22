@@ -28,7 +28,7 @@ export interface Task {
     experienceRequired: number;
     jobLocationId: number;
     jobReferenceNumber: string;
-    taxTypeId: number;
+    taxTypeId: any;
     rate: number;
     recruiterName: string;
     recruiterEmail: string;
