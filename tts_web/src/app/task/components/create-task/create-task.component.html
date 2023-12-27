@@ -20,7 +20,7 @@
             <div class="row modal-body justify-content-center">
                 <div class="col-md-6 text-center">
 
-                    <fieldset class="border rounded-3">
+                    <!-- <fieldset class="border rounded-3">
                         <legend class="float-none w-auto px-2">Candidate Type</legend>
                         <div class="row">
                             <div class="col">
@@ -40,7 +40,7 @@
                                     candidate</label>
                             </div>
                         </div>
-                    </fieldset>
+                    </fieldset> -->
 
                 </div>
                 <ng-container *ngTemplateOutlet="taskForm;"></ng-container>
@@ -62,9 +62,8 @@
 
             <div class="col">
 
-                <fieldset class="border rounded-3">
-                    <legend class="float-none w-auto px-2">Candidate Details</legend>
-                    <!-- candidate name -->
+                <!-- <fieldset class="border rounded-3">
+                 
                     <div class="row">
                         <ng-container *ngIf="task.placementId==EXTERNAL_PLACEMENT_ID; else bench">
                             <div class="col">
@@ -82,7 +81,7 @@
                             </div>
                         </ng-container>
 
-                        <!-- candidate name dropdown for bench candidate  -->
+                       
                         <ng-template #bench>
                             <div class="col">
                                 <label for="candidateName" class="form-label">Candidate Name<span
@@ -123,7 +122,8 @@
                                 <option value="undefined" disabled>Select Option</option>
                                 <ng-container *ngFor="let taxType of allTaxTypes">
                                     <option *ngIf="taxType.forSourcing" value="{{taxType.taxTypeId}}">
-                                        {{taxType.taxTypeName}}</option>
+                                        {{taxType.taxTypeName}}
+                                    </option>
                                 </ng-container>
 
                             </select>
@@ -138,18 +138,19 @@
                                 <option value="undefined" disabled>Select Option</option>
                                 <ng-container *ngFor="let taxType of allTaxTypes">
                                     <option *ngIf="taxType.forBench" value="{{taxType.taxTypeId}}">
-                                        {{taxType.taxTypeName}}</option>
+                                        {{taxType.taxTypeName}}
+                                    </option>
                                 </ng-container>
 
                             </select>
                         </div>
                     </div>
-                </fieldset>
+                </fieldset> -->
 
 
                 <!-- job details, vendor details and job sibmission portalId -->
                 <!-- job title, location, rate  -->
-                <fieldset class="border rounded-3">
+                <!-- <fieldset class="border rounded-3">
                     <legend class="float-none w-auto px-2">Job Details</legend>
                     <div class="row">
 
@@ -196,7 +197,7 @@
 
                     </div>
 
-                    <!-- experience required, Rate, job link   -->
+                
                     <div class="row">
                         <div class="col">
                             <label for="experienceRequired" class="form-label">Exp required (In years)<span
@@ -240,111 +241,111 @@
                         </div>
                     </div>
 
-                    <!-- date posted, job portal, job reference no -->
-                    <div class="row">
+                
+                <div class="row">
 
-                        <div class="col">
-                            <label for="datePosted" class="form-label">Job posted date<span class="required-asterisk"
-                                    *ngIf="!updateScreen">*</span></label>
+                    <div class="col">
+                        <label for="datePosted" class="form-label">Job posted date<span class="required-asterisk"
+                                *ngIf="!updateScreen">*</span></label>
 
-                            <input type="date" class="form-control" id="datePosted" name="datePosted" [max]="todayDate"
-                                [(ngModel)]="task.datePosted" onkeydown="return false">
-                        </div>
-
-                        <div class="col">
-                            <label for="jobPortalId" class="form-label">Job portal<span class="required-asterisk"
-                                    *ngIf="!updateScreen">*</span></label><br>
-                            <select class="form-control form-select" name="jobPortalId" id="jobPortalId"
-                                name="jobPortalId" [(ngModel)]="task.jobPortalId" [required]="true">
-                                <option value="undefined" disabled>Select Option</option>
-                                <ng-container *ngFor="let portal of allJobPortals">
-                                    <option value="{{portal.portalId}}">{{portal.portalName}}</option>
-                                </ng-container>
-                            </select>
-                        </div>
-
-                        <div class="col">
-                            <label for="jobReferenceNumber" class="form-label">Job reference number</label>
-                            <input
-                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
-                                type="text" class="form-control extra-light-placeholder" id="jobReferenceNumber"
-                                name="jobReferenceNumber" placeholder="Enter job reference number"
-                                [(ngModel)]="task.jobReferenceNumber" maxlength="100" #jobReferenceNumber="ngModel">
-                            <div *ngIf="jobReferenceNumber.invalid && (jobReferenceNumber.dirty||jobReferenceNumber.touched) "
-                                class="text-danger">
-                                Job reference number is required.
-                            </div>
-                        </div>
+                        <input type="date" class="form-control" id="datePosted" name="datePosted" [max]="todayDate"
+                            [(ngModel)]="task.datePosted" onkeydown="return false">
                     </div>
 
-                    <!-- recruiter name , email, phone -->
-                    <div class="row">
-                        <div class="col">
-                            <label for="recruiterName" class="form-label">Vendor Name</label>
-                            <input
-                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
-                                type="text" class="form-control extra-light-placeholder" id="recruiterName"
-                                name="recruiterName" placeholder="Vendor name" [(ngModel)]="task.recruiterName"
-                                maxlength="100" #recruiterName="ngModel">
-                            <div *ngIf="recruiterName.invalid && (recruiterName.dirty||recruiterName.touched) "
-                                class="text-danger">
-                                Enter recruiter name.
-                            </div>
-                        </div>
-                        <div class="col">
-                            <label for="recruiterEmail" class="form-label">Vendor email</label>
-                            <input
-                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
-                                type="email" pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}"
-                                class="form-control extra-light-placeholder" id="recruiterEmail" name="recruiterEmail"
-                                placeholder="Vendor email" [(ngModel)]="task.recruiterEmail" maxlength="100"
-                                #recruiterEmail="ngModel">
-                            <div *ngIf="recruiterEmail.invalid && (recruiterEmail.dirty||recruiterEmail.touched) "
-                                class="text-danger">
-                                Enter correct email.
-                            </div>
-                        </div>
-                        <div class="col">
-                            <label for="recruiterPhone" class="form-label">Vendor phone</label>
-                            <input
-                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
-                                type="number" pattern="^[0-9]{10}$" class="form-control extra-light-placeholder"
-                                id="recruiterPhone" name="recruiterPhone" placeholder="Vendor phone number"
-                                [(ngModel)]="task.recruiterPhone" maxlength="100" #recruiterPhone="ngModel">
-                            <div *ngIf="recruiterPhone.invalid && (recruiterPhone.dirty||recruiterPhone.touched) "
-                                class="text-danger">
-                                Enter correct phone.
-                            </div>
-                        </div>
+                    <div class="col">
+                        <label for="jobPortalId" class="form-label">Job portal<span class="required-asterisk"
+                                *ngIf="!updateScreen">*</span></label><br>
+                        <select class="form-control form-select" name="jobPortalId" id="jobPortalId" name="jobPortalId"
+                            [(ngModel)]="task.jobPortalId" [required]="true">
+                            <option value="undefined" disabled>Select Option</option>
+                            <ng-container *ngFor="let portal of allJobPortals">
+                                <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                            </ng-container>
+                        </select>
                     </div>
 
-                    <!-- job submission portal  -->
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <label for="jobSubmissionPortalId" class="form-label">Job submission method<span
-                                    class="required-asterisk" *ngIf="!updateScreen">*</span></label><br>
-                            <select class="form-control form-select" name="jobSubmissionPortalId" id="jobPortalId"
-                                [(ngModel)]="task.jobSubmissionPortalId" [required]="true">
-                                <option value="undefined" disabled>Select Option</option>
-                                <ng-container *ngFor="let portal of allJobPortals">
-                                    <option value="{{portal.portalId}}">{{portal.portalName}}</option>
-                                </ng-container>
-                            </select>
+                    <div class="col">
+                        <label for="jobReferenceNumber" class="form-label">Job reference number</label>
+                        <input
+                            [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                            type="text" class="form-control extra-light-placeholder" id="jobReferenceNumber"
+                            name="jobReferenceNumber" placeholder="Enter job reference number"
+                            [(ngModel)]="task.jobReferenceNumber" maxlength="100" #jobReferenceNumber="ngModel">
+                        <div *ngIf="jobReferenceNumber.invalid && (jobReferenceNumber.dirty||jobReferenceNumber.touched) "
+                            class="text-danger">
+                            Job reference number is required.
                         </div>
                     </div>
+                </div>
+
+             
+                <div class="row">
+                    <div class="col">
+                        <label for="recruiterName" class="form-label">Vendor Name</label>
+                        <input
+                            [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                            type="text" class="form-control extra-light-placeholder" id="recruiterName"
+                            name="recruiterName" placeholder="Vendor name" [(ngModel)]="task.recruiterName"
+                            maxlength="100" #recruiterName="ngModel">
+                        <div *ngIf="recruiterName.invalid && (recruiterName.dirty||recruiterName.touched) "
+                            class="text-danger">
+                            Enter recruiter name.
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="recruiterEmail" class="form-label">Vendor email</label>
+                        <input
+                            [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                            type="email" pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}"
+                            class="form-control extra-light-placeholder" id="recruiterEmail" name="recruiterEmail"
+                            placeholder="Vendor email" [(ngModel)]="task.recruiterEmail" maxlength="100"
+                            #recruiterEmail="ngModel">
+                        <div *ngIf="recruiterEmail.invalid && (recruiterEmail.dirty||recruiterEmail.touched) "
+                            class="text-danger">
+                            Enter correct email.
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="recruiterPhone" class="form-label">Vendor phone</label>
+                        <input
+                            [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                            type="number" pattern="^[0-9]{10}$" class="form-control extra-light-placeholder"
+                            id="recruiterPhone" name="recruiterPhone" placeholder="Vendor phone number"
+                            [(ngModel)]="task.recruiterPhone" maxlength="100" #recruiterPhone="ngModel">
+                        <div *ngIf="recruiterPhone.invalid && (recruiterPhone.dirty||recruiterPhone.touched) "
+                            class="text-danger">
+                            Enter correct phone.
+                        </div>
+                    </div>
+                </div>
+
+              
+                <div class="row">
+                    <div class="col-sm-5">
+                        <label for="jobSubmissionPortalId" class="form-label">Job submission method<span
+                                class="required-asterisk" *ngIf="!updateScreen">*</span></label><br>
+                        <select class="form-control form-select" name="jobSubmissionPortalId" id="jobPortalId"
+                            [(ngModel)]="task.jobSubmissionPortalId" [required]="true">
+                            <option value="undefined" disabled>Select Option</option>
+                            <ng-container *ngFor="let portal of allJobPortals">
+                                <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
                 </fieldset>
 
 
 
             </div>
 
-            <!-- TASK NAME AND TASK DESCRIPTION  -->
+
             <div class="col">
-                <!-- // company detail  -->
+
                 <fieldset class="border rounded-3"
                     *ngIf="task.placementId==EXTERNAL_PLACEMENT_ID && (currectTaxTypeObject!=undefined && currectTaxTypeObject!=null && c2c.includes(currectTaxTypeObject.taxTypeName))">
                     <legend class="float-none w-auto px-2">Company Details</legend>
-                    <!-- candidate company and company address  -->
+
                     <div class="row">
                         <div class="col">
                             <label for="candidateCompany" class="form-label">Candidate Company<span
@@ -377,7 +378,7 @@
 
                     </div>
 
-                    <!-- hr name, email, phone -->
+
                     <div class="row">
                         <div class="col">
                             <label for="hrName" class="form-label">Recruiter Name<span class="required-asterisk"
@@ -417,7 +418,7 @@
                             </div>
                         </div>
                     </div>
-                </fieldset>
+                </fieldset> -->
 
                 <fieldset class="border rounded-3">
                     <legend class="float-none w-auto px-2">Task Details</legend>
@@ -513,7 +514,8 @@
                                 <option value="{{employeeId}}" selected="true">Self</option>
                                 <ng-container *ngFor="let employee of companyEmployees">
                                     <option *ngIf="employeeId!=employee.employeeId" value="{{employee.employeeId}}">
-                                        {{employee.firstName}} {{employee.lastName}}</option>
+                                        {{employee.firstName}} {{employee.lastName}}
+                                    </option>
                                 </ng-container>
                             </select>
                         </div>
@@ -730,4 +732,748 @@
         </div>
 
     </form>
+</ng-template>
+
+
+<!-- Modal class for Child-->
+
+<div #createTaskModal class="modal fade" data-bs-backdrop="static" id="createTask1{{modalId}}" tabindex="-1"
+    aria-labelledby="createTaskLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" style="max-width: 1300px;">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 *ngIf="!updateScreen" class="modal-title fs-5" id="createTaskLabel1">Create Task<ng-container
+                        *ngIf="task.taskParent!=0"> for - {{parentTask.taskName}}
+                    </ng-container></h1>
+                <h1 *ngIf="updateScreen" class="modal-title fs-5" id="createTaskLabel1">Update Task</h1>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="closeModal()"></button>
+            </div>
+            <div>
+
+            </div>
+
+            <div class="row modal-body justify-content-center">
+                <div class="col-md-6 text-center">
+
+                    <fieldset class="border rounded-3">
+                        <legend class="float-none w-auto px-2">Candidate Type</legend>
+                        <div class="row">
+                            <div class="col">
+                                <input type="radio" name="placement" id="internalplacement"
+                                    [(ngModel)]="task.placementId" [value]="INTERNAL_PLACEMENT_ID"
+                                    [disabled]="updateScreen" (change)="onChangeCandidateType()">&nbsp;
+                                <label for="internalplacement"
+                                    [ngClass]="{'selectedPlacement': task.placementId === INTERNAL_PLACEMENT_ID}">Bench
+                                    applicant</label>
+                            </div>
+                            <div class="col">
+                                <input type="radio" name="placement" id="externalplacement"
+                                    [(ngModel)]="task.placementId" [value]="EXTERNAL_PLACEMENT_ID"
+                                    [disabled]="updateScreen" (change)="onChangeCandidateType()">&nbsp;
+                                <label for="externalplacement"
+                                    [ngClass]="{'selectedPlacement': task.placementId === EXTERNAL_PLACEMENT_ID}">Sourcing
+                                    candidate</label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </div>
+                <ng-container *ngTemplateOutlet="taskForm1;"></ng-container>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Form For Child ...-->
+
+<ng-template #taskForm1>
+
+
+    <!-- {{backupTask|json}} -->
+    <!-- {{backupTask|json}} -->
+    <form #addTaskForm="ngForm" style="margin-top: 20px;">
+        <div class="row">
+
+            <div class="col">
+
+                <fieldset class="border rounded-3">
+
+                    <div class="row">
+                        <ng-container *ngIf="task.placementId==EXTERNAL_PLACEMENT_ID; else bench">
+                            <div class="col">
+                                <label for="candidateName" class="form-label">Candidate Name<span
+                                        class="required-asterisk" *ngIf="!updateScreen">*</span></label>
+                                <input
+                                    [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                    type="text" class="form-control extra-light-placeholder" id="candidateName"
+                                    name="candidateName" placeholder="Enter task name" [(ngModel)]="task.candidateName"
+                                    [required]="true" maxlength="100" #candidateName="ngModel"
+                                    (input)="onChangeCandidatename()">
+                                <div *ngIf="candidateName.invalid && (candidateName.dirty||candidateName.touched) "
+                                    class="text-danger">
+                                    Candidate Name is required.
+                                </div>
+                            </div>
+                        </ng-container>
+
+
+                        <ng-template #bench>
+                            <div class="col">
+                                <label for="candidateName" class="form-label">Candidate Name<span
+                                        class="required-asterisk" *ngIf="!updateScreen">*</span></label><br>
+                                <select class="form-control form-select" name="candidateName" id="candidateName"
+                                    [(ngModel)]="task.candidateId" [required]="true">
+                                    <option value="undefined" disabled>Select Option</option>
+                                    <ng-container *ngFor="let employee of allEmployees">
+                                        <ng-container *ngIf="employee.onBench">
+                                            <option value="{{employee.employeeId}}">{{employee.firstName}}
+                                                {{employee.lastName}}
+                                            </option>
+                                        </ng-container>
+                                    </ng-container>
+
+                                </select>
+                            </div>
+                        </ng-template>
+
+                        <div class="col-md-3">
+                            <label for="visaId" class="form-label">Visa Type<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label><br>
+                            <select class="form-control form-select" name="visaId" id="visaId" name="visaId"
+                                [(ngModel)]="task.visaId" [required]="true">
+                                <option value="undefined" disabled>Select Option</option>
+                                <ng-container *ngFor="let visa of allVisas">
+                                    <option value="{{visa.visaId}}">{{visa.visaType}}</option>
+                                </ng-container>
+
+                            </select>
+                        </div>
+                        <div class="col-md-3" *ngIf="task.placementId==EXTERNAL_PLACEMENT_ID">
+                            <label for="taxTypeId" class="form-label">Tax Type<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label><br>
+                            <select class="form-control form-select" name="taxTypeId" id="taxTypeId" name="taxTypeId"
+                                [(ngModel)]="task.taxTypeId" [required]="true"
+                                (change)="onChangeTaxType(task.taxTypeId)">
+                                <option value="undefined" disabled>Select Option</option>
+                                <ng-container *ngFor="let taxType of allTaxTypes">
+                                    <option *ngIf="taxType.forSourcing" value="{{taxType.taxTypeId}}">
+                                        {{taxType.taxTypeName}}
+                                    </option>
+                                </ng-container>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-3" *ngIf="task.placementId==INTERNAL_PLACEMENT_ID">
+                            <label for="taxTypeId" class="form-label">Tax Type<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label><br>
+                            <select class="form-control form-select" name="taxTypeId" id="taxTypeId" name="taxTypeId"
+                                [(ngModel)]="task.taxTypeId" [required]="true"
+                                (change)="onChangeTaxType(task.taxTypeId)">
+                                <option value="undefined" disabled>Select Option</option>
+                                <ng-container *ngFor="let taxType of allTaxTypes">
+                                    <option *ngIf="taxType.forBench" value="{{taxType.taxTypeId}}">
+                                        {{taxType.taxTypeName}}
+                                    </option>
+                                </ng-container>
+
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+                <!-- job details, vendor details and job sibmission portalId -->
+                <!-- job title, location, rate  -->
+                <fieldset class="border rounded-3">
+                    <legend class="float-none w-auto px-2">Job Details</legend>
+                    <div class="row">
+
+                        <div class="col">
+                            <label for="hiringCompanyName" class="form-label">Hiring company Name<span
+                                    class="required-asterisk" *ngIf="!updateScreen">*</span></label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="text" class="form-control extra-light-placeholder" id="hiringCompanyName"
+                                name="hiringCompanyName" placeholder="Recruiter name"
+                                [(ngModel)]="task.hiringCompanyName" [required]="true" maxlength="100"
+                                #hiringCompanyName="ngModel" (input)="onChangeHiringCompanyname()">
+                            <div *ngIf="hiringCompanyName.invalid && (hiringCompanyName.dirty||hiringCompanyName.touched) "
+                                class="text-danger">
+                                Enter hiring company name name.
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <label for="jobTitle" class="form-label">Job Title<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="text" class="form-control extra-light-placeholder" id="jobTitle" name="jobTitle"
+                                placeholder="Enter Job Title" [(ngModel)]="task.jobTitle" [required]="true"
+                                maxlength="100" #jobTitle="ngModel">
+                            <div *ngIf="jobTitle.invalid && (jobTitle.dirty||jobTitle.touched) " class="text-danger">
+                                Job title is required.
+                            </div>
+                        </div>
+
+
+                        <div class="col">
+                            <label for="jobLocationId" class="form-label">Job location<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label><br>
+                            <select class="form-control form-select" name="jobLocationId" id="jobLocationId"
+                                [(ngModel)]="task.jobLocationId" [required]="true">
+                                <option value="undefined" disabled>Select Option</option>
+                                <ng-container *ngFor="let location of allJobLocations">
+                                    <option value="{{location.locationId}}">{{location.locationType}}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="experienceRequired" class="form-label">Exp required (In years)<span
+                                    class="required-asterisk" *ngIf="!updateScreen">*</span></label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="number" class="form-control extra-light-placeholder" id="experienceRequired"
+                                name="experienceRequired" placeholder="Experience required"
+                                [(ngModel)]="task.experienceRequired" [required]="true" maxlength="100"
+                                #experienceRequired="ngModel" [min]="0" [max]="70">
+                            <div *ngIf="experienceRequired.invalid && (experienceRequired.dirty||experienceRequired.touched) "
+                                class="text-danger">
+                                Enter valid experience in years.
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <label for="rate" class="form-label">Rate ($ per hour)<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="number" class="form-control extra-light-placeholder" id="rate" name="rate"
+                                placeholder="Enter rate per hour" [(ngModel)]="task.rate" [required]="true"
+                                maxlength="100" #rate="ngModel" [min]="0">
+                            <div *ngIf="rate.invalid && (rate.dirty||rate.touched) " class="text-danger">
+                                Enter valid rate.
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <label for="jobLink" class="form-label">Job link<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="text" class="form-control extra-light-placeholder" id="jobLink" name="jobLink"
+                                placeholder="Enter job link" [(ngModel)]="task.jobLink" [required]="true"
+                                maxlength="100" #jobLink="ngModel">
+                            <div *ngIf="jobLink.invalid && (jobLink.dirty||jobLink.touched) " class="text-danger">
+                                Job link is required.
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col">
+                            <label for="datePosted" class="form-label">Job posted date<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label>
+
+                            <input type="date" class="form-control" id="datePosted" name="datePosted" [max]="todayDate"
+                                [(ngModel)]="task.datePosted" onkeydown="return false">
+                        </div>
+
+                        <div class="col">
+                            <label for="jobPortalId" class="form-label">Job portal<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label><br>
+                            <select class="form-control form-select" name="jobPortalId" id="jobPortalId"
+                                name="jobPortalId" [(ngModel)]="task.jobPortalId" [required]="true">
+                                <option value="undefined" disabled>Select Option</option>
+                                <ng-container *ngFor="let portal of allJobPortals">
+                                    <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label for="jobReferenceNumber" class="form-label">Job reference number</label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="text" class="form-control extra-light-placeholder" id="jobReferenceNumber"
+                                name="jobReferenceNumber" placeholder="Enter job reference number"
+                                [(ngModel)]="task.jobReferenceNumber" maxlength="100" #jobReferenceNumber="ngModel">
+                            <div *ngIf="jobReferenceNumber.invalid && (jobReferenceNumber.dirty||jobReferenceNumber.touched) "
+                                class="text-danger">
+                                Job reference number is required.
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="recruiterName" class="form-label">Vendor Name</label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="text" class="form-control extra-light-placeholder" id="recruiterName"
+                                name="recruiterName" placeholder="Vendor name" [(ngModel)]="task.recruiterName"
+                                maxlength="100" #recruiterName="ngModel">
+                            <div *ngIf="recruiterName.invalid && (recruiterName.dirty||recruiterName.touched) "
+                                class="text-danger">
+                                Enter recruiter name.
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="recruiterEmail" class="form-label">Vendor email</label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="email" pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}"
+                                class="form-control extra-light-placeholder" id="recruiterEmail" name="recruiterEmail"
+                                placeholder="Vendor email" [(ngModel)]="task.recruiterEmail" maxlength="100"
+                                #recruiterEmail="ngModel">
+                            <div *ngIf="recruiterEmail.invalid && (recruiterEmail.dirty||recruiterEmail.touched) "
+                                class="text-danger">
+                                Enter correct email.
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="recruiterPhone" class="form-label">Vendor phone</label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="number" pattern="^[0-9]{10}$" class="form-control extra-light-placeholder"
+                                id="recruiterPhone" name="recruiterPhone" placeholder="Vendor phone number"
+                                [(ngModel)]="task.recruiterPhone" maxlength="100" #recruiterPhone="ngModel">
+                            <div *ngIf="recruiterPhone.invalid && (recruiterPhone.dirty||recruiterPhone.touched) "
+                                class="text-danger">
+                                Enter correct phone.
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <label for="jobSubmissionPortalId" class="form-label">Job submission method<span
+                                    class="required-asterisk" *ngIf="!updateScreen">*</span></label><br>
+                            <select class="form-control form-select" name="jobSubmissionPortalId" id="jobPortalId"
+                                [(ngModel)]="task.jobSubmissionPortalId" [required]="true">
+                                <option value="undefined" disabled>Select Option</option>
+                                <ng-container *ngFor="let portal of allJobPortals">
+                                    <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+
+            </div>
+
+
+            <div class="col">
+
+                <fieldset class="border rounded-3"
+                    *ngIf="task.placementId==EXTERNAL_PLACEMENT_ID && (currectTaxTypeObject!=undefined && currectTaxTypeObject!=null && c2c.includes(currectTaxTypeObject.taxTypeName))">
+                    <legend class="float-none w-auto px-2">Company Details</legend>
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="candidateCompany" class="form-label">Candidate Company<span
+                                    class="required-asterisk" *ngIf="!updateScreen">*</span></label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="text" class="form-control extra-light-placeholder" id="candidateCompany"
+                                name="candidateCompany" placeholder="Enter candidate's company name"
+                                [(ngModel)]="task.candidateCompany" [required]="true" maxlength="100"
+                                #candidateCompany="ngModel">
+                            <div *ngIf="candidateCompany.invalid && (candidateCompany.dirty||candidateCompany.touched) "
+                                class="text-danger">
+                                Candidate company is required.
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="companyAddress" class="form-label">Company Address<span
+                                    class="required-asterisk" *ngIf="!updateScreen">*</span></label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="text" class="form-control extra-light-placeholder" id="companyAddress"
+                                name="companyAddress" placeholder="Enter candidate's company address"
+                                [(ngModel)]="task.companyAddress" [required]="true" maxlength="100"
+                                #companyAddress="ngModel">
+                            <div *ngIf="companyAddress.invalid && (companyAddress.dirty||companyAddress.touched) "
+                                class="text-danger">
+                                Candidate address is required.
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="hrName" class="form-label">Recruiter Name<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="text" class="form-control extra-light-placeholder" id="hrName" name="hrName"
+                                placeholder="Enter Recruiter name" [(ngModel)]="task.hrName" maxlength="100"
+                                #hrName="ngModel" [required]="true">
+                            <div *ngIf="hrName.invalid && (hrName.dirty||hrName.touched) " class="text-danger">
+                                Recruiter name is required.
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="hrEmail" class="form-label">Recruiter email<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="email" required pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}"
+                                class="form-control extra-light-placeholder" id="hrEmail" name="hrEmail"
+                                placeholder="Enter Recruiter name" [(ngModel)]="task.hrEmail" maxlength="100"
+                                #hrEmail="ngModel" [required]="true">
+                            <div *ngIf="hrEmail.invalid && (hrEmail.dirty||hrEmail.touched) " class="text-danger">
+                                Recruiter email is required.
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="hrPhone" class="form-label">Recruiter phone<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="number" pattern="^[0-9]{10}$" class="form-control extra-light-placeholder"
+                                id="hrPhone" name="hrPhone" placeholder="Enter Recruiter phone"
+                                [(ngModel)]="task.hrPhone" maxlength="100" #hrPhone="ngModel" [required]="true">
+                            <div *ngIf="hrPhone.invalid && (hrPhone.dirty||hrPhone.touched) " class="text-danger">
+                                Recruiter phone number is required.
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="border rounded-3">
+                    <legend class="float-none w-auto px-2">Task Details</legend>
+
+                    <!-- task details  -->
+                    <div class="row">
+                        <!-- code for parent task dropdown -->
+                        <ng-container *ngIf="false">
+                            <div class="col">
+
+                                <label for="parentTaskId" class="form-label">Parent Task</label><br>
+                                <select class="form-control form-select" name="parentTaskId" id="parentTaskId"
+                                    name="parentTaskId" [(ngModel)]="task.taskParent" [required]="true"
+                                    [disabled]="updateScreen || (backupTask.taskParent>=0)">
+                                    <!-- <option *ngIf="!updateScreen" value="undefined" disabled>Select Option</option> -->
+                                    <option *ngIf="!updateScreen && !(backupTask.taskParent>0)" value="0">Create As
+                                        Parent
+                                    </option>
+                                    <!-- <ng-container *ngFor="let parentTaskObject of parentTaskList"> -->
+                                    <!-- <option *ngIf="updateScreen" value="0">Parent Task</option> -->
+                                    <option
+                                        *ngIf="!(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) && parentTask.taskName!=undefined"
+                                        value="{{parentTask.taskId}}">{{parentTask.taskName}}</option>
+                                    <!-- </ng-container> -->
+
+                                    <!-- <ng-container *ngIf="parentTask.childTask">
+                    <ng-container *ngFor="let childTask of parentTask.childTask">
+                        <option value="{{childTask.taskId}}">{{childTask.taskName}}</option>
+
+                    </ng-container>
+                </ng-container> -->
+                                </select>
+
+                            </div>
+                        </ng-container>
+
+
+
+                        <!-- task name -->
+                        <div class="col">
+
+                            <label for="taskName" class="form-label">Task Name<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label>
+
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                type="text" class="form-control extra-light-placeholder" id="taskName" name="taskName"
+                                placeholder="Enter task name" [(ngModel)]="task.taskName" maxlength="100"
+                                #taskNameField="ngModel">
+                            <!-- <div *ngIf="taskNameField.invalid && (taskNameField.dirty||taskNameField.touched) "
+                                class="text-danger">
+                                Task Name is required.
+                            </div> -->
+                        </div>
+
+                        <div class="col">
+                            <label for="taskDescription" class="form-label">Task Description<span
+                                    class="required-asterisk" *ngIf="!updateScreen">*</span></label>
+                            <textarea
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                class="form-control" id="taskDescription" name="taskDescription"
+                                [(ngModel)]="task.taskDescription" placeholder="Enter task description" maxlength="255"
+                                #taskDescriptionField="ngModel"></textarea>
+                            <!-- <div *ngIf="taskDescriptionField.invalid && (taskDescriptionField.dirty||taskDescriptionField.touched) "
+                                class="text-danger">
+                                Task Description is required.
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <!-- employee and status  -->
+                    <div class="row">
+                        <div class="col">
+                            <label for="taskCreatedBy" class="form-label">Created By</label><br>
+                            <select class="form-control form-select" name="taskCreatedBy" id="taskCreatedBy"
+                                name="taskCreatedBy" [(ngModel)]="task.taskCreatedBy" [required]="true" disabled>
+                                <option value="undefined" disabled>Select Option</option>
+                                <!-- <option *ngIf="!updateScreen" value="{{employeeId}}" selected="true">Self</option> -->
+                                <ng-container>
+                                    <ng-container *ngFor="let employee of allEmployees">
+                                        <option value="{{employee.employeeId}}">{{employee.firstName}}
+                                            {{employee.lastName}}
+                                        </option>
+                                    </ng-container>
+                                </ng-container>
+
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="taskAssignedTo" class="form-label">Assigned To</label><br>
+                            <select
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                                class="form-control form-select" name="taskAssignedTo" id="taskAssignedTo"
+                                name="taskAssignedTo" [(ngModel)]="task.taskAssignedTo" [required]="true">
+                                <option value="undefined" disabled>Select Option</option>
+                                <option value="{{employeeId}}" selected="true">Self</option>
+                                <ng-container *ngFor="let employee of companyEmployees">
+                                    <option *ngIf="employeeId!=employee.employeeId" value="{{employee.employeeId}}">
+                                        {{employee.firstName}} {{employee.lastName}}
+                                    </option>
+                                </ng-container>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label for="taskStatus" class="form-label">Status</label><br>
+                            <select
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)  || parentTaskStatus?.finalStatus == true"
+                                class="form-control form-select" name="taskStatus" id="taskStatus" name="taskStatus"
+                                [(ngModel)]="task.taskStatus" [required]="true"
+                                (change)="onChangeStatus(task.taskStatus, task)">
+                                <option value="undefined" disabled>Select Option</option>
+                                <ng-container *ngFor="let status of allStatus">
+                                    <ng-container *ngIf="updateScreen">
+                                        <option value="{{status.statusId}}">{{status.statusCode |titlecase}}
+                                        </option>
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="!updateScreen && (!(status?.actualEndDate===true && status?.actualStartDate===true && status.finalStatus===true))">
+                                        <option value="{{status.statusId}}">{{status.statusCode |titlecase}}
+                                        </option>
+                                    </ng-container>
+                                </ng-container>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <!-- dates  -->
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="startDate" class="form-label">Start date<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label>
+                            <ng-container *ngIf="!updateScreen">
+                                <ng-container
+                                    *ngIf="(currentTaskStatus?.actualEndDate===false && currentTaskStatus?.actualStartDate===true)">
+                                    <input [disabled]="true" type="date" class="form-control" id="startDate"
+                                        name="startDate" [(ngModel)]="todayForPlannedStartDate" [required]="true"
+                                        #startDateField="ngModel" onkeydown="return false">
+                                </ng-container>
+
+                                <ng-container
+                                    *ngIf="!(currentTaskStatus?.actualEndDate===false && currentTaskStatus?.actualStartDate===true)">
+                                    <input
+                                        [disabled]="(currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)"
+                                        type="date" class="form-control" id="startDate" name="startDate"
+                                        [(ngModel)]="task.taskStartDate" [required]="true" [min]="currentDate"
+                                        #startDateField="ngModel"
+                                        [disabled]="parentTaskStatus && parentTaskStatus?.finalStatus == true"
+                                        onkeydown="return false">
+                                    <div *ngIf="startDateField.invalid && (startDateField.dirty||startDateField.touched)"
+                                        class="text-danger">
+                                        Start Date is required.
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+
+                            <ng-container *ngIf="updateScreen">
+                                <input [disabled]="true" type="date" class="form-control " id="startDate"
+                                    name="startDate" [(ngModel)]="task.taskStartDate" [required]="true"
+                                    [min]="currentDate" #startDateField="ngModel" onkeydown="return false">
+                                <div *ngIf="startDateField.invalid && (startDateField.dirty||startDateField.touched)"
+                                    class="text-danger">
+                                    Start Date is required.
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="endDate" class="form-label">End date<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label>
+                            <ng-container *ngIf="!updateScreen">
+                                <input type="date" class="form-control" id="endDate" name="endDate"
+                                    [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate" [required]="true"
+                                    [min]="todayForPlannedStartDate"
+                                    [disabled]="task.taskStartDate==null || updateScreen || (currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)"
+                                    #endDateField="ngModel" onkeydown="return false">
+
+                                <div *ngIf="endDateField.invalid " class="text-danger">
+                                    End Date is required.
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="updateScreen">
+                                <input [disabled]="true" type="date" class="form-control" id="endDate" name="endDate"
+                                    [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate" [required]="true"
+                                    #endDateField="ngModel" onkeydown="return false">
+
+                                <div *ngIf="endDateField.invalid " class="text-danger">
+                                    End Date is required.
+                                </div>
+                            </ng-container>
+                        </div>
+
+
+
+                        <div class="col-sm-3">
+                            <label for="actualStartDate" class="form-label">Actual Start date</label>
+
+                            <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
+                                [min]="task.taskStartDate" [(ngModel)]="todayForStartDate"
+                                [required]="updateScreen && (currentTaskStatus?.actualEndDate===false && currentTaskStatus?.actualStartDate===true)"
+                                disabled>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label for="actualEndDate" class="form-label">Actual End date</label>
+                            <input type="date" class="form-control" id="actualEndDate" name="actualEndDate"
+                                [(ngModel)]="todayForEndDate" [min]="task.taskActualStartDate"
+                                [required]="updateScreen && (currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)"
+                                disabled>
+                        </div>
+
+                    </div>
+
+                    <!-- // comment  -->
+                    <div class="row">
+                        <!-- comment -->
+                        <div class="col">
+                            <label for="taskReason" class="form-label">Comment<span
+                                    class="required-asterisk">*</span></label>
+                            <textarea
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)  || parentTaskStatus?.finalStatus == true"
+                                class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
+                                placeholder="Enter comment" [required]="true" #taskReasonField="ngModel"></textarea>
+
+                            <div *ngIf="taskReasonField.invalid && (taskReasonField.dirty||taskReasonField.touched)"
+                                class="text-danger">
+                                Reason is required.
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+                <!-- file and attachements  -->
+                <fieldset class="border rounded-3">
+                    <legend class="float-none w-auto px-2">Attachments</legend>
+                    <div class="row">
+                        <!-- upload file  -->
+                        <div class="col">
+                            <label class="form-label" for="uploadFile">Upload File</label>
+                            <input
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                                type="file" id="uploadFile" name="uploadFile" (change)="onFileSelected($event)"
+                                class="form-control" [required]="true"
+                                [disabled]="parentTaskStatus && parentTaskStatus?.finalStatus == true">
+                        </div>
+                    </div>
+
+                    <!-- Attachments -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" for="attachment">Attachments</label>
+                            <ul>
+                                <li *ngFor="let file of fileNames">
+                                    <ng-container
+                                        *ngIf="employeeId == backupTask.taskCreatedBy || employeeId == backupTask.taskAssignedTo; else disabledLink">
+                                        <a href="javascript:void(0)" (click)="downloadFile(file)">{{ file }}</a>
+                                    </ng-container>
+                                    <ng-template #disabledLink>
+                                        <span>{{ file }}</span>
+                                    </ng-template>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="modal-footer mt-3">
+                    <!-- <ng-container *ngIf="parentTaskStatus && parentTaskStatus?.finalStatus == true">
+                                        <label style="color: red;">* Parent Task's status is final status, (Not allowed to create sub
+                                            task)</label>
+                                   </ng-container> -->
+                    <!-- Move the success message here and apply centering classes -->
+                    <div class="text-center mx-auto">
+                        <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+                            Task created/updated successfully!
+                        </div>
+                        <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+                            Operation failed. Please update sub-task(s) status to Done/Cancel.
+                        </div>
+                    </div>
+
+                    <!-- Add loading spinner here -->
+                    <div *ngIf="isLoading">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                    <!-- Move the "Save" and "Close" buttons to the right -->
+                    <button
+                        [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true)"
+                        *ngIf="!isLoading && updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                        type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
+
+                    <ng-container
+                        *ngIf="updateScreen && !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)">
+                        <label style="color: red;">* Update only allowed to Creator/ Assignee</label>
+                    </ng-container>
+
+                    <!-- <ng-container *ngIf="parentTaskStatus && parentTaskStatus?.finalStatus == false"> -->
+                    <button
+                        [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true)"
+                        *ngIf="!isLoading && !updateScreen" type="submit" class="btn btn-primary"
+                        (click)="onClickSave(task)">Save</button>
+                    <!-- </ng-container> -->
+                    <button type="button" class="btn btn-secondary" (click)="closeModal()"
+                        id="closeButton">Close</button>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close"
+                        (click)="closeModal()">Close</button> -->
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
 </ng-template>

@@ -13,6 +13,7 @@ import { Visa } from 'src/app/visa/class/visa';
 import { Joblocation } from 'src/app/joblocation/classes/joblocation';
 import { Jobportal } from 'src/app/jobportal/classes/jobportal';
 import { Taxtype } from 'src/app/taxtype/classes/taxtype';
+import { Task2 } from 'src/app/classes/task2';
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
@@ -64,6 +65,9 @@ export class CreateTaskComponent implements OnInit {
   todayDate!: string;
   parentTaskStatus: any;
 
+  parentAndAllTask!: Task2;
+
+
   c2c: string[] = ['C2C', 'C 2 C', 'CTOC', 'C TO C'];
   currectTaxTypeObject!: Taxtype;
   constructor(
@@ -85,8 +89,44 @@ export class CreateTaskComponent implements OnInit {
     this.loadCompanyEmployees();
 
     this.todayDate = new Date().toISOString().split('T')[0];
+
+
+    this.taskService.getTaskCreatedByMeOrAssignedToMe(this.employeeId).subscribe(
+      response => {
+        this.parentAndAllTask = response;
+        console.log(this.parentAndAllTask);
+
+      }
+    )
   }
 
+
+  onChangeCandidatename() {
+
+    if (this.task.placementId == this.EXTERNAL_PLACEMENT_ID) {
+      this.task.taskName = this.task.candidateName;
+    }
+
+    // if (this.task.taskName == undefined || this.task.taskName == null || this.task.placementId == this.EXTERNAL_PLACEMENT_ID) {
+    //   this.task.taskName = '';
+
+    // }
+
+
+
+  }
+
+  onChangeHiringCompanyname() {
+
+    if (this.task.placementId == this.INTERNAL_PLACEMENT_ID) {
+      // if (this.task.taskName == undefined || this.task.taskName == null) {
+      //   this.task.taskName = '';
+      // }
+      this.task.taskName = this.task.hiringCompanyName;
+
+    }
+
+  }
   ngOnChanges(changes: SimpleChanges): void {
     // if (changes['parentTask']) {
     //   //console.log("parent Task " + JSON.stringify(this.parentTask));
@@ -109,7 +149,7 @@ export class CreateTaskComponent implements OnInit {
   onChangeCandidateType() {
     this.task.taxTypeId = undefined;
   }
-  
+
   // called when current task object changed
   private onChangeTaskObject() {
 
@@ -455,5 +495,9 @@ export class CreateTaskComponent implements OnInit {
     this.currentTaskStatus = this.allStatus.find((status) => status.statusId === taskStatus);
     this.actualTaskStatus = this.currentTaskStatus
   }
+
+
+
+
 
 }

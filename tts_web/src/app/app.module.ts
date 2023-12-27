@@ -49,6 +49,8 @@ import { UpdatejoblocationComponent } from './joblocation/components/updatejoblo
     HeaderModule,
     TaskModule,
     ReasonModule,
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

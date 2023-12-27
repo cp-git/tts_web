@@ -1,7 +1,7 @@
 export interface Task {
     taskId: number;
-    taskName: String;
-    taskDescription: String;
+    taskName: string;
+    taskDescription: string;
     taskCreatedBy: number;
     taskAssignedTo: number;
     taskStatus: number;
@@ -16,8 +16,8 @@ export interface Task {
     childTask: Task[];
     reason: String;
     employeeId: String;
-    isToggled: boolean ;    // for checking that task is toggled or not (temporary variable)
-    hasChildInAllTasks:boolean;
+    isToggled: boolean;    // for checking that task is toggled or not (temporary variable)
+    hasChildInAllTasks: boolean;
 
     // extra fields add for internal and external task
     internalId: number;

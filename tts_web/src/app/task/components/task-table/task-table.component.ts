@@ -281,9 +281,13 @@ export class TaskTableComponent implements OnInit {
 
       if (this.parentTask.taskParent == undefined || this.parentTask.taskParent == null) {
         this.emptyTask.taskParent = 0;
+        console.log("parent task...");
+
       }
       else {
         this.emptyTask.taskParent = this.parentTask.taskId;
+        console.log("child task");
+
       }
 
       this.emptyTask.taskCreatedBy = this.employeeId;
