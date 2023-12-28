@@ -32,7 +32,7 @@ export class AddtaxtypeComponent implements OnInit {
   addTaxType(taxType: Taxtype) {
 
     taxType.companyId = this.companyId;
-    alert(JSON.stringify(taxType))
+    // alert(JSON.stringify(taxType))
     this.taxTypeService.addTaxType(taxType).subscribe(
       (response: Taxtype) => {
 

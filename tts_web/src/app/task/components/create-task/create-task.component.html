@@ -56,7 +56,7 @@
 <ng-template #taskForm>
 
     <!-- {{backupTask|json}} -->
-    <!-- {{backupTask|json}} -->
+    <!-- {{task|json}} -->
     <form #addTaskForm="ngForm">
         <div class="row">
 
@@ -324,12 +324,25 @@
                             <label for="jobSubmissionPortalId" class="form-label">Job submission method<span
                                     class="required-asterisk" *ngIf="!updateScreen">*</span></label><br>
                             <select class="form-control form-select" name="jobSubmissionPortalId" id="jobPortalId"
-                                [(ngModel)]="task.jobSubmissionPortalId" [required]="true">
+                                [(ngModel)]="task.jobSubmissionPortalId" [required]="true"
+                                (change)="onChangeSubmissionMethod()">
                                 <option value="undefined" disabled>Select Option</option>
                                 <ng-container *ngFor="let portal of allJobPortals">
                                     <option value="{{portal.portalId}}">{{portal.portalName}}</option>
                                 </ng-container>
                             </select>
+                        </div>
+                        <div class="col-md-4"
+                            *ngIf="selectedJobSubmissionMethod?.portalName=='Other' || this.selectedJobSubmissionMethod?.portalName=='other' ">
+                            <label for="portalName" class="form-label">Other method<span class="required-asterisk"
+                                    *ngIf="!updateScreen">*</span></label><br>
+                            <input type="text" class="form-control extra-light-placeholder" id="portalName"
+                                name="portalName" placeholder="Submission method" [(ngModel)]="task.portalName"
+                                [required]="true" maxlength="100" #portalName="ngModel">
+                            <div *ngIf="portalName.invalid && (portalName.dirty||portalName.touched) "
+                                class="text-danger">
+                                Enter other method.
+                            </div>
                         </div>
                     </div>
                 </fieldset>

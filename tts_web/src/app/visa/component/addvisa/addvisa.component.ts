@@ -31,7 +31,7 @@ export class AddvisaComponent {
   createVisa(visa: Visa) {
 
     visa.companyId = this.companyId;
-    alert(JSON.stringify(visa))
+    // alert(JSON.stringify(visa))
     this.visaService.addVisa(visa).subscribe(
       (response: Visa) => {
 

@@ -66,6 +66,9 @@ export class CreateTaskComponent implements OnInit {
 
   c2c: string[] = ['C2C', 'C 2 C', 'CTOC', 'C TO C'];
   currectTaxTypeObject!: Taxtype;
+
+  otherJobPortal!: string;
+  selectedJobSubmissionMethod: Jobportal = new Jobportal();;
   constructor(
 
     private taskService: TaskService,
@@ -109,7 +112,14 @@ export class CreateTaskComponent implements OnInit {
   onChangeCandidateType() {
     this.task.taxTypeId = undefined;
   }
-  
+  onChangeSubmissionMethod() {
+    const portalData = this.allJobPortals.find(portal => portal.portalId == this.task.jobSubmissionPortalId);
+
+    if (portalData) {
+      this.selectedJobSubmissionMethod = portalData;
+    }
+  }
+
   // called when current task object changed
   private onChangeTaskObject() {
 
@@ -137,6 +147,9 @@ export class CreateTaskComponent implements OnInit {
 
     // if task exist 
     if (this.task.taskId > 0) {
+
+      // update variable of selected job submission method (selectedJobSubmissionMethod)
+      this.onChangeSubmissionMethod();
 
       // date posted string to date
       // this.task.datePosted = new Date(this.task.datePosted);
@@ -243,6 +256,7 @@ export class CreateTaskComponent implements OnInit {
     if (this.selectedFile) {
       formData.append('file', this.selectedFile);   // adding file in header with key - 'file'
     }
+
 
     const tempTask = task;
     tempTask.childTask = [];

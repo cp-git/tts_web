@@ -25,7 +25,7 @@ export class UpdatetaxtypeComponent {
   }
 
   updateTaxType(taxType: Taxtype) {
-    alert(JSON.stringify(taxType))
+    // alert(JSON.stringify(taxType))
     this.taxTypeService.updateTaxType(taxType.taxTypeId, taxType).subscribe(
       (response: Taxtype) => {
 

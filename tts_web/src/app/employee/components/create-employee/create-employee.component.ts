@@ -86,7 +86,7 @@ export class CreateEmployeeComponent implements OnInit {
   // This function creates a new employee and uploads an optional file.
   createEmployee(employee: Employee) {
     // Check if a file is selected for upload
-    alert(JSON.stringify(employee));
+    // alert(JSON.stringify(employee));
     if (this.isAdmin) {
       employee.companyId = this.companyId
       employee.countryId = this.countryId

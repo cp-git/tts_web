@@ -31,7 +31,7 @@ export class AddjoblocationComponent implements OnInit {
   addJobLocation(location: Joblocation) {
 
     location.companyId = this.companyId;
-    alert(JSON.stringify(location))
+    // alert(JSON.stringify(location))
     this.jobLocationSercvice.addJobLocation(location).subscribe(
       (response: Joblocation) => {
 

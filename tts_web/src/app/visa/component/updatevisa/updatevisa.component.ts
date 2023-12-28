@@ -25,7 +25,7 @@ export class UpdatevisaComponent {
   }
 
   updateVisa(visa: Visa) {
-    alert(JSON.stringify(visa))
+    // alert(JSON.stringify(visa))
     this.visaService.updateVisa(visa.visaId, visa).subscribe(
       (response: Visa) => {
 

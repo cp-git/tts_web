@@ -91,7 +91,7 @@ export class UpdateEmployeeComponent {
   updateEmployeeByEmployeeId(updatedEmployee: Employee) {
     // Check if a file is selected for upload
 
-    alert(JSON.stringify(updatedEmployee));
+    // alert(JSON.stringify(updatedEmployee));
     const formData = new FormData();
     if (this.selectedFile) {
       // Log the name of the selected file
