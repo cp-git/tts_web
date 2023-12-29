@@ -148,7 +148,7 @@ export class CreateTaskComponent implements OnInit {
     // if task exist 
     if (this.task.taskId > 0) {
 
-      // update variable of selected job submission method (selectedJobSubmissionMethod)
+      // update variable of selected job submission method (selectedJobSubmissionMethod).
       this.onChangeSubmissionMethod();
 
       // date posted string to date
