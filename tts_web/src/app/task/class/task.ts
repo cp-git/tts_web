@@ -16,8 +16,8 @@ export interface Task {
     childTask: Task[];
     reason: String;
     employeeId: String;
-    isToggled: boolean ;    // for checking that task is toggled or not (temporary variable)
-    hasChildInAllTasks:boolean;
+    isToggled: boolean;    // for checking that task is toggled or not (temporary variable)
+    hasChildInAllTasks: boolean;
 
     // extra fields add for internal and external task
     internalId: number;
@@ -34,6 +34,8 @@ export interface Task {
     recruiterEmail: string;
     recruiterPhone: string;
     jobSubmissionPortalId: number;
+    portalName: string;
+
     datePosted: Date;
     jobLink: string;
     candidateId: number;

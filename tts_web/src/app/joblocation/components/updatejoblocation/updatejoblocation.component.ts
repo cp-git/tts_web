@@ -27,7 +27,7 @@ export class UpdatejoblocationComponent implements OnInit {
   }
 
   updateJobLocation(location: Joblocation) {
-    alert(JSON.stringify(location))
+    // alert(JSON.stringify(location))
     this.jobLocationService.updateJobLocation(location.locationId, location).subscribe(
       (response: Joblocation) => {
 

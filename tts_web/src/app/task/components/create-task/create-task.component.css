@@ -82,3 +82,11 @@ fieldset {
 legend{
     font-size: large;
 }
+
+/* .modal-xl{
+    max-width: 1350px !important;
+} 
+[ngClass]="{'modal-lg':task.taskParent==0, 'modal-xl':task.taskParent>0}"
+.modal-lg{
+    max-width: 1000px !important;
+}  */

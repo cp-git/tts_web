@@ -305,7 +305,7 @@ export class TaskTableComponent implements OnInit {
           (response) => {
             // on success 
             this.parentTask = response;
-            //console.log(this.parentTask);
+            // console.log(this.parentTask);
           }
         );
       }
@@ -315,13 +315,13 @@ export class TaskTableComponent implements OnInit {
         (response) => {
           // on success 
           task = response;
-          console.log(task);
+          // console.log(task);
           this.emptyTask = Object.assign({}, task);
         }
       );
 
       this.emptyTask = Object.assign({}, task);
-      console.log(this.emptyTask);
+      // console.log(this.emptyTask);
 
     }
   }
@@ -350,6 +350,6 @@ export class TaskTableComponent implements OnInit {
   }
 
   onTriggered(data: Task) {
-    alert();
+    // alert();
   }
 }

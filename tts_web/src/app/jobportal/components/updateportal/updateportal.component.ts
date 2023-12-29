@@ -24,7 +24,7 @@ export class UpdateportalComponent {
   }
 
   updateJobPortal(portal: Jobportal) {
-    alert(JSON.stringify(portal))
+    // alert(JSON.stringify(portal))
     this.jobPortalServcice.updateJobPortal(portal.portalId, portal).subscribe(
       (response: Jobportal) => {
 

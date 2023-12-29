@@ -32,7 +32,7 @@ export class AddportalComponent implements OnInit {
   addJobPortal(portal: Jobportal) {
 
     portal.companyId = this.companyId;
-    alert(JSON.stringify(portal))
+    // alert(JSON.stringify(portal))
     this.jobPortalService.addJobPortal(portal).subscribe(
       (response: Jobportal) => {
 
