@@ -47,4 +47,16 @@ export interface Task {
     hrPhone: string;
     visaId: number;
     placementId: number;
+
+    jobAddress: string;
+    jobCity: string;
+    jobState: string;
+    jobDescription: string;
+
+    candidateExperience: number;
+    expectedMaxSalary: number;
+    expectedMinSalary: number;
+    willingToRelocate: boolean;
+    willingToNegotiateSalary: boolean;
+
 }

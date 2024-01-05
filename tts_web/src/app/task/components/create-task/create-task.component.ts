@@ -206,6 +206,8 @@ export class CreateTaskComponent implements OnInit {
   taskObject: any;
   // for adding task and reason
   onClickSave(task: Task) {
+    console.log(task);
+    
     this.isLoading = true;
     task.employeeId = this.employeeId;    // assigning employee id to object
 
@@ -249,6 +251,7 @@ export class CreateTaskComponent implements OnInit {
 
   // for updating task and adding reason
   onClickUpdate(task: Task) {
+    console.log(task);
     this.isLoading = true;
     task.employeeId = this.employeeId;    // assigning employee id to object
 
@@ -260,6 +263,8 @@ export class CreateTaskComponent implements OnInit {
 
     const tempTask = task;
     tempTask.childTask = [];
+    console.log(tempTask);
+    
     const taskBlob = new Blob([JSON.stringify(tempTask)], { type: 'application/json' });    // converting object into blob 
     formData.append('task', taskBlob);    // adding task object in header with key - 'task'
 
