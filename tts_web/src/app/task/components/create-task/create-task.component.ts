@@ -25,6 +25,9 @@ export class CreateTaskComponent implements OnInit {
   EXTERNAL_PLACEMENT_ID: number = 2;
   PLACEMENT_ID: number = 1;
 
+
+  selectedJobSubmissionMethod: Jobportal = new Jobportal();;
+
   @ViewChild('createTaskModal') createTaskModal!: ElementRef;
 
   @Input() parentTask: Task = {} as Task;
@@ -145,6 +148,16 @@ export class CreateTaskComponent implements OnInit {
       this.currectTaxTypeObject = currentTaxType;
     }
   }
+
+
+  onChangeSubmissionMethod() {
+    const portalData = this.allJobPortals.find(portal => portal.portalId == this.task.jobSubmissionPortalId);
+
+    if (portalData) {
+      this.selectedJobSubmissionMethod = portalData;
+    }
+  }
+
 
   onChangeCandidateType() {
     this.task.taxTypeId = undefined;

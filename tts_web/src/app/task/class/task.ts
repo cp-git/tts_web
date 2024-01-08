@@ -1,7 +1,7 @@
 export interface Task {
     taskId: number;
-    taskName: string;
-    taskDescription: string;
+    taskName: String;
+    taskDescription: String;
     taskCreatedBy: number;
     taskAssignedTo: number;
     taskStatus: number;
@@ -34,6 +34,8 @@ export interface Task {
     recruiterEmail: string;
     recruiterPhone: string;
     jobSubmissionPortalId: number;
+    portalName: string;
+
     datePosted: Date;
     jobLink: string;
     candidateId: number;
@@ -45,4 +47,16 @@ export interface Task {
     hrPhone: string;
     visaId: number;
     placementId: number;
+
+    jobAddress: string;
+    jobCity: string;
+    jobState: string;
+    jobDescription: string;
+
+    candidateExperience: number;
+    expectedMaxSalary: number;
+    expectedMinSalary: number;
+    willingToRelocate: boolean;
+    willingToNegotiateSalary: boolean;
+
 }
