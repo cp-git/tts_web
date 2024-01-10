@@ -102,6 +102,23 @@ export class CreateTaskComponent implements OnInit {
     }
   }
 
+  // function called when user type data for Candidate name
+  onChangeCandidatename() {
+    if (this.task.placementId == this.EXTERNAL_PLACEMENT_ID) {
+      this.task.taskName = this.task.candidateName;
+    }
+  }
+
+  // function called when user type data for hiring company name
+  onChangeHiringCompanyname() {
+    if (this.task.placementId == this.INTERNAL_PLACEMENT_ID) {
+      this.task.taskName = this.task.hiringCompanyName;
+      // if (this.task.jobTitle != undefined) {
+      //   this.task.taskName = this.task.hiringCompanyName + " - " + this.task.jobTitle;
+      // }
+    }
+  }
+
   onChangeTaxType(taxTypeId: any) {
     const currentTaxType = this.allTaxTypes.find(tax => tax.taxTypeId == taxTypeId);
     if (currentTaxType) {
@@ -125,6 +142,7 @@ export class CreateTaskComponent implements OnInit {
 
     this.task = this.task;
 
+
     this.onChangeTaxType(this.task.taxTypeId);
 
     //console.log(this.task);
@@ -134,9 +152,38 @@ export class CreateTaskComponent implements OnInit {
     if (this.task && this.task.taskParent) {
       this.taskService.getTaskByTaskId(this.task.taskParent).subscribe(
         response => {
-          //console.log(response);
+          console.log(response);
           this.parentTaskStatus = this.allStatus.find(s => s.statusId == response.taskStatus);
           //console.log(this.parentTaskStatus);
+
+          // selecting candidate type for below conditions
+          this.task.placementId = response.placementId;
+
+          // if candidate type in bench means internal placement then assign some values from parent to child
+          if (this.task.placementId == this.INTERNAL_PLACEMENT_ID && this.task.taskParent != 0) {
+            // alert(response.candidateId)
+            this.task.candidateId = response.candidateId;
+            this.task.visaId = response.visaId;
+            this.task.taxTypeId = response.taxTypeId;
+          }
+
+          // if candidate type in sourcing means external placement then assign some values from parent to child
+          if (this.task.placementId == this.EXTERNAL_PLACEMENT_ID && this.task.taskParent != 0) {
+            // alert(JSON.stringify(response))
+            this.task.hiringCompanyName = response.hiringCompanyName;
+            this.task.jobTitle = response.jobTitle;
+            this.task.jobLocationId = response.jobLocationId;
+            this.task.jobAddress = response.jobAddress;
+            this.task.jobCity = response.jobCity;
+            this.task.jobState = response.jobState;
+            this.task.experienceRequired = response.experienceRequired;
+            this.task.rate = response.rate;
+            this.task.datePosted = response.datePosted;
+            this.task.jobSubmissionPortalId = response.jobSubmissionPortalId;
+            this.task.portalName = response.portalName;
+            this.task.jobDescription = response.jobDescription;
+          }
+
 
         }
       );
@@ -207,7 +254,7 @@ export class CreateTaskComponent implements OnInit {
   // for adding task and reason
   onClickSave(task: Task) {
     console.log(task);
-    
+
     this.isLoading = true;
     task.employeeId = this.employeeId;    // assigning employee id to object
 
@@ -264,7 +311,7 @@ export class CreateTaskComponent implements OnInit {
     const tempTask = task;
     tempTask.childTask = [];
     console.log(tempTask);
-    
+
     const taskBlob = new Blob([JSON.stringify(tempTask)], { type: 'application/json' });    // converting object into blob 
     formData.append('task', taskBlob);    // adding task object in header with key - 'task'
 

@@ -20,24 +20,27 @@
             <div class="row modal-body justify-content-center">
                 <div class="col-md-6 text-center">
 
+                    <!-- candidate type -->
                     <fieldset class="border rounded-3">
                         <legend class="float-none w-auto px-2">Candidate Type</legend>
                         <div class="row">
                             <div class="col">
                                 <input type="radio" name="placement" id="internalplacement"
                                     [(ngModel)]="task.placementId" [value]="INTERNAL_PLACEMENT_ID"
-                                    [disabled]="updateScreen" (change)="onChangeCandidateType()">&nbsp;
+                                    [disabled]="!(task.taskParent<=0)" (change)="onChangeCandidateType()">&nbsp;
                                 <label for="internalplacement"
-                                    [ngClass]="{'selectedPlacement': task.placementId === INTERNAL_PLACEMENT_ID}">Bench
-                                    candidate</label>
+                                    [ngClass]="{'selectedPlacement': task.placementId === INTERNAL_PLACEMENT_ID}"><b>
+                                        Bench
+                                        candidate</b></label>
                             </div>
                             <div class="col">
                                 <input type="radio" name="placement" id="externalplacement"
                                     [(ngModel)]="task.placementId" [value]="EXTERNAL_PLACEMENT_ID"
-                                    [disabled]="updateScreen" (change)="onChangeCandidateType()">&nbsp;
+                                    [disabled]="!(task.taskParent<=0)" (change)="onChangeCandidateType()">&nbsp;
                                 <label for="externalplacement"
-                                    [ngClass]="{'selectedPlacement': task.placementId === EXTERNAL_PLACEMENT_ID}">Sourcing
-                                    candidate</label>
+                                    [ngClass]="{'selectedPlacement': task.placementId === EXTERNAL_PLACEMENT_ID}"><b>
+                                        Sourcing
+                                        candidate</b></label>
                             </div>
                         </div>
                     </fieldset>
@@ -61,11 +64,14 @@
         <div class="row">
 
             <div class="col">
-
-                <fieldset class="border rounded-3">
+                <!-- candidate details  -->
+                <fieldset class="border rounded-3"
+                    *ngIf="task.taskParent!=0 || task.placementId == INTERNAL_PLACEMENT_ID"
+                    [disabled]="task.placementId==INTERNAL_PLACEMENT_ID && task.taskParent!=0">
                     <legend class="float-none w-auto px-2">Candidate Details</legend>
                     <!-- candidate name -->
                     <div class="row">
+                        <!-- candidate name dropdown for sourcing candidate  -->
                         <ng-container *ngIf="task.placementId==EXTERNAL_PLACEMENT_ID; else bench">
                             <div class="col">
                                 <label for="candidateName" class="form-label">Candidate Name<span
@@ -74,7 +80,8 @@
                                     [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
                                     type="text" class="form-control extra-light-placeholder" id="candidateName"
                                     name="candidateName" placeholder="Enter task name" [(ngModel)]="task.candidateName"
-                                    [required]="true" maxlength="100" #candidateName="ngModel">
+                                    (input)="onChangeCandidatename()" [required]="true" maxlength="100"
+                                    #candidateName="ngModel">
                                 <div *ngIf="candidateName.invalid && (candidateName.dirty||candidateName.touched) "
                                     class="text-danger">
                                     Candidate Name is required.
@@ -189,7 +196,7 @@
                                     Expected max salary is required.
                                 </div>
                             </div>
-                           
+
                         </div>
 
                         <div class="row">
@@ -218,13 +225,17 @@
 
                 <!-- job details, vendor details and job sibmission portalId -->
                 <!-- job title, location, rate  -->
-                <fieldset class="border rounded-3">
+                <!-- displaying for child task ( and only sourcing parent) -->
+                <fieldset class="border rounded-3"
+                    [disabled]="task.taskParent !=0 && (task.placementId == EXTERNAL_PLACEMENT_ID)"
+                    *ngIf="task.taskParent !=0 || task.placementId == EXTERNAL_PLACEMENT_ID">
                     <ng-container *ngIf="task.placementId == INTERNAL_PLACEMENT_ID">
                         <legend class="float-none w-auto px-2">Company Details</legend>
                     </ng-container>
                     <ng-container *ngIf="task.placementId == EXTERNAL_PLACEMENT_ID">
-                        <legend class="float-none w-auto px-2">Client Details</legend>
+                        <legend class="float-none w-auto px-2">Job Details</legend>
                     </ng-container>
+
                     <div class="row">
 
                         <div class="col">
@@ -235,7 +246,7 @@
                                 type="text" class="form-control extra-light-placeholder" id="hiringCompanyName"
                                 name="hiringCompanyName" placeholder="Recruiter name"
                                 [(ngModel)]="task.hiringCompanyName" [required]="true" maxlength="100"
-                                #hiringCompanyName="ngModel">
+                                #hiringCompanyName="ngModel" (input)="onChangeHiringCompanyname()">
                             <div *ngIf="hiringCompanyName.invalid && (hiringCompanyName.dirty||hiringCompanyName.touched) "
                                 class="text-danger">
                                 Enter hiring company name name.
@@ -279,7 +290,7 @@
                                 [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
                                 type="text" class="form-control extra-light-placeholder" id="jobAddress"
                                 name="jobAddress" placeholder="Enter job address" [(ngModel)]="task.jobAddress"
-                                 #jobAddress="ngModel">
+                                #jobAddress="ngModel">
                             <!-- <div *ngIf="jobAddress.invalid && (jobAddress.dirty||jobAddress.touched) "
                                 class="text-danger">
                                 Job address is required.
@@ -344,12 +355,12 @@
 
                         <div class="col">
                             <ng-container *ngIf="task.placementId == INTERNAL_PLACEMENT_ID">
-                                <label for="datePosted" class="form-label">Job Posted Date<span class="required-asterisk"
-                                    *ngIf="!updateScreen">*</span></label>
+                                <label for="datePosted" class="form-label">Job Posted Date<span
+                                        class="required-asterisk" *ngIf="!updateScreen">*</span></label>
                             </ng-container>
                             <ng-container *ngIf="task.placementId == EXTERNAL_PLACEMENT_ID">
-                                <label for="datePosted" class="form-label">Job Fulfilment Date<span class="required-asterisk"
-                                    *ngIf="!updateScreen">*</span></label>
+                                <label for="datePosted" class="form-label">Job Fulfilment Date<span
+                                        class="required-asterisk" *ngIf="!updateScreen">*</span></label>
                             </ng-container>
 
                             <input type="date" class="form-control" id="datePosted" name="datePosted" [max]="todayDate"
@@ -359,7 +370,7 @@
                     </div>
 
                     <!-- date posted, job portal, job reference no -->
-                    <div class="row">
+                    <div class="row" *ngIf="task.placementId==INTERNAL_PLACEMENT_ID">
                         <div class="col" *ngIf="task.placementId==INTERNAL_PLACEMENT_ID">
                             <label for="jobLink" class="form-label">Job Link<span class="required-asterisk"
                                     *ngIf="!updateScreen">*</span></label>
@@ -472,11 +483,11 @@
                         <div class="col">
                             <ng-container *ngIf="task.placementId == INTERNAL_PLACEMENT_ID">
                                 <label for="jobDescription" class="form-label">Job Description<span
-                                    class="required-asterisk" *ngIf="!updateScreen">*</span></label>
+                                        class="required-asterisk" *ngIf="!updateScreen">*</span></label>
                             </ng-container>
                             <ng-container *ngIf="task.placementId == EXTERNAL_PLACEMENT_ID">
-                                <label for="jobDescription" class="form-label">Comment on Candidate<span
-                                    class="required-asterisk" *ngIf="!updateScreen">*</span></label>
+                                <label for="jobDescription" class="form-label">Job Description<span
+                                        class="required-asterisk" *ngIf="!updateScreen">*</span></label>
                             </ng-container>
 
                             <textarea

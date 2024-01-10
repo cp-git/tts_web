@@ -1,33 +1,26 @@
 .form-label {
-    font-weight: bold;
-
+  font-weight: bold;
 }
 
 .required-asterisk {
-    color: red;
+  color: red;
 }
 
 ::placeholder {
-    color: #ccc;
-    /* Use a nearly white or very light gray color */
+  color: #ccc;
+  /* Use a nearly white or very light gray color */
 }
-
 
 .form-control {
-    border: 1px solid black;
-
+  border: 1px solid black;
 }
-
 
 .form-control[type="file"] {
-    border: 1px solid black;
-
+  border: 1px solid black;
 }
 
-
 .form-control.select {
-    border: 1px solid black;
-
+  border: 1px solid black;
 }
 
 /* CSS for background color of fields that are disabled  */
@@ -36,51 +29,43 @@
 
 } */
 
-.borderclass
-{
-    border: 3px solid orangered
+.borderclass {
+  border: 3px solid orangered;
 }
-.br-3{
-    border-right: 3px solid orangered
-    /* border-radius: 25px; */
-}
-
-
-.bl-3{
-    border-left: 3px solid orangered
-    /* border-radius: 25px; */
-
+.br-3 {
+  border-right: 3px solid orangered;
+  /* border-radius: 25px; */
 }
 
-
-.bt-3{
-    border-top: 3px solid orangered
-    /* border-radius: 25px; */
-
+.bl-3 {
+  border-left: 3px solid orangered;
+  /* border-radius: 25px; */
 }
 
-
-.bb-3{
-    border-bottom: 3px solid orangered
-    /* border-radius: 25px; */
-
+.bt-3 {
+  border-top: 3px solid orangered;
+  /* border-radius: 25px; */
 }
 
-.selectedPlacement{
-    /* font-weight: bold; */
-    color: blue;
+.bb-3 {
+  border-bottom: 3px solid orangered;
+  /* border-radius: 25px; */
+}
+
+.selectedPlacement {
+  /* font-weight: bold; */
+  color: blue;
 }
 
 fieldset {
-    padding-left: 10px;
-    padding-bottom: 10px;
-    padding-right: 10px;
-    border: 2px solid black !important;
-
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  border: 2px solid black !important;
 }
 
-legend{
-    font-size: large;
+legend {
+  font-size: large;
 }
 
 /* .modal-xl{
@@ -90,3 +75,8 @@ legend{
 .modal-lg{
     max-width: 1000px !important;
 }  */
+
+.disablePanel {
+  pointer-events: none;
+
+}
