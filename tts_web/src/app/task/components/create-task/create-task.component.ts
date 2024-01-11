@@ -70,6 +70,10 @@ export class CreateTaskComponent implements OnInit {
 
   parentAndAllTask!: Task2;
 
+  responseData!: number;
+
+  candidateName!: number;
+
 
   c2c: string[] = ['C2C', 'C 2 C', 'CTOC', 'C TO C'];
   currectTaxTypeObject!: Taxtype;
@@ -91,6 +95,9 @@ export class CreateTaskComponent implements OnInit {
     //alert(this.companyId);
     this.loadCompanyEmployees();
 
+    console.log(this.employeeId);
+
+
     this.todayDate = new Date().toISOString().split('T')[0];
 
 
@@ -107,6 +114,7 @@ export class CreateTaskComponent implements OnInit {
   onChangeCandidatename() {
 
     if (this.task.placementId == this.EXTERNAL_PLACEMENT_ID) {
+      this.PLACEMENT_ID = 2;
       this.task.taskName = this.task.candidateName;
     }
 
@@ -177,7 +185,14 @@ export class CreateTaskComponent implements OnInit {
     if (this.task && this.task.taskParent) {
       this.taskService.getTaskByTaskId(this.task.taskParent).subscribe(
         response => {
-          //console.log(response);
+          console.log(response);
+
+          this.responseData = response.placementId;
+          this.task.placementId = response.placementId;
+          this.candidateName = response.candidateId;
+
+
+
           this.parentTaskStatus = this.allStatus.find(s => s.statusId == response.taskStatus);
           //console.log(this.parentTaskStatus);
 
@@ -236,6 +251,8 @@ export class CreateTaskComponent implements OnInit {
 
       (employees) => {
         this.companyEmployees = employees;
+        console.log(this.companyEmployees);
+
       },
       (error) => {
         console.error('Error fetching company employees:', error);
@@ -262,6 +279,8 @@ export class CreateTaskComponent implements OnInit {
       (response) => {
         this.showSuccessMessage = true;
         this.taskObject = response;
+        console.log(response);
+
 
         // alert("Task created successfully");
         // this.dialogueBoxService.open('task created successfully', 'information')
@@ -306,6 +325,8 @@ export class CreateTaskComponent implements OnInit {
     this.taskService.createOrUpdateTaskAndAddReason(formData).subscribe(
       (response) => {
         this.showSuccessMessage = true;
+        console.log(response);
+
         // alert("Task updated successfully");
 
         // // for closing modal after creating task

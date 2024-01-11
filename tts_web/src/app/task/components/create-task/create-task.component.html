@@ -58,12 +58,34 @@
     <!-- {{backupTask|json}} -->
     <!-- {{backupTask|json}} -->
     <form #addTaskForm="ngForm">
+        <fieldset class="border rounded-3">
+            <legend class="float-none w-auto px-2">Candidate Type</legend>
+            <div class="row">
+                <div class="col">
+                    <input type="radio" name="placement" id="internalplacement" [(ngModel)]="task.placementId"
+                        [value]="INTERNAL_PLACEMENT_ID" [disabled]="updateScreen"
+                        (change)="onChangeCandidateType()">&nbsp;
+                    <label for="internalplacement"
+                        [ngClass]="{'selectedPlacement': task.placementId === INTERNAL_PLACEMENT_ID}">Bench
+                        applicant</label>
+                </div>
+                <div class="col">
+                    <input type="radio" name="placement" id="externalplacement" [(ngModel)]="task.placementId"
+                        [value]="EXTERNAL_PLACEMENT_ID" [disabled]="updateScreen"
+                        (change)="onChangeCandidateType()">&nbsp;
+                    <label for="externalplacement"
+                        [ngClass]="{'selectedPlacement': task.placementId === EXTERNAL_PLACEMENT_ID}">Sourcing
+                        candidate</label>
+                </div>
+            </div>
+        </fieldset>
+
         <div class="row">
 
             <div class="col">
 
-                <!-- <fieldset class="border rounded-3">
-                 
+                <fieldset class="border rounded-3">
+
                     <div class="row">
                         <ng-container *ngIf="task.placementId==EXTERNAL_PLACEMENT_ID; else bench">
                             <div class="col">
@@ -81,7 +103,7 @@
                             </div>
                         </ng-container>
 
-                       
+
                         <ng-template #bench>
                             <div class="col">
                                 <label for="candidateName" class="form-label">Candidate Name<span
@@ -145,7 +167,7 @@
                             </select>
                         </div>
                     </div>
-                </fieldset> -->
+                </fieldset>
 
 
                 <!-- job details, vendor details and job sibmission portalId -->
@@ -757,25 +779,31 @@
 
             <div class="row modal-body justify-content-center">
                 <div class="col-md-6 text-center">
-
+                    {{candidateName}}
                     <fieldset class="border rounded-3">
                         <legend class="float-none w-auto px-2">Candidate Type</legend>
                         <div class="row">
                             <div class="col">
-                                <input type="radio" name="placement" id="internalplacement"
-                                    [(ngModel)]="task.placementId" [value]="INTERNAL_PLACEMENT_ID"
-                                    [disabled]="updateScreen" (change)="onChangeCandidateType()">&nbsp;
-                                <label for="internalplacement"
-                                    [ngClass]="{'selectedPlacement': task.placementId === INTERNAL_PLACEMENT_ID}">Bench
-                                    applicant</label>
+                                <div *ngIf="responseData == 1">
+                                    <input type="radio" name="placement" id="internalplacement"
+                                        [(ngModel)]="task.placementId" [value]="INTERNAL_PLACEMENT_ID"
+                                        [disabled]="updateScreen || task.placementId === EXTERNAL_PLACEMENT_ID"
+                                        (change)=" onChangeCandidateType()">&nbsp;
+                                    <label for="internalplacement"
+                                        [ngClass]="{'selectedPlacement': task.placementId === INTERNAL_PLACEMENT_ID}">Bench
+                                        applicant</label>
+                                </div>
                             </div>
+
                             <div class="col">
-                                <input type="radio" name="placement" id="externalplacement"
-                                    [(ngModel)]="task.placementId" [value]="EXTERNAL_PLACEMENT_ID"
-                                    [disabled]="updateScreen" (change)="onChangeCandidateType()">&nbsp;
-                                <label for="externalplacement"
-                                    [ngClass]="{'selectedPlacement': task.placementId === EXTERNAL_PLACEMENT_ID}">Sourcing
-                                    candidate</label>
+                                <div *ngIf="responseData == 2">
+                                    <input type="radio" name="placement" id="externalplacement"
+                                        [(ngModel)]="task.placementId" [value]="EXTERNAL_PLACEMENT_ID"
+                                        [disabled]="updateScreen" (change)="onChangeCandidateType()" checked>&nbsp;
+                                    <label for="externalplacement" style="text-align: center;"
+                                        [ngClass]="{'selectedPlacement': task.placementId === EXTERNAL_PLACEMENT_ID}">Sourcing
+                                        candidate</label>
+                                </div>
                             </div>
                         </div>
                     </fieldset>
@@ -828,7 +856,7 @@
                                 <label for="candidateName" class="form-label">Candidate Name<span
                                         class="required-asterisk" *ngIf="!updateScreen">*</span></label><br>
                                 <select class="form-control form-select" name="candidateName" id="candidateName"
-                                    [(ngModel)]="task.candidateId" [required]="true">
+                                    [(ngModel)]="candidateName" [required]="true" disabled>
                                     <option value="undefined" disabled>Select Option</option>
                                     <ng-container *ngFor="let employee of allEmployees">
                                         <ng-container *ngIf="employee.onBench">
