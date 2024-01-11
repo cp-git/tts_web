@@ -27,7 +27,7 @@
                             <div class="col">
                                 <input type="radio" name="placement" id="internalplacement"
                                     [(ngModel)]="task.placementId" [value]="INTERNAL_PLACEMENT_ID"
-                                    [disabled]="!(task.taskParent<=0)" (change)="onChangeCandidateType()">&nbsp;
+                                    [disabled]="!(task.taskParent<=0) || updateScreen" (change)="onChangeCandidateType()">&nbsp;
                                 <label for="internalplacement"
                                     [ngClass]="{'selectedPlacement': task.placementId === INTERNAL_PLACEMENT_ID}"><b>
                                         Bench
@@ -36,7 +36,7 @@
                             <div class="col">
                                 <input type="radio" name="placement" id="externalplacement"
                                     [(ngModel)]="task.placementId" [value]="EXTERNAL_PLACEMENT_ID"
-                                    [disabled]="!(task.taskParent<=0)" (change)="onChangeCandidateType()">&nbsp;
+                                    [disabled]="!(task.taskParent<=0) || updateScreen" (change)="onChangeCandidateType()">&nbsp;
                                 <label for="externalplacement"
                                     [ngClass]="{'selectedPlacement': task.placementId === EXTERNAL_PLACEMENT_ID}"><b>
                                         Sourcing
