@@ -67,7 +67,7 @@
                         <!-- Display employee name using getEmployeeNameById method -->
                         <td>{{ getEmployeeNameById(reason.employeeId) }}</td>
                         <!-- Display change date using date pipe -->
-                        <td>{{ reason.chgDateTime | date:'MM-dd-yyyy' }}</td>
+                        <td>{{ reason.chgDateTime | date:'M/d/yy, h:mm a' }}</td>
                         <!-- Display assigned-to employee name using getEmployeeNameById method -->
                         <td>{{ getEmployeeNameById(reason.assignedTo) }}</td>
                         <!-- Display status name using getStatusNameById method -->

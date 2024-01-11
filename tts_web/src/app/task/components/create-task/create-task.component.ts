@@ -92,6 +92,12 @@ export class CreateTaskComponent implements OnInit {
 
 
 
+  //Bennch candidate 
+  visaId!: number;
+  dataTaxId!: number
+
+
+
   c2c: string[] = ['C2C', 'C 2 C', 'CTOC', 'C TO C'];
   currectTaxTypeObject!: Taxtype;
   constructor(
@@ -171,6 +177,8 @@ export class CreateTaskComponent implements OnInit {
     const currentTaxType = this.allTaxTypes.find(tax => tax.taxTypeId == taxTypeId);
     if (currentTaxType) {
       this.currectTaxTypeObject = currentTaxType;
+      console.log(this.currectTaxTypeObject);
+
     }
   }
 
@@ -218,6 +226,17 @@ export class CreateTaskComponent implements OnInit {
           this.expData = response.experienceRequired;
           this.jobsubmissionPortal = response.jobSubmissionPortalId;
           this.datePosted = response.datePosted;
+
+
+
+          this.visaId = response.visaId;
+          this.dataTaxId = response.taxTypeId;
+
+          console.log(this.dataTaxId);
+
+
+
+
 
 
 
