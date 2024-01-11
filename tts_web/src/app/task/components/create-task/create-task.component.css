@@ -82,3 +82,7 @@ fieldset {
 legend {
     font-size: large;
 }
+
+#internalplacement {
+    background-color: aqua;
+}

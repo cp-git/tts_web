@@ -75,6 +75,23 @@ export class CreateTaskComponent implements OnInit {
   candidateName!: number;
 
 
+  //sourcing candidate job details
+
+  hiringCompanyNameData!: string;
+  jobTitleData!: string;
+
+  jobcity!: string;
+  jobaddress!: string;
+  jobstate!: string;
+  jobMode!: number;
+  commentsOnCandidate!: string;
+  rateData!: number;
+  expData!: number;
+  jobsubmissionPortal!: number;
+  datePosted!: any;
+
+
+
   c2c: string[] = ['C2C', 'C 2 C', 'CTOC', 'C TO C'];
   currectTaxTypeObject!: Taxtype;
   constructor(
@@ -190,6 +207,27 @@ export class CreateTaskComponent implements OnInit {
           this.responseData = response.placementId;
           this.task.placementId = response.placementId;
           this.candidateName = response.candidateId;
+          this.hiringCompanyNameData = response.hiringCompanyName;
+          this.jobTitleData = response.jobTitle;
+          this.jobaddress = response.jobAddress;
+          this.jobcity = response.jobCity;
+          this.jobstate = response.jobState;
+          this.jobMode = response.jobLocationId;
+          this.commentsOnCandidate = response.jobDescription;
+          this.rateData = response.rate;
+          this.expData = response.experienceRequired;
+          this.jobsubmissionPortal = response.jobSubmissionPortalId;
+          this.datePosted = response.datePosted;
+
+
+
+
+
+
+
+
+
+
 
 
 
