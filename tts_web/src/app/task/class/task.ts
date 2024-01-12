@@ -59,4 +59,6 @@ export interface Task {
     willingToRelocate: boolean;
     willingToNegotiateSalary: boolean;
 
+    reasonToFitForJob: string;
+
 }

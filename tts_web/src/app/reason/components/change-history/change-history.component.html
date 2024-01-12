@@ -55,7 +55,7 @@
                     <!-- Table header row -->
                     <tr>
                         <th>Employee</th>
-                        <th>Change Date</th>
+                        <th>Change Date & Time</th>
                         <th>Assigned To</th>
                         <th>Status</th>
                         <th class="col-md-5">Comment</th>
@@ -67,7 +67,7 @@
                         <!-- Display employee name using getEmployeeNameById method -->
                         <td>{{ getEmployeeNameById(reason.employeeId) }}</td>
                         <!-- Display change date using date pipe -->
-                        <td>{{ reason.chgDateTime | date:'MM-dd-yyyy' }}</td>
+                        <td>{{ reason.chgDateTime | date:'MM-dd-yyyy H:m' }}</td>
                         <!-- Display assigned-to employee name using getEmployeeNameById method -->
                         <td>{{ getEmployeeNameById(reason.assignedTo) }}</td>
                         <!-- Display status name using getStatusNameById method -->
