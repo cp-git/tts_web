@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { TaskRoutingModule } from './task-routing.module';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
@@ -24,6 +24,7 @@ import { SharedModule } from '../shared/shared.module';
   exports: [
     CreateTaskComponent,
     TaskTableComponent
-  ]
+  ],
+  providers: [DatePipe],
 })
 export class TaskModule { }

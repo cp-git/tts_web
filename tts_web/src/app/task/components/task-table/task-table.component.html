@@ -19,7 +19,14 @@
             <span title="Add Task" class="fa-solid fa-circle-plus fa-xl mainaddtaskbtn -mt35px" style="color: #03a300;"
                 data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
                 (click)="onClickCreateTask(task, 'ADD', $event)"></span>
+
         </div>
+
+        <div class="button-container ">
+            <button type="button" *ngIf="selectedParentIds.length>0" (click)="generatePDF()"
+                class="btn btn-danger -mt45px mr35px">Generate Report</button>
+        </div>
+
         <ng-container *ngFor="let parentTaskData of parentAndAllTask.parentTasks; let i = index">
             <ng-container
                 *ngIf="(parentTaskData.childTask | statusFilter:filteredStatus | employeeTaskFilter:filteredEmployees).length>0">
@@ -34,6 +41,11 @@
                         <mat-panel-description class="align-right">
                             <!-- <div class="row">
                             <div class="col icons addtask"> -->
+                            <input type="checkbox" id=parentTask.taskId name=parentTask.taskId
+                                class="custom-checkbox form-check-input"
+                                (change)="onCheckboxChange(parentTaskData.taskId)">
+                            &nbsp;
+                            &nbsp;
                             <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" style="color: #03a300;"
                                 data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
                                 (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span>
@@ -204,7 +216,8 @@
 <!-- <ng-container *ngIf="parentTask"> -->
 <app-create-task [modalId]="modalId + 1" [task]="emptyTask" [parentTask]="parentTask" [allEmployees]="employees"
     [allStatus]="allStatus" [updateScreen]="updateScreen" [allVisas]="allVisas" [allTaxTypes]="allTaxTypes"
-    [allJobLocations]="allJobLocations" [allJobPortals]="allJobPortals" (afterCreateTask)="afterCreateTask()"></app-create-task>
+    [allJobLocations]="allJobLocations" [allJobPortals]="allJobPortals"
+    (afterCreateTask)="afterCreateTask()"></app-create-task>
 
 
 <!-- </ng-container> -->
