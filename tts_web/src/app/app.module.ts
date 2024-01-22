@@ -26,6 +26,10 @@ import { UpdatetaxtypeComponent } from './taxtype/components/updatetaxtype/updat
 import { JoblocationComponent } from './joblocation/components/joblocation/joblocation.component';
 import { AddjoblocationComponent } from './joblocation/components/addjoblocation/addjoblocation.component';
 import { UpdatejoblocationComponent } from './joblocation/components/updatejoblocation/updatejoblocation.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -49,6 +53,10 @@ import { UpdatejoblocationComponent } from './joblocation/components/updatejoblo
     HeaderModule,
     TaskModule,
     ReasonModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    MatCardModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

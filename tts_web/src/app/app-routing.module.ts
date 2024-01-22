@@ -27,6 +27,7 @@ import { AddtaxtypeComponent } from './taxtype/components/addtaxtype/addtaxtype.
 import { UpdatetaxtypeComponent } from './taxtype/components/updatetaxtype/updatetaxtype.component';
 import { UpdatejoblocationComponent } from './joblocation/components/updatejoblocation/updatejoblocation.component';
 import { AddjoblocationComponent } from './joblocation/components/addjoblocation/addjoblocation.component';
+import { TaskViewComponent } from './task/task-view/task-view.component';
 const routes: Routes = [
 
 
@@ -56,7 +57,8 @@ const routes: Routes = [
   { path: 'addTaxType', component: AddtaxtypeComponent },
   { path: 'updateTaxType', component: UpdatetaxtypeComponent },
   { path: 'addLocation', component: AddjoblocationComponent },
-  { path: 'updateLocation', component: UpdatejoblocationComponent }
+  { path: 'updateLocation', component: UpdatejoblocationComponent },
+  { path: 'taskView/:taskId', component: TaskViewComponent }
 
 
 ];

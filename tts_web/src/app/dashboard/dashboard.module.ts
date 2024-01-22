@@ -9,6 +9,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { StatusDropdownComponent } from './components/status-dropdown/status-dropdown.component';
 import { SharedModule } from "../shared/shared.module";
 import { EmployeeFilterComponent } from './components/employee-filter/employee-filter.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { EmployeeFilterComponent } from './components/employee-filter/employee-f
         TaskModule,
         FooterModule,
         NgMultiSelectDropDownModule.forRoot(),
-        SharedModule
+        SharedModule,
+        MatIconModule
     ]
 })
 export class DashboardModule { }

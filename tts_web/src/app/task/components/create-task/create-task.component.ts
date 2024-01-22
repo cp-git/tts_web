@@ -242,6 +242,8 @@ export class CreateTaskComponent implements OnInit {
     this.employeeService.getAllEmployeesByCompanyId(this.companyId).subscribe(
 
       (employees) => {
+        console.log(employees);
+
         this.companyEmployees = employees;
       },
       (error) => {

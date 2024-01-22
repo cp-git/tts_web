@@ -61,7 +61,7 @@
 <ng-template #taskForm>
 
     <!-- {{backupTask|json}} -->
-    <!-- {{task|json}} -->
+    {{task|json}}
     <form #addTaskForm="ngForm">
         <div class="row">
 
@@ -98,8 +98,9 @@
                                         class="required-asterisk" *ngIf="!updateScreen">*</span></label><br>
                                 <select class="form-control form-select" name="candidateName" id="candidateName"
                                     [(ngModel)]="task.candidateId" [required]="true">
-                                    <option value="undefined" disabled>Select Option</option>
+                                    <option value="undefined">Select Option</option>
                                     <ng-container *ngFor="let employee of allEmployees">
+                                        {{employee}}
                                         <ng-container *ngIf="employee.onBench">
                                             <option value="{{employee.employeeId}}">{{employee.firstName}}
                                                 {{employee.lastName}}
@@ -132,7 +133,8 @@
                                 <option value="undefined" disabled>Select Option</option>
                                 <ng-container *ngFor="let taxType of allTaxTypes">
                                     <option *ngIf="taxType.forSourcing" value="{{taxType.taxTypeId}}">
-                                        {{taxType.taxTypeName}}</option>
+                                        {{taxType.taxTypeName}}
+                                    </option>
                                 </ng-container>
 
                             </select>
@@ -147,7 +149,8 @@
                                 <option value="undefined" disabled>Select Option</option>
                                 <ng-container *ngFor="let taxType of allTaxTypes">
                                     <option *ngIf="taxType.forBench" value="{{taxType.taxTypeId}}">
-                                        {{taxType.taxTypeName}}</option>
+                                        {{taxType.taxTypeName}}
+                                    </option>
                                 </ng-container>
 
                             </select>
@@ -226,15 +229,14 @@
                         <div class="row">
                             <div class="col">
                                 <ng-container *ngIf="task.placementId == EXTERNAL_PLACEMENT_ID">
-                                    <label for="jobDescription" class="form-label">Why candidate is fits for this job?<span
-                                            class="required-asterisk" *ngIf="!updateScreen">*</span></label>
+                                    <label for="jobDescription" class="form-label">Why candidate is fits for this
+                                        job?<span class="required-asterisk" *ngIf="!updateScreen">*</span></label>
                                 </ng-container>
 
                                 <textarea
                                     [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
                                     class="form-control" [(ngModel)]="task.reasonToFitForJob" id="reasonToFitForJob"
-                                    name="reasonToFitForJob"
-                                    placeholder="Why candidate is fits for this job?"
+                                    name="reasonToFitForJob" placeholder="Why candidate is fits for this job?"
                                     [required]="true" #reasonToFitForJob="ngModel"></textarea>
                                 <div *ngIf="reasonToFitForJob.invalid && (reasonToFitForJob.dirty||reasonToFitForJob.touched) "
                                     class="text-danger">
@@ -711,7 +713,8 @@
                                 <option value="{{employeeId}}" selected="true">Self</option>
                                 <ng-container *ngFor="let employee of companyEmployees">
                                     <option *ngIf="employeeId!=employee.employeeId" value="{{employee.employeeId}}">
-                                        {{employee.firstName}} {{employee.lastName}}</option>
+                                        {{employee.firstName}} {{employee.lastName}}
+                                    </option>
                                 </ng-container>
                             </select>
                         </div>

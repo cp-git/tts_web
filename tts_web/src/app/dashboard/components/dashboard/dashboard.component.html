@@ -1,48 +1,50 @@
-<nav class="navbar navbar-expand-lg navbar-light fixed-top">
-    <div class="container-fluid">
-        <div style="display: flex; align-items: center;">
-            <!-- Container for logo and name with margin-left -->
-            <div style="display: flex; align-items: center; ">
-                <!-- Display the company's photo -->
-                <img src="{{displayCompanyLogo}}/{{companyId}}"
-                    style="width: 100px; height: 60px; border: 2px solid; border-radius: 15px;">
-                <!-- <label class="company" for="company" style="color: wheat; margin-left: 10px;">
+<div class="container-fluid" id="sect1">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="sect2">
+        <div class="container-fluid">
+            <div style="display: flex; align-items: center;">
+                <!-- Container for logo and name with margin-left -->
+                <div style="display: flex; align-items: center; ">
+                    <!-- Display the company's photo -->
+                    <img src="{{displayCompanyLogo}}/{{companyId}}"
+                        style="width: 100px; height: 60px; border: 2px solid; border-radius: 15px;">
+                    <!-- <label class="company" for="company" style="color: wheat; margin-left: 10px;">
                     {{ company.companyName }}
                 </label> -->
+                </div>
+            </div>
+
+            <!-- Centered text for "TaskDashboard" -->
+            <div style="flex-grow: 1; text-align: center;">
+                <h1>Task Dashboard</h1>
+            </div>
+
+            <div style="display: flex; align-items: center; margin-right: 40px;">
+                <label class="name" for="name" style="color:red; margin-left: 0px;">
+                    {{loggedInUserData.firstName | uppercase}}
+                </label>
+                <img src="{{displayEmployeeLogo}}/{{loggedInUserData.employeeId}} "
+                    style="width: 60px; height: 60px; border: 2px solid; border-radius: 15px; margin-left: 15px;">
+
+            </div>
+
+            <div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <mat-icon (click)="logout()" id="logoutbtn">power_settings_new</mat-icon>
+
             </div>
         </div>
-
-        <!-- Centered text for "TaskDashboard" -->
-        <div style="flex-grow: 1; text-align: center;">
-            <h1 style="color: white; margin: 0;">Task Dashboard</h1>
-        </div>
-
-        <div style="display: flex; align-items: center; margin-right: 40px;">
-            <label class="name" for="name" style="color: wheat; margin-left: 10px;">
-                {{loggedInUserData.firstName}}
-            </label>
-            <img src="{{displayEmployeeLogo}}/{{loggedInUserData.employeeId}} "
-                style="width: 60px; height: 60px; border: 2px solid; border-radius: 15px; margin-left: 15px;">
-
-        </div>
-
-        <div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <span (click)="logout()" class="navbar-text fa-solid fa-power-off"></span>
-        </div>
-    </div>
-</nav>
-<hr>
-<hr>
-<hr>
+    </nav>
+    <hr>
+    <hr>
+    <hr>
 
 
-<div class="d-flex flex-column min-vh-100">
-    <div class="container">
-        <!-- <div>
+    <div class="d-flex flex-column min-vh-100">
+        <div class="container-fluid">
+            <!-- <div>
             
             <label class="name" for="name">Welcome
                 {{loggedInUserData.firstName}} {{loggedInUserData.lastName}}
@@ -50,22 +52,23 @@
 
         </div> -->
 
-        <div class="container">
+            <div class="container-fluid">
 
-            <!-- status buttons (Created/ In-Progress/ Done) -->
-            <!-- <app-status-buttons (onChangeFilter)="getParentTask($event)"></app-status-buttons> -->
-            <div class="row">
-                <div class="col-md-3">
-                    <app-status-dropdown (onChangeStatusFilter)="onChangeStatusFilter($event)"></app-status-dropdown>
+                <!-- status buttons (Created/ In-Progress/ Done) -->
+                <!-- <app-status-buttons (onChangeFilter)="getParentTask($event)"></app-status-buttons> -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <app-status-dropdown
+                            (onChangeStatusFilter)="onChangeStatusFilter($event)"></app-status-dropdown>
 
-                </div>
-                <div class="col-md-3 ms-3" *ngIf="loggedInUserData.showAllTasks">
-                    <app-employee-filter (onChangeEmployeeFilter)="onChangeEmployeeFilter($event)"
-                        [employees]="employees"> </app-employee-filter>
+                    </div>
+                    <div class="col-md-3 ms-3" *ngIf="loggedInUserData.showAllTasks">
+                        <app-employee-filter (onChangeEmployeeFilter)="onChangeEmployeeFilter($event)"
+                            [employees]="employees"> </app-employee-filter>
 
-                </div>
+                    </div>
 
-                <!-- <div class="col-md-3 ms-3" *ngIf="displayAllTask">
+                    <!-- <div class="col-md-3 ms-3" *ngIf="displayAllTask">
                     <label class="form-check-label" for="normal"><strong>Normal Employee</strong></label>
                     <div>
                         <input type="checkbox" id="showalltasks" name="showalltasks" (click)="onCheckedNormalEmployee($event)"
@@ -73,16 +76,19 @@
                     </div>
 
                 </div> -->
-            </div>
-        </div>
+                </div>
 
-        <!-- task table  -->
-        <!-- {{parentAndAllTask|json}} -->
-        
-        <app-task-table [parentTaskData]="parentTaskData" [parentAndAllTask]="parentAndAllTask"
-            [filteredStatus]="filteredStatuses" [filteredEmployees]="filteredEmployees" [employees]="employees" [allStatus]="allStatus"
-            [loggedInUserData]="loggedInUserData"
-            ></app-task-table>
+
+                <!-- task table  -->
+                <!-- {{parentAndAllTask|json}} -->
+
+                <app-task-table [parentTaskData]="parentTaskData" [parentAndAllTask]="parentAndAllTask"
+                    [filteredStatus]="filteredStatuses" [filteredEmployees]="filteredEmployees" [employees]="employees"
+                    [allStatus]="allStatus" [loggedInUserData]="loggedInUserData"></app-task-table>
+
+            </div>
+
+        </div>
 
     </div>
 

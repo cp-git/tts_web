@@ -16,6 +16,8 @@ import { Taxtype } from 'src/app/taxtype/classes/taxtype';
 import { Joblocation } from 'src/app/joblocation/classes/joblocation';
 import { Jobportal } from 'src/app/jobportal/classes/jobportal';
 import { JobportalService } from 'src/app/jobportal/services/jobportal.service';
+import { environment } from 'src/environments/environment.dev';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-table',
@@ -58,6 +60,7 @@ export class TaskTableComponent implements OnInit {
 
   updateScreen: boolean = false;
   toggledTasksIds: Set<any> = new Set<any>();;
+  displayCompanyLogo: any;
 
   constructor(
     private taskService: TaskService,
@@ -65,9 +68,10 @@ export class TaskTableComponent implements OnInit {
     private visaService: VisaService,
     private taxTypeService: TextypeService,
     private jobLocationService: JoblocationService,
-    private jobPortalService: JobportalService
+    private jobPortalService: JobportalService,
+    private _router: Router
   ) {
-
+    this.displayCompanyLogo = `${environment.companyUrl}/photos`;
     this.employeeId = sessionStorage.getItem("employeeId");
     this.companyId = sessionStorage.getItem("companyId");
 
@@ -75,6 +79,8 @@ export class TaskTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    
 
     this.getDataForDropdowns();
 
@@ -206,6 +212,7 @@ export class TaskTableComponent implements OnInit {
 
     this.taskService.getChildTaskByParentId(task.taskId).subscribe(
       (response) => {
+
         //console.log(this.parentAndAllTask);
         // const uniqueKeys = new Set(this.parentAndAllTask.childTasks.map(item => item.taskId));
 
@@ -351,5 +358,10 @@ export class TaskTableComponent implements OnInit {
 
   onTriggered(data: Task) {
     // alert();
+  }
+
+  NavigateParentView(taskId: number) {
+    this._router.navigate(['/taskView', taskId])
+
   }
 }

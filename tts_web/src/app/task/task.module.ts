@@ -8,10 +8,14 @@ import { TaskTableComponent } from './components/task-table/task-table.component
 import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../shared/shared.module';
+import { MatCardModule } from '@angular/material/card';
+import { TaskViewComponent } from './task-view/task-view.component';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     CreateTaskComponent,
-    TaskTableComponent
+    TaskTableComponent,
+    TaskViewComponent
   ],
   imports: [
     CommonModule,
@@ -19,11 +23,15 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     MatExpansionModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    MatCardModule,
+    MatIconModule
+
   ],
   exports: [
     CreateTaskComponent,
-    TaskTableComponent
+    TaskTableComponent,
+    TaskViewComponent
   ]
 })
 export class TaskModule { }

@@ -57,7 +57,7 @@ export class TaskService {
   }
 
   getTaskByTaskId(taskId: number): Observable<Task> {
-    return this.http.get<Task>(`${this.TaskURL}/taskby/${taskId}`); 
+    return this.http.get<Task>(`${this.TaskURL}/taskby/${taskId}`);
 
   }
 
@@ -70,35 +70,36 @@ export class TaskService {
     return this.http.get(`${this.TaskURL}/download/${taskId}?filename=${fileName}`, { responseType: 'blob' });
   }
 
+
   getTaskCreatedByMeOrAssignedToMe(employeeId: number) {
     return this.http.get<Task2>(`${this.TaskURL}/created/${employeeId}`);
   }
 
-  getAllParentTasksByCompanyId(companyId:number):Observable<Task2>{
+  getAllParentTasksByCompanyId(companyId: number): Observable<Task2> {
     return this.http.get<Task2>(`${this.TaskURL}/allparents?companyid=${companyId}`);
 
   }
-  
+
 
   // ---------------------------------------------------------------------------
   private readonly jobLocationURL = `http://localhost:8080/joblocation/ttsms/locations/`;
   private readonly jobPortalURL = `http://localhost:8080/jobportal/ttsms/jobportals/`
   private readonly jobTypeURL = `http://localhost:8080/taxtype/ttsms/taxtypes/`
   private readonly visaURL = `http://localhost:8080/visa/ttsms/visas/`
-  
-  getAllJobLocationsByCompanyId(companyId:number):Observable<Joblocation[]>{
+
+  getAllJobLocationsByCompanyId(companyId: number): Observable<Joblocation[]> {
     return this.http.get<Joblocation[]>(`${this.jobLocationURL}${companyId}`);
   }
 
-  getAllJobPortalsByCompanyId(companyId:number):Observable<Jobportal[]>{
+  getAllJobPortalsByCompanyId(companyId: number): Observable<Jobportal[]> {
     return this.http.get<Jobportal[]>(`${this.jobPortalURL}${companyId}`);
   }
 
-  getAllTaxTypesByCompanyId(companyId:number):Observable<Taxtype[]>{
+  getAllTaxTypesByCompanyId(companyId: number): Observable<Taxtype[]> {
     return this.http.get<Taxtype[]>(`${this.jobTypeURL}${companyId}`);
   }
 
-  getAllVisasByCompanyId(companyId:number):Observable<Visa[]>{
+  getAllVisasByCompanyId(companyId: number): Observable<Visa[]> {
     return this.http.get<Visa[]>(`${this.visaURL}${companyId}`);
   }
 
