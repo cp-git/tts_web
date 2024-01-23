@@ -1,0 +1,116 @@
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center w-100">
+        <h2>Add Hiring Company</h2>
+        <span [routerLink]="['/hiringcompany']" class="fa-solid fa-circle-arrow-left fa-lg"
+            style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
+    </div>
+    <form #addUpdateForm="ngForm" class="form-material">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="label" for="hiringCompanyName">Company Name:<span
+                        class="required-asterisk">*</span></label>
+                <input type="text" id="hiringCompanyName" name="hiringCompanyName"
+                    [(ngModel)]="hiringCompany.hiringCompanyName" class="form-control" required
+                    #hiringCompanyName="ngModel">
+                <div *ngIf="hiringCompanyName.invalid  && (hiringCompanyName.dirty||hiringCompanyName.touched) "
+                    class="text-danger">Company name is
+                    required.</div>
+            </div>
+            <div class="col-md-4">
+                <label class="label" for="jobTitle">Job Title:<span class="required-asterisk">*</span></label>
+                <input type="text" id="jobTitle" name="jobTitle" [(ngModel)]="hiringCompany.jobTitle"
+                    class="form-control" required #jobTitle="ngModel">
+                <div *ngIf="jobTitle.invalid  && (jobTitle.dirty||jobTitle.touched)" class="text-danger">Job title is
+                    required.</div>
+            </div>
+            <div class="col-md-4">
+                <label for="jobLocationId" class="label">Job Mode<span class="required-asterisk">*</span></label><br>
+                <select class="form-control form-select" name="jobLocationId" id="jobLocationId"
+                    [(ngModel)]="hiringCompany.jobMode" [required]="true">
+                    <option value="undefined" disabled>Select Option</option>
+                    <ng-container *ngFor="let location of allJobLocations">
+                        <option value="{{location.locationId}}">{{location.locationType}}</option>
+                    </ng-container>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="label" for="jobAddress">Job Adress:</label>
+                <input type="text" id="jobAddress" name="jobAddress" [(ngModel)]="hiringCompany.jobAddress"
+                    class="form-control" #jobAddress="ngModel">
+                <!-- <div *ngIf="jobAddress.invalid  && (jobAddress.dirty||jobAddress.touched)" class="text-danger">Job Address
+                    is
+                    required.</div>-->
+            </div>
+            <div class="col-md-4">
+                <label class="label" for="jobCity">Job City:<span class="required-asterisk">*</span></label>
+                <input type="text" id="jobCity" name="jobCity" [(ngModel)]="hiringCompany.jobCity" class="form-control"
+                    required #jobCity="ngModel">
+                <div *ngIf="jobCity.invalid  && (jobCity.dirty||jobCity.touched)" class="text-danger">Job city is
+                    required.</div>
+            </div>
+            <div class="col-md-4">
+                <label class="label" for="jobState">Job State:<span class="required-asterisk">*</span></label>
+                <input type="text" id="jobState" name="jobState" [(ngModel)]="hiringCompany.jobState"
+                    class="form-control" required #jobState="ngModel">
+                <div *ngIf="jobState.invalid  && (jobState.dirty||jobState.touched)" class="text-danger">Job state is
+                    required.</div>
+            </div>
+            <div class="col-md-4">
+                <label class="label" for="experienceRequired">Exp Required (In years):<span
+                        class="required-asterisk">*</span></label>
+                <input type="number" id="experienceRequired" name="experienceRequired"
+                    [(ngModel)]="hiringCompany.experienceRequired" class="form-control" required
+                    #experienceRequired="ngModel">
+                <div *ngIf="experienceRequired.invalid  && (experienceRequired.dirty||experienceRequired.touched)"
+                    class="text-danger">Experience is required.</div>
+            </div>
+            <div class="col-md-4">
+                <label class="label" for="rate">Rate ($ per hour):<span class="required-asterisk">*</span></label>
+                <input type="number" id="rate" name="rate" [(ngModel)]="hiringCompany.rate" class="form-control"
+                    required #rate="ngModel">
+                <div *ngIf="rate.invalid  && (rate.dirty||rate.touched)" class="text-danger">Rate is required.</div>
+            </div>
+            <div class="col-md-4">
+                <label for="datePosted" class="label">Job Fulfilment Date:</label>
+                <input type="date" class="form-control" id="datePosted" name="datePosted" [min]="todayDate"
+                    [(ngModel)]="hiringCompany.jobFulfillmentDate" onkeydown="return false" [required]="true">
+            </div>
+
+            <div class="col-md-4">
+                <label for="jobSubmissionPortalId" class="label">Job Submission method</label><br>
+                <select class="form-control form-select" name="jobSubmissionPortalId" id="jobPortalId"
+                    [(ngModel)]="hiringCompany.jobSubmissionMethod" (change)="onChangeSubmissionMethod()">
+                    <option value="undefined">Select Option</option>
+                    <ng-container *ngFor="let portal of allJobPortals">
+                        <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+            <div class="col-md-4"
+                *ngIf="selectedJobSubmissionMethod?.portalName=='Other' || this.selectedJobSubmissionMethod?.portalName=='other' ">
+                <label for="portalName" class="label">Other Method<span class="required-asterisk">*</span></label><br>
+                <input type="text" class="form-control extra-light-placeholder" id="portalName" name="portalName"
+                    placeholder="Submission method" [(ngModel)]="hiringCompany.portalName" [required]="true"
+                    maxlength="100" #portalName="ngModel">
+                <div *ngIf="portalName.invalid && (portalName.dirty||portalName.touched) " class="text-danger">
+                    Enter other method.
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="jobDescription" class="label">Job Fulfilment Date:</label>
+                <textarea class="form-control" id="jobDescription" name="jobDescription"
+                    [(ngModel)]="hiringCompany.jobDescription" [required]="true" #jobDescription="ngModel"></textarea>
+
+                <div *ngIf="jobDescription.invalid  && (jobDescription.dirty||jobDescription.touched)"
+                    class="text-danger">
+                    Job description is required.</div>
+            </div>
+
+        </div>
+        <div>
+            <button type="submit" [disabled]="!addUpdateForm.valid" (click)="addHiringCompany(hiringCompany)"
+                class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>
+        </div>
+    </form>
+</div>
+<app-footer></app-footer>

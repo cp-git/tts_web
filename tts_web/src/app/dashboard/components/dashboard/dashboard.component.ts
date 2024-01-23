@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
     this.loggedInUserData = sessionStorage.getItem('empData');
 
     this.loggedInUserData = JSON.parse(this.loggedInUserData); // Parse JSON data
-    this.displayAllTask = this.loggedInUserData.showAllTasks
+    this.displayAllTask = this.loggedInUserData.showAllTasks;
 
     //console.log(this.loggedInUserData);
     this.getCompanyById(this.companyId); // Fetch company data
@@ -60,11 +60,9 @@ export class DashboardComponent implements OnInit {
 
   //ngOnInit is executed after the constructor
   ngOnInit(): void {
-
     //console.log(this.allStatus);
 
     this.initialization(); // Call the initialization method
-
   }
 
   // Initialization method
@@ -74,7 +72,7 @@ export class DashboardComponent implements OnInit {
 
     // Fetch all parent tasks with specified filters
     const data = {
-      statuses: this.allStatus.map(status => status.statusCode), // Set all statuses by default
+      statuses: this.allStatus.map((status) => status.statusCode), // Set all statuses by default
       createdBy: 0,
       assignedTo: 0,
       companyId: this.companyId,
@@ -86,7 +84,6 @@ export class DashboardComponent implements OnInit {
     // this.getAllStatus(); // Fetch all statuses
     this.getStatusesByCompanyId();
   }
-
 
   // Fetch all employees
   private getAllEmployees() {
@@ -101,8 +98,7 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-
-  // 
+  //
   // getting all task based on created by, assigned to and status
   // Fetch parent tasks based on specified filters
   // getParentTask(data: any) {
@@ -140,19 +136,19 @@ export class DashboardComponent implements OnInit {
   // get all task by created by me or assigned to me
   getParentTask(data: any) {
     if (this.loggedInUserData.showAllTasks) {
-      this.taskService.getAllParentTasksByCompanyId(this.companyId).subscribe(
-        (response) => {
+      this.taskService
+        .getAllParentTasksByCompanyId(this.companyId)
+        .subscribe((response) => {
           console.log(response);
 
           this.parentAndAllTask = response;
-        }
-      );
+        });
     } else {
-      this.taskService.getTaskCreatedByMeOrAssignedToMe(this.employeeId).subscribe(
-        (response) => {
+      this.taskService
+        .getTaskCreatedByMeOrAssignedToMe(this.employeeId)
+        .subscribe((response) => {
           this.parentAndAllTask = response;
-        }
-      );
+        });
     }
   }
 
@@ -185,7 +181,6 @@ export class DashboardComponent implements OnInit {
 
   // Logout method
   logout() {
-
     // Remove items from sessionStorage
     sessionStorage.removeItem('selectedAssignedTo');
     sessionStorage.removeItem('selectedCreatedBy');
@@ -195,7 +190,7 @@ export class DashboardComponent implements OnInit {
     sessionStorage.removeItem('companyId');
     sessionStorage.removeItem('empData');
     sessionStorage.removeItem('selectedStatuses');
-
+    sessionStorage.removeItem('toggle');
     this.router.navigate(['/']); // Navigate to the root URL
   }
 
@@ -203,7 +198,6 @@ export class DashboardComponent implements OnInit {
     //console.log(data);
     this.filteredStatuses = data;
     console.log(this.filteredStatuses);
-
   }
 
   filteredEmployees: any[] = [];
@@ -211,11 +205,15 @@ export class DashboardComponent implements OnInit {
     // console.log(data);
     this.filteredEmployees = data;
     console.log(this.filteredEmployees);
-
   }
   onCheckedNormalEmployee(event: any) {
     if (event.target.checked) {
-      this.filteredEmployees = [{ id: this.loggedInUserData.employeeId, itemName: this.loggedInUserData.firstName }];
+      this.filteredEmployees = [
+        {
+          id: this.loggedInUserData.employeeId,
+          itemName: this.loggedInUserData.firstName,
+        },
+      ];
       this.loggedInUserData.showAllTasks = true;
     } else {
       this.filteredEmployees = [];

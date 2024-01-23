@@ -27,9 +27,13 @@ import { AddtaxtypeComponent } from './taxtype/components/addtaxtype/addtaxtype.
 import { UpdatetaxtypeComponent } from './taxtype/components/updatetaxtype/updatetaxtype.component';
 import { UpdatejoblocationComponent } from './joblocation/components/updatejoblocation/updatejoblocation.component';
 import { AddjoblocationComponent } from './joblocation/components/addjoblocation/addjoblocation.component';
+import { HiringCompanyComponent } from './hiring-company/components/hiring-company/hiring-company.component';
+import { UpdateHiringCompanyComponent } from './hiring-company/components/update-hiring-company/update-hiring-company.component';
+import { CreateHiringCompanyComponent } from './hiring-company/components/create-hiring-company/create-hiring-company.component';
+import { BenchCandidateComponent } from './bench-candidate/components/bench-candidate/bench-candidate.component';
+import { CreateBenchCandidateComponent } from './bench-candidate/components/create-bench-candidate/create-bench-candidate.component';
+import { UpdateBenchCandidateComponent } from './bench-candidate/components/update-bench-candidate/update-bench-candidate.component';
 const routes: Routes = [
-
-
   { path: 'employee', component: EmployeeComponent },
   { path: 'createEmp', component: CreateEmployeeComponent },
   { path: 'updateEmp', component: UpdateEmployeeComponent },
@@ -56,13 +60,18 @@ const routes: Routes = [
   { path: 'addTaxType', component: AddtaxtypeComponent },
   { path: 'updateTaxType', component: UpdatetaxtypeComponent },
   { path: 'addLocation', component: AddjoblocationComponent },
-  { path: 'updateLocation', component: UpdatejoblocationComponent }
+  { path: 'updateLocation', component: UpdatejoblocationComponent },
 
-
+  { path: 'hiringcompany', component: HiringCompanyComponent },
+  { path: 'addhc', component: CreateHiringCompanyComponent },
+  { path: 'updatehc', component: UpdateHiringCompanyComponent },
+  { path: 'benchcand', component: BenchCandidateComponent },
+  { path: 'addbenchcand', component: CreateBenchCandidateComponent },
+  { path: 'updatebenchcand', component: UpdateBenchCandidateComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true })],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../../class/employee';
 import { EmployeeAndPasswordDTO } from '../../class/employeeandpasswordDTO';
@@ -8,11 +7,11 @@ import { Company } from '../../class/company';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
 import { Router } from '@angular/router';
 import { EmployeePasswordAndEmployeePhotosDTO } from '../../class/employee-password-and-employee-photos-dto';
-import { Location } from '@angular/common'
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-create-employee',
   templateUrl: './create-employee.component.html',
-  styleUrls: ['./create-employee.component.css']
+  styleUrls: ['./create-employee.component.css'],
 })
 export class CreateEmployeeComponent implements OnInit {
   employee!: Employee; // The current employee object to be added
@@ -23,7 +22,8 @@ export class CreateEmployeeComponent implements OnInit {
   companies!: Company[]; // Property to store the list of companies as an array of 'Company' objects
   selectedCountryId!: number;
   selectedCompanyId!: number;
-  employeePhotosData: EmployeePasswordAndEmployeePhotosDTO = new EmployeePasswordAndEmployeePhotosDTO();
+  employeePhotosData: EmployeePasswordAndEmployeePhotosDTO =
+    new EmployeePasswordAndEmployeePhotosDTO();
   empDataFromSession: any;
   empData: any;
   companyId: any;
@@ -33,20 +33,21 @@ export class CreateEmployeeComponent implements OnInit {
   company: Company = new Company();
 
   selectedImageUrl: string | null = null;
-  selectedFile: File | undefined;  // To store the selected file
+  selectedFile: File | undefined; // To store the selected file
   constructor(
     private employeeService: EmployeeService,
     private dialogueBoxService: DialogueBoxService,
-    private router: Router, private location: Location) {
-    this.empDataFromSession = sessionStorage.getItem('empData')
+    private router: Router,
+    private location: Location
+  ) {
+    this.empDataFromSession = sessionStorage.getItem('empData');
     this.empData = JSON.parse(this.empDataFromSession);
     // Retrieve 'employeeId' from session storage
-    this.employeeId = sessionStorage.getItem("employeeId");
+    this.employeeId = sessionStorage.getItem('employeeId');
 
     // Set 'companyId' and 'countryId' properties based on 'empData'
     this.companyId = this.empData.companyId;
     this.countryId = this.empData.countryId;
-
   } // Constructor with parameter to inject 'EmployeeService' dependency
 
   //This method is called when the component is initialized
@@ -72,7 +73,6 @@ export class CreateEmployeeComponent implements OnInit {
 
     //   this.router.navigate([''])
     // }
-
   }
 
   // Method to get the maximum date for the birth date input field and return it as a string
@@ -82,14 +82,13 @@ export class CreateEmployeeComponent implements OnInit {
     return maxDate; // Return the formatted date as the maximum date for the birth date input field
   }
 
-
   // This function creates a new employee and uploads an optional file.
   createEmployee(employee: Employee) {
     // Check if a file is selected for upload
     // alert(JSON.stringify(employee));
     if (this.isAdmin) {
-      employee.companyId = this.companyId
-      employee.countryId = this.countryId
+      employee.companyId = this.companyId;
+      employee.countryId = this.countryId;
     }
 
     // Check if a file is selected for upload
@@ -102,7 +101,9 @@ export class CreateEmployeeComponent implements OnInit {
       console.log(employee);
 
       // Create a Blob containing the employee data in JSON format
-      const employeeBlob = new Blob([JSON.stringify(employee)], { type: 'application/json' });
+      const employeeBlob = new Blob([JSON.stringify(employee)], {
+        type: 'application/json',
+      });
       console.log(employeeBlob);
       // Append the employee data Blob to the FormData object
       formData.append('employee', employeeBlob);
@@ -112,32 +113,35 @@ export class CreateEmployeeComponent implements OnInit {
       this.employeeService.createEmployees(formData).subscribe(
         (response) => {
           //alert(JSON.stringify(response));
-          console.log(JSON.stringify(response))
+          console.log(JSON.stringify(response));
           // Log a success message and display an information alert indicating that the employee was created successfully
           console.log('Employee created successfully:', response);
-          this.dialogueBoxService.open('Employee Created Successfully', 'information').then((response) => {
-            if (response) {
-              this.location.back(); // Refresh the page
-            }
-          });
+          this.dialogueBoxService
+            .open('Employee Created Successfully', 'information')
+            .then((response) => {
+              if (response) {
+                this.location.back(); // Refresh the page
+              }
+            });
 
           // Reset the form data for employee creation (if needed)
-          this.employeeData = new EmployeeAndPasswordDTO();
+          // this.employeeData = new EmployeeAndPasswordDTO();
         },
         (error) => {
           // Display a warning alert indicating that there was an error creating the employee, possibly due to a duplicate username or email
-          this.dialogueBoxService.open('Failed to Create Employee. UserName or Email Already Exist', 'warning');
+          this.dialogueBoxService.open(
+            'Failed to Create Employee. UserName or Email Already Exist',
+            'warning'
+          );
         }
       );
     }
   }
 
-
-
-
   // Method to fetch all countries from the server and update the 'countries' property
   fetchCountries() {
-    this.employeeService.getAllCountries().subscribe( // Call the 'getAllCountries' method of 'EmployeeService' to fetch the countries and subscribe to the response
+    this.employeeService.getAllCountries().subscribe(
+      // Call the 'getAllCountries' method of 'EmployeeService' to fetch the countries and subscribe to the response
       (data) => {
         this.countries = data; // Update the 'countries' property with the fetched list of countries
       },
@@ -154,7 +158,9 @@ export class CreateEmployeeComponent implements OnInit {
       return this.companies;
     } else {
       // Filter companies based on selected countryId
-      return this.companies.filter(company => company.companyCountryId === this.selectedCountryId);
+      return this.companies.filter(
+        (company) => company.companyCountryId === this.selectedCountryId
+      );
     }
   }
 
@@ -172,11 +178,10 @@ export class CreateEmployeeComponent implements OnInit {
     );
   }
 
-
-
   // Method to fetch all companies from the server and update the 'companies' property
   fetchCompanies() {
-    this.employeeService.getAllCompanies().subscribe( // Call the 'getAllCompanies' method of 'EmployeeService' to fetch the companies and subscribe to the response
+    this.employeeService.getAllCompanies().subscribe(
+      // Call the 'getAllCompanies' method of 'EmployeeService' to fetch the companies and subscribe to the response
       (data) => {
         this.companies = data; // Update the 'companies' property with the fetched list of companies
       },
@@ -220,6 +225,4 @@ export class CreateEmployeeComponent implements OnInit {
       }
     );
   }
-
-
 }

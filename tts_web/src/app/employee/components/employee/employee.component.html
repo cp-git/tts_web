@@ -4,14 +4,14 @@
     <fieldset class="border rounded-3">
         <legend class="float-none w-auto px-2">All Employees</legend>
 
-       
+
         <!-- Gap between plus icon and filter options -->
         <!-- <div style="margin-top: 20px;"></div> -->
         <!-- Filter options (assuming you have select boxes for country and company filtering) -->
-      
+
         <!-- &nbsp; -->
         <div class="row">
-          
+
             <div class="col-md-3">
                 <label for="countrySelect"><b>Select Country:</b></label>
                 <select class="form-control" id="countrySelect" [(ngModel)]="selectedCountryId" [disabled]="isAdmin">
@@ -51,7 +51,7 @@
                 <div class="d-flex justify-content-end align-items-center w-100">
                     <span (click)="navigateToCreateEmployee()" class="fa-solid fa-circle-plus"
                         style='font-size:30px;color: rgb(33, 176, 40); padding-top: 5%;'></span>
-    
+
                     <!-- <span [routerLink]="['/adminDash']" class="fa-solid fa-circle-arrow-left fa-lg"
                 style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer; margin-top: 10px;"></span> -->
                 </div>

@@ -4,10 +4,9 @@ import { environment } from 'src/environments/environment.dev';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-
   employeeId: any;
   companyId: any;
   empDataFromSession: any;
@@ -17,9 +16,9 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router) {
     this.displayCompanyLogo = `${environment.companyUrl}/photos`;
-    this.employeeId = sessionStorage.getItem("employeeId");
-    this.companyId = sessionStorage.getItem("companyId");
-    this.empDataFromSession = sessionStorage.getItem('empData')
+    this.employeeId = sessionStorage.getItem('employeeId');
+    this.companyId = sessionStorage.getItem('companyId');
+    this.empDataFromSession = sessionStorage.getItem('empData');
     this.empData = JSON.parse(this.empDataFromSession);
   }
 
@@ -28,14 +27,11 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-
-
-
     // Clear session storage data
     sessionStorage.removeItem('employeeId');
     sessionStorage.removeItem('companyId');
     sessionStorage.removeItem('empData');
-
+    sessionStorage.removeItem('toggle');
     // Navigate to the '/' route
     this.router.navigate(['/']);
   }

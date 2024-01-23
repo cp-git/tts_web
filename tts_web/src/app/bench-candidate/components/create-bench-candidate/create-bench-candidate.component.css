@@ -1,0 +1,18 @@
+.label {
+  font-weight: bold;
+}
+
+.required-asterisk {
+  color: red;
+}
+
+.custom-checkbox {
+  border: solid 1px;
+  /* Increase the size of the checkbox */
+  transform: scale(1.5);
+  margin-left: 0.5%;
+  margin-top: 1%;
+  margin-bottom: 10px;
+  /* Add some space between the checkbox and the label */
+  /* Add any other styling you want here */
+}

@@ -1,0 +1,9 @@
+.label {
+  font-weight: bold;
+}
+
+.custom-checkbox {
+  border: solid 1px;
+  /* Increase the size of the checkbox */
+  transform: scale(1.5);
+}

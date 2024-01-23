@@ -15,15 +15,10 @@ import { VisaModule } from '../visa/module/visa.module';
 import { TaxtypeModule } from '../taxtype/taxtype/taxtype.module';
 import { Joblocation } from '../joblocation/classes/joblocation';
 import { JoblocationModule } from '../joblocation/joblocation/joblocation.module';
-
-
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
-  declarations: [
-    StatusComponent,
-    AddStatusComponent,
-    UpdateStatusComponent
-  ],
+  declarations: [StatusComponent, AddStatusComponent, UpdateStatusComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -34,9 +29,8 @@ import { JoblocationModule } from '../joblocation/joblocation/joblocation.module
     JobportalModule,
     VisaModule,
     TaxtypeModule,
-    JoblocationModule
-
-
-  ]
+    JoblocationModule,
+    MatExpansionModule,
+  ],
 })
-export class StatusModule { }
+export class StatusModule {}
