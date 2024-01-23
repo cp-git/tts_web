@@ -13,6 +13,7 @@ import { Visa } from 'src/app/visa/class/visa';
 import { Joblocation } from 'src/app/joblocation/classes/joblocation';
 import { Jobportal } from 'src/app/jobportal/classes/jobportal';
 import { Taxtype } from 'src/app/taxtype/classes/taxtype';
+import { StatusService } from 'src/app/status/services/status.service';
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
@@ -67,6 +68,8 @@ export class CreateTaskComponent implements OnInit {
   c2c: string[] = ['C2C', 'C 2 C', 'CTOC', 'C TO C'];
   currectTaxTypeObject!: Taxtype;
 
+  allStatusFiltered: Status[] = [];
+
   otherJobPortal!: string;
   selectedJobSubmissionMethod: Jobportal = new Jobportal();;
   constructor(
@@ -76,7 +79,8 @@ export class CreateTaskComponent implements OnInit {
     private location: Location,
     private http: HttpClient,
     private dialogueBoxService: DialogueBoxService,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private statusService: StatusService
   ) { }
   ngOnInit(): void {
     this.taskName = this.parentTask.taskName;
@@ -86,6 +90,7 @@ export class CreateTaskComponent implements OnInit {
     this.companyId = sessionStorage.getItem("companyId");
     //alert(this.companyId);
     this.loadCompanyEmployees();
+    this.getAllStatus();
 
     this.todayDate = new Date().toISOString().split('T')[0];
   }
@@ -154,7 +159,7 @@ export class CreateTaskComponent implements OnInit {
         response => {
           console.log(response);
           this.parentTaskStatus = this.allStatus.find(s => s.statusId == response.taskStatus);
-          //console.log(this.parentTaskStatus);
+          console.log(this.parentTaskStatus);
 
           // selecting candidate type for below conditions
           this.task.placementId = response.placementId;
@@ -522,6 +527,37 @@ export class CreateTaskComponent implements OnInit {
     const taskStatus = this.task.taskStatus;
     this.currentTaskStatus = this.allStatus.find((status) => status.statusId === taskStatus);
     this.actualTaskStatus = this.currentTaskStatus
+  }
+
+
+  private getAllStatus() {
+    this.statusService.getAllStatus().subscribe(
+      (response) => {
+        // store all status
+        this.allStatus = response;
+
+        for (let k = 0; k <= this.allStatus.length; k++) {
+          // console.log(this.allStatus[k]);
+
+          if (this.allStatus[k].companyId == this.companyId) {
+            console.log("@@Data...");
+
+            console.log(this.allStatus[k].statusId);
+            this.allStatusFiltered.push(this.allStatus[k]);
+            console.log(this.allStatusFiltered);
+
+
+          }
+
+        }
+
+        //console.log(this.allStatus);
+
+      },
+      (error) => {
+        //console.log("Failed to get all status");
+      }
+    );
   }
 
 }

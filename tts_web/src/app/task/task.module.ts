@@ -11,11 +11,13 @@ import { SharedModule } from '../shared/shared.module';
 import { MatCardModule } from '@angular/material/card';
 import { TaskViewComponent } from './task-view/task-view.component';
 import { MatIconModule } from '@angular/material/icon';
+import { ViewChildDataComponent } from './components/view-child-data/view-child-data.component';
 @NgModule({
   declarations: [
     CreateTaskComponent,
     TaskTableComponent,
-    TaskViewComponent
+    TaskViewComponent,
+    ViewChildDataComponent
   ],
   imports: [
     CommonModule,

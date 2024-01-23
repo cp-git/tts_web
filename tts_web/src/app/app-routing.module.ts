@@ -28,6 +28,7 @@ import { UpdatetaxtypeComponent } from './taxtype/components/updatetaxtype/updat
 import { UpdatejoblocationComponent } from './joblocation/components/updatejoblocation/updatejoblocation.component';
 import { AddjoblocationComponent } from './joblocation/components/addjoblocation/addjoblocation.component';
 import { TaskViewComponent } from './task/task-view/task-view.component';
+import { ViewChildDataComponent } from './task/components/view-child-data/view-child-data.component';
 const routes: Routes = [
 
 
@@ -58,7 +59,10 @@ const routes: Routes = [
   { path: 'updateTaxType', component: UpdatetaxtypeComponent },
   { path: 'addLocation', component: AddjoblocationComponent },
   { path: 'updateLocation', component: UpdatejoblocationComponent },
-  { path: 'taskView/:taskId', component: TaskViewComponent }
+  { path: 'taskView/:taskId', component: TaskViewComponent },
+  { path: 'taskView/: taskId /changehistory/:id', component: ChangeHistoryComponent },
+  { path: 'childview/:taskId', component: ViewChildDataComponent }
+
 
 
 ];

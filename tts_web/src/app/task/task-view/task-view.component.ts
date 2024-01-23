@@ -17,6 +17,7 @@ import { JobportalService } from 'src/app/jobportal/services/jobportal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment.dev';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-task-view',
@@ -72,6 +73,8 @@ export class TaskViewComponent {
 
   loggedInUserData1!: any;
 
+  allStatusFiltered: Status[] = [];
+
   constructor(
     private taskService: TaskService,
     private statusService: StatusService,
@@ -81,7 +84,8 @@ export class TaskViewComponent {
     private jobPortalService: JobportalService,
     private _router: Router,
     private _route: ActivatedRoute,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private location: Location
   ) {
     this.displayCompanyLogo = `${environment.companyUrl}/photos`;
     this.displayEmployeeLogo = `${environment.employeeUrl}/employee/photos`;
@@ -91,6 +95,7 @@ export class TaskViewComponent {
     this.loggedInUserData1 = sessionStorage.getItem('empData');
 
     this.loggedInUserData = JSON.parse(this.loggedInUserData1);
+
 
     this.parentTask.taskId = 0;
   }
@@ -102,7 +107,6 @@ export class TaskViewComponent {
     console.log(this.companyId);
 
     this.getDataForDropdowns();
-
     this.getAllEmployees();
 
     // Attempt to retrieve the selected date format from localStorage
@@ -110,7 +114,7 @@ export class TaskViewComponent {
 
     // If a format is found in localStorage, use it; otherwise, use the default format
     this.selectedDateFormat = storedFormat || 'MM-dd-yyyy';
-    // this.getAllStatus();
+    this.getAllStatus();
 
     let taskId = this._route.snapshot.params['taskId'];
     console.log(taskId);
@@ -150,8 +154,6 @@ export class TaskViewComponent {
 
   }
 
-
-
   private getAllEmployees() {
     this.dashboardService.getAllEmployees(this.companyId).subscribe(
       (response) => {
@@ -160,19 +162,6 @@ export class TaskViewComponent {
       },
       (error) => {
         //console.log('Failed to get all employees');
-      }
-    );
-  }
-
-  private getAllStatus() {
-    this.statusService.getAllStatus().subscribe(
-      (response) => {
-        // Store all statuses
-        this.allStatus = response;
-        //console.log(this.allStatus);
-      },
-      (error) => {
-        //console.log('Failed to get all statuses');
       }
     );
   }
@@ -289,6 +278,37 @@ export class TaskViewComponent {
 
   }
 
+  private getAllStatus() {
+    this.statusService.getAllStatus().subscribe(
+      (response) => {
+        // store all status
+        this.allStatus = response;
+
+        for (let k = 0; k <= this.allStatus.length; k++) {
+          // console.log(this.allStatus[k]);
+
+          if (this.allStatus[k].companyId == this.companyId) {
+            console.log("@@Data...");
+
+            console.log(this.allStatus[k].statusId);
+            this.allStatusFiltered.push(this.allStatus[k]);
+            console.log(this.allStatusFiltered);
+
+
+          }
+
+        }
+
+        //console.log(this.allStatus);
+
+      },
+      (error) => {
+        //console.log("Failed to get all status");
+      }
+    );
+  }
+
+
 
 
   logout() {
@@ -308,6 +328,17 @@ export class TaskViewComponent {
 
   afterCreateTask() {
     location.reload();
+  }
+
+  backToDisplayTask() {
+    this.location.back();
+  }
+
+
+  NavigateChildView(taskParent: number) {
+    console.log(taskParent);
+    
+    this._router.navigate(['/childview', taskParent])
   }
 
 

@@ -68,16 +68,17 @@ li a.active {
 }
 
 #sect1 {
-    background-image: url('/assets/final.avif');
+
     background-size: 100%;
     background-size: cover;
     background-attachment: fixed;
+
 
 }
 
 
 #sect2 {
-    background-image: url('/assets/demo.avif');
+
     background-size: 100%;
     background-size: cover;
     background-attachment: fixed;

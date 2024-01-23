@@ -61,7 +61,8 @@
 <ng-template #taskForm>
 
     <!-- {{backupTask|json}} -->
-    {{task|json}}
+    <!-- {{task|json}}
+    {{task.candidateId}} -->
     <form #addTaskForm="ngForm">
         <div class="row">
 
@@ -99,7 +100,7 @@
                                 <select class="form-control form-select" name="candidateName" id="candidateName"
                                     [(ngModel)]="task.candidateId" [required]="true">
                                     <option value="undefined">Select Option</option>
-                                    <ng-container *ngFor="let employee of allEmployees">
+                                    <ng-container *ngFor="let employee of companyEmployees">
                                         {{employee}}
                                         <ng-container *ngIf="employee.onBench">
                                             <option value="{{employee.employeeId}}">{{employee.firstName}}
@@ -694,7 +695,7 @@
                                 <option value="undefined" disabled>Select Option</option>
                                 <!-- <option *ngIf="!updateScreen" value="{{employeeId}}" selected="true">Self</option> -->
                                 <ng-container>
-                                    <ng-container *ngFor="let employee of allEmployees">
+                                    <ng-container *ngFor="let employee of companyEmployees">
                                         <option value="{{employee.employeeId}}">{{employee.firstName}}
                                             {{employee.lastName}}
                                         </option>
@@ -727,7 +728,7 @@
                                 [(ngModel)]="task.taskStatus" [required]="true"
                                 (change)="onChangeStatus(task.taskStatus, task)">
                                 <option value="undefined" disabled>Select Option</option>
-                                <ng-container *ngFor="let status of allStatus">
+                                <ng-container *ngFor="let status of allStatusFiltered">
                                     <ng-container *ngIf="updateScreen">
                                         <option value="{{status.statusId}}">{{status.statusCode |titlecase}}
                                         </option>
