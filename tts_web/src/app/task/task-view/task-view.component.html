@@ -48,10 +48,13 @@
 <!-- {{childTaskData | json}} -->
 
 
-<div class="container-fluid" style="margin-top: 130px;">
+<div class="container-fluid" style="margin-top: 60px;">
 
     <div class="backBtn">
-        <button (click)="backToDisplayTask()">Back</button>
+
+        <mat-icon (click)="backToDisplayTask()"
+            style="margin-left:90% ;height:30%;margin-top: 20px;">keyboard_backspace</mat-icon>
+
     </div>
 
 
@@ -59,6 +62,7 @@
         <h2>Parent Task Details</h2>
 
     </div>
+
     <table class="table table-striped" style="margin-top: 10px; border: 2px groove black;">
         <thead id="parentHeadertable">
             <tr>
@@ -68,7 +72,8 @@
                 <th scope="col" class="col-sm-1.5">Assigned To</th>
                 <th scope="col">Status</th>
                 <th scopr="col">End Date</th>
-                <th>Action</th>
+                <th scopr="col">Update</th>
+                <th scopr="col">history</th>
             </tr>
         </thead>
 
@@ -153,7 +158,24 @@
 
 
         <mat-card-content id="finaldata">
-            <div id="data">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
+                        <span title="Save Task" data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
+                            (click)="onClickCreateTask(childData, 'UPDATE', $event)"
+                            style="color: #0095a8;">Update</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
+                        <span title="Response history" [routerLink]="['changehistory', childData.taskId]"
+                            style="color: blue">history</span>
+                    </div>
+
+                </div>
+            </div>
+            <!-- <div id="data">
                 <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
                     <span title="Save Task" data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
                         (click)="onClickCreateTask(childData, 'UPDATE', $event)" style="color: #0095a8;">Update</span>
@@ -164,7 +186,7 @@
                     <span title="Response history" [routerLink]="['changehistory', childData.taskId]"
                         style="color: blue">history</span>
                 </div>
-            </div>
+            </div> -->
         </mat-card-content>
 
 

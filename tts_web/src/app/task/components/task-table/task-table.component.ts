@@ -62,6 +62,9 @@ export class TaskTableComponent implements OnInit {
   toggledTasksIds: Set<any> = new Set<any>();;
   displayCompanyLogo: any;
 
+  allStatusFiltered: Status[] = [];
+
+
   constructor(
     private taskService: TaskService,
     private statusService: StatusService,
@@ -80,7 +83,7 @@ export class TaskTableComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
+
 
     this.getDataForDropdowns();
 
@@ -89,7 +92,7 @@ export class TaskTableComponent implements OnInit {
 
     // If a format is found in localStorage, use it; otherwise, use the default format
     this.selectedDateFormat = storedFormat || 'MM-dd-yyyy';
-    // this.getAllStatus();
+    this.getAllStatus();
 
   }
 
@@ -349,6 +352,22 @@ export class TaskTableComponent implements OnInit {
         this.allStatus = response;
         //console.log(this.allStatus);
 
+        for (let k = 0; k <= this.allStatus.length; k++) {
+          // console.log(this.allStatus[k]);
+
+          if (this.allStatus[k].companyId == this.companyId) {
+            //console.log("@@Data...");
+
+            //console.log(this.allStatus[k].statusId);
+            this.allStatusFiltered.push(this.allStatus[k]);
+            console.log(this.allStatusFiltered);
+
+          
+
+
+          }
+        }
+
       },
       (error) => {
         //console.log("Failed to get all status");
@@ -364,4 +383,6 @@ export class TaskTableComponent implements OnInit {
     this._router.navigate(['/taskView', taskId])
 
   }
+
+
 }

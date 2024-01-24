@@ -9,30 +9,69 @@
                     (click)="onClickCreateTask(task, 'ADD', $event)"></span>
             </div>
 
-            <mat-card class="card" *ngFor="let parentTaskData of parentAndAllTask.parentTasks; let i = index"
-                (click)="NavigateParentView(parentTaskData.taskId)">
-                <mat-card-content style="text-align: center">
 
-                    <img src="{{displayCompanyLogo}}/{{companyId}}"
-                        style="width: 90%; height: 140px; border: 2px solid; border-radius: 15px;margin-right: 30px;">
+            <ng-container *ngFor="let parentTaskData of parentAndAllTask.parentTasks; let i = index">
+                <ng-container
+                    *ngIf="(parentTaskData.childTask | statusFilter:filteredStatus | employeeTaskFilter:filteredEmployees).length>0">
+
+                    <mat-card class="card" (click)="NavigateParentView(parentTaskData.taskId)">
 
 
-                    <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
+
+                        <mat-card-content style="text-align: center">
+
+                            <img src="{{displayCompanyLogo}}/{{companyId}}"
+                                style="width: 90%; height: 140px; border: 2px solid; border-radius: 15px;margin-right: 30px;">
+
+
+                            <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
                     data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
                     (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span> -->
-                </mat-card-content>
+                        </mat-card-content>
 
-                <mat-card-content style="text-align: center">
-                    <h1 style="color:black;">{{parentTaskData.taskName}}</h1>
-                    <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
+                        <mat-card-content style="text-align: center">
+                            <h1 style="color:black;word-break:break-all;font-size: medium;">{{parentTaskData.taskName}}
+                            </h1>
+
+                            <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
                                 data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
                                 (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span> -->
-                </mat-card-content>
+                        </mat-card-content>
+
+                        <mat-card-content id="statusdesc">
+                            <ng-container *ngFor="let status of allStatus">
+                                <ng-container *ngIf="status.statusId == parentTaskData.taskStatus">
+
+                                    <ng-container *ngIf="status.statusCode === 'Created'">
+                                        <h5 style="background-color: #03a300;">Status: {{status.statusCode | titlecase}}
+                                        </h5>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="status.statusCode === 'In-progress'">
+                                        <h5 style="background-color:#D7BDE2;">Status: {{status.statusCode | titlecase}}
+                                        </h5>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="status.statusCode === 'Cancelled'">
+                                        <h5 style="background-color:cyan;">Status: {{status.statusCode | titlecase}}
+                                        </h5>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="status.statusCode === 'Done'">
+                                        <h5 style="background-color:lightblue;">Status:
+                                            {{status.statusCode | titlecase}}
+                                        </h5>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
 
 
+                        </mat-card-content>
 
+                    </mat-card>
+                </ng-container>
+            </ng-container>
 
-            </mat-card>
 
             <ng-container *ngFor="let parentTaskData of parentAndAllTask.parentTasks; let i = index">
                 <ng-container

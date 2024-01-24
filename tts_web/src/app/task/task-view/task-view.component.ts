@@ -288,11 +288,11 @@ export class TaskViewComponent {
           // console.log(this.allStatus[k]);
 
           if (this.allStatus[k].companyId == this.companyId) {
-            console.log("@@Data...");
+            // console.log("@@Data...");
 
-            console.log(this.allStatus[k].statusId);
+            // console.log(this.allStatus[k].statusId);
             this.allStatusFiltered.push(this.allStatus[k]);
-            console.log(this.allStatusFiltered);
+            // console.log(this.allStatusFiltered);
 
 
           }
@@ -337,7 +337,7 @@ export class TaskViewComponent {
 
   NavigateChildView(taskParent: number) {
     console.log(taskParent);
-    
+
     this._router.navigate(['/childview', taskParent])
   }
 

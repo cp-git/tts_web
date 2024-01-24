@@ -111,9 +111,7 @@ li a.active {
     font-size: 18px;
 }
 
-#backBtn {
-    margin-bottom: 20px;
-}
+
 
 
 .card {
@@ -134,14 +132,27 @@ li a.active {
 }
 
 
-#data {
+.col icons {
     margin-top: 10px;
+    border: 1px groove grey;
+
+
 }
 
 
-#finaldata {
-    display: flex;
-    justify-content: space-between;
 
+.headerdata {
+    width: 95%;
+    margin-left: 40px;
+    margin-top: 20px;
+    border: 1px groove grey;
 
+}
+
+#coldata {
+    margin-left: 66%;
+}
+
+.col-md-6 {
+    height: 30px;
 }

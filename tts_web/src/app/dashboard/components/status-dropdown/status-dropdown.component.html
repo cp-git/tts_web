@@ -5,6 +5,7 @@
                 <b> Task :</b>
             </div>
             <div class="col">
+
                 <!-- Use the ng-multiselect-dropdown component for multi-select -->
                 <ng-multiselect-dropdown [placeholder]="'Select Statuses'" [data]="statusOptions"
                     [(ngModel)]="selectedStatuses" [settings]="dropdownSettings" (onSelect)="onChangeFilterTask()"

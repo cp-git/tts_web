@@ -33,7 +33,7 @@ export class StatusDropdownComponent {
     const selectedStatusesJson = sessionStorage.getItem('selectedStatuses');
     this.selectedStatuses = selectedStatusesJson ? JSON.parse(selectedStatusesJson) : []; // Set "All" by default
     //console.log(this.selectedStatuses);
-    
+
     // Configure dropdown settings
     this.dropdownSettings = {
       singleSelection: false,
@@ -51,6 +51,7 @@ export class StatusDropdownComponent {
 
   getStatuses() {
     this.statusService.getStatusesByCompanyId(this.companyId).subscribe((statuses: any[]) => {
+    
       this.statusOptions = statuses.map((status) => ({
         id: status.statusId,
         itemName: status.statusCode,
@@ -69,7 +70,7 @@ export class StatusDropdownComponent {
     };
     //console.log(data);
     //console.log(this.selectedStatuses);
-    
+
     this.onChangeStatusFilter.emit(this.selectedStatuses);
   }
 }
