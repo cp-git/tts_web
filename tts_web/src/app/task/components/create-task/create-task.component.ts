@@ -265,11 +265,11 @@ export class CreateTaskComponent implements OnInit {
             this.task.taskParent != 0
           ) {
             // alert(response.candidateId);
-            this.task.candidateId = response.candidateId;
+            this.task.benchCandidateId = response.benchCandidateId;
             this.task.visaId = response.visaId;
             this.task.taxTypeId = response.taxTypeId;
 
-            this.benchCandidate.benchCandidateId = response.candidateId;
+            this.benchCandidate.benchCandidateId = response.benchCandidateId;
             // for getting bench candidate details (for dropdown)
             this.getBenchCandidateDetails();
           }
@@ -281,19 +281,19 @@ export class CreateTaskComponent implements OnInit {
           ) {
             // alert(JSON.stringify(response));
             this.task.hiringCompanyId = response.hiringCompanyId;
-            this.task.hiringCompanyName = response.hiringCompanyName;
-            this.task.jobTitle = response.jobTitle;
-            this.task.jobLocationId = response.jobLocationId;
-            this.task.jobAddress = response.jobAddress;
-            this.task.jobCity = response.jobCity;
-            this.task.jobState = response.jobState;
-            this.task.experienceRequired = response.experienceRequired;
-            this.task.rate = response.rate;
-            this.task.datePosted = response.datePosted;
-            this.task.jobSubmissionPortalId = response.jobSubmissionPortalId;
-            this.task.portalName = response.portalName;
-            this.task.jobDescription = response.jobDescription;
-            console.log(this.task);
+            // this.task.hiringCompanyName = response.hiringCompanyName;
+            // this.task.jobTitle = response.jobTitle;
+            // this.task.jobLocationId = response.jobLocationId;
+            // this.task.jobAddress = response.jobAddress;
+            // this.task.jobCity = response.jobCity;
+            // this.task.jobState = response.jobState;
+            // this.task.experienceRequired = response.experienceRequired;
+            // this.task.rate = response.rate;
+            // this.task.datePosted = response.datePosted;
+            // this.task.jobSubmissionPortalId = response.jobSubmissionPortalId;
+            // this.task.portalName = response.portalName;
+            // this.task.reasonToFitForJob = response.reasonToFitForJob;
+            // console.log(this.task);
 
             // for getting hiring company details
             this.getHiringCompanyDetails();
@@ -323,6 +323,7 @@ export class CreateTaskComponent implements OnInit {
         .getHiringCompanyById(this.task.hiringCompanyId)
         .subscribe((response) => {
           this.allHiringCompany.push(response);
+          this.hiringCompany = response;
           console.log(this.allHiringCompany);
         });
     }
@@ -358,7 +359,7 @@ export class CreateTaskComponent implements OnInit {
     ) {
       console.log('creating child task');
       this.benchCandidateService
-        .getBenchCandidateById(this.task.candidateId)
+        .getBenchCandidateById(this.task.benchCandidateId)
         .subscribe((response) => {
           this.allBenchCandidateDetails.push(response);
           console.log(this.allBenchCandidateDetails);
@@ -691,6 +692,8 @@ export class CreateTaskComponent implements OnInit {
     this.actualTaskStatus = this.currentTaskStatus;
   }
 
+  hiringCompany: HiringCompany = new HiringCompany();
+
   onChangeHiringCompany(hiringCompanyId: number) {
     const hiringCompany = this.allHiringCompany.find(
       (comp) => comp.hiringCompanyId == hiringCompanyId
@@ -707,7 +710,8 @@ export class CreateTaskComponent implements OnInit {
       this.task.datePosted = hiringCompany.jobFulfillmentDate;
       this.task.jobSubmissionPortalId = hiringCompany.jobSubmissionMethod;
       this.task.portalName = hiringCompany.portalName;
-      this.task.jobDescription = hiringCompany.jobDescription;
+      // this.task.reasonToFitForJob = hiringCompany.jobDescription;
+      this.hiringCompany = hiringCompany;
     }
   }
 }
