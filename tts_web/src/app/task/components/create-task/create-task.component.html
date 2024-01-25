@@ -604,7 +604,7 @@
                                         type="date" class="form-control" id="startDate" name="startDate"
                                         [(ngModel)]="task.taskStartDate" [required]="true" [min]="currentDate"
                                         #startDateField="ngModel"
-                                        [disabled]="parentTaskStatus && parentTaskStatus?.finalStatus == true"
+                                        [disabled]="task.taskParent>0 ||parentTaskStatus && parentTaskStatus?.finalStatus == true"
                                         onkeydown="return false">
                                     <div *ngIf="startDateField.invalid && (startDateField.dirty||startDateField.touched)"
                                         class="text-danger">
@@ -630,7 +630,7 @@
                                 <input type="date" class="form-control" id="endDate" name="endDate"
                                     [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate" [required]="true"
                                     [min]="todayForPlannedStartDate"
-                                    [disabled]="task.taskStartDate==null || updateScreen || (currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)"
+                                    [disabled]="task.taskParent>0 || task.taskStartDate==null || updateScreen || (currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)"
                                     #endDateField="ngModel" onkeydown="return false">
 
                                 <div *ngIf="endDateField.invalid " class="text-danger">

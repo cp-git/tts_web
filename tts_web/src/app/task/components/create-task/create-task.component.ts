@@ -268,6 +268,8 @@ export class CreateTaskComponent implements OnInit {
             this.task.benchCandidateId = response.benchCandidateId;
             this.task.visaId = response.visaId;
             this.task.taxTypeId = response.taxTypeId;
+            this.task.taskStartDate = response.taskStartDate;
+            this.task.taskEndDate = response.taskEndDate;
 
             this.benchCandidate.benchCandidateId = response.benchCandidateId;
             // for getting bench candidate details (for dropdown)
@@ -281,6 +283,8 @@ export class CreateTaskComponent implements OnInit {
           ) {
             // alert(JSON.stringify(response));
             this.task.hiringCompanyId = response.hiringCompanyId;
+            this.task.taskStartDate = response.taskStartDate;
+            this.task.taskEndDate = response.taskEndDate;
             // this.task.hiringCompanyName = response.hiringCompanyName;
             // this.task.jobTitle = response.jobTitle;
             // this.task.jobLocationId = response.jobLocationId;
@@ -331,17 +335,6 @@ export class CreateTaskComponent implements OnInit {
 
   // get bench candidate details
   getBenchCandidateDetails() {
-    console.log(this.task);
-
-    console.log(
-      this.task.taskParent == 0 &&
-        (this.task.taskId == undefined || this.task.taskId == 0)
-    );
-    console.log(
-      this.task.taskParent >= 0 &&
-        this.task.placementId == this.INTERNAL_PLACEMENT_ID
-    );
-
     if (
       this.task.taskParent == 0 &&
       (this.task.taskId == undefined || this.task.taskId == 0)
@@ -520,10 +513,27 @@ export class CreateTaskComponent implements OnInit {
         this.todayForEndDate = '';
         this.task.taskActualEndDate = null as unknown as Date;
 
+        // for create screen when start date is not null (we are taking data from parent task for child)
+        // so assigning start date and end date from parent to child
         if (!this.updateScreen) {
-          this.todayForPlannedStartDate = '';
-          this.task.taskStartDate = null as unknown as Date;
-          this.task.taskEndDate = null as unknown as Date;
+          if (
+            this.task.taskStartDate != undefined ||
+            this.task.taskStartDate != null ||
+            this.task.taskStartDate
+          ) {
+            this.task.taskStartDate = this.parentTask.taskStartDate;
+
+            // if creating parent task then assign end date to null otherwise assign parent end date to child end date
+            if (
+              this.task.taskParent == 0 ||
+              this.task.taskParent == undefined ||
+              this.task.taskParent == null
+            ) {
+              this.task.taskEndDate = null as unknown as Date;
+            } else {
+              this.task.taskEndDate = this.parentTask.taskEndDate;
+            }
+          }
         }
       }
       // for In progress
@@ -531,6 +541,7 @@ export class CreateTaskComponent implements OnInit {
         this.currentTaskStatus.actualStartDate == true &&
         this.currentTaskStatus.actualEndDate == false
       ) {
+        // if actual starte is null then assign today's date otherwie assign existing date
         if (
           this.task.taskActualStartDate == undefined ||
           this.task.taskActualStartDate == null ||
@@ -546,12 +557,15 @@ export class CreateTaskComponent implements OnInit {
           // alert("exisiting" + this.todayForStartDate);
         }
 
+        // for in progress actual end date is always null
         this.todayForEndDate = '';
         this.task.taskActualEndDate = null as unknown as Date;
         //console.log(this.task);
 
-        // when task is inprogress then set start to current date and end date to null (user will select end date)
+        // when task is inprogress then set start date to current date and end date to null (user will select end date)
         if (!this.updateScreen) {
+          // for create screen and inprgress status id actual start date is null then assigne todays date
+          // otherwise assign existing date
           if (
             this.task.taskActualStartDate == undefined ||
             this.task.taskActualStartDate == null ||
@@ -566,11 +580,33 @@ export class CreateTaskComponent implements OnInit {
               .split('T')[0];
           }
 
-          this.task.taskStartDate = new Date();
-          this.todayForPlannedStartDate = new Date()
-            .toISOString()
-            .split('T')[0];
-          this.task.taskEndDate = null as unknown as Date;
+          // this.task.taskStartDate = new Date();
+          // this.todayForPlannedStartDate = new Date()
+          //   .toISOString()
+          //   .split('T')[0];
+          // this.task.taskEndDate = null as unknown as Date;
+
+          // create screen and inprogress
+          // if starte date is not null of parent task then assign those value to child task
+          if (
+            this.parentTask.taskStartDate != undefined ||
+            this.parentTask.taskStartDate != null ||
+            this.parentTask.taskStartDate
+          ) {
+            this.task.taskStartDate = this.parentTask.taskStartDate;
+            this.task.taskEndDate = this.parentTask.taskEndDate;
+            this.todayForPlannedStartDate = new Date(
+              this.parentTask.taskStartDate
+            )
+              .toISOString()
+              .split('T')[0];
+          } else {
+            this.task.taskStartDate = new Date();
+            this.todayForPlannedStartDate = new Date()
+              .toISOString()
+              .split('T')[0];
+            this.task.taskEndDate = null as unknown as Date;
+          }
         }
       }
 
