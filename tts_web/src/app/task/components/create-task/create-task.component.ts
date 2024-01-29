@@ -735,17 +735,18 @@ export class CreateTaskComponent implements OnInit {
       (comp) => comp.hiringCompanyId == hiringCompanyId
     );
     if (hiringCompany) {
-      this.task.hiringCompanyName = hiringCompany.hiringCompanyName;
-      this.task.jobTitle = hiringCompany.jobTitle;
-      this.task.jobLocationId = hiringCompany.jobMode;
-      this.task.jobAddress = hiringCompany.jobAddress;
-      this.task.jobCity = hiringCompany.jobCity;
-      this.task.jobState = hiringCompany.jobState;
-      this.task.experienceRequired = hiringCompany.experienceRequired;
-      this.task.rate = hiringCompany.rate;
-      this.task.datePosted = hiringCompany.jobFulfillmentDate;
-      this.task.jobSubmissionPortalId = hiringCompany.jobSubmissionMethod;
-      this.task.portalName = hiringCompany.portalName;
+      this.task.hiringCompanyId = hiringCompany.hiringCompanyId;
+      // this.task.hiringCompanyName = hiringCompany.hiringCompanyName;
+      // this.task.jobTitle = hiringCompany.jobTitle;
+      // this.task.jobLocationId = hiringCompany.jobMode;
+      // this.task.jobAddress = hiringCompany.jobAddress;
+      // this.task.jobCity = hiringCompany.jobCity;
+      // this.task.jobState = hiringCompany.jobState;
+      // this.task.experienceRequired = hiringCompany.experienceRequired;
+      // this.task.rate = hiringCompany.rate;
+      // this.task.datePosted = hiringCompany.jobFulfillmentDate;
+      // this.task.jobSubmissionPortalId = hiringCompany.jobSubmissionMethod;
+      // this.task.portalName = hiringCompany.portalName;
       // this.task.reasonToFitForJob = hiringCompany.jobDescription;
       this.hiringCompany = hiringCompany;
     }
