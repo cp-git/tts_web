@@ -18,6 +18,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment.dev';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { Location } from '@angular/common';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-task-view',
@@ -85,7 +86,8 @@ export class TaskViewComponent {
     private _router: Router,
     private _route: ActivatedRoute,
     private dashboardService: DashboardService,
-    private location: Location
+    private location: Location,
+    private _spinner: NgxSpinnerService
   ) {
     this.displayCompanyLogo = `${environment.companyUrl}/photos`;
     this.displayEmployeeLogo = `${environment.employeeUrl}/employee/photos`;
@@ -194,6 +196,12 @@ export class TaskViewComponent {
 
 
   onClickCreateTask(task: Task, operation: string, event: Event) {
+
+    this._spinner.show();
+    setTimeout(() => {
+      this._spinner.hide();
+    }, 2000);
+
     event.stopPropagation();
 
     // for getting update task status

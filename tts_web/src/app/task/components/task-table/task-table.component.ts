@@ -18,6 +18,7 @@ import { Jobportal } from 'src/app/jobportal/classes/jobportal';
 import { JobportalService } from 'src/app/jobportal/services/jobportal.service';
 import { environment } from 'src/environments/environment.dev';
 import { Router } from '@angular/router';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-task-table',
@@ -65,6 +66,7 @@ export class TaskTableComponent implements OnInit {
   allStatusFiltered: Status[] = [];
 
 
+
   constructor(
     private taskService: TaskService,
     private statusService: StatusService,
@@ -72,7 +74,8 @@ export class TaskTableComponent implements OnInit {
     private taxTypeService: TextypeService,
     private jobLocationService: JoblocationService,
     private jobPortalService: JobportalService,
-    private _router: Router
+    private _router: Router,
+    private _spinner: NgxSpinnerService
   ) {
     this.displayCompanyLogo = `${environment.companyUrl}/photos`;
     this.employeeId = sessionStorage.getItem("employeeId");
@@ -80,6 +83,9 @@ export class TaskTableComponent implements OnInit {
 
     this.parentTask.taskId = 0;
   }
+
+
+
 
   ngOnInit(): void {
 
@@ -261,6 +267,12 @@ export class TaskTableComponent implements OnInit {
 
   // for create and Update task
   onClickCreateTask(task: Task, operation: string, event: Event) {
+    this._spinner.show();
+    setTimeout(() => {
+      this._spinner.hide();
+    }, 2000);
+
+
     event.stopPropagation();
 
     // for getting update task status
@@ -362,7 +374,7 @@ export class TaskTableComponent implements OnInit {
             this.allStatusFiltered.push(this.allStatus[k]);
             console.log(this.allStatusFiltered);
 
-          
+
 
 
           }
@@ -380,8 +392,100 @@ export class TaskTableComponent implements OnInit {
   }
 
   NavigateParentView(taskId: number) {
+    this._spinner.show();
+    setTimeout(() => {
+      this._spinner.hide();
+    }, 2000);
+
     this._router.navigate(['/taskView', taskId])
 
+
+
+
+  }
+
+
+
+  onClickCreateTask1(task: Task, operation: string) {
+    this._spinner.show();
+    setTimeout(() => {
+      this._spinner.hide();
+    }, 2000);
+
+
+
+
+    // for getting update task status
+    if (task != null && task.taskId != undefined) {
+      this.taskService.getTaskByTaskId(task.taskId).subscribe(
+        response => {
+          this.parentTaskStatus = this.allStatus.find(s => s.statusId == response.taskStatus);
+        }
+      );
+    }
+    // //console.log(taskData);
+
+    this.emptyTask = {} as Task;
+    this.updateScreen = false;
+    this.parentTask = {} as Task;
+
+    console.log(task);
+    //console.log(operation);
+
+    if (operation == 'ADD') {
+
+      console.log(task);
+
+      this.updateScreen = false;
+      this.parentTask = Object.assign({}, task);
+
+      this.emptyTask.companyId = this.companyId;
+
+      if (this.parentTask.taskParent == undefined || this.parentTask.taskParent == null) {
+        this.emptyTask.taskParent = 0;
+      }
+      else {
+        this.emptyTask.taskParent = this.parentTask.taskId;
+      }
+
+      this.emptyTask.taskCreatedBy = this.employeeId;
+      this.emptyTask.taskAssignedTo = this.employeeId;
+      this.emptyTask.taskStatus = this.allStatus[0].statusId;
+      this.emptyTask.taskActualStartDate = null as unknown as Date;
+      this.emptyTask.taskActualEndDate = null as unknown as Date;
+      this.emptyTask.placementId = this.INTERNAL_PLACEMENT_ID;
+      // this.emptyTask.taxTypeId = 0;
+
+    }
+    else if (operation == 'UPDATE') {
+
+      this.updateScreen = true;
+      console.log(task);
+
+      if (task.taskParent > 0) {
+        this.taskService.getTaskByTaskId(task.taskParent).subscribe(
+          (response) => {
+            // on success 
+            this.parentTask = response;
+            // console.log(this.parentTask);
+          }
+        );
+      }
+
+      // get task and internal/external task data by task id
+      this.taskService.getTaskByTaskId(task.taskId).subscribe(
+        (response) => {
+          // on success 
+          task = response;
+          // console.log(task);
+          this.emptyTask = Object.assign({}, task);
+        }
+      );
+
+      this.emptyTask = Object.assign({}, task);
+      // console.log(this.emptyTask);
+
+    }
   }
 
 

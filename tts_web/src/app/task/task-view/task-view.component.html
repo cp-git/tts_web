@@ -1,262 +1,270 @@
-<div class="container-fluid">
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="sect2">
-        <div class="container-fluid">
-            <div style="display: flex; align-items: center;">
-                <!-- Container for logo and name with margin-left -->
-                <div style="display: flex; align-items: center; ">
-                    <!-- Display the company's photo -->
-                    <img src="{{displayCompanyLogo}}/{{companyId}}"
-                        style="width: 100px; height: 60px; border: 2px solid; border-radius: 15px;">
-                    <!-- <label class="company" for="company" style="color: wheat; margin-left: 10px;">
-                        {{ company.companyName }}
-                    </label> -->
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p class="info" style="color: white ; font-size: 40px; text-align: 700px;">Loading</p>
+</ngx-spinner>
+
+
+<div class="container-fluid" id="sect1">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="sect2">
+            <div class="container-fluid">
+                <div style="display: flex; align-items: center;">
+                    <!-- Container for logo and name with margin-left -->
+                    <div style="display: flex; align-items: center; ">
+                        <!-- Display the company's photo -->
+                        <img src="{{displayCompanyLogo}}/{{companyId}}"
+                            style="width: 100px; height: 60px; border: 2px solid; border-radius: 15px;">
+                        <!-- <label class="company" for="company" style="color: wheat; margin-left: 10px;">
+                                {{ company.companyName }}
+                            </label> -->
+                    </div>
+                </div>
+
+                <!-- Centered text for "TaskDashboard" -->
+                <div style="flex-grow: 1; text-align: center;">
+                    <h1 style="color: red;">Task Dashboard</h1>
+                </div>
+
+                <div style="display: flex; align-items: center; margin-right: 40px;">
+                    <label class="name" for="name" style="color:red; margin-left: 0px;">
+                        {{loggedInUserData.firstName | uppercase}}
+                    </label>
+                    <img src="{{displayEmployeeLogo}}/{{loggedInUserData.employeeId}} "
+                        style="width: 60px; height: 60px; border: 2px solid; border-radius: 15px; margin-left: 15px;">
+
+                </div>
+
+                <div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <mat-icon (click)="logout()" id="logoutbtn">power_settings_new</mat-icon>
+
                 </div>
             </div>
+        </nav>
 
-            <!-- Centered text for "TaskDashboard" -->
-            <div style="flex-grow: 1; text-align: center;">
-                <h1 style="color: red;">Task Dashboard</h1>
-            </div>
+    </div>
 
-            <div style="display: flex; align-items: center; margin-right: 40px;">
-                <label class="name" for="name" style="color:red; margin-left: 0px;">
-                    {{loggedInUserData.firstName | uppercase}}
-                </label>
-                <img src="{{displayEmployeeLogo}}/{{loggedInUserData.employeeId}} "
-                    style="width: 60px; height: 60px; border: 2px solid; border-radius: 15px; margin-left: 15px;">
 
-            </div>
 
-            <div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <mat-icon (click)="logout()" id="logoutbtn">power_settings_new</mat-icon>
 
-            </div>
+    <!-- {{ParentTaskInfo | json}} -->
+
+    <!-- {{childTaskData | json}} -->
+
+
+    <div class="container-fluid" style="margin-top: 60px;">
+
+        <div class="backBtn">
+
+            <mat-icon (click)="backToDisplayTask()"
+                style="margin-left:90% ;height:30%;margin-top: 20px;">keyboard_backspace</mat-icon>
+
         </div>
-    </nav>
-
-</div>
 
 
+        <div class="parentData" style="margin-top: 20px;">
+            <h2>Parent Task Details</h2>
 
+        </div>
 
-<!-- {{ParentTaskInfo | json}} -->
+        <table class="table table-striped" style="margin-top: 10px; border: 2px groove black;">
+            <thead id="parentHeadertable">
+                <tr>
+                    <th scope="col" class="col-sm-2">Task Name</th>
+                    <th scope="col" class="col-sm-2">Description</th>
+                    <th scope="col" class="col-sm-1.5">Created By</th>
+                    <th scope="col" class="col-sm-1.5">Assigned To</th>
+                    <th scope="col">Status</th>
+                    <th scopr="col">End Date</th>
+                    <th scopr="col">Update</th>
+                    <th scopr="col">history</th>
+                </tr>
+            </thead>
 
-<!-- {{childTaskData | json}} -->
-
-
-<div class="container-fluid" style="margin-top: 60px;">
-
-    <div class="backBtn">
-
-        <mat-icon (click)="backToDisplayTask()"
-            style="margin-left:90% ;height:30%;margin-top: 20px;">keyboard_backspace</mat-icon>
-
-    </div>
-
-
-    <div class="parentData" style="margin-top: 20px;">
-        <h2>Parent Task Details</h2>
-
-    </div>
-
-    <table class="table table-striped" style="margin-top: 10px; border: 2px groove black;">
-        <thead id="parentHeadertable">
-            <tr>
-                <th scope="col" class="col-sm-2">Task Name</th>
-                <th scope="col" class="col-sm-2">Description</th>
-                <th scope="col" class="col-sm-1.5">Created By</th>
-                <th scope="col" class="col-sm-1.5">Assigned To</th>
-                <th scope="col">Status</th>
-                <th scopr="col">End Date</th>
-                <th scopr="col">Update</th>
-                <th scopr="col">history</th>
-            </tr>
-        </thead>
-
-        <tbody id="parentHeaderDatatable">
-            <tr>
-                <td>{{ParentTaskInfo.taskName}}</td>
-                <td>{{ParentTaskInfo.taskDescription}}</td>
-                <!-- <td>{{ParentTaskInfo.taskCreatedBy}}</td> -->
-                <td>
-                    <ng-container *ngFor="let employee of employees">
-                        <ng-container *ngIf="employee.employeeId == ParentTaskInfo.taskCreatedBy">
-                            {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
+            <tbody id="parentHeaderDatatable">
+                <tr>
+                    <td>{{ParentTaskInfo.taskName}}</td>
+                    <td>{{ParentTaskInfo.taskDescription}}</td>
+                    <!-- <td>{{ParentTaskInfo.taskCreatedBy}}</td> -->
+                    <td>
+                        <ng-container *ngFor="let employee of employees">
+                            <ng-container *ngIf="employee.employeeId == ParentTaskInfo.taskCreatedBy">
+                                {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
+                            </ng-container>
                         </ng-container>
-                    </ng-container>
-                </td>
-                <td>
-                    <ng-container *ngFor="let employee of employees">
-                        <ng-container *ngIf="employee.employeeId == ParentTaskInfo.taskAssignedTo">
-                            {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let employee of employees">
+                            <ng-container *ngIf="employee.employeeId == ParentTaskInfo.taskAssignedTo">
+                                {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
+                            </ng-container>
                         </ng-container>
-                    </ng-container>
-                </td>
-                <td>
-                    <ng-container *ngFor="let status of allStatusFiltered">
-                        <ng-container *ngIf="status.statusId == ParentTaskInfo.taskStatus">
-                            {{status.statusCode | titlecase}}
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let status of allStatusFiltered">
+                            <ng-container *ngIf="status.statusId == ParentTaskInfo.taskStatus">
+                                {{status.statusCode | titlecase}}
+                            </ng-container>
                         </ng-container>
-                    </ng-container>
-                </td>
-                <td>{{ParentTaskInfo.taskEndDate}}</td>
-                <td>
-                    <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
-                        <span title="Save Task" class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
-                            data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
-                            (click)="onClickCreateTask(ParentTaskInfo, 'UPDATE', $event)"
-                            style="color: #0095a8;"></span>
+                    </td>
+                    <td>{{ParentTaskInfo.taskEndDate}}</td>
+                    <td>
+                        <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
+                            <span title="Save Task" class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
+                                data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
+                                (click)="onClickCreateTask(ParentTaskInfo, 'UPDATE', $event)"
+                                style="color: #0095a8;"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
+                            <span title="Response history" class="fa-solid fa fa-history fa-xl"
+                                [routerLink]="['changehistory', ParentTaskInfo.taskId]" style="color: blue"></span>
+                        </div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+
+        <div class="childData" style="margin-top: 30px;">
+            <h2>Child Task Details</h2>
+        </div>
+
+        <div class="dataHeader">
+            <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" style="color: #03a300;"
+                data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
+                (click)="onClickCreateTask(ParentTaskInfo, 'ADD', $event)"></span>
+        </div>
+
+
+
+        <mat-card class="card" *ngFor="let childData of childTaskData; let i = index">
+
+            <mat-card-content style="text-align: center">
+
+                <img src="{{displayCompanyLogo}}/{{companyId}}"
+                    style="width: 90%; height: 140px; border: 2px solid; border-radius: 15px;margin-right: 30px;">
+
+
+                <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
+                                data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
+                                (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span> -->
+            </mat-card-content>
+
+            <mat-card-content style="text-align: center">
+                <h1 style="color:black;">{{childData.taskName}}</h1>
+                <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
+                                            data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
+                                            (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span> -->
+            </mat-card-content>
+
+
+            <mat-card-content id="finaldata">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
+                            <span title="Save Task" data-bs-toggle="modal"
+                                attr.data-bs-target="#createTask{{modalId + 1}}"
+                                (click)="onClickCreateTask(childData, 'UPDATE', $event)"
+                                style="color: #0095a8;">Update</span>
+                        </div>
                     </div>
-                </td>
-                <td>
-                    <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
-                        <span title="Response history" class="fa-solid fa fa-history fa-xl"
-                            [routerLink]="['changehistory', ParentTaskInfo.taskId]" style="color: blue"></span>
+
+                    <div class="col-md-6">
+                        <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
+                            <span title="Response history" [routerLink]="['changehistory', childData.taskId]"
+                                style="color: blue">history</span>
+                        </div>
+
                     </div>
-                </td>
-
-            </tr>
-        </tbody>
-    </table>
-
-
-    <div class="childData" style="margin-top: 30px;">
-        <h2>Child Task Details</h2>
-    </div>
-
-    <div class="dataHeader">
-        <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" style="color: #03a300;"
-            data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
-            (click)="onClickCreateTask(ParentTaskInfo, 'ADD', $event)"></span>
-    </div>
+                </div>
+                <!-- <div id="data">
+                        <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
+                            <span title="Save Task" data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
+                                (click)="onClickCreateTask(childData, 'UPDATE', $event)" style="color: #0095a8;">Update</span>
+                        </div>
+                    </div>
+                    <div id="data">
+                        <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
+                            <span title="Response history" [routerLink]="['changehistory', childData.taskId]"
+                                style="color: blue">history</span>
+                        </div>
+                    </div> -->
+            </mat-card-content>
 
 
 
-    <mat-card class="card" *ngFor="let childData of childTaskData; let i = index">
-
-        <mat-card-content style="text-align: center">
-
-            <img src="{{displayCompanyLogo}}/{{companyId}}"
-                style="width: 90%; height: 140px; border: 2px solid; border-radius: 15px;margin-right: 30px;">
 
 
-            <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
-                        data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
-                        (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span> -->
-        </mat-card-content>
 
-        <mat-card-content style="text-align: center">
-            <h1 style="color:black;">{{childData.taskName}}</h1>
-            <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
+        </mat-card>
+
+
+        <!-- <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-sm-2">Task Name</th>
+                        <th scope="col" class="col-sm-2">Description</th>
+                        <th scope="col" class="col-sm-1.5">Created By</th>
+                        <th scope="col" class="col-sm-1.5">Assigned To</th>
+                        <th scope="col">Status</th>
+                        <th scopr="col">End Date</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr *ngFor="let childData of childTaskData">
+
+                        <td>{{childData.taskName}}</td>
+                        <td>{{childData.taskDescription}}</td>
+                        <td>
+                            <ng-container *ngFor="let employee of employees">
+                                <ng-container *ngIf="employee.employeeId == childData.taskCreatedBy">
+                                    {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngFor="let employee of employees">
+                                <ng-container *ngIf="employee.employeeId == childData.taskAssignedTo">
+                                    {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngFor="let status of allStatus">
+                                <ng-container *ngIf="status.statusId == childData.taskStatus">
+                                    {{status.statusCode | titlecase}}
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                        <td>{{childData.taskEndDate}}</td>
+
+                        <td>
+                            <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
+                                <span title="Save Task" class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
                                     data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
-                                    (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span> -->
-        </mat-card-content>
+                                    (click)="onClickCreateTask(childData, 'UPDATE', $event)" style="color: #0095a8;"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
+                                <span title="Response history" class="fa-solid fa fa-history fa-xl"
+                                    [routerLink]="['changehistory', childData.taskId]" style="color: blue"></span>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table> -->
 
 
-        <mat-card-content id="finaldata">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
-                        <span title="Save Task" data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
-                            (click)="onClickCreateTask(childData, 'UPDATE', $event)"
-                            style="color: #0095a8;">Update</span>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
-                        <span title="Response history" [routerLink]="['changehistory', childData.taskId]"
-                            style="color: blue">history</span>
-                    </div>
-
-                </div>
-            </div>
-            <!-- <div id="data">
-                <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
-                    <span title="Save Task" data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
-                        (click)="onClickCreateTask(childData, 'UPDATE', $event)" style="color: #0095a8;">Update</span>
-                </div>
-            </div>
-            <div id="data">
-                <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
-                    <span title="Response history" [routerLink]="['changehistory', childData.taskId]"
-                        style="color: blue">history</span>
-                </div>
-            </div> -->
-        </mat-card-content>
-
-
-
-
-
-
-    </mat-card>
-
-
-    <!-- <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col" class="col-sm-2">Task Name</th>
-                <th scope="col" class="col-sm-2">Description</th>
-                <th scope="col" class="col-sm-1.5">Created By</th>
-                <th scope="col" class="col-sm-1.5">Assigned To</th>
-                <th scope="col">Status</th>
-                <th scopr="col">End Date</th>
-                <th>Action</th>
-            </tr>
-
-        </thead>
-        <tbody>
-            <tr *ngFor="let childData of childTaskData">
-
-                <td>{{childData.taskName}}</td>
-                <td>{{childData.taskDescription}}</td>
-                <td>
-                    <ng-container *ngFor="let employee of employees">
-                        <ng-container *ngIf="employee.employeeId == childData.taskCreatedBy">
-                            {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
-                        </ng-container>
-                    </ng-container>
-                </td>
-                <td>
-                    <ng-container *ngFor="let employee of employees">
-                        <ng-container *ngIf="employee.employeeId == childData.taskAssignedTo">
-                            {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
-                        </ng-container>
-                    </ng-container>
-                </td>
-                <td>
-                    <ng-container *ngFor="let status of allStatus">
-                        <ng-container *ngIf="status.statusId == childData.taskStatus">
-                            {{status.statusCode | titlecase}}
-                        </ng-container>
-                    </ng-container>
-                </td>
-                <td>{{childData.taskEndDate}}</td>
-
-                <td>
-                    <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
-                        <span title="Save Task" class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
-                            data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
-                            (click)="onClickCreateTask(childData, 'UPDATE', $event)" style="color: #0095a8;"></span>
-                    </div>
-                </td>
-                <td>
-                    <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
-                        <span title="Response history" class="fa-solid fa fa-history fa-xl"
-                            [routerLink]="['changehistory', childData.taskId]" style="color: blue"></span>
-                    </div>
-                </td>
-
-            </tr>
-        </tbody>
-    </table> -->
-
-
+    </div>
 </div>
 
 

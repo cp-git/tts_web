@@ -10,6 +10,7 @@ import { StatusDropdownComponent } from './components/status-dropdown/status-dro
 import { SharedModule } from "../shared/shared.module";
 import { EmployeeFilterComponent } from './components/employee-filter/employee-filter.component';
 import { MatIconModule } from '@angular/material/icon';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { MatIconModule } from '@angular/material/icon';
         FooterModule,
         NgMultiSelectDropDownModule.forRoot(),
         SharedModule,
-        MatIconModule
+        MatIconModule,
+        NgxSpinnerModule
     ]
 })
 export class DashboardModule { }

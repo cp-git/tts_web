@@ -11,6 +11,7 @@ ul {
     padding: 0;
     overflow: hidden;
     background-color: #2d2c2c;
+
 }
 
 li {
@@ -39,6 +40,7 @@ li a.active {
     padding: 0;
     overflow: hidden;
     background-color: #2d2c2c;
+
 }
 
 .admindashboard {
@@ -68,7 +70,7 @@ li a.active {
 }
 
 #sect1 {
-
+    background-image: url("/assets/hr1.jpg");
     background-size: 100%;
     background-size: cover;
     background-attachment: fixed;

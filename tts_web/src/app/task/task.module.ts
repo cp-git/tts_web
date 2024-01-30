@@ -12,6 +12,9 @@ import { MatCardModule } from '@angular/material/card';
 import { TaskViewComponent } from './task-view/task-view.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ViewChildDataComponent } from './components/view-child-data/view-child-data.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgxSpinner, NgxSpinnerModule } from 'ngx-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
 @NgModule({
   declarations: [
     CreateTaskComponent,
@@ -27,7 +30,10 @@ import { ViewChildDataComponent } from './components/view-child-data/view-child-
     BrowserAnimationsModule,
     SharedModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule,
+    NgxSpinnerModule,
+    MatSidenavModule
 
   ],
   exports: [

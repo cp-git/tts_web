@@ -1,5 +1,5 @@
 .border-around {
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 5px;
   /* Define your desired border style here */
 }
@@ -9,4 +9,8 @@
   margin-bottom: 5px;
   border-color: black;
   border-width: 4px;
+}
+
+#usrinput {
+  color: white;
 }

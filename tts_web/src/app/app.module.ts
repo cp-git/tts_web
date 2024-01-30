@@ -30,6 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { MatIconModule } from '@angular/material/icon';
     BrowserAnimationsModule,
     MaterialModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    NgxSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

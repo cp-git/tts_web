@@ -118,7 +118,7 @@ li a.active {
     width: 230px;
     display: inline-block;
     margin-left: 40px;
-    background-color: transparent;
+    background-color: white;
     margin-bottom: 30px;
     height: 240px;
     margin-top: 30px;
@@ -155,4 +155,13 @@ li a.active {
 
 .col-md-6 {
     height: 30px;
+}
+
+#sect1 {
+    background-image: url("/assets/hr1.jpg");
+    background-size: 100%;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100%;
+
 }
