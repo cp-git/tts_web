@@ -8,6 +8,8 @@ import { EmployeeAndPasswordDTO } from 'src/app/employee/class/employeeandpasswo
 import { EmployeeService } from 'src/app/employee/services/employee.service';
 import { AuthenticationServiceService } from 'src/app/service/authentication-service.service';
 import { DialogueBoxService } from 'src/app/shared/services/dialogue-box.service';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+
 declare var $: any;
 @Component({
   selector: 'app-login',
@@ -25,6 +27,8 @@ export class LoginComponent implements OnInit {
   passwordData!: Password;
   userData!: Password;
 
+  step:any;
+
   forgotData = { username: '', email: '' };
   showForgotPopup = false;
 
@@ -40,6 +44,8 @@ export class LoginComponent implements OnInit {
     private employeeService: EmployeeService,
     private authService: AuthenticationServiceService,
     private dialogueBoxService: DialogueBoxService,
+    private _spinner: NgxSpinnerService
+    
 
   ) {
 
@@ -81,10 +87,15 @@ export class LoginComponent implements OnInit {
               this.route.navigate(['/company']);
             } else
               if (this.empData.admin == true) {
-                if (this.selectedUserType == "admin") {
+                if (this.selectedUserType == "admin") { 
                   $('#exampleModal').modal('show');
+                  
                 }
               } else {
+                this._spinner.show();
+                setTimeout(() => {
+                  this._spinner.hide();
+                }, 2000);
                 this.route.navigate(['/dashboard']);
               }
           } else {
@@ -103,6 +114,18 @@ export class LoginComponent implements OnInit {
 
   redirectToForgot() {
     this.route.navigate(['/forgot']);
+  }
+
+  loginbtn(){
+    location.reload();
+    this.route.navigate(['/login'])
+  }
+
+
+  clickTab(stepValue: any){
+    this.step = stepValue;
+    localStorage.setItem('step', JSON.stringify(this.step));
+    location.reload();
   }
 
 

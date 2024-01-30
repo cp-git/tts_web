@@ -85,3 +85,137 @@ button {
 .admin-button {
     float: right;
 }
+
+
+#headerData{
+ height: 50px;
+ background-color:#0288d1;
+}
+
+.header h1{
+    margin-left: 150px;
+    color: white;
+}
+
+#info h1{
+    margin-left: 30px;
+    color: white;
+}
+
+
+
+.btnsign{
+    background-color:#0288d1;
+    border: none;
+    color: white;
+    font-size: 20px;  
+    margin-top: 10px;
+    margin-right: 30px;
+}
+
+.card{
+    display: inline-block;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 40%;
+    position: relative;
+    margin: -4px 0;
+    margin-top: 40px;
+    margin-left: 27%;
+    background:#fff;
+
+}
+
+.card .card-header{
+    background-color: #4a99c7;
+    margin: -15px 15px 0;
+    height: 40px;
+    z-index: 3;  
+}
+
+.card-content{
+    margin-top: 30px;
+}
+
+
+.input-group-addon{
+   margin-left: 30px;
+   margin-top: 10px;
+    
+ 
+}
+#rowdata{
+    margin-top: 10px;
+}
+
+
+.active, .btn:hover {
+    background-color: #666;
+    color: white;
+  }
+
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  
+
+  }
+  
+  .example-full-width {
+    width: 100%;   
+  }
+
+  .example-full-width{
+    background-color: white;
+    border-radius: 5px;
+  }
+
+
+#btn{
+    display: inline-block;
+    margin-left: 8%;
+}
+
+
+.flex-container {
+    display: flex;
+   
+    height: 100%;
+}
+
+.flex-child {
+    flex: 1;
+   
+}  
+
+.flex-child:first-child {
+    /*margin-right: 20px;*/
+} 
+
+
+
+.icon-display {
+    transform: scale(1);
+    margin-left: 85px;
+    margin-top: 10px;
+ }
+
+ .icon-display1 {
+    transform: scale(1);
+    margin-left: 75px;
+    margin-top: 10px;
+  
+ }
+
+ #btn{
+    display: inline-block;
+    margin-left: 8%;
+}
+
+
+ 
+
+
+  
+

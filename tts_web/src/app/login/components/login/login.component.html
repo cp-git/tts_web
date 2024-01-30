@@ -1,4 +1,119 @@
-<div class="container">
+<div class="container-fluid" id="headerData">
+  <div class="row">
+    <div class="col-md-6" id="info"> 
+      <h1 style="margin-top: 10px;">Task Tracking System</h1>
+    </div>
+    <div class="col-md-2" id="btn"> 
+      <div class="flex-container">
+
+        <div class="flex-child magenta">
+           <mat-icon class="icon-display">fingerprint</mat-icon>
+        </div>
+        
+        <div class="flex-child green">
+          <button type="submit"  class="btnsign"  [routerLink]="['/login']">Login</button>
+        </div>
+        
+      </div>
+  </div>
+
+  <div class="col-md-2" id="btn1"> 
+    <div class="flex-container">
+
+      <div class="flex-child magenta" >
+        <mat-icon  class="icon-display">verified_user</mat-icon>
+      </div>
+      
+      <div class="flex-child green">
+        <button type="submit"  class="btnsign"  [routerLink]="['/forgot']">Recover</button>
+      </div>
+      
+</div>
+  <div class="header">
+     
+  </div>
+</div>
+
+<div class="container" >
+   <form #loginForm="ngForm">
+        <div class="card" style="background: #fff;">
+           <div class="card-header text-center">
+              <h4>TTS LOGIN</h4>
+           </div>
+       
+
+        <div class="card-content">
+                  <div class="row" id="rowdata">
+                    <div class="col-md-3" style="margin-left: 10px;">
+                      <span class="input-group-addon">
+                        <i class="material-icons">face</i>
+                      </span>
+                    </div>
+                    <div class="col-md-8">
+                      
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Username</mat-label>
+                        <input  matInput type="text"  id="username" name="username" [(ngModel)]="passwordData.username" >
+                      </mat-form-field>
+                      <!-- <input type="text" class="form-control" id="username" placeholder="username" name="username"
+                      [(ngModel)]="passwordData.username"> -->
+
+                    </div>
+                  </div>
+
+
+                  <div class="row" id="rowdata">
+                        <div class="col-md-3" style="margin-left: 10px;">
+                                <span class="input-group-addon">
+                                  <i class="material-icons">lock_outline</i>
+                                </span>
+                        </div>
+
+                          <div class="col-md-8">
+
+                            <mat-form-field class="example-full-width" >
+                              <mat-label>Password</mat-label>
+                              <input matInput type="password"   id="password" name="password" [(ngModel)]="passwordData.password">
+                            </mat-form-field>
+
+                            <!-- <input type="password" class="form-control" id="password" placeholder="password" name="password"
+                            [(ngModel)]="passwordData.password"> -->
+
+                          </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-md-3" style="margin-left: 40%;width: 120px;">
+                        <button type="submit" style="font-size: 12px;"   class="btn btn-primary form-control" (click)="login(passwordData)">Login</button>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h4 style="text-align: center;">Forget Username and Password...</h4>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-3" style="margin-left: 37%;">
+                       <button type="button" style="font-size: 12px;" class="btn btn-primary form-control"   [routerLink]="['/forgot']">Recover</button>
+                    </div>
+                </div>
+
+                
+                  
+                
+              </div>
+      
+      </div>
+
+
+   </form>
+
+</div>
+
+
+<!-- <div class="container">
   <div class="login-container">
     <h2>Login</h2>
     <form #loginForm="ngForm">
@@ -12,20 +127,7 @@
         <input type="password" class="form-control" id="password" placeholder="password" name="password"
           [(ngModel)]="passwordData.password">
       </div>
-      <!-- <div class="form-group">
-        <label for="userType">Login As:</label>
-        <select class="form-control" id="userType" name="userType" [(ngModel)]="selectedUserType">
-          <option value="admin">Admin</option>
-          <option value="employee">Employee</option>
-        </select>
-      </div> -->
-      <!-- <div *ngIf="empData.admin ==true">
-        <div class="form-group">
-          <label>Login As:</label>
-          <button [routerLink]="['/company']">Admin</button>
-          <button [routerLink]="['/dashboard']">Employee</button>
-        </div>
-      </div> -->
+     
       <label *ngIf="isLoggedIn==false && clicked">Please enter correct username or password</label>
       <div class="col-auto row">
         <div class="col reset">
@@ -45,13 +147,10 @@
       </div>
 
 
-      <!-- <div class="col-auto">
-          <button type="reset" class="btn btn-reset">Reset</button>
-        </div> -->
-
+     
     </form>
   </div>
-</div>
+</div> -->
 
 <!-- <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -89,3 +188,7 @@
 
 
 <app-footer></app-footer>
+
+
+
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-pulse-out" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
