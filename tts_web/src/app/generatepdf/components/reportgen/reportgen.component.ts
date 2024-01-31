@@ -26,11 +26,9 @@ import { HiringCompany } from 'src/app/hiring-company/class/hiring-company';
 @Component({
   selector: 'app-reportgen',
   templateUrl: './reportgen.component.html',
-  styleUrls: ['./reportgen.component.css']
+  styleUrls: ['./reportgen.component.css'],
 })
 export class ReportgenComponent implements OnInit {
-
-
   allVisas: Visa[] = [];
   allJobLocations: Joblocation[] = [];
   allJobPortals: Jobportal[] = [];
@@ -59,15 +57,13 @@ export class ReportgenComponent implements OnInit {
     private location: Location,
     private benchCandidateService: BenchCandidateService,
     private hiringCompanyService: HiringCompanyService
-
   ) {
-    this.employeeId = sessionStorage.getItem("employeeId");
-    this.companyId = sessionStorage.getItem("companyId");
-    this.empData = sessionStorage.getItem("empData");
-    this.empData = JSON.parse(this.empData)
+    this.employeeId = sessionStorage.getItem('employeeId');
+    this.companyId = sessionStorage.getItem('companyId');
+    this.empData = sessionStorage.getItem('empData');
+    this.empData = JSON.parse(this.empData);
 
     this.displayCompanyLogo = `${environment.companyUrl}/photos/${this.companyId}`;
-
   }
 
   ngOnInit(): void {
@@ -76,37 +72,37 @@ export class ReportgenComponent implements OnInit {
   }
 
   navigateToTask() {
-    this.location.back()
+    this.location.back();
     // this.router.navigate(['/dashboard']);
   }
 
   getDataForDropdowns() {
-    this.taskService.getAllVisasByCompanyId(this.companyId).subscribe(
-      (response) => {
+    this.taskService
+      .getAllVisasByCompanyId(this.companyId)
+      .subscribe((response) => {
         this.allVisas = response;
-      }
-    );
-    this.taskService.getAllTaxTypesByCompanyId(this.companyId).subscribe(
-      (response) => {
+      });
+    this.taskService
+      .getAllTaxTypesByCompanyId(this.companyId)
+      .subscribe((response) => {
         this.allTaxTypes = response;
-      }
-    );
-    this.taskService.getAllJobLocationsByCompanyId(this.companyId).subscribe(
-      (response) => {
+      });
+    this.taskService
+      .getAllJobLocationsByCompanyId(this.companyId)
+      .subscribe((response) => {
         this.allJobLocations = response;
-      }
-    );
-    this.taskService.getAllJobPortalsByCompanyId(this.companyId).subscribe(
-      (response) => {
+      });
+    this.taskService
+      .getAllJobPortalsByCompanyId(this.companyId)
+      .subscribe((response) => {
         this.allJobPortals = response;
-      }
-    );
+      });
 
-    this.statusService.getStatusesByCompanyId(this.companyId).subscribe(
-      (response) => {
+    this.statusService
+      .getStatusesByCompanyId(this.companyId)
+      .subscribe((response) => {
         this.allStatus = response;
-      }
-    );
+      });
     this.getAllEmployees();
   }
 
@@ -125,31 +121,35 @@ export class ReportgenComponent implements OnInit {
   }
 
   private getAllBenchCandidateByCompnayId() {
-    this.benchCandidateService.getAllBenchCandidateByCompanyId(this.companyId).subscribe(
-      (response) => {
-        this.benchEmp = response;
-      },
-      (error) => {
-        console.log(("Failed to get "));
-
-      }
-    )
+    this.benchCandidateService
+      .getAllBenchCandidateByCompanyId(this.companyId)
+      .subscribe(
+        (response) => {
+          this.benchEmp = response;
+        },
+        (error) => {
+          console.log('Failed to get ');
+        }
+      );
   }
 
   private getHiringCompaniesByCompanyId() {
-    this.hiringCompanyService.getAllHiringCompanyByCompanyId(this.companyId).subscribe(
-      (response) => {
-        this.allHiringCompany = response;
-      },
-      (error) => {
-        console.log(("failed to get"));
-
-      }
-    )
+    this.hiringCompanyService
+      .getAllHiringCompanyByCompanyId(this.companyId)
+      .subscribe(
+        (response) => {
+          this.allHiringCompany = response;
+        },
+        (error) => {
+          console.log('failed to get');
+        }
+      );
   }
   async generatePdf(candidateId: any) {
-    alert(candidateId)
-    const internalTasks: any = await this.taskService.getInternalTasks(candidateId).toPromise();
+    // alert(candidateId)
+    const internalTasks: any = await this.taskService
+      .getInternalTasks(candidateId)
+      .toPromise();
     const imageData: string = await this.getImageFromApi();
     const pdfContent: Content = [];
     const headerCellStyle = {
@@ -174,45 +174,66 @@ export class ReportgenComponent implements OnInit {
         fillColor: '#F4F0FF',
         bold: true,
       },
-
     ];
     const comp = [
       {
         fillColor: '#A6FFA6',
         bold: true,
       },
-
     ];
-
 
     pdfContent.push({
       image: imageData,
       width: 100,
       height: 70,
       alignment: 'center',
-
     });
 
     pdfContent.push({
-      text: "Job Application(s) for -  " + this.benchEmp.find(bench => candidateId == bench.benchCandidateId)?.benchCandidateName,
+      text:
+        'Bench job application for ' +
+        this.benchEmp.find((bench) => candidateId == bench.benchCandidateId)
+          ?.benchCandidateName,
       alignment: 'center',
       bold: true,
       fontSize: 15,
-      color: '#1A0940'
+      color: '#1A0940',
     });
-
 
     for (const task of internalTasks) {
       if (task.hiringCompanyName !== null) {
-        pdfContent.push({ text: " TaskFor - " + this.employees.find(emp => task.taskAssignedTo == emp.employeeId)?.firstName, style: taskFor })
-
+        pdfContent.push({
+          text:
+            ' Recruiter - ' +
+            this.employees.find((emp) => task.taskAssignedTo == emp.employeeId)
+              ?.firstName +
+            ' ' +
+            this.employees.find((emp) => task.taskAssignedTo == emp.employeeId)
+              ?.lastName,
+          style: taskFor,
+        });
 
         const childRow = [
-          [{ text: "Hiring Company Name", style: comp }, { text: task.hiringCompanyName, style: comp }],
-          [{ text: "Job Title", style: taskFor }, { text: task.jobTitle, style: taskFor }],
-          [{ text: "Job City", style: taskFor }, { text: task.jobCity, style: taskFor }],
-          [{ text: "Job State", style: taskFor }, { text: task.jobState, style: taskFor }],
-          [{ text: "Rate", style: taskFor }, { text: task.rate, style: taskFor }]
+          [
+            { text: 'Hiring Company Name', style: comp },
+            { text: task.hiringCompanyName, style: comp },
+          ],
+          [
+            { text: 'Job Title', style: taskFor },
+            { text: task.jobTitle, style: taskFor },
+          ],
+          [
+            { text: 'Job City', style: taskFor },
+            { text: task.jobCity, style: taskFor },
+          ],
+          [
+            { text: 'Job State', style: taskFor },
+            { text: task.jobState, style: taskFor },
+          ],
+          [
+            { text: 'Rate', style: taskFor },
+            { text: task.rate, style: taskFor },
+          ],
         ];
 
         const childTableConfig = {
@@ -226,18 +247,40 @@ export class ReportgenComponent implements OnInit {
         pdfContent.push({ text: 'Change History ', style: taskFor });
 
         try {
-          const reasonData = await this.reasonService.getReasonsByTaskId(task.taskId).toPromise();
+          const reasonData = await this.reasonService
+            .getReasonsByTaskId(task.taskId)
+            .toPromise();
           if (reasonData) {
             this.reasons = reasonData;
             // console.log(JSON.stringify(this.reasons));
 
-
-            const taskReson: any = this.reasons.map(reason => [
-              { text: this.datePipe.transform(reason.chgDateTime, 'MM-dd-yyyy HH:mm'), fillColor: 'white' },
-              { text: reason.reasonText, },
-              { text: this.allStatus.find(status => reason.statusId == status.statusId)?.statusCode, fillColor: 'white' },
-              { text: this.employees.find(emp => reason.employeeId == emp.employeeId)?.firstName, fillColor: 'white' },
-              { text: this.employees.find(emp => reason.assignedTo == emp.employeeId)?.firstName, fillColor: 'white' }
+            const taskReson: any = this.reasons.map((reason) => [
+              {
+                text: this.datePipe.transform(
+                  reason.chgDateTime,
+                  'MM-dd-yyyy HH:mm'
+                ),
+                fillColor: 'white',
+              },
+              { text: reason.reasonText },
+              {
+                text: this.allStatus.find(
+                  (status) => reason.statusId == status.statusId
+                )?.statusCode,
+                fillColor: 'white',
+              },
+              {
+                text: this.employees.find(
+                  (emp) => reason.employeeId == emp.employeeId
+                )?.firstName,
+                fillColor: 'white',
+              },
+              {
+                text: this.employees.find(
+                  (emp) => reason.assignedTo == emp.employeeId
+                )?.firstName,
+                fillColor: 'white',
+              },
             ]);
             // console.log("hey2");
             const reasonsHeaderRow = [
@@ -245,15 +288,15 @@ export class ReportgenComponent implements OnInit {
               { text: 'Comments', style: reasonHeader },
               { text: 'Status', style: reasonHeader },
               { text: 'Created By', style: reasonHeader },
-              { text: 'Assigned To', style: reasonHeader }
+              { text: 'Assigned To', style: reasonHeader },
             ];
             // console.log(JSON.stringify(taskReson));
 
             pdfContent.push({
               table: {
                 widths: [110, 124, 80, 80, 80],
-                body: [reasonsHeaderRow, ...taskReson]
-              }
+                body: [reasonsHeaderRow, ...taskReson],
+              },
             });
             pdfContent.push({ text: ' ', margin: [0, 5] });
           }
@@ -262,9 +305,6 @@ export class ReportgenComponent implements OnInit {
         }
       }
     }
-
-
-
 
     const documentDefinition: TDocumentDefinitions = {
       //  pageOrientation: 'landscape',
@@ -276,8 +316,10 @@ export class ReportgenComponent implements OnInit {
   }
 
   async generatePdfForSourcing(hiringCompanyId: any) {
-    alert(hiringCompanyId)
-    const externalTask: any = await this.taskService.getExternalTasks(hiringCompanyId).toPromise();
+    // alert(hiringCompanyId)
+    const externalTask: any = await this.taskService
+      .getExternalTasks(hiringCompanyId)
+      .toPromise();
     console.log(JSON.stringify(externalTask));
 
     const imageData: string = await this.getImageFromApi();
@@ -296,16 +338,13 @@ export class ReportgenComponent implements OnInit {
         fillColor: '#F4F0FF',
         bold: true,
       },
-
     ];
     const comp = [
       {
         fillColor: '#A6FFA6',
         bold: true,
       },
-
     ];
-
 
     pdfContent.push({
       image: imageData,
@@ -314,24 +353,56 @@ export class ReportgenComponent implements OnInit {
       alignment: 'center',
     });
     pdfContent.push({
-      text: "Candidate Application(s) for Company -  " + this.allHiringCompany.find(hiringCom => hiringCompanyId == hiringCom.hiringCompanyId)?.hiringCompanyName,
+      text:
+        'Job submission for ' +
+        this.allHiringCompany.find(
+          (hiringCom) => hiringCompanyId == hiringCom.hiringCompanyId
+        )?.hiringCompanyName,
       alignment: 'center',
       bold: true,
       fontSize: 15,
-      color: '#1A0940'
+      color: '#1A0940',
     });
 
     for (const task of externalTask) {
       if (task.candidateName !== null) {
-        pdfContent.push({ text: " Task For - " + this.employees.find(emp => task.taskAssignedTo == emp.employeeId)?.firstName, style: taskFor })
-
+        pdfContent.push({
+          text:
+            ' Recruiter - ' +
+            this.employees.find((emp) => task.taskAssignedTo == emp.employeeId)
+              ?.firstName +
+            ' ' +
+            this.employees.find((emp) => task.taskAssignedTo == emp.employeeId)
+              ?.lastName,
+          style: taskFor,
+        });
 
         const childRow = [
-          [{ text: "Candidate Name", style: comp }, { text: task.candidateName, style: comp }],
-          [{ text: "Visa Type", style: taskFor }, { text: this.allVisas.find(visa => task.visaId == visa.visaId)?.visaType, style: taskFor }],
-          [{ text: "Tax Type", style: taskFor }, { text: this.allTaxTypes.find(tax => task.taxTypeId == tax.taxTypeId)?.taxTypeName, style: taskFor }],
-          [{ text: "Willing To Relocate", style: taskFor }, { text: task.willingToRelocate, style: taskFor }],
-
+          [
+            { text: 'Candidate Name', style: comp },
+            { text: task.candidateName, style: comp },
+          ],
+          [
+            { text: 'Visa Type', style: taskFor },
+            {
+              text: this.allVisas.find((visa) => task.visaId == visa.visaId)
+                ?.visaType,
+              style: taskFor,
+            },
+          ],
+          [
+            { text: 'Tax Type', style: taskFor },
+            {
+              text: this.allTaxTypes.find(
+                (tax) => task.taxTypeId == tax.taxTypeId
+              )?.taxTypeName,
+              style: taskFor,
+            },
+          ],
+          [
+            { text: 'Willing To Relocate', style: taskFor },
+            { text: task.willingToRelocate, style: taskFor },
+          ],
         ];
 
         const childTableConfig = {
@@ -345,18 +416,40 @@ export class ReportgenComponent implements OnInit {
         pdfContent.push({ text: 'Change History ', style: taskFor });
 
         try {
-          const reasonData = await this.reasonService.getReasonsByTaskId(task.taskId).toPromise();
+          const reasonData = await this.reasonService
+            .getReasonsByTaskId(task.taskId)
+            .toPromise();
           if (reasonData) {
             this.reasons = reasonData;
             // console.log(JSON.stringify(this.reasons));
 
-
-            const taskReson: any = this.reasons.map(reason => [
-              { text: this.datePipe.transform(reason.chgDateTime, 'MM-dd-yyyy HH:mm'), fillColor: 'white' },
-              { text: reason.reasonText, },
-              { text: this.allStatus.find(status => reason.statusId == status.statusId)?.statusCode, fillColor: 'white' },
-              { text: this.employees.find(emp => reason.employeeId == emp.employeeId)?.firstName, fillColor: 'white' },
-              { text: this.employees.find(emp => reason.assignedTo == emp.employeeId)?.firstName, fillColor: 'white' }
+            const taskReson: any = this.reasons.map((reason) => [
+              {
+                text: this.datePipe.transform(
+                  reason.chgDateTime,
+                  'MM-dd-yyyy HH:mm'
+                ),
+                fillColor: 'white',
+              },
+              { text: reason.reasonText },
+              {
+                text: this.allStatus.find(
+                  (status) => reason.statusId == status.statusId
+                )?.statusCode,
+                fillColor: 'white',
+              },
+              {
+                text: this.employees.find(
+                  (emp) => reason.employeeId == emp.employeeId
+                )?.firstName,
+                fillColor: 'white',
+              },
+              {
+                text: this.employees.find(
+                  (emp) => reason.assignedTo == emp.employeeId
+                )?.firstName,
+                fillColor: 'white',
+              },
             ]);
             // console.log("hey2");
             const reasonsHeaderRow = [
@@ -364,15 +457,15 @@ export class ReportgenComponent implements OnInit {
               { text: 'Comments', style: reasonHeader },
               { text: 'Status', style: reasonHeader },
               { text: 'Created By', style: reasonHeader },
-              { text: 'Assigned To', style: reasonHeader }
+              { text: 'Assigned To', style: reasonHeader },
             ];
             // console.log(JSON.stringify(taskReson));
 
             pdfContent.push({
               table: {
                 widths: [110, 124, 80, 80, 80],
-                body: [reasonsHeaderRow, ...taskReson]
-              }
+                body: [reasonsHeaderRow, ...taskReson],
+              },
             });
             pdfContent.push({ text: ' ', margin: [0, 5] });
           }
@@ -396,7 +489,15 @@ export class ReportgenComponent implements OnInit {
       // Replace 'your-api-endpoint' with the actual API endpoint
       const response = await fetch(this.displayCompanyLogo);
       const buffer = await response.arrayBuffer();
-      return 'data:image/jpeg;base64,' + btoa(new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+      return (
+        'data:image/jpeg;base64,' +
+        btoa(
+          new Uint8Array(buffer).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ''
+          )
+        )
+      );
     } catch (error) {
       console.error('Error fetching image from API:', error);
       throw error;
@@ -408,10 +509,9 @@ export class ReportgenComponent implements OnInit {
       (data: any) => {
         this.reasons = data; // Store the retrieved reasons in the reasons array
         // // console.log(JSON.stringify(this.reasons));
-
       },
       (error: any) => {
-        alert('Error fetching reasons:');
+        // alert('Error fetching reasons:');
       }
     );
   }
