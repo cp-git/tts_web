@@ -8,6 +8,10 @@ import { Joblocation } from 'src/app/joblocation/classes/joblocation';
 import { Jobportal } from 'src/app/jobportal/classes/jobportal';
 import { Taxtype } from 'src/app/taxtype/classes/taxtype';
 import { Visa } from 'src/app/visa/class/visa';
+import { InternalTask } from '../class/internal-task';
+import { ExternalTask } from '../class/external-task';
+import { InternalTaskDTO } from '../class/internal-task-dto';
+import { ExternalTaskDTO } from '../class/external-task-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +61,7 @@ export class TaskService {
   }
 
   getTaskByTaskId(taskId: number): Observable<Task> {
-    return this.http.get<Task>(`${this.TaskURL}/taskby/${taskId}`); 
+    return this.http.get<Task>(`${this.TaskURL}/taskby/${taskId}`);
 
   }
 
@@ -74,32 +78,50 @@ export class TaskService {
     return this.http.get<Task2>(`${this.TaskURL}/created/${employeeId}`);
   }
 
-  getAllParentTasksByCompanyId(companyId:number):Observable<Task2>{
+  getAllParentTasksByCompanyId(companyId: number): Observable<Task2> {
     return this.http.get<Task2>(`${this.TaskURL}/allparents?companyid=${companyId}`);
 
   }
-  
+
 
   // ---------------------------------------------------------------------------
   private readonly jobLocationURL = `http://localhost:8080/joblocation/ttsms/locations/`;
   private readonly jobPortalURL = `http://localhost:8080/jobportal/ttsms/jobportals/`
   private readonly jobTypeURL = `http://localhost:8080/taxtype/ttsms/taxtypes/`
   private readonly visaURL = `http://localhost:8080/visa/ttsms/visas/`
-  
-  getAllJobLocationsByCompanyId(companyId:number):Observable<Joblocation[]>{
+
+  getAllJobLocationsByCompanyId(companyId: number): Observable<Joblocation[]> {
     return this.http.get<Joblocation[]>(`${this.jobLocationURL}${companyId}`);
   }
 
-  getAllJobPortalsByCompanyId(companyId:number):Observable<Jobportal[]>{
+  getAllJobPortalsByCompanyId(companyId: number): Observable<Jobportal[]> {
     return this.http.get<Jobportal[]>(`${this.jobPortalURL}${companyId}`);
   }
 
-  getAllTaxTypesByCompanyId(companyId:number):Observable<Taxtype[]>{
+  getAllTaxTypesByCompanyId(companyId: number): Observable<Taxtype[]> {
     return this.http.get<Taxtype[]>(`${this.jobTypeURL}${companyId}`);
   }
 
-  getAllVisasByCompanyId(companyId:number):Observable<Visa[]>{
+  getAllVisasByCompanyId(companyId: number): Observable<Visa[]> {
     return this.http.get<Visa[]>(`${this.visaURL}${companyId}`);
+  }
+  getInternalTasksByCandidateId(candidateId: number): Observable<InternalTask> {
+    return this.http.get<InternalTask>(`${this.TaskURL}/internalTask/${candidateId}`);
+
+  }
+  getExternalTasksByHiringCompanyId(hiringCompanyId: number): Observable<ExternalTask> {
+    return this.http.get<ExternalTask>(`${this.TaskURL}/externalTask/${hiringCompanyId}`);
+
+  }
+
+
+  getInternalTasks(candidateId: number): Observable<InternalTaskDTO> {
+    return this.http.get<InternalTaskDTO>(`${this.TaskURL}/internal/${candidateId}`);
+
+  }
+  getExternalTasks(hiringCompanyId: number): Observable<ExternalTaskDTO> {
+    return this.http.get<ExternalTaskDTO>(`${this.TaskURL}/external/${hiringCompanyId}`);
+
   }
 
 }

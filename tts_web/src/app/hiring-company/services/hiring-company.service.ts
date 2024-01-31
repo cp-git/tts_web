@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.dev';
 import { HiringCompany } from '../class/hiring-company';
 import { Observable } from 'rxjs';
+import { ExternalTask } from 'src/app/task/class/external-task';
 
 @Injectable({
   providedIn: 'root',
@@ -45,5 +46,9 @@ export class HiringCompanyService {
       `${this.HiringCompanyUrl}/${hiringCompanyId}`,
       HiringCompany
     );
+  }
+  getExternalTasksByHiringCompanyId(hiringCompanyId: number): Observable<ExternalTask> {
+    return this.http.get<ExternalTask>(`${this.HiringCompanyUrl}/internalTask/${hiringCompanyId}`);
+
   }
 }

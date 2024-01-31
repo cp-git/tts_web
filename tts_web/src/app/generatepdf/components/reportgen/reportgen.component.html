@@ -1,0 +1,83 @@
+<!-- Image and text -->
+<nav class="navbar navbar-light bg-purple">
+    <a class="navbar-brand text-white" href="#">
+        &nbsp;
+        <!-- <img src="{{displayCompanyLogo}}" class="d-inline-block align-top" alt=""> -->
+        Summary Reports
+    </a>
+    <button type="button" class="btn btn-danger " (click)="navigateToTask()" style="margin-right: 10px;">Back</button>
+</nav>
+&nbsp;
+&nbsp;
+<div class="container">
+    <form>
+        <fieldset class="border rounded-3">
+            <legend class="float-none w-auto px-2">For Bench Candidate</legend>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label" for="statusCode">Candidate Name:<span
+                            class="required-asterisk">*</span></label>
+                    <select class="form-control form-select" name="candidateName" id="candidateName"
+                        [(ngModel)]="candidateId" [required]="true">
+                        <option value="undefined" disabled>Select Candidate</option>
+                        <ng-container *ngFor="let employee of benchEmp">
+                            <ng-container>
+                                <option value="{{employee.benchCandidateId}}">{{employee.benchCandidateName}}
+
+                                </option>
+                            </ng-container>
+                        </ng-container>
+
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <button *ngIf="candidateId" class="btn btn-danger mt-4 " style="border-radius: 50px;"
+                        (click)="generatePdf(candidateId)">Generate Report</button>
+                </div>
+
+            </div>
+        </fieldset>
+
+    </form>
+</div>
+&nbsp;
+&nbsp;
+<div class="container">
+    <form>
+        <fieldset class="border rounded-3">
+            <legend class="float-none w-auto px-2">For Sourcing Candidate</legend>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label" for="statusCode">Hiring Company Name:<span
+                            class="required-asterisk">*</span></label>
+                    <select class="form-control form-select" name="candidateName" id="candidateName"
+                        [(ngModel)]="hiringCompanyId" [required]="true">
+                        <option value="undefined" disabled>Select Hiring Company</option>
+                        <ng-container *ngFor="let company of allHiringCompany">
+                            <ng-container>
+                                <option value="{{company.hiringCompanyId}}">{{company.hiringCompanyName}}
+
+                                </option>
+                            </ng-container>
+                        </ng-container>
+
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <button *ngIf="hiringCompanyId" class="btn btn-danger mt-4 " style="border-radius: 50px;"
+                        (click)="generatePdfForSourcing(hiringCompanyId)">Generate Report</button>
+                </div>
+
+            </div>
+        </fieldset>
+
+    </form>
+</div>
+
+<app-footer></app-footer>
