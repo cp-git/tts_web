@@ -270,6 +270,9 @@ export class CreateTaskComponent implements OnInit {
             this.task.taxTypeId = response.taxTypeId;
             this.task.taskStartDate = response.taskStartDate;
             this.task.taskEndDate = response.taskEndDate;
+            if (this.task.minBillingRate == null) {
+              this.task.minBillingRate = response.minBillingRate;
+            }
 
             this.benchCandidate.benchCandidateId = response.benchCandidateId;
             // for getting bench candidate details (for dropdown)

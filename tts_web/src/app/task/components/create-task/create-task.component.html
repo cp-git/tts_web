@@ -68,9 +68,9 @@
             <div class="col">
                 <!-- candidate details  -->
                 <!-- this will display for child task and (for parent only for bench candidate) -->
+                <!-- [disabled]="task.placementId==INTERNAL_PLACEMENT_ID && task.taskParent!=0" -->
                 <fieldset class="border rounded-3"
-                    *ngIf="task.taskParent!=0 || task.placementId == INTERNAL_PLACEMENT_ID"
-                    [disabled]="task.placementId==INTERNAL_PLACEMENT_ID && task.taskParent!=0">
+                    *ngIf="task.taskParent!=0 || task.placementId == INTERNAL_PLACEMENT_ID">
                     <legend class="float-none w-auto px-2">Candidate Details</legend>
                     <!-- candidate name -->
                     <div class="row">
@@ -255,21 +255,31 @@
                                         class="required-asterisk" *ngIf="!updateScreen">*</span></label>
                                 <input type="number" class="form-control extra-light-placeholder"
                                     id="candidateMinBillingRate" name="candidateMinBillingRate"
-                                    placeholder="Enter candidate experience" [(ngModel)]="benchCandidate.minBillingRate"
-                                    [required]="true" #candidateMinBillingRate="ngModel" disabled>
+                                    placeholder="Enter candidate experience" [(ngModel)]="task.minBillingRate"
+                                    [required]="true" #candidateMinBillingRate="ngModel" [disabled]=false>
                                 <div *ngIf="candidateMinBillingRate.invalid && (candidateMinBillingRate.dirty||candidateMinBillingRate.touched) "
                                     class="text-danger">
-                                    Experience is required.
+                                    Min billing rate is required.
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <label class="form-check-label" for="isWillingToRelocate"><strong>Willing to
                                         relocate?</strong></label>
-                                <div>
-                                    <input type="checkbox" id="isWillingToRelocate" name="isWillingToRelocate"
-                                        [(ngModel)]="benchCandidate.willingToRelocate"
-                                        class="custom-checkbox form-check-input" disabled>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="radio" id="willingToRelocate" name="isWillingToRelocate"
+                                            [(ngModel)]="benchCandidate.willingToRelocate" [value]="true"
+                                            class="custom-input form-check-input" disabled>
+                                        <label class="custom-input-label" for="willingToRelocate">&nbsp;Yes</label><br>
+                                    </div>
+                                    <div class="col">
+                                        <input type="radio" id="notWillingToRelocate" name="isWillingToRelocate"
+                                            [(ngModel)]="benchCandidate.willingToRelocate" [value]="false"
+                                            class="custom-input form-check-input" disabled>
+                                        <label class="custom-input-label"
+                                            for="notWillingToRelocate">&nbsp;No</label><br>
+                                    </div>
                                 </div>
                             </div>
 
@@ -328,20 +338,43 @@
                             <div class="col">
                                 <label class="form-check-label" for="isWillingToRelocate"><strong>Willing to
                                         relocate?</strong></label>
-                                <div>
-                                    <input type="checkbox" id="isWillingToRelocate" name="isWillingToRelocate"
-                                        [(ngModel)]="task.willingToRelocate" class="custom-checkbox form-check-input">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="radio" id="willingToRelocate" name="isWillingToRelocate"
+                                            [(ngModel)]="task.willingToRelocate" [value]="true"
+                                            class="custom-input-radio2 form-check-input">
+                                        <label for="willingToRelocate">&nbsp;Yes</label><br>
+                                    </div>
+                                    <div class="col">
+                                        <input type="radio" id="notWillingToRelocate" name="isWillingToRelocate"
+                                            [(ngModel)]="task.willingToRelocate" [value]="false"
+                                            class="custom-input-radio2 form-check-input">
+                                        <label for="notWillingToRelocate">&nbsp;No</label><br>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="col">
                                 <label class="form-check-label" for="isWillingToNegotiateSalary"><strong>Willing to
                                         negotiate salary?</strong></label>
-                                <div>
-                                    <input type="checkbox" id="isWillingToNegotiateSalary"
-                                        name="isWillingToNegotiateSalary" [(ngModel)]="task.willingToNegotiateSalary"
-                                        class="custom-checkbox form-check-input">
+
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="radio" id="willingToNegotiateSalary"
+                                            name="isWillingToNegotiateSalary"
+                                            [(ngModel)]="task.willingToNegotiateSalary" [value]="true"
+                                            class="custom-input-radio2 form-check-input">
+                                        <label for="willingToNegotiateSalary">&nbsp;Yes</label><br>
+                                    </div>
+                                    <div class="col">
+                                        <input type="radio" id="notWillingToNegotiateSalary"
+                                            name="isWillingToNegotiateSalary"
+                                            [(ngModel)]="task.willingToNegotiateSalary" [value]="false"
+                                            class="custom-input-radio2 form-check-input">
+                                        <label for="notWillingToNegotiateSalary">&nbsp;No</label><br>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
 
@@ -1035,7 +1068,7 @@
         <!-- date posted, job portal, job reference no -->
         <div class="row">
             <div class="col">
-                <label for="jobLink" class="form-label">Job Link<span class="required-asterisk"
+                <label for="jobLink" class="form-label">Job Url<span class="required-asterisk"
                         *ngIf="!updateScreen">*</span></label>
                 <input
                     [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
@@ -1043,7 +1076,7 @@
                     placeholder="Enter job link" [(ngModel)]="task.jobLink" [required]="true" maxlength="100"
                     #jobLink="ngModel">
                 <div *ngIf="jobLink.invalid && (jobLink.dirty||jobLink.touched) " class="text-danger">
-                    Job link is required.
+                    Job url is required.
                 </div>
             </div>
 

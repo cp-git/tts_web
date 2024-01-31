@@ -89,18 +89,27 @@
                     class="form-control" #experience="ngModel">
 
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <label class="label" for="minBillingRate">Min Billing Rate:</label>
                 <input type="number" id="minBillingRate" name="minBillingRate"
                     [(ngModel)]="benchCandidate.minBillingRate" class="form-control" required #experience="ngModel">
 
-            </div>
+            </div> -->
             <div class="col-md-4">
                 <label class="form-check-label " for="isWillingToRelocate"><strong>Willing to
                         relocate?</strong></label>
-                <div>
-                    <input type="checkbox" id="isWillingToRelocate" name="isWillingToRelocate"
-                        [(ngModel)]="benchCandidate.willingToRelocate" class="custom-checkbox form-check-input">
+                <div class="row">
+                    <div class="col"><input type="radio" id="willingToRelocate" name="isWillingToRelocate"
+                            [(ngModel)]="benchCandidate.willingToRelocate" [value]="true"
+                            class="custom-input form-check-input">
+                        <label class="custom-input-label" for="willingToRelocate">&nbsp;Yes</label><br>
+                    </div>
+                    <div class="col">
+                        <input type="radio" id="notWillingToRelocate" name="isWillingToRelocate"
+                            [(ngModel)]="benchCandidate.willingToRelocate" [value]="false"
+                            class="custom-input form-check-input">
+                        <label class="custom-input-label" for="notWillingToRelocate">&nbsp;No</label><br>
+                    </div>
                 </div>
             </div>
 

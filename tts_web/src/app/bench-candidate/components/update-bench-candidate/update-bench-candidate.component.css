@@ -7,3 +7,8 @@
   /* Increase the size of the checkbox */
   transform: scale(1.5);
 }
+
+.custom-input {
+  border: solid 1px;
+  transform: scale(1.2);
+}

@@ -105,6 +105,7 @@ export interface Task {
   jobSubmissionPortalId: number;
   portalName: string;
   commentOnCandidate: string;
+  minBillingRate: number;
 
   //external
   externalId: number;
