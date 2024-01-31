@@ -62,10 +62,13 @@ fieldset {
   padding-bottom: 10px;
   padding-right: 10px;
   border: 2px solid black !important;
+ 
 }
 
 legend {
   font-size: large;
+  background-color: #0288d1;
+  color: white;
 }
 
 /* .modal-xl{
@@ -80,3 +83,50 @@ legend {
   pointer-events: none;
 
 }
+
+#headerinfo{
+  width: 100%;
+  border: 1px groove red;
+  background-color:#0288d1;
+  height: 60px;
+}
+
+
+
+.datainput:active, 
+.datainput:focus 
+{
+    border:0.5em solid #00c; /* here configure as your needs */
+    /*color:#00c;*/
+ }
+
+ input[type=text],[type=date],[type=textarea],[type=dropdown]{
+  width: 100%;
+  /* padding: 12px 20px;
+  margin: 8px 0; */
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid grey;
+  border-radius: 0;
+  height: 30px;
+  font-size: 14px;
+}
+
+input[type=text]:focus ,[type=date]:focus,[type=textarea]:focus{
+  width: 100%;
+  /* padding: 12px 20px;
+  margin: 8px 0; */
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid dodgerblue;
+  border-radius: 0;
+ 
+}
+
+label{
+  font-size: 14px;
+  color: black;
+}
+
+
+

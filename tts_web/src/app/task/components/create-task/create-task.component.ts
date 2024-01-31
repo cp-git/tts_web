@@ -514,6 +514,7 @@ export class CreateTaskComponent implements OnInit {
     const modalElement = this.createTaskModal.nativeElement;
     if (modalElement) {
       const closeButton = modalElement.querySelector('#closeButton');
+   
       if (closeButton) {
         this.renderer.selectRootElement(closeButton).click();
       }
