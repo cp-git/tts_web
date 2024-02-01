@@ -1,73 +1,78 @@
 <div class="container">
-    <form #updateStatusData="ngForm">
-        <div class="d-flex justify-content-between align-items-center w-100">
-            <h2>Update Status</h2>
-            <span [routerLink]="['/status']" class="fa-solid fa-circle-arrow-left fa-lg"
-                style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <label class="label" for="statusCode">Status:</label>
-                <input type="text" id="statusCode" name="statusCode" [(ngModel)]="status.statusCode" required
-                    class="form-control" maxlength="25" #statusCodeField="ngModel">
-                <div *ngIf="statusCodeField.invalid && (statusCodeField.dirty||statusCodeField.touched) "
-                    class="text-danger">
-                    Status Code is required.
-                </div>
-            </div>
-            <div class="col-md-4">
-                <label class="label" for="statusDescription">Description:</label>
-                <input type="text" id="statusDescription" name="statusDescription"
-                    [(ngModel)]="status.statusDescription" required class="form-control" maxlength="255"
-                    #statusDescriptionField="ngModel">
-                <div *ngIf="statusDescriptionField.invalid && (statusDescriptionField.dirty||statusDescriptionField.touched)"
-                    class="text-danger">
-                    Description is required.
-                </div>
-            </div>
-            <div class="col-md-4">
-                <label class="label" for="statusOrder">Status Order:</label>
-                <input type="text" id="statusOrder" name="statusOrder" [(ngModel)]="status.statusOrder" required
-                    class="form-control" #statusOrderField="ngModel">
-                <div *ngIf="statusOrderField.invalid && (statusOrderField.dirty||statusOrderField.touched)"
-                    class="text-danger">
-                    Status Order is required.
-                </div>
-            </div>
+    <fieldset class="border rounded-3">
+        <legend class="float-none w-auto px-2">Update Status</legend>
+        <form #updateStatusData="ngForm">
 
-        </div>
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <h2></h2>
+                <span [routerLink]="['/status']" class="fa-solid fa-circle-arrow-left fa-lg"
+                    style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
 
-        <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label" for="statusCode">Status:</label>
+                    <input type="text" id="statusCode" name="statusCode" [(ngModel)]="status.statusCode" required
+                        class="form-control" maxlength="25" #statusCodeField="ngModel">
+                    <div *ngIf="statusCodeField.invalid && (statusCodeField.dirty||statusCodeField.touched) "
+                        class="text-danger">
+                        Status Code is required.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="label" for="statusDescription">Description:</label>
+                    <input type="text" id="statusDescription" name="statusDescription"
+                        [(ngModel)]="status.statusDescription" required class="form-control" maxlength="255"
+                        #statusDescriptionField="ngModel">
+                    <div *ngIf="statusDescriptionField.invalid && (statusDescriptionField.dirty||statusDescriptionField.touched)"
+                        class="text-danger">
+                        Description is required.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="label" for="statusOrder">Status Order:</label>
+                    <input type="text" id="statusOrder" name="statusOrder" [(ngModel)]="status.statusOrder" required
+                        class="form-control" #statusOrderField="ngModel">
+                    <div *ngIf="statusOrderField.invalid && (statusOrderField.dirty||statusOrderField.touched)"
+                        class="text-danger">
+                        Status Order is required.
+                    </div>
+                </div>
 
-            <div class="col-md-3">
-                <label class="label" for="actualStartDate">ActualStartdate:</label>
-                <div>
-                    <input type="checkbox" id="actualStartDate" name="actualStartDate"
-                        [(ngModel)]="status.actualStartDate" class="custom-checkbox form-check-input">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <label class="label" for="actualEndDate">ActualEndDate:</label>
-                <div>
-                    <input type="checkbox" id="actualEndDate" name="actualEndDate" [(ngModel)]="status.actualEndDate"
-                        class="custom-checkbox form-check-input">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <label class="label" for="finalStatus">FinalStatus:</label>
-                <div>
-                    <input type="checkbox" id="finalStatus" name="finalStatus" [(ngModel)]="status.finalStatus"
-                        class="custom-checkbox form-check-input">
-                </div>
             </div>
 
-        </div>
+            <div class="row">
+
+                <div class="col-md-3">
+                    <label class="label" for="actualStartDate">ActualStartdate:</label>
+                    <div>
+                        <input type="checkbox" id="actualStartDate" name="actualStartDate"
+                            [(ngModel)]="status.actualStartDate" class="custom-checkbox form-check-input">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="label" for="actualEndDate">ActualEndDate:</label>
+                    <div>
+                        <input type="checkbox" id="actualEndDate" name="actualEndDate"
+                            [(ngModel)]="status.actualEndDate" class="custom-checkbox form-check-input">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="label" for="finalStatus">FinalStatus:</label>
+                    <div>
+                        <input type="checkbox" id="finalStatus" name="finalStatus" [(ngModel)]="status.finalStatus"
+                            class="custom-checkbox form-check-input">
+                    </div>
+                </div>
+
+            </div>
 
 
-        <div>
-            <button type="button" [disabled]="!updateStatusData.valid" class="btn btn-primary mt-3"
-                (click)="onSaveStatus(status)">Update</button>
-        </div>
-    </form>
+            <div>
+                <button type="button" [disabled]="!updateStatusData.valid" class="btn btn-primary mt-3"
+                    (click)="onSaveStatus(status)">Update</button>
+            </div>
+        </form>
+    </fieldset>
 </div>
 <app-footer></app-footer>

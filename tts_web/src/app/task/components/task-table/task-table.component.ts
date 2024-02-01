@@ -24,6 +24,7 @@ import { Taxtype } from 'src/app/taxtype/classes/taxtype';
 import { Joblocation } from 'src/app/joblocation/classes/joblocation';
 import { Jobportal } from 'src/app/jobportal/classes/jobportal';
 import { JobportalService } from 'src/app/jobportal/services/jobportal.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-table',
@@ -73,7 +74,8 @@ export class TaskTableComponent implements OnInit {
     private visaService: VisaService,
     private taxTypeService: TextypeService,
     private jobLocationService: JoblocationService,
-    private jobPortalService: JobportalService
+    private jobPortalService: JobportalService,
+    private router: Router
   ) {
     this.employeeId = sessionStorage.getItem('employeeId');
     this.companyId = sessionStorage.getItem('companyId');
@@ -338,5 +340,8 @@ export class TaskTableComponent implements OnInit {
 
   onTriggered(data: Task) {
     // alert();
+  }
+  navigateToReport() {
+    this.router.navigate(['/report']);
   }
 }

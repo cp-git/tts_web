@@ -18,6 +18,8 @@ import { ReasonModule } from './reason/reason.module';
 import { StatusModule } from './status/status.module';
 import { HiringCompanyModule } from './hiring-company/hiring-company.module';
 import { BenchCandidateModule } from './bench-candidate/bench-candidate.module';
+import { ReportgenComponent } from './generatepdf/components/reportgen/reportgen.component';
+import { RepotgenModule } from './generatepdf/repotgen/repotgen.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,8 +41,9 @@ import { BenchCandidateModule } from './bench-candidate/bench-candidate.module';
     ReasonModule,
     HiringCompanyModule,
     BenchCandidateModule,
+    RepotgenModule
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -12,7 +12,7 @@ export const environment = {
   // companyUrl: `http://localhost:8090/company/ttsms/company`,
   // reasonUrl: `http://localhost:8090/reason/ttsms`,
   // statusUrl: `http://localhost:8090/status/ttsms`,
-  // taskUrl: `http://localhost:8090/ttsms`,
+  //taskUrl: `http://localhost:8081/ttsms`,
   // passwordUrl: `http://localhost:8090/employee/ttsms/password`,
   // forgotUrl: `http://localhost:8090/employee/ttsms/forgotpass`,
   // statusURL: `http://localhost:8090/status/ttsms`,
