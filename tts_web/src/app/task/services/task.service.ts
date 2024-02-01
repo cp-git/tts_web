@@ -85,10 +85,10 @@ export class TaskService {
 
 
   // ---------------------------------------------------------------------------
-  private readonly jobLocationURL = `http://localhost:8080/joblocation/ttsms/locations/`;
-  private readonly jobPortalURL = `http://localhost:8080/jobportal/ttsms/jobportals/`
-  private readonly jobTypeURL = `http://localhost:8080/taxtype/ttsms/taxtypes/`
-  private readonly visaURL = `http://localhost:8080/visa/ttsms/visas/`
+  private readonly jobLocationURL = `https://localhost:8443/joblocation/ttsms/locations/`;
+  private readonly jobPortalURL = `https://localhost:8443/jobportal/ttsms/jobportals/`
+  private readonly jobTypeURL = `https://localhost:8443/taxtype/ttsms/taxtypes/`
+  private readonly visaURL = `https://localhost:8443/visa/ttsms/visas/`
 
   getAllJobLocationsByCompanyId(companyId: number): Observable<Joblocation[]> {
     return this.http.get<Joblocation[]>(`${this.jobLocationURL}${companyId}`);
