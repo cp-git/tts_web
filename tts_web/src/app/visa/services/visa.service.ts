@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class VisaService {
 
-  private readonly visaURL = `http://localhost:8080/visa/ttsms/`
+  private readonly visaURL = `https://127.0.0.1:8443/visa/ttsms/`
   constructor(
     private http: HttpClient
   ) { }

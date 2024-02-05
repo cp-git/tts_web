@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class JoblocationService {
 
-  private readonly jobLocationURL = `http://localhost:8080/joblocation/ttsms/`
+  private readonly jobLocationURL = `https://127.0.0.1:8443/joblocation/ttsms/`
   constructor(
     private http: HttpClient
   ) { }

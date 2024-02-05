@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class JobportalService {
 
-  private readonly jobPortalURL = `http://localhost:8080/jobportal/ttsms/`
+  private readonly jobPortalURL = `https://127.0.0.1:8443/jobportal/ttsms/`
   constructor(
     private http: HttpClient
   ) { }
