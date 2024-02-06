@@ -1,17 +1,17 @@
 <!-- Modal -->
 <div #createTaskModal class="modal fade" data-bs-backdrop="static" id="createTask{{modalId}}" tabindex="-1"
     aria-labelledby="createTaskLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered" style="max-width: 1300px;">
+    <div class="modal-dialog modal-xl modal-dialog modal-fullscreen" style="height: 110vh;">
 
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" id="header">
                 <h1 *ngIf="!updateScreen" class="modal-title fs-5" id="createTaskLabel">Create Task<ng-container
                         *ngIf="task.taskParent!=0"> for - {{parentTask.taskName}}
                     </ng-container></h1>
                 <h1 *ngIf="updateScreen" class="modal-title fs-5" id="createTaskLabel">Update Task</h1>
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                    (click)="closeModal()"></button>
+                    (click)="closeModal()" style="margin-right: 20px;"></button>
             </div>
             <div>
 
@@ -68,7 +68,7 @@
 
             <div class="col">
                 <!-- candidate details  -->
-                <fieldset class="border rounded-3"
+                <fieldset class="border rounded-3" style="margin-top: 20px;"
                     *ngIf="task.taskParent!=0 || task.placementId == INTERNAL_PLACEMENT_ID"
                     [disabled]="task.placementId==INTERNAL_PLACEMENT_ID && task.taskParent!=0">
                     <legend class="float-none w-auto px-2">Candidate Details</legend>
@@ -252,7 +252,7 @@
                 <!-- job details, vendor details and job sibmission portalId -->
                 <!-- job title, location, rate  -->
                 <!-- displaying for child task ( and only sourcing parent) -->
-                <fieldset class="border rounded-3"
+                <fieldset class="border rounded-3" style="margin-top: 20px;"
                     [disabled]="task.taskParent !=0 && (task.placementId == EXTERNAL_PLACEMENT_ID)"
                     *ngIf="task.taskParent !=0 || task.placementId == EXTERNAL_PLACEMENT_ID">
                     <ng-container *ngIf="task.placementId == INTERNAL_PLACEMENT_ID">
@@ -620,7 +620,7 @@
                     </div>
                 </fieldset>
 
-                <fieldset class="border rounded-3">
+                <fieldset class="border rounded-3" style="margin-top: 20px;">
                     <legend class="float-none w-auto px-2">Task Details</legend>
 
                     <!-- task details  -->
@@ -850,7 +850,7 @@
                 </fieldset>
 
                 <!-- file and attachements  -->
-                <fieldset class="border rounded-3">
+                <fieldset class="border rounded-3" style="margin-top: 10px;">
                     <legend class="float-none w-auto px-2">Attachments</legend>
                     <div class="row">
                         <!-- upload file  -->

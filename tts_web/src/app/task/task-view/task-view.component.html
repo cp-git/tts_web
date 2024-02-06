@@ -5,7 +5,7 @@
 
 <div class="container-fluid" id="sect1">
     <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="sect2">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="sect2" style="background-color: purple;">
             <div class="container-fluid">
                 <div style="display: flex; align-items: center;">
                     <!-- Container for logo and name with margin-left -->
@@ -21,11 +21,11 @@
 
                 <!-- Centered text for "TaskDashboard" -->
                 <div style="flex-grow: 1; text-align: center;">
-                    <h1 style="color: red;">Task Dashboard</h1>
+                    <h1 style="color:white;">Task Dashboard</h1>
                 </div>
 
                 <div style="display: flex; align-items: center; margin-right: 40px;">
-                    <label class="name" for="name" style="color:red; margin-left: 0px;">
+                    <label class="name" for="name" style="color:white; margin-left: 0px;">
                         {{loggedInUserData.firstName | uppercase}}
                     </label>
                     <img src="{{displayEmployeeLogo}}/{{loggedInUserData.employeeId}} "
@@ -56,20 +56,101 @@
 
     <div class="container-fluid" style="margin-top: 60px;">
 
-        <div class="backBtn">
+        <div class="row">
+            <div class="col-md-8" style="margin-left: 10px;">
+                <div class="parentData" style="margin-top: 10px;border-radius: 6px;">
+                    <h2 style="color: white;">Parent Task Details</h2>
+        
+                </div>
+
+            </div>
+            <div class="col-md-2">
+                <div class="backBtn">
+
+                    <i class="fas fa-arrow-circle-left" (click)="backToDisplayTask()"  style="margin-left:200% ;height:30%;margin-top: 20px;color: blue;  transform: scale(2);"></i>
+            
+                    <!-- <mat-icon (click)="backToDisplayTask()"
+                        style="margin-left:40% ;height:30%;margin-top: 10px;color: blue;  transform: scale(2);">keyboard_backspace</mat-icon> -->
+        
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="backBtn">
 
             <mat-icon (click)="backToDisplayTask()"
-                style="margin-left:90% ;height:30%;margin-top: 20px;">keyboard_backspace</mat-icon>
+                style="margin-left:90% ;height:30%;margin-top: 10px;color: blue;">keyboard_backspace</mat-icon>
 
         </div>
 
 
-        <div class="parentData" style="margin-top: 20px;">
-            <h2>Parent Task Details</h2>
+        <div class="parentData" style="margin-top: 10px;border-radius: 6px;">
+            <h2 style="color: white;">Parent Task Details</h2>
 
-        </div>
+        </div> -->
 
-        <table class="table table-striped" style="margin-top: 10px; border: 2px groove black;">
+          <!--<div class="displayParentData" style="border: 1px groove grey;margin-top: 10px;">
+            <div class="row" id="dataheader">
+                <div class="col-md-2" id="datalabel">
+                    <h6>Task Name</h6>
+                </div>
+                <div class="col-md-3">{{ParentTaskInfo.taskName}}</div>
+                <div class="col-md-3" id="datalabel">
+                    <h6>Description</h6>
+                </div>
+                <div class="col-md-3">{{ParentTaskInfo.taskDescription}}</div>
+            </div>
+
+
+           <div class="row" id="dataheader">
+                <div class="col-md-3" id="datalabel">
+                    <h6>Created By</h6>
+                </div>
+                <div class="col-md-3"> 
+                    <ng-container *ngFor="let employee of employees">
+                        <ng-container *ngIf="employee.employeeId == ParentTaskInfo.taskCreatedBy">
+                            {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <div class="col-md-3" id="datalabel">
+                    <h6>Assigned To</h6>
+                </div>
+                <div class="col-md-3">
+                    <ng-container *ngFor="let employee of employees">
+                        <ng-container *ngIf="employee.employeeId == ParentTaskInfo.taskAssignedTo">
+                            {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+
+
+            <div class="row" id="dataheader">
+                <div class="col-md-3" id="datalabel">
+                    <h6>Status</h6>
+                </div>
+                <div class="col-md-3">
+                    <ng-container *ngFor="let status of allStatusFiltered">
+                        <ng-container *ngIf="status.statusId == ParentTaskInfo.taskStatus">
+                            {{status.statusCode | titlecase}}
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <div class="col-md-3" id="datalabel">
+                    <h6>End Date</h6>
+                </div>
+                <div class="col-md-3">
+                    {{ParentTaskInfo.taskEndDate}}
+                </div>
+            </div>
+
+
+
+        </div> -->
+
+        <table class="table table-condensed" style="margin-top: 10px;margin-left: 10px;  border: 1px groove grey">
+           
             <thead id="parentHeadertable">
                 <tr>
                     <th scope="col" class="col-sm-2">Task Name</th>
@@ -130,6 +211,28 @@
         </table>
 
 
+        <div class="row">
+            <div class="col-md-6">
+                <div class="parentData" style="margin-top: 10px;border-radius: 6px;margin-left: 10px;">
+                    <h2 style="color: white;">Child Tasks</h2>
+        
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="dataHeader">
+                    <span title="Add Child Task" class="fa-solid fa-circle-plus fa-xl addtask" style="color: #03a300; transform: scale(1.5);"
+                        data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
+                        (click)="onClickCreateTask(ParentTaskInfo, 'ADD', $event)"></span>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+<!-- 
         <div class="childData" style="margin-top: 30px;">
             <h2>Child Task Details</h2>
         </div>
@@ -138,16 +241,22 @@
             <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" style="color: #03a300;"
                 data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
                 (click)="onClickCreateTask(ParentTaskInfo, 'ADD', $event)"></span>
-        </div>
+        </div> -->
 
+        
 
+     
 
-        <mat-card class="card" *ngFor="let childData of childTaskData; let i = index">
+      
+
+    
+
+        <mat-card class="card" style="border: 1px groove black;" *ngFor="let childData of childTaskData; let i = index">
 
             <mat-card-content style="text-align: center">
 
-                <img src="{{displayCompanyLogo}}/{{companyId}}"
-                    style="width: 90%; height: 140px; border: 2px solid; border-radius: 15px;margin-right: 30px;">
+                <!-- <img src="{{displayCompanyLogo}}/{{companyId}}"
+                    style="width: 90%; height: 140px; border: 2px solid; border-radius: 15px;margin-right: 20px;margin-left:5px;"> -->
 
 
                 <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
@@ -156,28 +265,29 @@
             </mat-card-content>
 
             <mat-card-content style="text-align: center">
-                <h1 style="color:black;">{{childData.taskName}}</h1>
+                <h1 style="color:purple;font-size:30px;margin-top: 20px;word-break:break-all;">{{childData.taskName}}</h1>
                 <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
                                             data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
                                             (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span> -->
             </mat-card-content>
 
 
-            <mat-card-content id="finaldata">
+            <mat-card-content id="finaldata" style="margin-top: 30px;margin-left: 10px;">
                 <div class="row">
-                    <div class="col-md-6">
+
+                    <div class="col-md-6" style="background-color:purple;border-radius: 5px;padding: 4px; width: 90px;">
                         <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
                             <span title="Save Task" data-bs-toggle="modal"
                                 attr.data-bs-target="#createTask{{modalId + 1}}"
                                 (click)="onClickCreateTask(childData, 'UPDATE', $event)"
-                                style="color: #0095a8;">Update</span>
+                                style="color:white;font-size: 20px;margin-left: 30px;" class="fas fa-edit" ></span>
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="background-color:#2596be;border-radius: 5px;padding: 4px;margin-left: 10px;  width: 90px;">
                         <div class="col icons" *ngIf="parentAndAllTask.parentTasks.length>0">
-                            <span title="Response history" [routerLink]="['changehistory', childData.taskId]"
-                                style="color: blue">history</span>
+                            <span title="Response history" [routerLink]="['changehistory', childData.taskId]" class="fa fa-history" aria-hidden="true"
+                                style="color: white;font-size: 20px;margin-left: 30px;"></span>
                         </div>
 
                     </div>
@@ -267,9 +377,15 @@
     </div>
 </div>
 
+ 
+
+
+
 
 <app-create-task [modalId]="modalId + 1" [task]="emptyTask" [parentTask]="ParentTaskInfo" [allStatus]="allStatus"
     [updateScreen]="updateScreen" [allVisas]="allVisas" [allTaxTypes]="allTaxTypes" [allJobLocations]="allJobLocations"
     [allJobPortals]="allJobPortals" (afterCreateTask)="afterCreateTask()"></app-create-task>
 
 <!-- {{childTaskData | json}} -->
+
+{{this.loggedInUserData}}

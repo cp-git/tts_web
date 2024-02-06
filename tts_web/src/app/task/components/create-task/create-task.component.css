@@ -66,6 +66,9 @@ fieldset {
 
 legend {
   font-size: large;
+  background-color: purple;
+  color: white;
+  padding: 5px;
 }
 
 /* .modal-xl{
@@ -79,4 +82,21 @@ legend {
 .disablePanel {
   pointer-events: none;
 
+}
+
+/* navigation header */
+#header{
+  background-color: purple;
+  height: 50px;
+  
+}
+
+#createTaskLabel{
+  color: white;
+  font-size: 22px;
+  margin-top: 10px;
+}
+
+label{
+  margin-top: 5px;
 }

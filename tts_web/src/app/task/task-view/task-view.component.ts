@@ -39,7 +39,7 @@ export class TaskViewComponent {
   @Input() allStatus: Status[] = [];
   @Input() modalId: number = 0;
   @Input() task: Task = {} as Task;
-  @Input() loggedInUserData!: Employee;
+  // @Input() loggedInUserData!: Employee;
 
   statusEnum = StatusEnum;
   employeeId: any;
@@ -72,9 +72,11 @@ export class TaskViewComponent {
 
   childTaskData: Task[] = [];
 
-  loggedInUserData1!: any;
+  loggedInUserData: any;
 
   allStatusFiltered: Status[] = [];
+
+  
 
   constructor(
     private taskService: TaskService,
@@ -94,9 +96,9 @@ export class TaskViewComponent {
     this.employeeId = sessionStorage.getItem("employeeId");
     this.companyId = sessionStorage.getItem("companyId");
 
-    this.loggedInUserData1 = sessionStorage.getItem('empData');
+    this.loggedInUserData= sessionStorage.getItem('empData');
 
-    this.loggedInUserData = JSON.parse(this.loggedInUserData1);
+    this.loggedInUserData = JSON.parse(this.loggedInUserData);
 
 
     this.parentTask.taskId = 0;
@@ -111,6 +113,9 @@ export class TaskViewComponent {
     this.getDataForDropdowns();
     this.getAllEmployees();
 
+    console.log(this.loggedInUserData.showAllTasks);
+    
+
     // Attempt to retrieve the selected date format from localStorage
     const storedFormat = localStorage.getItem('selectedDateFormat');
 
@@ -122,39 +127,81 @@ export class TaskViewComponent {
     console.log(taskId);
 
 
+    if(this.loggedInUserData.showAllTasks){
+      this.taskService.getAllParentTasksByCompanyId(this.companyId).subscribe(
+        (response) => {
+          console.log(response);
 
-    this.taskService.getTaskCreatedByMeOrAssignedToMe(this.employeeId).subscribe(
-      (response) => {
-        this.parentAndAllTask = response;
-        console.log(this.parentAndAllTask);
+          this.parentAndAllTask = response;
 
-        for (let j = 0; j < this.parentAndAllTask.parentTasks.length; j++) {
-          if (this.parentAndAllTask.parentTasks[j].taskId == taskId) {
-            // console.log(this.parentAndAllTask.parentTasks[j]);
-            this.ParentTaskInfo = this.parentAndAllTask.parentTasks[j];
-            console.log(this.ParentTaskInfo.taskId);
-
-            for (let k = 0; k < this.parentAndAllTask.childTasks.length; k++) {
-              if (this.parentAndAllTask.childTasks[k].taskParent == this.ParentTaskInfo.taskId) {
-                console.log(this.parentAndAllTask.childTasks[k]);
-                this.childTaskData.push(this.parentAndAllTask.childTasks[k])
-                console.log(this.childTaskData);
-
-
+           for (let j = 0; j < this.parentAndAllTask.parentTasks.length; j++) {
+            if (this.parentAndAllTask.parentTasks[j].taskId == taskId) {
+              // console.log(this.parentAndAllTask.parentTasks[j]);
+              this.ParentTaskInfo = this.parentAndAllTask.parentTasks[j];
+              console.log(this.ParentTaskInfo.taskId);
+  
+              for (let k = 0; k < this.parentAndAllTask.childTasks.length; k++) {
+                if (this.parentAndAllTask.childTasks[k].taskParent == this.ParentTaskInfo.taskId) {
+                  console.log(this.parentAndAllTask.childTasks[k]);
+                  this.childTaskData.push(this.parentAndAllTask.childTasks[k])
+                  console.log(this.childTaskData);
+  
+  
+                }
               }
+  
+  
+  
+  
             }
-
-
-
-
           }
+  
+        
         }
+      );
+    }else{
 
-      }
-    );
+      this.taskService.getTaskCreatedByMeOrAssignedToMe(this.employeeId).subscribe(
+        (response) => {
+          this.parentAndAllTask = response;
+          console.log(this.parentAndAllTask);
+  
+          for (let j = 0; j < this.parentAndAllTask.parentTasks.length; j++) {
+            if (this.parentAndAllTask.parentTasks[j].taskId == taskId) {
+              // console.log(this.parentAndAllTask.parentTasks[j]);
+              this.ParentTaskInfo = this.parentAndAllTask.parentTasks[j];
+              console.log(this.ParentTaskInfo.taskId);
+  
+              for (let k = 0; k < this.parentAndAllTask.childTasks.length; k++) {
+                if (this.parentAndAllTask.childTasks[k].taskParent == this.ParentTaskInfo.taskId) {
+                  console.log(this.parentAndAllTask.childTasks[k]);
+                  this.childTaskData.push(this.parentAndAllTask.childTasks[k])
+                  console.log(this.childTaskData);
+  
+  
+                }
+              }
+  
+  
+  
+  
+            }
+          }
+  
+        }
+      );
+
+    }
+    
+
+
+
+   
 
 
   }
+
+  
 
   private getAllEmployees() {
     this.dashboardService.getAllEmployees(this.companyId).subscribe(

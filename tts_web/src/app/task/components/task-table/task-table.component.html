@@ -6,9 +6,11 @@
 
 <div class="taskTable" *ngIf="parentAndAllTask">
 
+  
+
     <ng-container *ngIf="parentAndAllTask.parentTasks.length>0; else nodata">
-        <div class="align-right" style="margin-left: 90%;">
-            <span title="Add Task" class="fa-solid fa-circle-plus fa-xl mainaddtaskbtn -mt35px" style="color:white;"
+        <div class="align-right" style="margin-left: 90%;margin-top: 10px;">
+            <span title="Add Task" class="fa-solid fa-circle-plus fa-xl mainaddtaskbtn -mt35px" style="color: #03a300; transform: scale(1.5);"
                 data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
                 (click)="onClickCreateTask(task, 'ADD', $event)"></span>
 
@@ -19,14 +21,28 @@
             <ng-container
                 *ngIf="(parentTaskData.childTask | statusFilter:filteredStatus | employeeTaskFilter:filteredEmployees).length>0">
 
-                <mat-card class="card" (click)="NavigateParentView(parentTaskData.taskId)">
-
-
-
+          
+                <mat-card class="card" style="border: 10px groove cadetblue;" *ngIf="parentTaskData.placementId==1"  (click)="NavigateParentView(parentTaskData.taskId)">
+                     
+                  
+                 
+                 
                     <mat-card-content style="text-align: center">
 
-                        <img src="{{displayCompanyLogo}}/{{companyId}}"
-                            style="width: 90%; height: 140px; border: 2px solid; border-radius: 15px;margin-right: 30px;">
+                        <div class="data" *ngIf="parentTaskData.placementId==1">
+                            <!-- <h5 style="font-size: 18px;margin-left: 40px;margin-top: 10px;">Bench Candidate</h5> -->
+                            <!-- <i class="fa fa-users" style=" transform: scale(3);margin-top: 20px;"  aria-hidden="true"></i> -->
+                            <img src="./assets/bench.png"
+                             style="width: 15%; height: 15%; border: 2px solid; border-radius: 15px;margin-right: 20px;margin-left:5px;"> 
+                        </div>
+                        <!-- <div class="data" *ngIf="parentTaskData.placementId==2">
+                          
+                           <i class="fa fa-user-circle" style="transform: scale(3);margin-top: 20px;"  aria-hidden="true"></i>
+                       </div> -->
+                        
+
+                        <!-- <img src="{{displayCompanyLogo}}/{{companyId}}"
+                            style="width: 90%; height: 120px;"> -->
 
 
                         <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
@@ -35,7 +51,7 @@
                     </mat-card-content>
 
                     <mat-card-content style="text-align: center">
-                        <h1 style="color:black;word-break:break-all;font-size: medium;">{{parentTaskData.taskName}}
+                        <h1 style="color:purple;word-break:break-all;font-size: 24px;margin-top: 30px;">{{parentTaskData.taskName}}
                         </h1>
 
                         <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
@@ -43,27 +59,29 @@
                                 (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span> -->
                     </mat-card-content>
 
-                    <mat-card-content id="statusdesc">
+                    
+
+                    <mat-card-content id="statusdesc" style="margin-top: 15px;">
                         <ng-container *ngFor="let status of allStatus">
                             <ng-container *ngIf="status.statusId == parentTaskData.taskStatus">
 
                                 <ng-container *ngIf="status.statusCode === 'Created'">
-                                    <h5 style="background-color: #03a300;">Status: {{status.statusCode | titlecase}}
+                                    <h5 style="background-color: #03a300;font-size: 18px;color: white;">Status: {{status.statusCode | titlecase}}
                                     </h5>
                                 </ng-container>
 
                                 <ng-container *ngIf="status.statusCode === 'In-progress'">
-                                    <h5 style="background-color:#D7BDE2;">Status: {{status.statusCode | titlecase}}
+                                    <h5 style="background-color:dodgerblue;font-size: 18px;color: white;">Status: {{status.statusCode | titlecase}}
                                     </h5>
                                 </ng-container>
 
                                 <ng-container *ngIf="status.statusCode === 'Cancelled'">
-                                    <h5 style="background-color:cyan;">Status: {{status.statusCode | titlecase}}
+                                    <h5 style="background-color:cyan;font-size: 18px;color: white;">Status: {{status.statusCode | titlecase}}
                                     </h5>
                                 </ng-container>
 
                                 <ng-container *ngIf="status.statusCode === 'Done'">
-                                    <h5 style="background-color:lightblue;">Status:
+                                    <h5 style="background-color:lightblue;font-size: 18px;color: white;">Status:
                                         {{status.statusCode | titlecase}}
                                     </h5>
                                 </ng-container>
@@ -72,8 +90,86 @@
 
 
                     </mat-card-content>
+               
+              
 
                 </mat-card>
+
+
+
+                <!-- Source Candidate...-->
+
+                <mat-card class="card" style="border: 10px groove dodgerblue;" *ngIf="parentTaskData.placementId==2"  (click)="NavigateParentView(parentTaskData.taskId)">
+                     
+                  
+                 
+                 
+                    <mat-card-content style="text-align: center">
+
+                        <!-- <div class="data" *ngIf="parentTaskData.placementId==1">
+                           
+                            <i class="fa fa-users" style=" transform: scale(3);margin-top: 20px;"  aria-hidden="true"></i>
+                        </div> -->
+                        <div class="data" *ngIf="parentTaskData.placementId==2">
+                          
+                           <i class="fa fa-user-circle" style="transform: scale(4);margin-top: 20px;"  aria-hidden="true"></i>
+                       </div>
+                        
+
+                        <!-- <img src="{{displayCompanyLogo}}/{{companyId}}"
+                            style="width: 90%; height: 120px;"> -->
+
+
+                        <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
+                    data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
+                    (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span> -->
+                    </mat-card-content>
+
+                    <mat-card-content style="text-align: center">
+                        <h1 style="color:purple;word-break:break-all;font-size: 24px;margin-top: 30px;">{{parentTaskData.taskName}}
+                        </h1>
+
+                        <!-- <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask" id="childAddBtn"
+                                data-bs-toggle="modal" attr.data-bs-target="#createTask{{modalId + 1}}"
+                                (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span> -->
+                    </mat-card-content>
+
+                    
+
+                    <mat-card-content id="statusdesc" style="margin-top: 15px;">
+                        <ng-container *ngFor="let status of allStatus">
+                            <ng-container *ngIf="status.statusId == parentTaskData.taskStatus">
+
+                                <ng-container *ngIf="status.statusCode === 'Created'">
+                                    <h5 style="background-color: #03a300;font-size: 18px;color: white;">Status: {{status.statusCode | titlecase}}
+                                    </h5>
+                                </ng-container>
+
+                                <ng-container *ngIf="status.statusCode === 'In-progress'">
+                                    <h5 style="background-color:dodgerblue;font-size: 18px;color: white;">Status: {{status.statusCode | titlecase}}
+                                    </h5>
+                                </ng-container>
+
+                                <ng-container *ngIf="status.statusCode === 'Cancelled'">
+                                    <h5 style="background-color:cyan;font-size: 18px;color: white;">Status: {{status.statusCode | titlecase}}
+                                    </h5>
+                                </ng-container>
+
+                                <ng-container *ngIf="status.statusCode === 'Done'">
+                                    <h5 style="background-color:lightblue;font-size: 18px;color: white;">Status:
+                                        {{status.statusCode | titlecase}}
+                                    </h5>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+
+
+                    </mat-card-content>
+               
+              
+
+                </mat-card>
+           
             </ng-container>
         </ng-container>
 

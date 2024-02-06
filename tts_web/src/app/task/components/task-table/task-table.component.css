@@ -1,13 +1,28 @@
 .card {
-  width: 230px;
+  /* width: 250px;
   display: inline-block;
-  margin-left: 40px;
-
   margin-bottom: 30px;
-  height: 220px;
+  height: 200px;
   margin-top: 30px;
+  border-radius: 10px;
+  height: 160px;
+  margin-left: 20px;
+  border: 1px groove black; */
 
 
+
+  width: 300px;
+  display: inline-block;
+  background-color: white;
+  margin-bottom: 30px;
+  margin-top: 40px;
+  border: 1px grey;
+  height: 60px;
+  border-radius: 8%;
+  margin-left: 10px;
+  height: 220px;
+  
+  
 
 }
 
@@ -15,9 +30,7 @@
   margin-left: 300px;
 }
 
-#statusdesc {
-  background-color: lightcyan;
-}
+
 
 #statusdesc h5 {
   font-size: 15px;
@@ -52,3 +65,5 @@
     background-position: left
   }
 }
+
+
