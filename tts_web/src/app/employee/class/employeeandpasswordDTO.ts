@@ -13,4 +13,5 @@ export class EmployeeAndPasswordDTO {
     passwordId!: number;
     username!: string;
     password!: string;
+    forgotPassword!: boolean;
 }

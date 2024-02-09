@@ -59,34 +59,38 @@ export class LoginComponent implements OnInit {
           // Check the response from the API
           this.userData = response;
           // alert(this.userData);
-
+          this.employeeId = sessionStorage.setItem("employeeId", JSON.stringify(this.userData.employeeId));
           if (this.userData) {
+            if (this.userData.forgotPassword) {
+              this.route.navigate(['/changePass']);
+            } else {
 
-            const employeeData = await this.employeeService.getEmployeeWithPasswordById(this.userData.employeeId).toPromise();
-            if (employeeData) {
-              sessionStorage.setItem('companyId', employeeData.companyId.toString())
-              sessionStorage.setItem('empData', JSON.stringify(employeeData));
+              const employeeData = await this.employeeService.getEmployeeWithPasswordById(this.userData.employeeId).toPromise();
+              if (employeeData) {
+                sessionStorage.setItem('companyId', employeeData.companyId.toString())
+                sessionStorage.setItem('empData', JSON.stringify(employeeData));
 
-            }
-            this.employeeId = sessionStorage.getItem('employeeId');
-            this.employeeIsAdmin = sessionStorage.getItem('empData');
-
-            // Set employeeId in sessionStorage
-            sessionStorage.setItem('employeeId', this.userData.employeeId.toString());
-            //await this.getEmployeeWithPassword(this.userData.employeeId);
-            this.empData = JSON.parse(this.employeeIsAdmin);
-            // alert(JSON.stringify(this.empData));
-
-            if (this.userData.username == "superadmin") {
-              this.route.navigate(['/company']);
-            } else
-              if (this.empData.admin == true) {
-                if (this.selectedUserType == "admin") {
-                  $('#exampleModal').modal('show');
-                }
-              } else {
-                this.route.navigate(['/dashboard']);
               }
+              this.employeeId = sessionStorage.getItem('employeeId');
+              this.employeeIsAdmin = sessionStorage.getItem('empData');
+
+              // Set employeeId in sessionStorage
+              sessionStorage.setItem('employeeId', this.userData.employeeId.toString());
+              //await this.getEmployeeWithPassword(this.userData.employeeId);
+              this.empData = JSON.parse(this.employeeIsAdmin);
+              // alert(JSON.stringify(this.empData));
+
+              if (this.userData.username == "superadmin") {
+                this.route.navigate(['/company']);
+              } else
+                if (this.empData.admin == true) {
+                  if (this.selectedUserType == "admin") {
+                    $('#exampleModal').modal('show');
+                  }
+                } else {
+                  this.route.navigate(['/dashboard']);
+                }
+            }
           } else {
             // Display a dialog box with the message "Invalid Details" in case of login failure.
             this.dialogueBoxService.open('Seems that either username or password is Incorrect.', 'warning');

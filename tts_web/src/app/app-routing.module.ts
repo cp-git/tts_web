@@ -34,6 +34,7 @@ import { BenchCandidateComponent } from './bench-candidate/components/bench-cand
 import { CreateBenchCandidateComponent } from './bench-candidate/components/create-bench-candidate/create-bench-candidate.component';
 import { UpdateBenchCandidateComponent } from './bench-candidate/components/update-bench-candidate/update-bench-candidate.component';
 import { ReportgenComponent } from './generatepdf/components/reportgen/reportgen.component';
+import { ChangepasswordComponent } from './login/components/changepassword/changepassword.component';
 const routes: Routes = [
   { path: 'employee', component: EmployeeComponent },
   { path: 'createEmp', component: CreateEmployeeComponent },
@@ -70,6 +71,7 @@ const routes: Routes = [
   { path: 'addbenchcand', component: CreateBenchCandidateComponent },
   { path: 'updatebenchcand', component: UpdateBenchCandidateComponent },
   { path: 'report', component: ReportgenComponent },
+  { path: 'changePass', component: ChangepasswordComponent }
 ];
 
 @NgModule({
