@@ -4,5 +4,6 @@ export class Employee {
     employeeId!: number;
     username!: string;
     password!: string;
-   
+    forgotPassword!: boolean;
+
 }

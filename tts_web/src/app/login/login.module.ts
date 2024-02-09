@@ -5,13 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { FooterModule } from '../footer/footer.module';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { RouterModule } from '@angular/router';
+import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
 
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ChangepasswordComponent
   ],
   imports: [
     CommonModule,

@@ -3,4 +3,5 @@ export class Password {
     employeeId!: number;
     username!: string;
     password!: string;
+    forgotPassword!: boolean;
 }
