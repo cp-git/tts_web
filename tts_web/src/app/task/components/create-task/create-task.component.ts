@@ -89,6 +89,7 @@ export class CreateTaskComponent implements OnInit {
   allBenchCandidateDetails: BenchCandidate[] = [];
   benchCandidate: BenchCandidate = new BenchCandidate();
 
+  employeeData: any;
   constructor(
     private taskService: TaskService,
     private renderer: Renderer2,
@@ -109,6 +110,12 @@ export class CreateTaskComponent implements OnInit {
     this.loadCompanyEmployees();
 
     this.todayDate = new Date().toISOString().split('T')[0];
+
+    const employeeData = sessionStorage.getItem('empData');
+    if (employeeData) {
+      this.employeeData = JSON.parse(employeeData);
+      console.log(this.employeeData);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
