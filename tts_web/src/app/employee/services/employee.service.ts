@@ -6,6 +6,7 @@ import { Employee } from '../class/employee';
 import { EmployeeAndPasswordDTO } from '../class/employeeandpasswordDTO';
 import { Country } from '../class/country';
 import { Company } from '../class/company';
+import { Password } from 'src/app/login/class/password';
 
 @Injectable({
   providedIn: 'root'
@@ -115,6 +116,12 @@ export class EmployeeService {
 
   getProfileImageByEmployeeId(employeeId: number): Observable<Employee> {
     return this._http.get<Employee>(`${this.employeeUrl}/employee/photos/${employeeId}`)
+  }
+
+
+  updatePasswordByEmployeeId(employeeId: number, password: Password): Observable<Password> {
+    // Construct and send a PUT request to the API endpoint for updating an employee
+    return this._http.put<Password>(`${this.employeeUrl}/password/${employeeId}`, password);
   }
 
 }
