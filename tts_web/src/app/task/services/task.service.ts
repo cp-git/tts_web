@@ -126,7 +126,7 @@ export class TaskService {
   }
 
   getInternalAndExternalTasksForTodayProgressByCompanyId(companyId: number): Observable<InternalExternalListDTO> {
-    return this.http.get<InternalExternalListDTO>(`${this.TaskURL}/tasks/${companyId}`);
+    return this.http.get<InternalExternalListDTO>(`${this.TaskURL}/tasklist/${companyId}`);
   }
 
 }

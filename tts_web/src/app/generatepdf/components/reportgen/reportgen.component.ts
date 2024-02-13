@@ -288,7 +288,7 @@ export class ReportgenComponent implements OnInit {
               { text: 'Change Date & Time', style: reasonHeader },
               { text: 'Comments', style: reasonHeader },
               { text: 'Status', style: reasonHeader },
-              { text: 'Created By', style: reasonHeader },
+              { text: 'Changed By', style: reasonHeader },
               { text: 'Assigned To', style: reasonHeader },
             ];
             // console.log(JSON.stringify(taskReson));
@@ -447,12 +447,12 @@ export class ReportgenComponent implements OnInit {
                 fillColor: 'white',
               },
             ]);
-            // console.log("hey2");
+
             const reasonsHeaderRow = [
               { text: 'Change Date', style: reasonHeader },
               { text: 'Comments', style: reasonHeader },
               { text: 'Status', style: reasonHeader },
-              { text: 'Created By', style: reasonHeader },
+              { text: 'Changed By', style: reasonHeader },
               { text: 'Assigned To', style: reasonHeader },
             ];
             // console.log(JSON.stringify(taskReson));
@@ -600,7 +600,7 @@ export class ReportgenComponent implements OnInit {
           ],
           [
             { text: 'Rate', style: taskFor },
-            { text: task.rate, style: taskFor },
+            { text: '$ ' + task.rate, style: taskFor },
           ],
         ];
 
@@ -638,15 +638,25 @@ export class ReportgenComponent implements OnInit {
                 fillColor: 'white',
               },
               {
-                text: this.employees.find(
-                  (emp) => reason.employeeId == emp.employeeId
-                )?.firstName,
+                text:
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.firstName +
+                  ' ' +
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.lastName,
                 fillColor: 'white',
               },
               {
-                text: this.employees.find(
-                  (emp) => reason.assignedTo == emp.employeeId
-                )?.firstName,
+                text:
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.firstName +
+                  ' ' +
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.lastName,
                 fillColor: 'white',
               },
             ]);
@@ -690,7 +700,7 @@ export class ReportgenComponent implements OnInit {
       if (task.candidateName !== null) {
 
         pdfContent.push({
-          text: 'Hiring Company Name  :  ' + this.allHiringCompany.find(hiringCom => task.hiringCompanyId == hiringCom.hiringCompanyId)?.hiringCompanyName,
+          text: 'Hiring Company  :  ' + this.allHiringCompany.find(hiringCom => task.hiringCompanyId == hiringCom.hiringCompanyId)?.hiringCompanyName,
         })
         pdfContent.push({
 
@@ -728,7 +738,7 @@ export class ReportgenComponent implements OnInit {
           ],
           [
             { text: 'Willing To Relocate', style: taskFor },
-            { text: task.willingToRelocate, style: taskFor },
+            { text: task.willingToRelocate ? 'Yes' : 'No', style: taskFor },
           ],
         ];
 
@@ -766,15 +776,25 @@ export class ReportgenComponent implements OnInit {
                 fillColor: 'white',
               },
               {
-                text: this.employees.find(
-                  (emp) => reason.employeeId == emp.employeeId
-                )?.firstName,
+                text:
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.firstName +
+                  ' ' +
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.lastName,
                 fillColor: 'white',
               },
               {
-                text: this.employees.find(
-                  (emp) => reason.assignedTo == emp.employeeId
-                )?.firstName,
+                text:
+                  this.employees.find(
+                    (emp) => reason.assignedTo == emp.employeeId
+                  )?.firstName +
+                  ' ' +
+                  this.employees.find(
+                    (emp) => reason.assignedTo == emp.employeeId
+                  )?.lastName,
                 fillColor: 'white',
               },
             ]);
