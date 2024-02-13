@@ -710,7 +710,7 @@
                             <label for="taskReason" class="form-label">Recruiters Comment<span
                                     class="required-asterisk">*</span></label>
                             <textarea
-                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)  || parentTaskStatus?.finalStatus == true"
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo || employeeData.showAllTasks)  || parentTaskStatus?.finalStatus == true"
                                 class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
                                 placeholder="Enter comment" [required]="true" #taskReasonField="ngModel"></textarea>
 
@@ -781,13 +781,13 @@
 
                     <!-- Move the "Save" and "Close" buttons to the right -->
                     <button
-                        [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true)"
-                        *ngIf="!isLoading && updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                        [disabled]="(!addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true))"
+                        *ngIf="(!isLoading && updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo || employeeData.showAllTasks))"
                         type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
 
                     <ng-container
-                        *ngIf="updateScreen && !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)">
-                        <label style="color: red;">* Update only allowed to Creator/ Assignee</label>
+                        *ngIf="(!employeeData.showAllTasks && updateScreen && !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo))">
+                        <label style="color: red;">* Update only allowed to Creator/ Assignee / Super employee</label>
                     </ng-container>
 
                     <!-- <ng-container *ngIf="parentTaskStatus && parentTaskStatus?.finalStatus == false"> -->
