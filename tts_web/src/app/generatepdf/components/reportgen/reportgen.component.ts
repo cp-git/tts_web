@@ -151,6 +151,7 @@ export class ReportgenComponent implements OnInit {
       .getInternalTasks(candidateId)
       .toPromise();
     const imageData: string = await this.getImageFromApi();
+    // alert(internalTasks);
     const pdfContent: Content = [];
     const headerCellStyle = {
       fillColor: '#34495E',
@@ -160,7 +161,6 @@ export class ReportgenComponent implements OnInit {
       color: 'white',
       margin: [5, 5],
     };
-
     const reasonHeader = {
       fillColor: '#A76AFF',
       bold: true,
@@ -181,14 +181,12 @@ export class ReportgenComponent implements OnInit {
         bold: true,
       },
     ];
-
     pdfContent.push({
       image: imageData,
       width: 100,
       height: 70,
       alignment: 'center',
     });
-
     pdfContent.push({
       text:
         'Bench job application for ' +
@@ -199,7 +197,6 @@ export class ReportgenComponent implements OnInit {
       fontSize: 15,
       color: '#1A0940',
     });
-
     for (const task of internalTasks) {
       if (task.hiringCompanyName !== null) {
         pdfContent.push({
@@ -212,7 +209,6 @@ export class ReportgenComponent implements OnInit {
               ?.lastName,
           style: taskFor,
         });
-
         const childRow = [
           [
             { text: 'Hiring Company Name', style: comp },
@@ -232,20 +228,16 @@ export class ReportgenComponent implements OnInit {
           ],
           [
             { text: 'Rate', style: taskFor },
-            { text: task.rate, style: taskFor },
+            { text: '$ ' + task.rate, style: taskFor },
           ],
         ];
-
         const childTableConfig = {
           widths: [140, 360],
           body: childRow,
         };
-
         pdfContent.push({ table: childTableConfig });
-
         pdfContent.push({ text: '', margin: [0, 5] });
         pdfContent.push({ text: 'Change History ', style: taskFor });
-
         try {
           const reasonData = await this.reasonService
             .getReasonsByTaskId(task.taskId)
@@ -253,7 +245,6 @@ export class ReportgenComponent implements OnInit {
           if (reasonData) {
             this.reasons = reasonData;
             // console.log(JSON.stringify(this.reasons));
-
             const taskReson: any = this.reasons.map((reason) => [
               {
                 text: this.datePipe.transform(
@@ -270,28 +261,37 @@ export class ReportgenComponent implements OnInit {
                 fillColor: 'white',
               },
               {
-                text: this.employees.find(
-                  (emp) => reason.employeeId == emp.employeeId
-                )?.firstName,
+                text:
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.firstName +
+                  ' ' +
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.lastName,
                 fillColor: 'white',
               },
               {
-                text: this.employees.find(
-                  (emp) => reason.assignedTo == emp.employeeId
-                )?.firstName,
+                text:
+                  this.employees.find(
+                    (emp) => reason.assignedTo == emp.employeeId
+                  )?.firstName +
+                  ' ' +
+                  this.employees.find(
+                    (emp) => reason.assignedTo == emp.employeeId
+                  )?.lastName,
                 fillColor: 'white',
               },
             ]);
             // console.log("hey2");
             const reasonsHeaderRow = [
-              { text: 'Change Date', style: reasonHeader },
+              { text: 'Change Date & Time', style: reasonHeader },
               { text: 'Comments', style: reasonHeader },
               { text: 'Status', style: reasonHeader },
               { text: 'Created By', style: reasonHeader },
               { text: 'Assigned To', style: reasonHeader },
             ];
             // console.log(JSON.stringify(taskReson));
-
             pdfContent.push({
               table: {
                 widths: [110, 124, 80, 80, 80],
@@ -305,26 +305,20 @@ export class ReportgenComponent implements OnInit {
         }
       }
     }
-
     const documentDefinition: TDocumentDefinitions = {
       //  pageOrientation: 'landscape',
       content: pdfContent,
     };
-
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     pdfDocGenerator.open();
   }
-
   async generatePdfForSourcing(hiringCompanyId: any) {
     // alert(hiringCompanyId)
     const externalTask: any = await this.taskService
       .getExternalTasks(hiringCompanyId)
       .toPromise();
-    console.log(JSON.stringify(externalTask));
-
     const imageData: string = await this.getImageFromApi();
     const pdfContent: Content = [];
-
     const reasonHeader = {
       fillColor: '#A76AFF',
       bold: true,
@@ -345,7 +339,6 @@ export class ReportgenComponent implements OnInit {
         bold: true,
       },
     ];
-
     pdfContent.push({
       image: imageData,
       width: 100,
@@ -363,7 +356,6 @@ export class ReportgenComponent implements OnInit {
       fontSize: 15,
       color: '#1A0940',
     });
-
     for (const task of externalTask) {
       if (task.candidateName !== null) {
         pdfContent.push({
@@ -376,7 +368,6 @@ export class ReportgenComponent implements OnInit {
               ?.lastName,
           style: taskFor,
         });
-
         const childRow = [
           [
             { text: 'Candidate Name', style: comp },
@@ -401,20 +392,16 @@ export class ReportgenComponent implements OnInit {
           ],
           [
             { text: 'Willing To Relocate', style: taskFor },
-            { text: task.willingToRelocate, style: taskFor },
+            { text: task.willingToRelocate ? 'Yes' : 'No', style: taskFor },
           ],
         ];
-
         const childTableConfig = {
           widths: [140, 360],
           body: childRow,
         };
-
         pdfContent.push({ table: childTableConfig });
-
         pdfContent.push({ text: '', margin: [0, 5] });
         pdfContent.push({ text: 'Change History ', style: taskFor });
-
         try {
           const reasonData = await this.reasonService
             .getReasonsByTaskId(task.taskId)
@@ -422,7 +409,6 @@ export class ReportgenComponent implements OnInit {
           if (reasonData) {
             this.reasons = reasonData;
             // console.log(JSON.stringify(this.reasons));
-
             const taskReson: any = this.reasons.map((reason) => [
               {
                 text: this.datePipe.transform(
@@ -439,15 +425,25 @@ export class ReportgenComponent implements OnInit {
                 fillColor: 'white',
               },
               {
-                text: this.employees.find(
-                  (emp) => reason.employeeId == emp.employeeId
-                )?.firstName,
+                text:
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.firstName +
+                  ' ' +
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.lastName,
                 fillColor: 'white',
               },
               {
-                text: this.employees.find(
-                  (emp) => reason.assignedTo == emp.employeeId
-                )?.firstName,
+                text:
+                  this.employees.find(
+                    (emp) => reason.assignedTo == emp.employeeId
+                  )?.firstName +
+                  ' ' +
+                  this.employees.find(
+                    (emp) => reason.assignedTo == emp.employeeId
+                  )?.lastName,
                 fillColor: 'white',
               },
             ]);
@@ -460,7 +456,6 @@ export class ReportgenComponent implements OnInit {
               { text: 'Assigned To', style: reasonHeader },
             ];
             // console.log(JSON.stringify(taskReson));
-
             pdfContent.push({
               table: {
                 widths: [110, 124, 80, 80, 80],
@@ -474,16 +469,13 @@ export class ReportgenComponent implements OnInit {
         }
       }
     }
-
     const documentDefinition: TDocumentDefinitions = {
       //pageOrientation: 'landscape',
       content: pdfContent,
     };
-
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     pdfDocGenerator.open();
   }
-
   async getImageFromApi(): Promise<string> {
     try {
       // Replace 'your-api-endpoint' with the actual API endpoint

@@ -89,6 +89,7 @@ export class CreateTaskComponent implements OnInit {
   allBenchCandidateDetails: BenchCandidate[] = [];
   benchCandidate: BenchCandidate = new BenchCandidate();
 
+  employeeData: any;
   constructor(
     private taskService: TaskService,
     private renderer: Renderer2,
@@ -109,6 +110,12 @@ export class CreateTaskComponent implements OnInit {
     this.loadCompanyEmployees();
 
     this.todayDate = new Date().toISOString().split('T')[0];
+
+    const employeeData = sessionStorage.getItem('empData');
+    if (employeeData) {
+      this.employeeData = JSON.parse(employeeData);
+      console.log(this.employeeData);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -268,8 +275,25 @@ export class CreateTaskComponent implements OnInit {
             this.task.benchCandidateId = response.benchCandidateId;
             this.task.visaId = response.visaId;
             this.task.taxTypeId = response.taxTypeId;
-            this.task.taskStartDate = response.taskStartDate;
-            this.task.taskEndDate = response.taskEndDate;
+
+            if (
+              this.task.taskStartDate == undefined ||
+              this.task.taskStartDate == null ||
+              !this.task.taskStartDate
+            ) {
+              this.task.taskStartDate = response.taskStartDate;
+            }
+
+            if (
+              this.task.taskEndDate == undefined ||
+              this.task.taskEndDate == null ||
+              !this.task.taskEndDate
+            ) {
+              this.task.taskEndDate = response.taskEndDate;
+            }
+
+            // this.task.taskStartDate = response.taskStartDate;
+            // this.task.taskEndDate = response.taskEndDate;
             if (this.task.minBillingRate == null) {
               this.task.minBillingRate = response.minBillingRate;
             }
@@ -286,8 +310,24 @@ export class CreateTaskComponent implements OnInit {
           ) {
             // alert(JSON.stringify(response));
             this.task.hiringCompanyId = response.hiringCompanyId;
-            this.task.taskStartDate = response.taskStartDate;
-            this.task.taskEndDate = response.taskEndDate;
+
+            if (
+              this.task.taskStartDate == undefined ||
+              this.task.taskStartDate == null ||
+              !this.task.taskStartDate
+            ) {
+              this.task.taskStartDate = response.taskStartDate;
+            }
+
+            if (
+              this.task.taskEndDate == undefined ||
+              this.task.taskEndDate == null ||
+              !this.task.taskEndDate
+            ) {
+              this.task.taskEndDate = response.taskEndDate;
+            }
+            // this.task.taskStartDate = response.taskStartDate;
+            // this.task.taskEndDate = response.taskEndDate;
             // this.task.hiringCompanyName = response.hiringCompanyName;
             // this.task.jobTitle = response.jobTitle;
             // this.task.jobLocationId = response.jobLocationId;
