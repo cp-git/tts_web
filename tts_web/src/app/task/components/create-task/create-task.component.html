@@ -663,7 +663,7 @@
                                 <input type="date" class="form-control" id="endDate" name="endDate"
                                     [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate" [required]="true"
                                     [min]="todayForPlannedStartDate"
-                                    [disabled]="(task.taskParent>0 || task.taskStartDate==null || updateScreen || (currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)) || employeeData.showAllTasks"
+                                    [disabled]="( task.taskParent>0 || task.taskStartDate==null || updateScreen || (currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true) && !employeeData.showAllTasks) "
                                     #endDateField="ngModel" onkeydown="return false">
 
                                 <div *ngIf="endDateField.invalid " class="text-danger">
