@@ -47,6 +47,10 @@ export class ReportgenComponent implements OnInit {
   hiringCompanyId: any;
   displayCompanyLogo: any;
   today: Date = new Date();
+  formattedDate: any;
+
+
+
   constructor(
     private taskService: TaskService,
     private dashboardService: DashboardService,
@@ -58,6 +62,7 @@ export class ReportgenComponent implements OnInit {
     private benchCandidateService: BenchCandidateService,
     private hiringCompanyService: HiringCompanyService
   ) {
+    this.formattedDate = this.datePipe.transform(this.today, 'MM-dd-yyyy');
     this.employeeId = sessionStorage.getItem('employeeId');
     this.companyId = sessionStorage.getItem('companyId');
     this.empData = sessionStorage.getItem('empData');
@@ -549,6 +554,8 @@ export class ReportgenComponent implements OnInit {
       },
     ];
 
+
+
     pdfContent.push({
       image: imageData,
       width: 100,
@@ -556,6 +563,14 @@ export class ReportgenComponent implements OnInit {
       alignment: 'center',
     });
 
+    pdfContent.push({
+      text:
+        'Date : ' + this.formattedDate,
+      alignment: 'right',
+      bold: true,
+      fontSize: 12,
+      color: '#1A0940',
+    });
     pdfContent.push({
       text:
         'Today progress of Bench Candidate ',
