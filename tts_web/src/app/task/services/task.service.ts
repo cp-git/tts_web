@@ -12,6 +12,7 @@ import { InternalTask } from '../class/internal-task';
 import { ExternalTask } from '../class/external-task';
 import { InternalTaskDTO } from '../class/internal-task-dto';
 import { ExternalTaskDTO } from '../class/external-task-dto';
+import { InternalExternalListDTO } from '../class/internal-external-list-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -134,6 +135,14 @@ export class TaskService {
   getExternalTasks(hiringCompanyId: number): Observable<ExternalTaskDTO> {
     return this.http.get<ExternalTaskDTO>(
       `${this.TaskURL}/external/${hiringCompanyId}`
+    );
+  }
+
+  getInternalAndExternalTasksForTodayProgressByCompanyId(
+    companyId: number
+  ): Observable<InternalExternalListDTO> {
+    return this.http.get<InternalExternalListDTO>(
+      `${this.TaskURL}/tasklist/${companyId}`
     );
   }
 }

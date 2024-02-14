@@ -46,7 +46,7 @@ export class ReportgenComponent implements OnInit {
   candidateId: any;
   hiringCompanyId: any;
   displayCompanyLogo: any;
-
+  today: Date = new Date();
   constructor(
     private taskService: TaskService,
     private dashboardService: DashboardService,
@@ -288,7 +288,7 @@ export class ReportgenComponent implements OnInit {
               { text: 'Change Date & Time', style: reasonHeader },
               { text: 'Comments', style: reasonHeader },
               { text: 'Status', style: reasonHeader },
-              { text: 'Created By', style: reasonHeader },
+              { text: 'Changed By', style: reasonHeader },
               { text: 'Assigned To', style: reasonHeader },
             ];
             // console.log(JSON.stringify(taskReson));
@@ -447,12 +447,12 @@ export class ReportgenComponent implements OnInit {
                 fillColor: 'white',
               },
             ]);
-            // console.log("hey2");
+
             const reasonsHeaderRow = [
               { text: 'Change Date', style: reasonHeader },
               { text: 'Comments', style: reasonHeader },
               { text: 'Status', style: reasonHeader },
-              { text: 'Created By', style: reasonHeader },
+              { text: 'Changed By', style: reasonHeader },
               { text: 'Assigned To', style: reasonHeader },
             ];
             // console.log(JSON.stringify(taskReson));
@@ -506,5 +506,328 @@ export class ReportgenComponent implements OnInit {
         // alert('Error fetching reasons:');
       }
     );
+  }
+
+  async todaysProgressReport() {
+
+    const internalExternalTask: any = await this.taskService
+      .getInternalAndExternalTasksForTodayProgressByCompanyId(this.companyId)
+      .toPromise();
+
+    const internalTasks = internalExternalTask.internalTask;
+    const externalTasks = internalExternalTask.externalTask;
+
+    const imageData: string = await this.getImageFromApi();
+    const pdfContent: Content = [];
+    const headerCellStyle = {
+      fillColor: '#34495E',
+      bold: true,
+      fontSize: 12,
+      alignment: 'center',
+      color: 'white',
+      margin: [5, 5],
+    };
+
+    const reasonHeader = {
+      fillColor: '#A76AFF',
+      bold: true,
+      fontSize: 12,
+      alignment: 'center',
+      color: 'white',
+      margin: [5, 5],
+    };
+    const taskFor = [
+      {
+        fillColor: '#F4F0FF',
+        bold: true,
+      },
+    ];
+    const comp = [
+      {
+        fillColor: '#A6FFA6',
+        bold: true,
+      },
+    ];
+
+    pdfContent.push({
+      image: imageData,
+      width: 100,
+      height: 70,
+      alignment: 'center',
+    });
+
+    pdfContent.push({
+      text:
+        'Today progress of Bench Candidate ',
+      alignment: 'center',
+      bold: true,
+      fontSize: 15,
+      color: '#1A0940',
+    });
+
+    for (const task of internalTasks) {
+      if (task.hiringCompanyName !== null) {
+        pdfContent.push({
+          text: 'Candidate Name  : ' + this.benchEmp.find(emp => task.benchCandidateId == emp.benchCandidateId)?.benchCandidateName
+        })
+        pdfContent.push({
+          text:
+            ' Recruiter - ' +
+            this.employees.find((emp) => task.taskAssignedTo == emp.employeeId)
+              ?.firstName +
+            ' ' +
+            this.employees.find((emp) => task.taskAssignedTo == emp.employeeId)
+              ?.lastName,
+          style: taskFor,
+        });
+
+        const childRow = [
+          [
+            { text: 'Hiring Company Name', style: comp },
+            { text: task.hiringCompanyName, style: comp },
+          ],
+          [
+            { text: 'Job Title', style: taskFor },
+            { text: task.jobTitle, style: taskFor },
+          ],
+          [
+            { text: 'Job City', style: taskFor },
+            { text: task.jobCity, style: taskFor },
+          ],
+          [
+            { text: 'Job State', style: taskFor },
+            { text: task.jobState, style: taskFor },
+          ],
+          [
+            { text: 'Rate', style: taskFor },
+            { text: '$ ' + task.rate, style: taskFor },
+          ],
+        ];
+
+        const childTableConfig = {
+          widths: [140, 360],
+          body: childRow,
+        };
+
+        pdfContent.push({ table: childTableConfig });
+
+        pdfContent.push({ text: '', margin: [0, 5] });
+        pdfContent.push({ text: 'Change History ', style: taskFor });
+
+        try {
+          const reasonData = await this.reasonService
+            .getReasonsByTaskId(task.taskId)
+            .toPromise();
+          if (reasonData) {
+            this.reasons = reasonData;
+            // console.log(JSON.stringify(this.reasons));
+
+            const taskReson: any = this.reasons.map((reason) => [
+              {
+                text: this.datePipe.transform(
+                  reason.chgDateTime,
+                  'MM-dd-yyyy HH:mm'
+                ),
+                fillColor: 'white',
+              },
+              { text: reason.reasonText },
+              {
+                text: this.allStatus.find(
+                  (status) => reason.statusId == status.statusId
+                )?.statusCode,
+                fillColor: 'white',
+              },
+              {
+                text:
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.firstName +
+                  ' ' +
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.lastName,
+                fillColor: 'white',
+              },
+              {
+                text:
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.firstName +
+                  ' ' +
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.lastName,
+                fillColor: 'white',
+              },
+            ]);
+            // console.log("hey2");
+            const reasonsHeaderRow = [
+              { text: 'Change Date', style: reasonHeader },
+              { text: 'Comments', style: reasonHeader },
+              { text: 'Status', style: reasonHeader },
+              { text: 'Changed By', style: reasonHeader },
+              { text: 'Assigned To', style: reasonHeader },
+            ];
+            // console.log(JSON.stringify(taskReson));
+
+            pdfContent.push({
+              table: {
+                widths: [110, 124, 80, 80, 80],
+                body: [reasonsHeaderRow, ...taskReson],
+              },
+            });
+            pdfContent.push({ text: ' ', margin: [0, 5] });
+          }
+        } catch (error) {
+          console.error('Error fetching reasons:', error);
+        }
+      }
+    }
+
+    pdfContent.push({
+      text:
+        'Today progress of Sourcing Candidate Task',
+      alignment: 'center',
+      bold: true,
+      fontSize: 15,
+      color: '#1A0940',
+    });
+
+
+
+    for (const task of externalTasks) {
+
+      if (task.candidateName !== null) {
+
+        pdfContent.push({
+          text: 'Hiring Company  :  ' + this.allHiringCompany.find(hiringCom => task.hiringCompanyId == hiringCom.hiringCompanyId)?.hiringCompanyName,
+        })
+        pdfContent.push({
+
+          text:
+            ' Recruiter - ' +
+            this.employees.find((emp) => task.taskAssignedTo == emp.employeeId)
+              ?.firstName +
+            ' ' +
+            this.employees.find((emp) => task.taskAssignedTo == emp.employeeId)
+              ?.lastName,
+          style: taskFor,
+        });
+
+        const childRow = [
+          [
+            { text: 'Candidate Name', style: comp },
+            { text: task.candidateName, style: comp },
+          ],
+          [
+            { text: 'Visa Type', style: taskFor },
+            {
+              text: this.allVisas.find((visa) => task.visaId == visa.visaId)
+                ?.visaType,
+              style: taskFor,
+            },
+          ],
+          [
+            { text: 'Tax Type', style: taskFor },
+            {
+              text: this.allTaxTypes.find(
+                (tax) => task.taxTypeId == tax.taxTypeId
+              )?.taxTypeName,
+              style: taskFor,
+            },
+          ],
+          [
+            { text: 'Willing To Relocate', style: taskFor },
+            { text: task.willingToRelocate ? 'Yes' : 'No', style: taskFor },
+          ],
+        ];
+
+        const childTableConfig = {
+          widths: [140, 360],
+          body: childRow,
+        };
+
+        pdfContent.push({ table: childTableConfig });
+
+        pdfContent.push({ text: '', margin: [0, 5] });
+        pdfContent.push({ text: 'Change History ', style: taskFor });
+
+        try {
+          const reasonData = await this.reasonService
+            .getReasonsByTaskId(task.taskId)
+            .toPromise();
+          if (reasonData) {
+            this.reasons = reasonData;
+            // console.log(JSON.stringify(this.reasons));
+
+            const taskReson: any = this.reasons.map((reason) => [
+              {
+                text: this.datePipe.transform(
+                  reason.chgDateTime,
+                  'MM-dd-yyyy HH:mm'
+                ),
+                fillColor: 'white',
+              },
+              { text: reason.reasonText },
+              {
+                text: this.allStatus.find(
+                  (status) => reason.statusId == status.statusId
+                )?.statusCode,
+                fillColor: 'white',
+              },
+              {
+                text:
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.firstName +
+                  ' ' +
+                  this.employees.find(
+                    (emp) => reason.employeeId == emp.employeeId
+                  )?.lastName,
+                fillColor: 'white',
+              },
+              {
+                text:
+                  this.employees.find(
+                    (emp) => reason.assignedTo == emp.employeeId
+                  )?.firstName +
+                  ' ' +
+                  this.employees.find(
+                    (emp) => reason.assignedTo == emp.employeeId
+                  )?.lastName,
+                fillColor: 'white',
+              },
+            ]);
+            // console.log("hey2");
+            const reasonsHeaderRow = [
+              { text: 'Change Date', style: reasonHeader },
+              { text: 'Comments', style: reasonHeader },
+              { text: 'Status', style: reasonHeader },
+              { text: 'Changed By', style: reasonHeader },
+              { text: 'Assigned To', style: reasonHeader },
+            ];
+            // console.log(JSON.stringify(taskReson));
+
+            pdfContent.push({
+              table: {
+                widths: [110, 124, 80, 80, 80],
+                body: [reasonsHeaderRow, ...taskReson],
+              },
+            });
+            pdfContent.push({ text: ' ', margin: [0, 5] });
+          }
+        } catch (error) {
+          console.error('Error fetching reasons:', error);
+        }
+      }
+    }
+
+    const documentDefinition: TDocumentDefinitions = {
+      //  pageOrientation: 'landscape',
+      content: pdfContent,
+    };
+
+    const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+    pdfDocGenerator.open();
   }
 }
