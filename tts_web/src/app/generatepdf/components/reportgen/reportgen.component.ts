@@ -573,7 +573,7 @@ export class ReportgenComponent implements OnInit {
     });
     pdfContent.push({
       text:
-        'Today progress of Bench Candidate ',
+        'Progress of bench candidate ',
       alignment: 'center',
       bold: true,
       fontSize: 15,
@@ -701,7 +701,7 @@ export class ReportgenComponent implements OnInit {
 
     pdfContent.push({
       text:
-        'Today progress of Sourcing Candidate Task',
+        'Progress of sourcing candidate',
       alignment: 'center',
       bold: true,
       fontSize: 15,
