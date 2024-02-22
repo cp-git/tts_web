@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TextypeService {
-  private readonly taxTypeURL = `https://44.193.95.50:8443/taxtype/ttsms/`;
+  private readonly taxTypeURL = `https://127.0.0.1:8443/taxtype/ttsms/`;
   constructor(private http: HttpClient) {}
 
   getAllTaxTypeByCompanyId(taxTypeId: number): Observable<Taxtype[]> {

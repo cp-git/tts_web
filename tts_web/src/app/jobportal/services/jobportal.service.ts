@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class JobportalService {
-  private readonly jobPortalURL = `https://44.193.95.50:8443/jobportal/ttsms/`;
+  private readonly jobPortalURL = `https://127.0.0.1:8443/jobportal/ttsms/`;
   constructor(private http: HttpClient) {}
 
   getAllJobPortalsByCompanyId(companyId: number): Observable<Jobportal[]> {

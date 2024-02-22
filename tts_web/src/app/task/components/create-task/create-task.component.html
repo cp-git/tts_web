@@ -730,11 +730,15 @@
                         <!-- upload file  -->
                         <div class="col">
                             <label class="form-label" for="uploadFile">Upload File</label>
-                            <input
-                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                            <input [(ngModel)]="fileSelected"
+                                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) "
                                 type="file" id="uploadFile" name="uploadFile" (change)="onFileSelected($event)"
-                                class="form-control" [required]="true"
-                                [disabled]="parentTaskStatus && parentTaskStatus?.finalStatus == true">
+                                class="form-control"
+                                [disabled]="parentTaskStatus && parentTaskStatus?.finalStatus == true"
+                                #fileInput="ngModel">
+                            <div class="text-danger" *ngIf="!isValidFile || (fileInput.invalid && (fileInput.dirty))">
+                                Kindly request to remove special characters from file name.
+                            </div>
                         </div>
                     </div>
 
@@ -745,11 +749,12 @@
                             <ul>
                                 <li *ngFor="let file of fileNames">
                                     <ng-container
-                                        *ngIf="employeeId == backupTask.taskCreatedBy || employeeId == backupTask.taskAssignedTo; else disabledLink">
-                                        <a href="javascript:void(0)" (click)="downloadFile(file)">{{ file }}</a>
+                                        *ngIf="employeeId == backupTask.taskCreatedBy || employeeId == backupTask.taskAssignedTo ; else disabledLink">
+                                        <a href="javascript:void(0)" [title]="file" (click)="downloadFile(file)">
+                                            {{ file | slice:0:60 }}</a>
                                     </ng-container>
                                     <ng-template #disabledLink>
-                                        <span>{{ file }}</span>
+                                        <span [title]="file">{{ file | slice:0:60}}</span>
                                     </ng-template>
                                 </li>
                             </ul>
@@ -781,7 +786,7 @@
 
                     <!-- Move the "Save" and "Close" buttons to the right -->
                     <button
-                        [disabled]="(!addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true))"
+                        [disabled]="((selectedFile && !isValidFile) || !addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true))"
                         *ngIf="(!isLoading && updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo || employeeData.showAllTasks))"
                         type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
 
@@ -792,7 +797,7 @@
 
                     <!-- <ng-container *ngIf="parentTaskStatus && parentTaskStatus?.finalStatus == false"> -->
                     <button
-                        [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true)"
+                        [disabled]="(selectedFile && !isValidFile) || !addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true)"
                         *ngIf="!isLoading && !updateScreen" type="submit" class="btn btn-primary"
                         (click)="onClickSave(task)">Save</button>
                     <!-- </ng-container> -->

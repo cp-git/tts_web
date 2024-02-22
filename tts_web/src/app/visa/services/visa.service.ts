@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class VisaService {
-  private readonly visaURL = `https://44.193.95.50:8443/visa/ttsms/`;
+  private readonly visaURL = `https://127.0.0.1:8443/visa/ttsms/`;
   constructor(private http: HttpClient) {}
 
   getAllVisasByCompanyId(companyId: number): Observable<Visa[]> {

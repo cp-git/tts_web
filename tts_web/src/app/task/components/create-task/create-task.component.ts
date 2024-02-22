@@ -442,7 +442,11 @@ export class CreateTaskComponent implements OnInit {
 
     const formData = new FormData(); // creating form data to send in header
     if (this.selectedFile) {
-      formData.append('file', this.selectedFile); // adding file in header with key - 'file'
+      formData.append(
+        'file',
+        this.selectedFile,
+        this.selectedFile.name.replaceAll(' ', '_')
+      ); // adding file in header with key - 'file'
     }
 
     const taskBlob = new Blob([JSON.stringify(task)], {
@@ -491,7 +495,11 @@ export class CreateTaskComponent implements OnInit {
 
     const formData = new FormData(); // creating form data to send in header
     if (this.selectedFile) {
-      formData.append('file', this.selectedFile); // adding file in header with key - 'file'
+      formData.append(
+        'file',
+        this.selectedFile,
+        this.selectedFile.name.replaceAll(' ', '_')
+      ); // adding file in header with key - 'file'
     }
 
     const tempTask = task;
@@ -713,10 +721,31 @@ export class CreateTaskComponent implements OnInit {
 
   // }
 
-  selectedFile!: File;
+  selectedFile!: File; // actual selected file which we are storing in directory
+  fileSelected: any; // temporary object for ngModel (required for validation)
+  isValidFile: boolean = true; // for checking file name is valid or not
+
   // called on file selected
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+
+    this.isValidFile = true;
+
+    // validating file name is valid or not
+    if (!this.isValidFileName(this.selectedFile)) {
+      this.isValidFile = false;
+    }
+  }
+
+  // function to check file name is valid or not (file name should only contain alphabets, numerics, underscore and spaces)
+  isValidFileName(file: File): boolean {
+    const fileName: string = file.name;
+    const nameWithoutExtension: string = fileName
+      .split('.')
+      .slice(0, -1)
+      .join('.');
+    const regex: RegExp = /^[a-zA-Z0-9_ ]+$/;
+    return regex.test(nameWithoutExtension);
   }
 
   // for getting files by task id

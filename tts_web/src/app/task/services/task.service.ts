@@ -91,9 +91,9 @@ export class TaskService {
     );
   }
 
-  private readonly baseUrl = 'https://44.193.95.50:8443';
- 
   // ---------------------------------------------------------------------------
+  private readonly baseUrl = 'https://127.0.0.1:8443';
+
   private readonly jobLocationURL = `${this.baseUrl}/joblocation/ttsms/locations/`;
   private readonly jobPortalURL = `${this.baseUrl}/jobportal/ttsms/jobportals/`;
   private readonly jobTypeURL = `${this.baseUrl}/taxtype/ttsms/taxtypes/`;
