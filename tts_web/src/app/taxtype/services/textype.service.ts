@@ -4,15 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TextypeService {
-
-  private readonly taxTypeURL = `http://localhost:8080/taxtype/ttsms/`
-  constructor(
-    private http: HttpClient
-  ) { }
-
+  private readonly taxTypeURL = `https://127.0.0.1:8443/taxtype/ttsms/`;
+  constructor(private http: HttpClient) {}
 
   getAllTaxTypeByCompanyId(taxTypeId: number): Observable<Taxtype[]> {
     return this.http.get<Taxtype[]>(`${this.taxTypeURL}taxtypes/${taxTypeId}`);
@@ -23,11 +19,13 @@ export class TextypeService {
   }
 
   updateTaxType(taxTypeId: number, taxType: Taxtype): Observable<Taxtype> {
-    return this.http.put<Taxtype>(`${this.taxTypeURL}taxtype/${taxTypeId}`, taxType);
+    return this.http.put<Taxtype>(
+      `${this.taxTypeURL}taxtype/${taxTypeId}`,
+      taxType
+    );
   }
 
   deleteTaxType(taxTypeId: number): Observable<void> {
     return this.http.delete<void>(`${this.taxTypeURL}taxtype/${taxTypeId}`);
   }
-
 }

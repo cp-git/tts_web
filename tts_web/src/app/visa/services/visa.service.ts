@@ -4,15 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VisaService {
-
-  private readonly visaURL = `http://localhost:8080/visa/ttsms/`
-  constructor(
-    private http: HttpClient
-  ) { }
-
+  private readonly visaURL = `https://127.0.0.1:8443/visa/ttsms/`;
+  constructor(private http: HttpClient) {}
 
   getAllVisasByCompanyId(companyId: number): Observable<Visa[]> {
     return this.http.get<Visa[]>(`${this.visaURL}visas/${companyId}`);
