@@ -83,11 +83,12 @@ export class UpdateBenchCandidateComponent {
             });
         },
         (error) => {
-          console.error('Failed to update Bench candidate:', error);
-          this.dialogueBoxService.open(
-            'Failed to update Bench candidate. Already Exists',
-            'warning'
-          );
+          console.error(error);
+          const errorMessage =
+            error && error.error
+              ? error.error
+              : 'Failed to update Bench candidate.';
+          this.dialogueBoxService.open(errorMessage, 'warning');
         }
       );
   }
