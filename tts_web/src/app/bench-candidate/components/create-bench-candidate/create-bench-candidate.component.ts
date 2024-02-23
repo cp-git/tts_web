@@ -77,11 +77,10 @@ export class CreateBenchCandidateComponent {
           });
       },
       (error) => {
-        console.error('Failed to add Bench candidate:', error);
-        this.dialogueBoxService.open(
-          'Failed to add Bench candidate. Already Exists',
-          'warning'
-        );
+        console.error(error);
+        const errorMessage =
+          error && error.error ? error.error : 'Failed to add Bench candidate.';
+        this.dialogueBoxService.open(errorMessage, 'warning');
       }
     );
   }

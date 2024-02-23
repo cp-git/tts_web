@@ -82,9 +82,9 @@
                                 <input
                                     [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
                                     type="text" class="form-control extra-light-placeholder" id="candidateName"
-                                    name="candidateName" placeholder="Enter task name" [(ngModel)]="task.candidateName"
-                                    (input)="onChangeCandidatename()" [required]="true" maxlength="100"
-                                    #candidateName="ngModel">
+                                    name="candidateName" placeholder="Enter Candidate name"
+                                    [(ngModel)]="task.candidateName" (input)="onChangeCandidatename()" [required]="true"
+                                    maxlength="100" #candidateName="ngModel">
                                 <div *ngIf="candidateName.invalid && (candidateName.dirty||candidateName.touched) "
                                     class="text-danger">
                                     Candidate Name is required.

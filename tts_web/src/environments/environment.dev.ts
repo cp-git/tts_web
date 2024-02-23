@@ -17,7 +17,7 @@ export const environment = {
   //forgotUrl: `http://localhost:8090/ttsms/forgotpass`,
   // statusURL: `http://localhost:8090/status/ttsms`,
   // hiringCompanyUrl: `http://localhost:8090/ttsms/hiringcompany`,
-  // benchCandidateUrl: `http://localhost:8090/ttsms/benchcandidate`,
+  // benchCandidateUrl: `https://127.0.0.1:8444/ttsms/benchcandidate`,
 
   countryUrl: `${commonEnv.baseUrl}/country/ttsms/country`,
   employeeUrl: `${commonEnv.baseUrl}/employee/ttsms`,

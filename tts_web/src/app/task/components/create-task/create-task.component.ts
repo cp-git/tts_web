@@ -417,6 +417,7 @@ export class CreateTaskComponent implements OnInit {
 
     if (benchCandidate) {
       this.benchCandidate = benchCandidate;
+      this.task.taskName = 'Bench - ' + benchCandidate.benchCandidateName;
     }
   }
 
@@ -821,6 +822,8 @@ export class CreateTaskComponent implements OnInit {
       // this.task.portalName = hiringCompany.portalName;
       // this.task.reasonToFitForJob = hiringCompany.jobDescription;
       this.hiringCompany = hiringCompany;
+
+      this.task.taskName = 'Sourcing - ' + hiringCompany.hiringCompanyName;
     }
   }
 }
