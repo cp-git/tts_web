@@ -40,7 +40,7 @@ fieldset {
 }
 
 .bg-purple {
-    background-color: rgb(142, 95, 235) !important;
+    background-color: #2d2c2c !important;
     /* Use !important to override Bootstrap styles if necessary */
 }
 

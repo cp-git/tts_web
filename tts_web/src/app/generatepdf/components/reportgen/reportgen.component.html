@@ -1,12 +1,18 @@
 <!-- Image and text -->
 <nav class="navbar navbar-light bg-purple">
-    <a class="navbar-brand text-white" href="#">
+    <a class="navbar-brand text-white" style="margin-left: 40%;font-size: 26px;">
         &nbsp;
         <!-- <img src="{{displayCompanyLogo}}" class="d-inline-block align-top" alt=""> -->
         Summary Reports
     </a>
-    <button type="button" class="btn btn-danger " (click)="navigateToTask()" style="margin-right: 10px;">Back</button>
+    <!-- <button type="button" class="btn btn-danger " (click)="navigateToTask()" style="margin-right: 10px;">Back</button> -->
 </nav>
+
+
+<div class="d-flex justify-content-end align-items-center closebutton">
+    <span (click)="close()" class="fa-solid fa-circle-left"
+        style='font-size:30px;color:blue; margin-right: 60px; margin-top: 20px; padding-bottom: 1%;'></span>
+</div>
 &nbsp;
 &nbsp;
 <div class="container">
@@ -24,7 +30,7 @@
                         <option value="undefined" disabled>Select Candidate</option>
                         <ng-container *ngFor="let employee of benchEmp">
                             <ng-container>
-                                <option value="{{employee.benchCandidateId}}">{{employee.benchCandidateName}}
+                                <option value="{{employee.benchCandidateId}}">{{employee.benchCandidateName}} - {{employee.currentDesignation}} - {{employee.experience}}
 
                                 </option>
                             </ng-container>
@@ -58,7 +64,7 @@
                         <option value="undefined" disabled>Select Hiring Company</option>
                         <ng-container *ngFor="let company of allHiringCompany">
                             <ng-container>
-                                <option value="{{company.hiringCompanyId}}">{{company.hiringCompanyName}}
+                                <option value="{{company.hiringCompanyId}}">{{company.hiringCompanyName}} - {{company.jobTitle}} - {{company.experienceRequired}}
                                 </option>
                             </ng-container>
                         </ng-container>

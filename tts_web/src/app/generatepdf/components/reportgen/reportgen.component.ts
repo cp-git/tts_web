@@ -60,7 +60,8 @@ export class ReportgenComponent implements OnInit {
     private router: Router,
     private location: Location,
     private benchCandidateService: BenchCandidateService,
-    private hiringCompanyService: HiringCompanyService
+    private hiringCompanyService: HiringCompanyService,
+    private _router:Router
   ) {
     this.formattedDate = this.datePipe.transform(this.today, 'MM-dd-yyyy');
     this.employeeId = sessionStorage.getItem('employeeId');
@@ -844,5 +845,11 @@ export class ReportgenComponent implements OnInit {
 
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     pdfDocGenerator.open();
+  }
+
+
+  close(){
+    this._router.navigate(['/dashboard'])
+    
   }
 }
