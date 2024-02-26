@@ -20,9 +20,12 @@ import { HiringCompanyModule } from './hiring-company/hiring-company.module';
 import { BenchCandidateModule } from './bench-candidate/bench-candidate.module';
 import { ReportgenComponent } from './generatepdf/components/reportgen/reportgen.component';
 import { RepotgenModule } from './generatepdf/repotgen/repotgen.module';
+import { BackupComponent } from './backup/backup/backup.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, BackupComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -41,7 +44,10 @@ import { RepotgenModule } from './generatepdf/repotgen/repotgen.module';
     ReasonModule,
     HiringCompanyModule,
     BenchCandidateModule,
-    RepotgenModule
+    RepotgenModule,
+    BrowserAnimationsModule,
+    NgxSpinnerModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent],

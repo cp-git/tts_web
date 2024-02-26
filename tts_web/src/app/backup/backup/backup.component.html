@@ -1,0 +1,32 @@
+<app-header></app-header>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="pacman" [fullScreen]="true">
+    <p class="info" style="color: white ; font-size: 40px; text-align: 700px;">Zipping...</p>
+
+    <div class="spinner-grow text-danger" role="status">
+    </div>
+    <div class="spinner-grow text-warning" role="status">
+    </div>
+    <div class="spinner-grow text-info" role="status">
+    </div>
+    <div class="spinner-grow text-light" role="status">
+    </div>
+
+</ngx-spinner>
+<div class="container">
+    <fieldset class="border rounded-3">
+        <legend class="float-none w-auto px-2">Backup Directory Structure <span style="color: rgb(0, 119, 255);">
+            </span>
+        </legend>
+        <p class="text-muted " style="font-weight: bold;">*Click the button below to download the backup of directory
+            structure.</p>
+        <i class="material-icons" style=" font-size:48px;color:rgb(0, 119, 255)" (click)="backupDir()">backup</i>
+        <div class="progress" *ngIf="downloadProgress > 0 && downloadProgress < 100">
+            <div class="progress-bar" role="progressbar" [style.width.%]="downloadProgress"
+                [attr.aria-valuenow]="downloadProgress" aria-valuemin="0" aria-valuemax="100">{{ downloadProgress }}%
+            </div>
+        </div>
+
+
+    </fieldset>
+
+</div>

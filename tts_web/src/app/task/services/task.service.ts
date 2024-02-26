@@ -20,7 +20,7 @@ import { InternalExternalListDTO } from '../class/internal-external-list-dto';
 export class TaskService {
   private readonly TaskURL = environment.taskUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // getTasksByStatusAndCreatorAndAssigneeOfCompanyByCompanyIdId(parentId: any, status: any, createdBy: any, assignedTo: any, companyId: any): Observable<Task[]> {
   //   return this.http.get<Task[]>(`${this.TaskURL}/allparent?parentid=${parentId}&status=${status}&createdby=${createdBy}&assignedto=${assignedTo}&companyid=${companyId}`,);
@@ -98,7 +98,8 @@ export class TaskService {
   private readonly jobPortalURL = `${this.baseUrl}/jobportal/ttsms/jobportals/`;
   private readonly jobTypeURL = `${this.baseUrl}/taxtype/ttsms/taxtypes/`;
   private readonly visaURL = `${this.baseUrl}/visa/ttsms/visas/`;
-
+  //  private backupUrl = 'http://localhost:8081/ttsms/backup';
+  private backupUrl = `${this.baseUrl}/uploadfile/ttsms/backup`;
   getAllJobLocationsByCompanyId(companyId: number): Observable<Joblocation[]> {
     return this.http.get<Joblocation[]>(`${this.jobLocationURL}${companyId}`);
   }
@@ -144,5 +145,10 @@ export class TaskService {
     return this.http.get<InternalExternalListDTO>(
       `${this.TaskURL}/tasklist/${companyId}`
     );
+  }
+
+
+  backupDirectory(): Observable<Blob> {
+    return this.http.get(this.backupUrl, { responseType: 'blob' });
   }
 }
