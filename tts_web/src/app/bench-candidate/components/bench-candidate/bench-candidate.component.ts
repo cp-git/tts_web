@@ -43,6 +43,8 @@ export class BenchCandidateComponent {
     this.benchCandidateService
       .getAllBenchCandidateByCompanyId(companyId)
       .subscribe((response) => {
+        console.log(response);
+        
         this.allBenchCandidate = response;
       });
   }

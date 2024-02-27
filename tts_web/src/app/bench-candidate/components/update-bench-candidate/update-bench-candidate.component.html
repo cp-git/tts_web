@@ -1,4 +1,5 @@
 <div class="container">
+    <!-- {{benchCandidate | json}} -->
     <fieldset class="border rounded-3">
         <legend class="float-none w-auto px-2">Update Bench Candidate</legend>
         <form #addUpdateForm="ngForm">
@@ -100,7 +101,7 @@
                     [(ngModel)]="benchCandidate.minBillingRate" class="form-control" required #experience="ngModel">
 
             </div> -->
-                <div class="col-md-4">
+                <div class="col-md-4" style="border: 1px groove grey;margin-top: 10px;border-radius: 8px;">
                     <label class="form-check-label " for="isWillingToRelocate"><strong>Willing to
                             relocate?</strong></label>
                     <div class="row">
@@ -118,6 +119,21 @@
                     </div>
                 </div>
 
+                <!-- Candidate Placed...-->
+
+                <div class="col-md-4" style="border: 1px groove grey;margin-top: 10px;border-radius: 8px;width: 400px;margin-left: 10px;">
+                    <label class="form-check-label " for="candidatePlaced"><strong>Active</strong></label>
+                    <div class="row">
+                        <div class="col"><input type="checkbox" id="candidatePlaced" name="candidatePlaced"
+                                [(ngModel)]="benchCandidate.candidatePlaced"
+                                class="custom-input form-check-input">
+                        </div>
+                     
+                    </div>
+                </div>
+
+
+                
 
                 <div>
                     <button type="submit" [disabled]="!addUpdateForm.valid"

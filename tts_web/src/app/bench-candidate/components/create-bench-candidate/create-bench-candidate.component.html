@@ -102,7 +102,7 @@
                     [(ngModel)]="benchCandidate.minBillingRate" class="form-control" #experience="ngModel">
 
             </div> -->
-                <div class="col-md-4">
+                <div class="col-md-4" style="border: 1px groove grey;margin-top: 10px;border-radius: 8px;">
                     <label class="form-check-label " for="isWillingToRelocate"><strong>Willing to
                             relocate?</strong></label>
                     <div class="row">
@@ -119,6 +119,22 @@
                         </div>
                     </div>
                 </div>
+
+
+                <!--Candidate is placed.... -->
+
+                <div class="col-md-4" style="border: 1px groove grey;margin-top: 10px;border-radius: 8px;width: 400px;margin-left: 10px;">
+                    <label class="form-check-label " for="candidatePlace"><strong>Active</strong></label>
+                    <div class="row">
+                        <div class="col"><input type="checkbox" id="candidatePlaced" name="candidatePlaced"
+                                [(ngModel)]="benchCandidate.candidatePlaced"
+                                class="custom-input form-check-input">
+                         
+                        </div>
+                     
+                    </div>
+                </div>
+
 
                 <div>
                     <button type="submit" [disabled]="!addUpdateForm.valid" (click)="addBenchCandidate(benchCandidate)"

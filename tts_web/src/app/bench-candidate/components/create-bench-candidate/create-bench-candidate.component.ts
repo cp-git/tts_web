@@ -67,6 +67,8 @@ export class CreateBenchCandidateComponent {
   addBenchCandidate(benchCandidate: BenchCandidate) {
     this.benchCandidateService.addBenchCandidate(benchCandidate).subscribe(
       (data) => {
+        console.log(data);
+        
         console.log('Bench candidate added successfully:', data);
         this.dialogueBoxService
           .open('Bench candidate added successfully', 'information')

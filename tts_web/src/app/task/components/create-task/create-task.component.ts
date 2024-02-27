@@ -87,6 +87,7 @@ export class CreateTaskComponent implements OnInit {
   allHiringCompany: HiringCompany[] = [];
 
   allBenchCandidateDetails: BenchCandidate[] = [];
+  filteredBenchCandidateDetails: BenchCandidate[] = [];
   benchCandidate: BenchCandidate = new BenchCandidate();
 
   employeeData: any;
@@ -386,8 +387,21 @@ export class CreateTaskComponent implements OnInit {
       this.benchCandidateService
         .getAllBenchCandidateByCompanyId(this.companyId)
         .subscribe((response) => {
+          console.log(response);
+          for(let e=0;e<=response.length;e++){
+           // console.log(response[e].candidatePlaced);
+            if(response[e].candidatePlaced==true){
+              console.log(response[e]);
+              this.filteredBenchCandidateDetails.push(response[e]);
+              
+            }
+            
+          }
+          
           this.allBenchCandidateDetails = response;
-          console.log(this.allBenchCandidateDetails);
+
+          
+
         });
     } else if (
       this.task.taskParent >= 0 &&
@@ -397,7 +411,12 @@ export class CreateTaskComponent implements OnInit {
       this.benchCandidateService
         .getBenchCandidateById(this.task.benchCandidateId)
         .subscribe((response) => {
-          this.allBenchCandidateDetails.push(response);
+
+          
+
+          
+
+          this.filteredBenchCandidateDetails.push(response);
           console.log(this.allBenchCandidateDetails);
 
           this.benchCandidate = response;
@@ -408,9 +427,9 @@ export class CreateTaskComponent implements OnInit {
 
   onChangeBenchCandidate(benchCandidateId: number) {
     console.log(benchCandidateId);
-    console.log(this.allBenchCandidateDetails);
+    console.log(this.filteredBenchCandidateDetails);
 
-    const benchCandidate = this.allBenchCandidateDetails.find(
+    const benchCandidate = this.filteredBenchCandidateDetails.find(
       (candidate) => candidate.benchCandidateId == benchCandidateId
     );
     console.log(benchCandidate);

@@ -113,7 +113,7 @@
                                     [(ngModel)]="task.benchCandidateId" [required]="true"
                                     (click)="onChangeBenchCandidate(task.benchCandidateId)">
                                     <option value="undefined" disabled>Select Option</option>
-                                    <ng-container *ngFor="let benchCandidate of  allBenchCandidateDetails">
+                                    <ng-container *ngFor="let benchCandidate of  filteredBenchCandidateDetails">
                                         <ng-container>
                                             <option value="{{benchCandidate.benchCandidateId}}">
                                                 {{benchCandidate.benchCandidateName}}
