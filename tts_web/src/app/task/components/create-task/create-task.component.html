@@ -830,7 +830,7 @@
                     [(ngModel)]="task.hiringCompanyId" [required]="true" #hiringCompanyName="ngModel"
                     (change)="onChangeHiringCompany(task.hiringCompanyId)">
                     <option value="undefined" disabled>Select Option</option>
-                    <ng-container *ngFor="let hiringCompany of  allHiringCompany">
+                    <ng-container *ngFor="let hiringCompany of  filterdHiringCompany">
                         <option value="{{hiringCompany.hiringCompanyId}}">
                             {{hiringCompany.hiringCompanyName}}</option>
                     </ng-container>

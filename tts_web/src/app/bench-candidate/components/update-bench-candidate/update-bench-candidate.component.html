@@ -101,16 +101,16 @@
                     [(ngModel)]="benchCandidate.minBillingRate" class="form-control" required #experience="ngModel">
 
             </div> -->
-                <div class="col-md-4" style="border: 1px groove grey;margin-top: 10px;border-radius: 8px;">
+                <div class="col-md-4" >
                     <label class="form-check-label " for="isWillingToRelocate"><strong>Willing to
                             relocate?</strong></label>
-                    <div class="row">
-                        <div class="col"><input type="radio" id="willingToRelocate" name="isWillingToRelocate"
+                    <div class="row" style="border: 1px groove grey;border-radius: 8px;height: 37px;margin-left: 1px;width: 407px;">
+                        <div class="col" style="margin-left: 40px;margin-top: 5px;"><input type="radio" id="willingToRelocate" name="isWillingToRelocate"
                                 [(ngModel)]="benchCandidate.willingToRelocate" [value]="true"
                                 class="custom-input form-check-input">
                             <label class="custom-input-label" for="willingToRelocate">&nbsp;Yes</label><br>
                         </div>
-                        <div class="col">
+                        <div class="col" style="margin-left: 40px;margin-top: 5px;">
                             <input type="radio" id="notWillingToRelocate" name="isWillingToRelocate"
                                 [(ngModel)]="benchCandidate.willingToRelocate" [value]="false"
                                 class="custom-input form-check-input">
@@ -121,10 +121,10 @@
 
                 <!-- Candidate Placed...-->
 
-                <div class="col-md-4" style="border: 1px groove grey;margin-top: 10px;border-radius: 8px;width: 400px;margin-left: 10px;">
+                <div class="col-md-4">
                     <label class="form-check-label " for="candidatePlaced"><strong>Active</strong></label>
-                    <div class="row">
-                        <div class="col"><input type="checkbox" id="candidatePlaced" name="candidatePlaced"
+                    <div class="row"  style="border: 1px groove grey;border-radius: 8px;height: 37px;margin-left: 1px;width: 407px;">
+                        <div class="col"><input style="height: 25px;width: 25px;margin-bottom: 2px;" type="checkbox" id="candidatePlaced" name="candidatePlaced"
                                 [(ngModel)]="benchCandidate.candidatePlaced"
                                 class="custom-input form-check-input">
                         </div>
@@ -138,7 +138,7 @@
                 <div>
                     <button type="submit" [disabled]="!addUpdateForm.valid"
                         (click)="updateBenchCandidate(benchCandidate)" class="btn btn-primary mt-3"
-                        style="border-radius: 50px;">Submit</button>
+                        style="border-radius: 50px;margin-left: 90%;">Submit</button>
                 </div>
 
             </div>

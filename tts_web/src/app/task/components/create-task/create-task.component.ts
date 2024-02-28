@@ -28,6 +28,7 @@ import { HiringCompany } from 'src/app/hiring-company/class/hiring-company';
 import { HiringCompanyService } from 'src/app/hiring-company/services/hiring-company.service';
 import { BenchCandidate } from 'src/app/bench-candidate/class/bench-candidate';
 import { BenchCandidateService } from 'src/app/bench-candidate/services/bench-candidate.service';
+import { reduce } from 'lodash';
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
@@ -85,6 +86,8 @@ export class CreateTaskComponent implements OnInit {
   selectedJobSubmissionMethod: Jobportal = new Jobportal();
 
   allHiringCompany: HiringCompany[] = [];
+
+  filterdHiringCompany: HiringCompany[] = [];
 
   allBenchCandidateDetails: BenchCandidate[] = [];
   filteredBenchCandidateDetails: BenchCandidate[] = [];
@@ -359,6 +362,17 @@ export class CreateTaskComponent implements OnInit {
       this.hiringCompanyService
         .getAllHiringCompanyByCompanyId(this.companyId)
         .subscribe((response) => {
+          console.log(response);
+          for(let k=0;k<=response.length;k++){
+           // console.log(response[k]);
+           if(response[k].userActive != false){
+            console.log(response[k]);
+             this.filterdHiringCompany.push(response[k]);
+            
+           }
+            
+          }
+        
           this.allHiringCompany = response;
           console.log(this.allHiringCompany);
         });
@@ -370,7 +384,7 @@ export class CreateTaskComponent implements OnInit {
       this.hiringCompanyService
         .getHiringCompanyById(this.task.hiringCompanyId)
         .subscribe((response) => {
-          this.allHiringCompany.push(response);
+          this.filterdHiringCompany.push(response);
           this.hiringCompany = response;
           console.log(this.allHiringCompany);
         });
@@ -823,7 +837,7 @@ export class CreateTaskComponent implements OnInit {
   hiringCompany: HiringCompany = new HiringCompany();
 
   onChangeHiringCompany(hiringCompanyId: number) {
-    const hiringCompany = this.allHiringCompany.find(
+    const hiringCompany = this.filterdHiringCompany.find(
       (comp) => comp.hiringCompanyId == hiringCompanyId
     );
     if (hiringCompany) {
