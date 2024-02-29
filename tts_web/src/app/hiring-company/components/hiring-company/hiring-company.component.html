@@ -24,6 +24,7 @@
                         <th>Job Title</th>
                         <th>Experience Required</th>
                         <th>Rate</th>
+                        <th>Active</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -37,6 +38,13 @@
                         <td>{{ hiringCompany.experienceRequired }}</td>
                         <td>{{ hiringCompany.rate }}</td>
                         <td>
+                            <span *ngIf="hiringCompany.userActive == true" class="fa-solid fa-check-square fa-lg"
+                            style='font-size: 23px;color: green;'></span>
+                         <span *ngIf="!hiringCompany.userActive == true"  class="fa-solid fa-square-xmark"
+                            style='font-size: 23px;color: red;'></span> 
+                            
+                        </td>
+                        <td>
                             <!-- Update Button -->
                             <span (click)="navigateToUpdateHiringCompany(hiringCompany)"
                                 class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
@@ -45,9 +53,9 @@
                             <!-- Delete Button -->
                             &nbsp;
                             &nbsp;
-                            <span (click)="deleteHiringCompany(hiringCompany)" class='fa-solid fa-trash fa-xl'
+                            <!-- <span (click)="deleteHiringCompany(hiringCompany)" class='fa-solid fa-trash fa-xl'
                                 style='font-size:23px;color: red;'>
-                            </span>
+                            </span> -->
                         </td>
 
 

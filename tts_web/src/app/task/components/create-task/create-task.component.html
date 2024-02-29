@@ -113,7 +113,7 @@
                                     [(ngModel)]="task.benchCandidateId" [required]="true"
                                     (click)="onChangeBenchCandidate(task.benchCandidateId)">
                                     <option value="undefined" disabled>Select Option</option>
-                                    <ng-container *ngFor="let benchCandidate of  allBenchCandidateDetails">
+                                    <ng-container *ngFor="let benchCandidate of  filteredBenchCandidateDetails">
                                         <ng-container>
                                             <option value="{{benchCandidate.benchCandidateId}}">
                                                 {{benchCandidate.benchCandidateName}}
@@ -830,7 +830,7 @@
                     [(ngModel)]="task.hiringCompanyId" [required]="true" #hiringCompanyName="ngModel"
                     (change)="onChangeHiringCompany(task.hiringCompanyId)">
                     <option value="undefined" disabled>Select Option</option>
-                    <ng-container *ngFor="let hiringCompany of  allHiringCompany">
+                    <ng-container *ngFor="let hiringCompany of  filterdHiringCompany">
                         <option value="{{hiringCompany.hiringCompanyId}}">
                             {{hiringCompany.hiringCompanyName}}</option>
                     </ng-container>

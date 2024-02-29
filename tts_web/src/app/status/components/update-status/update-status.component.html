@@ -67,6 +67,14 @@
 
             </div>
 
+            <div class="col-md-3">
+                <label class="label" for="finalStatus">Status:</label>
+                <div>
+                    <input type="checkbox" id="finalStatus" name="statusActive" [(ngModel)]="status.statusActive"
+                        class="custom-checkbox form-check-input">
+                </div>
+            </div>
+
 
             <div>
                 <button type="button" [disabled]="!updateStatusData.valid" class="btn btn-primary mt-3"

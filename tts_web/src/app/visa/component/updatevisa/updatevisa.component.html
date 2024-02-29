@@ -47,6 +47,14 @@
 
             </div>
 
+            <div class="col-md-2">
+                <label class="label" for="actualEndDate">Active</label>
+                <div>
+                    <input type="checkbox" id="visaActive" name="visaActive" [(ngModel)]="visa.visaActive"
+                        class="custom-checkbox form-check-input">
+                </div>
+            </div>
+
 
             <div>
                 <button type="submit" [disabled]="!updateVisaForm.valid" (click)="updateVisa(visa)"

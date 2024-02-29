@@ -6,5 +6,6 @@ export class Jobportal {
     companyId!: number;
     forBench!: boolean;
     forSourcing!: boolean;
+    jobActive!:boolean;
 
 }

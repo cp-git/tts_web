@@ -50,6 +50,14 @@
 
             </div>
 
+            <div class="col-md-2">
+                <label class="label" for="sourcing">Active</label>
+                <div>
+                    <input type="checkbox" id="locationActive" name="locationActive" [(ngModel)]="jobLocation.locationActive"
+                        class="custom-checkbox form-check-input">
+                </div>
+            </div>
+
             <div>
                 <button type="submit" [disabled]="!addLocation.valid" (click)="updateJobLocation(jobLocation)"
                     class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>

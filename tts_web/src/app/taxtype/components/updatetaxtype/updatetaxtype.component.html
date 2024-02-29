@@ -48,6 +48,14 @@
 
             </div>
 
+            <div class="col-md-2">
+                <label class="label" for="actualEndDate">Active</label>
+                <div>
+                    <input type="checkbox" id="taxActive" name="taxActive" [(ngModel)]="taxType.taxActive"
+                        class="custom-checkbox form-check-input">
+                </div>
+            </div>
+
             <div>
                 <button type="submit" [disabled]="!addPort.valid" (click)="updateTaxType(taxType)"
                     class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>
