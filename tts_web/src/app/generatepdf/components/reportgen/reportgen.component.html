@@ -28,7 +28,7 @@
                     <select class="form-control form-select" name="candidateName" id="candidateName"
                         [(ngModel)]="candidateId" [required]="true">
                         <option value="undefined" disabled>Select Candidate</option>
-                        <ng-container *ngFor="let employee of benchEmp">
+                        <ng-container *ngFor="let employee of filteredbenchEmp">
                             <ng-container>
                                 <option value="{{employee.benchCandidateId}}">{{employee.benchCandidateName}} - {{employee.currentDesignation}} - {{employee.experience}}
 
@@ -62,7 +62,7 @@
                     <select class="form-control form-select" name="candidateName" id="candidateName"
                         [(ngModel)]="hiringCompanyId" [required]="true">
                         <option value="undefined" disabled>Select Hiring Company</option>
-                        <ng-container *ngFor="let company of allHiringCompany">
+                        <ng-container *ngFor="let company of filteredHiringCompany">
                             <ng-container>
                                 <option value="{{company.hiringCompanyId}}">{{company.hiringCompanyName}} - {{company.jobTitle}} - {{company.experienceRequired}}
                                 </option>
