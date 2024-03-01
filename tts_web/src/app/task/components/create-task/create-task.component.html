@@ -111,7 +111,7 @@
                                         class="required-asterisk" *ngIf="!updateScreen">*</span></label><br>
                                 <select class="form-control form-select" name="candidateName" id="candidateName"
                                     [(ngModel)]="task.benchCandidateId" [required]="true"
-                                    (click)="onChangeBenchCandidate(task.benchCandidateId)">
+                                    (click)="onChangeBenchCandidate(task.benchCandidateId)" [disabled]="updateScreen">
                                     <option value="undefined" disabled>Select Option</option>
                                     <ng-container *ngFor="let benchCandidate of  filteredBenchCandidateDetails">
                                         <ng-container>
