@@ -90,15 +90,30 @@
                                     Candidate Name is required.
                                 </div>
                             </div>
+
+                            <!-- Visa dropdown for sourcing -->
                             <div class="col-md-3">
                                 <label for="visaId" class="form-label">Visa Type<span class="required-asterisk"
                                         *ngIf="!updateScreen">*</span></label><br>
                                 <select class="form-control form-select" name="visaId" id="visaId" name="visaId"
                                     [(ngModel)]="task.visaId" [required]="true">
                                     <option value="undefined" disabled>Select Option</option>
-                                    <ng-container *ngFor="let visa of allVisas">
-                                        <option value="{{visa.visaId}}">{{visa.visaType}}</option>
+                                    <ng-container *ngIf="!updateScreen;else allVisa">
+                                        <ng-container *ngFor="let visa of allVisas">
+                                            <option *ngIf="visa.forSourcing && visa.visaActive" value="{{visa.visaId}}">
+                                                {{visa.visaType}}</option>
+                                        </ng-container>
                                     </ng-container>
+                                    <ng-template #allVisa>
+                                        <ng-container *ngFor="let visa of allVisas">
+                                            <option *ngIf="visa.forSourcing" value="{{visa.visaId}}"
+                                                [disabled]="!visa.visaActive">
+                                                {{visa.visaType}}</option>
+                                        </ng-container>
+                                    </ng-template>
+                                    <!-- <ng-container *ngFor="let visa of allVisas">
+                                        <option value="{{visa.visaId}}">{{visa.visaType}}</option>
+                                    </ng-container> -->
 
                                 </select>
                             </div>
@@ -124,6 +139,7 @@
                                 </select>
                             </div>
                             <div class="col-md-3">
+                                <!-- visa dropdown for bench candidate -->
                                 <label for="visaId" class="form-label">Visa Type<span class="required-asterisk"
                                         *ngIf="!updateScreen">*</span></label><br>
                                 <select class="form-control form-select" name="visaId" id="visaId" name="visaId"
@@ -145,10 +161,21 @@
                                 [(ngModel)]="task.taxTypeId" [required]="true"
                                 (change)="onChangeTaxType(task.taxTypeId)">
                                 <option value="undefined" disabled>Select Option</option>
-                                <ng-container *ngFor="let taxType of allTaxTypes">
-                                    <option *ngIf="taxType.forSourcing" value="{{taxType.taxTypeId}}">
-                                        {{taxType.taxTypeName}}</option>
+                                <ng-container *ngIf="!updateScreen;else allTaxType">
+                                    <ng-container *ngFor="let taxType of allTaxTypes">
+                                        <option *ngIf="taxType.forSourcing && taxType.taxActive"
+                                            value="{{taxType.taxTypeId}}">
+                                            {{taxType.taxTypeName}}</option>
+                                    </ng-container>
                                 </ng-container>
+                                <ng-template #allTaxType>
+                                    <ng-container *ngFor="let taxType of allTaxTypes">
+                                        <option *ngIf="taxType.forSourcing" value="{{taxType.taxTypeId}}"
+                                            [disabled]="!taxType.taxActive"
+                                            [ngClass]="{'disabled-option': !taxType.taxActive}">
+                                            {{taxType.taxTypeName}}</option>
+                                    </ng-container>
+                                </ng-template>
 
                             </select>
                         </div>
@@ -979,15 +1006,32 @@
 
 
             <div class="col">
+                <!-- Job Mode dropdown for bench candiate  -->
                 <label for="jobLocationId" class="form-label">Job Mode<span class="required-asterisk"
                         *ngIf="!updateScreen">*</span></label><br>
                 <select class="form-control form-select" name="jobLocationId" id="jobLocationId"
                     [(ngModel)]="task.jobLocationId" [required]="true"
                     [disabled]="task.placementId == EXTERNAL_PLACEMENT_ID">
                     <option value="undefined" disabled>Select Option</option>
-                    <ng-container *ngFor="let location of allJobLocations">
-                        <option value="{{location.locationId}}">{{location.locationType}}</option>
+
+                    <ng-container *ngIf="!updateScreen;else allLocation">
+                        <ng-container *ngFor="let location of allJobLocations">
+                            <option *ngIf="location.forSourcing && location.locationActive"
+                                value="{{location.locationId}}">
+                                {{location.locationType}}</option>
+                        </ng-container>
                     </ng-container>
+                    <ng-template #allLocation>
+                        <ng-container *ngFor="let location of allJobLocations">
+                            <option *ngIf="location.forSourcing" value="{{location.locationId}}"
+                                [disabled]="!location.locationActive"
+                                [ngClass]="{'disabled-option': !location.locationActive}">
+                                {{location.locationType}}</option>
+                        </ng-container>
+                    </ng-template>
+                    <!-- <ng-container *ngFor="let location of allJobLocations">
+                        <option value="{{location.locationId}}">{{location.locationType}}</option>
+                    </ng-container> -->
                 </select>
             </div>
 
@@ -1092,9 +1136,22 @@
                 <select class="form-control form-select" name="jobPortalId" id="jobPortalId" name="jobPortalId"
                     [(ngModel)]="task.jobPortalId" [required]="true">
                     <option value="undefined" disabled>Select Option</option>
-                    <ng-container *ngFor="let portal of allJobPortals">
-                        <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                    <ng-container *ngIf="!updateScreen;else allJobPortal">
+                        <ng-container *ngFor="let portal of allJobPortals">
+                            <option *ngIf="portal.forSourcing && portal.jobActive" value="{{portal.portalId}}">
+                                {{portal.portalName}}</option>
+                        </ng-container>
                     </ng-container>
+                    <ng-template #allJobPortal>
+                        <ng-container *ngFor="let portal of allJobPortals">
+                            <option *ngIf="portal.forSourcing" value="{{portal.portalId}}"
+                                [disabled]="!portal.jobActive" [ngClass]="{'disabled-option': !portal.jobActive}">
+                                {{portal.portalName}}</option>
+                        </ng-container>
+                    </ng-template>
+                    <!-- <ng-container *ngFor="let portal of allJobPortals">
+                        <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                    </ng-container> -->
                 </select>
             </div>
 
@@ -1159,9 +1216,22 @@
                     [(ngModel)]="task.jobSubmissionPortalId" [required]="true" (change)="onChangeSubmissionMethod()"
                     [disabled]="task.placementId == EXTERNAL_PLACEMENT_ID">
                     <option value="undefined" disabled>Select Option</option>
-                    <ng-container *ngFor="let portal of allJobPortals">
-                        <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                    <ng-container *ngIf="!updateScreen;else allJobPortal">
+                        <ng-container *ngFor="let portal of allJobPortals">
+                            <option *ngIf="portal.forSourcing && portal.jobActive" value="{{portal.portalId}}">
+                                {{portal.portalName}}</option>
+                        </ng-container>
                     </ng-container>
+                    <ng-template #allJobPortal>
+                        <ng-container *ngFor="let portal of allJobPortals">
+                            <option *ngIf="portal.forSourcing" value="{{portal.portalId}}"
+                                [disabled]="!portal.jobActive" [ngClass]="{'disabled-option': !portal.jobActive}">
+                                {{portal.portalName}}</option>
+                        </ng-container>
+                    </ng-template>
+                    <!-- <ng-container *ngFor="let portal of allJobPortals">
+                        <option value="{{portal.portalId}}">{{portal.portalName}}</option>
+                    </ng-container> -->
                 </select>
             </div>
             <div class="col-md-4"
