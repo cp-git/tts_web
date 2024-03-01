@@ -11,7 +11,7 @@
                 <h1 *ngIf="updateScreen" class="modal-title fs-5" id="createTaskLabel">Update Task</h1>
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                    (click)="closeModal()"></button>
+                    (click)="closeModal(task, addTaskForm)"></button>
             </div>
             <div>
 
@@ -801,10 +801,10 @@
                         *ngIf="!isLoading && !updateScreen" type="submit" class="btn btn-primary"
                         (click)="onClickSave(task)">Save</button>
                     <!-- </ng-container> -->
-                    <button type="button" class="btn btn-secondary" (click)="closeModal()"
-                        id="closeButton">Close</button>
-                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close"
-                        (click)="closeModal()">Close</button> -->
+                    <!-- <button type="button" class="btn btn-secondary" (click)="closeModal()"
+                        id="closeButton">Close</button> -->
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close"
+                        (click)="closeModal(task, addTaskForm)">Close</button>
                 </div>
             </div>
 
