@@ -148,6 +148,7 @@ export class DashboardComponent implements OnInit {
         .getTaskCreatedByMeOrAssignedToMe(this.employeeId)
         .subscribe((response) => {
           this.parentAndAllTask = response;
+          console.log(this.parentAndAllTask);
         });
     }
   }

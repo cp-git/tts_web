@@ -28,6 +28,7 @@ import { HiringCompany } from 'src/app/hiring-company/class/hiring-company';
 import { HiringCompanyService } from 'src/app/hiring-company/services/hiring-company.service';
 import { BenchCandidate } from 'src/app/bench-candidate/class/bench-candidate';
 import { BenchCandidateService } from 'src/app/bench-candidate/services/bench-candidate.service';
+import { Form, NgForm } from '@angular/forms';
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
@@ -39,6 +40,7 @@ export class CreateTaskComponent implements OnInit {
   PLACEMENT_ID: number = 1;
 
   @ViewChild('createTaskModal') createTaskModal!: ElementRef;
+  @ViewChild('addTaskForm') addTaskForm!: NgForm; // ViewChild to get a reference to the form
 
   @Input() parentTask: Task = {} as Task;
   @Input() allEmployees: Employee[] = [];
@@ -90,6 +92,18 @@ export class CreateTaskComponent implements OnInit {
   benchCandidate: BenchCandidate = new BenchCandidate();
 
   employeeData: any;
+
+  hiringCompany: HiringCompany = new HiringCompany();
+
+  selectedFile!: File; // actual selected file which we are storing in directory
+  fileSelected: any; // temporary object for ngModel (required for validation)
+  isValidFile: boolean = true; // for checking file name is valid or not
+
+  taskObject: any;
+  currentStatus!: any;
+  actualTaskStatus: any;
+  currentTaskStatus: any;
+
   constructor(
     private taskService: TaskService,
     private renderer: Renderer2,
@@ -126,9 +140,17 @@ export class CreateTaskComponent implements OnInit {
 
     if (changes['task']) {
       this.onChangeTaskObject();
+      this.resetFields();
     }
   }
 
+  resetFields() {
+    this.isLoading = false;
+    this.showSuccessMessage = false;
+    this.showErrorMessage = false;
+    this.fileNames = [];
+    // this.addTaskForm.resetForm;
+  }
   // function called when user type data for Candidate name
   onChangeCandidatename() {
     if (this.task.placementId == this.EXTERNAL_PLACEMENT_ID) {
@@ -158,6 +180,7 @@ export class CreateTaskComponent implements OnInit {
   onChangeCandidateType() {
     this.task.taxTypeId = undefined;
   }
+
   onChangeSubmissionMethod() {
     const portalData = this.allJobPortals.find(
       (portal) => portal.portalId == this.task.jobSubmissionPortalId
@@ -433,7 +456,6 @@ export class CreateTaskComponent implements OnInit {
     );
   }
 
-  taskObject: any;
   // for adding task and reason
   onClickSave(task: Task) {
     console.log(task);
@@ -462,7 +484,7 @@ export class CreateTaskComponent implements OnInit {
         (response) => {
           this.showSuccessMessage = true;
           this.taskObject = response;
-
+          this.task.taskId = response.taskId;
           // alert("Task created successfully");
           // this.dialogueBoxService.open('task created successfully', 'information')
           // for closing modal after creating task
@@ -542,7 +564,6 @@ export class CreateTaskComponent implements OnInit {
       });
   }
 
-  currentStatus!: any;
   // calling function when use change the status on add task screen
   onChangeStatus(statusId: any, task: Task) {
     //console.log(this.backupTask);
@@ -722,10 +743,6 @@ export class CreateTaskComponent implements OnInit {
 
   // }
 
-  selectedFile!: File; // actual selected file which we are storing in directory
-  fileSelected: any; // temporary object for ngModel (required for validation)
-  isValidFile: boolean = true; // for checking file name is valid or not
-
   // called on file selected
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
@@ -780,7 +797,8 @@ export class CreateTaskComponent implements OnInit {
         URL.revokeObjectURL(blobUrl);
       });
   }
-  closeModal() {
+
+  closeModal(task: Task, addTaskForm: Form) {
     const modalElement = this.createTaskModal.nativeElement;
     if (modalElement) {
       const closeButton = modalElement.querySelector('#closeButton');
@@ -788,11 +806,11 @@ export class CreateTaskComponent implements OnInit {
         this.renderer.selectRootElement(closeButton).click();
       }
     }
-    this.afterCreateTask.emit();
+    // alert('inside ' + JSON.stringify(task));
+    this.addTaskForm.resetForm();
+    this.afterCreateTask.emit(task);
   }
 
-  actualTaskStatus: any;
-  currentTaskStatus: any;
   getCurrentTaskStatus(): any {
     const taskStatus = this.task.taskStatus;
     this.currentTaskStatus = this.allStatus.find(
@@ -800,8 +818,6 @@ export class CreateTaskComponent implements OnInit {
     );
     this.actualTaskStatus = this.currentTaskStatus;
   }
-
-  hiringCompany: HiringCompany = new HiringCompany();
 
   onChangeHiringCompany(hiringCompanyId: number) {
     const hiringCompany = this.allHiringCompany.find(
