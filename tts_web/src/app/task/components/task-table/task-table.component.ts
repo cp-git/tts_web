@@ -338,6 +338,8 @@ export class TaskTableComponent implements OnInit {
 
         // changing child task data
         this.addOrReplaceChildTask(response, task);
+
+        console.log(this.parentAndAllTask);
       },
       (error) => {}
     );
@@ -364,6 +366,11 @@ export class TaskTableComponent implements OnInit {
       this.parentAndAllTask.parentTasks[indexParentTaskToChange].childTask[
         indexOfTaskData
       ] = response;
+
+      // //also need to replace parent task data
+      // this.parentAndAllTask.parentTasks[indexParentTaskToChange] = response;
+
+      console.log(this.parentAndAllTask);
     } else {
       // for newly created parent task
       if (task.taskParent == 0) {

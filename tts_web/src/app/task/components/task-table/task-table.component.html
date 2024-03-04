@@ -32,24 +32,52 @@
                     *ngIf="(parentTaskData.childTask | statusFilter:filteredStatus | employeeTaskFilter:filteredEmployees).length>0">
 
                     <!-- called on click function when logged employee is creator -->
-                    <mat-expansion-panel class="expansionrow" hideToggle="false"
-                        (click)="toggleChildTable(parentTaskData)"
+                    <mat-expansion-panel class="expansionrow"
+                        [ngClass]="{'colorSourcingCandidate':parentTaskData.placementId==EXTERNAL_PLACEMENT_ID, 'colorBenchCandidate':parentTaskData.placementId==INTERNAL_PLACEMENT_ID}"
+                        hideToggle="false" (click)="toggleChildTable(parentTaskData)"
                         [expanded]="toggledTasksIds.has(parentTaskData.taskId)">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <b>{{parentTaskData.taskName}}</b>
+
                             </mat-panel-title>
-                            <mat-panel-description class="align-right">
-                                <!-- <div class="row">
-                            <div class="col icons addtask"> -->
+                            <mat-panel-description>
+                                <mat-panel-description title="Name of Task creator">
+                                    <!-- <img src="../../../../assets/initiate.png" alt="Name of Task creator"
+                                        style="width: 6%; height: 6%;"> -->
+                                    <!-- <i class="fa-regular fa-folder-open" title="Name of Task creator"></i> -->
+                                    <i class="fa-solid fa-envelope-open" title="Name of Task creator"></i>
+                                    &nbsp;
+                                    <ng-container *ngFor="let employee of employees">
+                                        <ng-container *ngIf="employee.employeeId == parentTaskData.taskCreatedBy">
+                                            {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
+                                        </ng-container>
+                                    </ng-container>
+
+
+                                    <!-- <b>Assigned To:</b> &nbsp;
+                                    <ng-container *ngFor="let employee of employees">
+                                        <ng-container *ngIf="employee.employeeId == parentTaskData.taskAssignedTo">
+                                            {{employee.firstName | titlecase}} {{employee.lastName | titlecase}}
+                                        </ng-container>
+                                    </ng-container> -->
+
+                                </mat-panel-description>
+                                <mat-panel-description class="align-right">
+                                    <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask"
+                                        style="color: #03a300;" data-bs-toggle="modal"
+                                        attr.data-bs-target="#createTask{{modalId + 1}}"
+                                        (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span>
+                                </mat-panel-description>
+                            </mat-panel-description>
+                            <!-- <mat-panel-description class="align-right">
+
                                 <span title="Add Task" class="fa-solid fa-circle-plus fa-xl addtask"
                                     style="color: #03a300;" data-bs-toggle="modal"
                                     attr.data-bs-target="#createTask{{modalId + 1}}"
                                     (click)="onClickCreateTask(parentTaskData, 'ADD', $event)"></span>
-                                <!-- </div>
-                        </div> -->
-                                <!-- This is a summary of the content -->
-                            </mat-panel-description>
+
+                            </mat-panel-description> -->
                         </mat-expansion-panel-header>
                         <!-- {{task|json}} -->
                         <!-- {{parentAndAllTask|json}} -->

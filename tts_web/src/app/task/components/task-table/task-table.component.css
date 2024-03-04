@@ -43,6 +43,7 @@ th {
 .expansionrow {
   margin-top: 1rem;
   border: 1px solid grey;
+  /* border-radius: 25px; */
 }
 
 .align-right {
@@ -55,7 +56,6 @@ th {
 .mat-expansion-panel-header {
   margin: 0.6%;
 }
-
 
 .mainaddtaskbtn {
   /* display: flex;
@@ -116,3 +116,25 @@ th {
   margin-top: -10px;
   /* Adjust the margin as needed */
 }
+
+/* class is used for adding background color dynamically for sourcing candidate  */
+.colorSourcingCandidate {
+  background-color: rgba(154, 255, 159, 0.4);
+}
+
+/* class is used for adding background color dynamically for bench candidate  */
+.colorBenchCandidate {
+  background-color: rgba(184, 129, 255, 0.3);
+}
+
+/* rgb(154, 255, 159); */
+/* rgba(172, 255, 47, 0.548); */
+
+/* .btn {
+  border-radius: 25px;
+} */
+
+/* .mat-expansion-panel-center-item {
+  display: flex;
+  justify-content: center;
+} */
