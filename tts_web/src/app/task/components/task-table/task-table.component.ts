@@ -133,25 +133,29 @@ export class TaskTableComponent implements OnInit {
     }
 
     if (changes['parentAndAllTask']) {
-      if (this.parentAndAllTask && this.parentAndAllTask.parentTasks) {
-        this.parentAndAllTask.parentTasks?.forEach((task) => {
+      if (
+        this.parentAndAllTask != null &&
+        this.parentAndAllTask.parentTasks != null
+      ) {
+        this.parentAndAllTask.parentTasks.forEach((task) => {
           //console.log(this.parentAndAllTask.childTasks);
+          if (task != null || task != undefined) {
+            task.childTask = [];
+            task.childTask.push(task);
+            let childData = this.parentAndAllTask.childTasks;
+            //console.log(childData);
 
-          task.childTask = [];
-          task.childTask.push(task);
-          let childData = this.parentAndAllTask.childTasks;
-          //console.log(childData);
+            childData.forEach((child) => {
+              //console.log(child);
 
-          childData.forEach((child) => {
-            //console.log(child);
-
-            if (task.taskId == child.taskParent) {
-              task.childTask.push(child);
-            }
-          });
+              if (task.taskId == child.taskParent) {
+                task.childTask.push(child);
+              }
+            });
+          }
         });
       }
-      //console.log(this.parentAndAllTask);
+      console.log(this.parentAndAllTask);
 
       // this.emptyTask = this.emptyTask;
 
@@ -320,8 +324,143 @@ export class TaskTableComponent implements OnInit {
   }
 
   // operation after creating task
-  afterCreateTask() {
-    location.reload();
+  afterCreateTask(task: Task) {
+    // location.reload();
+
+    console.log(task);
+
+    this.taskService.getTaskByTaskId(task.taskId).subscribe(
+      (response) => {
+        console.log(response);
+
+        // changing parent task data
+        this.addOrReplaceParentTask(response, task);
+
+        // changing child task data
+        this.addOrReplaceChildTask(response, task);
+
+        console.log(this.parentAndAllTask);
+      },
+      (error) => {}
+    );
+  }
+
+  private addOrReplaceParentTask(response: Task, task: Task) {
+    this.removeNullObjectsFormParentAndAllTask();
+    let indexParentTaskToChange = this.parentAndAllTask.parentTasks.findIndex(
+      (taskData) => task.taskId == taskData.taskId
+    );
+    console.log(this.parentAndAllTask);
+
+    console.log(indexParentTaskToChange);
+
+    // for update
+    if (indexParentTaskToChange >= 0) {
+      // finding index from array of child tasks where all the task are store of parent
+      //(so that array also contain parent task data which is responsible for displaying on frontend)
+      let indexOfTaskData = this.parentAndAllTask.parentTasks[
+        indexParentTaskToChange
+      ].childTask.findIndex((taskData2) => taskData2.taskId == task.taskId);
+
+      // replacing parent task data with latest/updated data which is in child task (because child task array contains all the task child + parent )
+      this.parentAndAllTask.parentTasks[indexParentTaskToChange].childTask[
+        indexOfTaskData
+      ] = response;
+
+      // //also need to replace parent task data
+      // this.parentAndAllTask.parentTasks[indexParentTaskToChange] = response;
+
+      console.log(this.parentAndAllTask);
+    } else {
+      // for newly created parent task
+      if (task.taskParent == 0) {
+        // adding newly created task in array
+        this.parentAndAllTask.parentTasks.push(response);
+
+        console.log(this.parentAndAllTask);
+
+        // adding newly created task in child tasks array (actually its containts the parent and all child task)
+        let indexOfNewlyCreatedTask =
+          this.parentAndAllTask.parentTasks.findIndex(
+            (newTask) => task.taskId == newTask.taskId
+          );
+
+        // first time need to initialised childTask to null/empty then only we can add/push data in it
+        this.parentAndAllTask.parentTasks[indexOfNewlyCreatedTask].childTask =
+          [];
+
+        // adding data of parent in array
+        this.parentAndAllTask.parentTasks[
+          indexOfNewlyCreatedTask
+        ].childTask.push(response);
+      }
+    }
+  }
+
+  removeNullObjectsFormParentAndAllTask() {
+    // Remove null objects from parentTasks array
+    this.parentAndAllTask.parentTasks =
+      this.parentAndAllTask.parentTasks.filter((task) => task !== null);
+
+    // Remove null objects from childTasks array
+    this.parentAndAllTask.childTasks = this.parentAndAllTask.childTasks.filter(
+      (task) => task !== null
+    );
+  }
+
+  private addOrReplaceChildTask(response: Task, task: Task) {
+    this.removeNullObjectsFormParentAndAllTask();
+
+    // finding child task
+    this.parentAndAllTask.parentTasks.forEach((parentTask) => {
+      let indexChildData = parentTask.childTask.findIndex(
+        (childTaskData) => task.taskId == childTaskData.taskId
+      );
+
+      // if child task found with some index then replacing child task data with latest task data
+      if (indexChildData >= 0) {
+        parentTask.childTask[indexChildData] = response;
+      }
+    });
+
+    // also replacing data in child tasks for parentAndAllTask
+    let indexChildTaskToChange = this.parentAndAllTask.childTasks.findIndex(
+      (taskData) => task.taskId == taskData.taskId
+    );
+
+    if (indexChildTaskToChange >= 0) {
+      this.parentAndAllTask.childTasks[indexChildTaskToChange] = response;
+    } else {
+      // for newly created child task
+      if (task.taskParent > 0) {
+        // adding newly created task in array
+        if (this.parentAndAllTask.childTasks.length <= 0) {
+          this.parentAndAllTask.childTasks = [];
+        }
+        this.parentAndAllTask.childTasks.push(response);
+
+        // adding newly created task in child tasks array (actually its containts the parent and all child task)
+        let indexOfParentOfNewlyCreatedTask =
+          this.parentAndAllTask.parentTasks.findIndex(
+            (newTask) => task.taskParent == newTask.taskId
+          );
+
+        // first time need to initialised childTask to null/empty then only we can add/push data in it
+        if (
+          this.parentAndAllTask.parentTasks[indexOfParentOfNewlyCreatedTask]
+            .childTask.length <= 0
+        ) {
+          this.parentAndAllTask.parentTasks[
+            indexOfParentOfNewlyCreatedTask
+          ].childTask = [];
+        }
+
+        // adding data of child task in parent array
+        this.parentAndAllTask.parentTasks[
+          indexOfParentOfNewlyCreatedTask
+        ].childTask.push(response);
+      }
+    }
   }
 
   // for getting all status

@@ -111,3 +111,30 @@ legend {
 .disabled-option {
   color: rgb(255, 112, 112);
 }
+
+/* class is used for adding background color dynamically for sourcing candidate  */
+/* .colorSourcingCandidate {
+  background-color: rgba(154, 255, 159, 0.4);
+} */
+
+/* class is used for adding background color dynamically for bench candidate  */
+/* .colorBenchCandidate {
+  background-color: rgba(184, 129, 255, 0.3);
+} */
+
+.candidateType {
+  background-color: white;
+  border-radius: 25px;
+  border: 1px solid black;
+}
+
+/* .btn {
+  border-radius: 25px;
+} */
+
+/* legend {
+  background-color: white;
+  border-radius: 25px;
+  border: 1px solid black;
+  background-color: lightskyblue;
+} */

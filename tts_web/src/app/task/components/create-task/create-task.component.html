@@ -11,7 +11,7 @@
                 <h1 *ngIf="updateScreen" class="modal-title fs-5" id="createTaskLabel">Update Task</h1>
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                    (click)="closeModal()"></button>
+                    (click)="closeModal(task, addTaskForm)"></button>
             </div>
             <div>
 
@@ -21,8 +21,11 @@
                 <div class="col-md-6 text-center">
 
                     <!-- candidate type -->
-                    <fieldset class="border rounded-3">
-                        <legend class="float-none w-auto px-2">Candidate Type</legend>
+                    <fieldset
+                        [ngClass]="{'sourcingfieldset':task.placementId==EXTERNAL_PLACEMENT_ID, 'benchfieldset':task.placementId==INTERNAL_PLACEMENT_ID}"
+                        class="border rounded-3"
+                        [ngClass]="{'colorSourcingCandidate':task.placementId==EXTERNAL_PLACEMENT_ID, 'colorBenchCandidate':task.placementId==INTERNAL_PLACEMENT_ID}">
+                        <legend class="float-none w-auto px-2 candidateType"><b>Candidate Type</b></legend>
                         <div class="row">
                             <div class="col">
                                 <input type="radio" name="placement" id="internalplacement"
@@ -69,8 +72,9 @@
                 <!-- candidate details  -->
                 <!-- this will display for child task and (for parent only for bench candidate) -->
                 <!-- [disabled]="task.placementId==INTERNAL_PLACEMENT_ID && task.taskParent!=0" -->
-                <fieldset class="border rounded-3"
-                    *ngIf="task.taskParent!=0 || task.placementId == INTERNAL_PLACEMENT_ID">
+                <fieldset
+                    [ngClass]="{'sourcingfieldset':task.placementId==EXTERNAL_PLACEMENT_ID, 'benchfieldset':task.placementId==INTERNAL_PLACEMENT_ID}"
+                    class="border rounded-3" *ngIf="task.taskParent!=0 || task.placementId == INTERNAL_PLACEMENT_ID">
                     <legend class="float-none w-auto px-2">Candidate Details</legend>
                     <!-- candidate name -->
                     <div class="row">
@@ -443,7 +447,9 @@
             <!-- TASK NAME AND TASK DESCRIPTION  -->
             <div class="col">
                 <!-- // company detail  -->
-                <fieldset class="border rounded-3"
+                <fieldset
+                    [ngClass]="{'sourcingfieldset':task.placementId==EXTERNAL_PLACEMENT_ID, 'benchfieldset':task.placementId==INTERNAL_PLACEMENT_ID}"
+                    class="border rounded-3"
                     *ngIf="task.placementId==EXTERNAL_PLACEMENT_ID && (currectTaxTypeObject!=undefined && currectTaxTypeObject!=null && c2c.includes(currectTaxTypeObject.taxTypeName))">
                     <legend class="float-none w-auto px-2">Sourcing Company Details</legend>
                     <!-- candidate company and company address  -->
@@ -521,7 +527,9 @@
                     </div>
                 </fieldset>
 
-                <fieldset class="border rounded-3">
+                <fieldset
+                    [ngClass]="{'sourcingfieldset':task.placementId==EXTERNAL_PLACEMENT_ID, 'benchfieldset':task.placementId==INTERNAL_PLACEMENT_ID}"
+                    class="border rounded-3">
                     <legend class="float-none w-auto px-2">Task Details</legend>
 
                     <!-- task details  -->
@@ -751,7 +759,9 @@
                 </fieldset>
 
                 <!-- file and attachements  -->
-                <fieldset class="border rounded-3">
+                <fieldset
+                    [ngClass]="{'sourcingfieldset':task.placementId==EXTERNAL_PLACEMENT_ID, 'benchfieldset':task.placementId==INTERNAL_PLACEMENT_ID}"
+                    class="border rounded-3">
                     <legend class="float-none w-auto px-2">Attachments</legend>
                     <div class="row">
                         <!-- upload file  -->
@@ -828,10 +838,10 @@
                         *ngIf="!isLoading && !updateScreen" type="submit" class="btn btn-primary"
                         (click)="onClickSave(task)">Save</button>
                     <!-- </ng-container> -->
-                    <button type="button" class="btn btn-secondary" (click)="closeModal()"
-                        id="closeButton">Close</button>
-                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close"
-                        (click)="closeModal()">Close</button> -->
+                    <!-- <button type="button" class="btn btn-secondary" (click)="closeModal()"
+                        id="closeButton">Close</button> -->
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close"
+                        (click)="closeModal(task, addTaskForm)">Close</button>
                 </div>
             </div>
 
@@ -842,7 +852,9 @@
 
 <!-- for sourcing candidate -->
 <ng-template #Sourcing_HiringCompanyDetails>
-    <fieldset class="border rounded-3" [disabled]="task.taskParent !=0 && (task.placementId == EXTERNAL_PLACEMENT_ID)"
+    <fieldset
+        [ngClass]="{'sourcingfieldset':task.placementId==EXTERNAL_PLACEMENT_ID, 'benchfieldset':task.placementId==INTERNAL_PLACEMENT_ID}"
+        class="border rounded-3" [disabled]="task.taskParent !=0 && (task.placementId == EXTERNAL_PLACEMENT_ID)"
         *ngIf="task.taskParent !=0 || task.placementId == EXTERNAL_PLACEMENT_ID">
 
         <legend class="float-none w-auto px-2">Job Details</legend>
@@ -970,7 +982,9 @@
 
 <!-- For bench candidate -->
 <ng-template #Bench_HiringCompanyDetails>
-    <fieldset class="border rounded-3" *ngIf="task.taskParent !=0">
+    <fieldset
+        [ngClass]="{'sourcingfieldset':task.placementId==EXTERNAL_PLACEMENT_ID, 'benchfieldset':task.placementId==INTERNAL_PLACEMENT_ID}"
+        class="border rounded-3" *ngIf="task.taskParent !=0">
 
         <legend class="float-none w-auto px-2">Job Details</legend>
 
