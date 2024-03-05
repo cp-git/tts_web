@@ -111,7 +111,8 @@
                                     <ng-template #allVisa>
                                         <ng-container *ngFor="let visa of allVisas">
                                             <option *ngIf="visa.forSourcing" value="{{visa.visaId}}"
-                                                [disabled]="!visa.visaActive">
+                                                [disabled]="!visa.visaActive"
+                                                [ngClass]="{'disabled-option': !visa.visaActive}">
                                                 {{visa.visaType}}</option>
                                         </ng-container>
                                     </ng-template>
