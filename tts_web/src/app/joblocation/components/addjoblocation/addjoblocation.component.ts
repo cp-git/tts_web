@@ -50,7 +50,7 @@ export class AddjoblocationComponent implements OnInit {
     )
   }
 
-  navigateToPortal() {
+  navigateToLocation() {
     this.route.navigate(['/status']);
   }
 

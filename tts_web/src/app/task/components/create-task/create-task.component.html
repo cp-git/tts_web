@@ -639,11 +639,13 @@
                                 <option value="undefined" disabled>Select Option</option>
                                 <ng-container *ngFor="let status of allStatus">
                                     <ng-container *ngIf="updateScreen">
-                                        <option value="{{status.statusId}}">{{status.statusCode |titlecase}}
+                                        <option value="{{status.statusId}}" [disabled]="!status.statusActive"
+                                            [ngClass]="{'disabled-option': !status.statusActive}">{{status.statusCode
+                                            |titlecase}}
                                         </option>
                                     </ng-container>
                                     <ng-container
-                                        *ngIf="!updateScreen && (!(status?.actualEndDate===true && status?.actualStartDate===true && status.finalStatus===true))">
+                                        *ngIf="!updateScreen && status?.statusActive && (!(status?.actualEndDate===true && status?.actualStartDate===true && status.finalStatus===true))">
                                         <option value="{{status.statusId}}">{{status.statusCode |titlecase}}
                                         </option>
                                     </ng-container>

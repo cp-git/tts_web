@@ -5,7 +5,7 @@
 
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h2></h2>
-                <span (click)="navigateToPortal()" class="fa-solid fa-circle-arrow-left fa-lg"
+                <span (click)="navigateToLocation()" class="fa-solid fa-circle-arrow-left fa-lg"
                     style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
 
             </div>
@@ -17,7 +17,7 @@
                         required class="form-control" maxlength="25" #locationType="ngModel">
                     <div *ngIf="locationType.invalid && (locationType.dirty||locationType.touched) "
                         class="text-danger">
-                        portal name is required.
+                        location type is required.
                     </div>
                 </div>
                 <div class="col-md-5">
@@ -52,8 +52,8 @@
             <div class="col-md-2">
                 <label class="label" for="sourcing">Active:</label>
                 <div>
-                    <input type="checkbox" id="locationActive" name="locationActive" [(ngModel)]="jobLocation.locationActive"
-                        class="custom-checkbox form-check-input">
+                    <input type="checkbox" id="locationActive" name="locationActive"
+                        [(ngModel)]="jobLocation.locationActive" class="custom-checkbox form-check-input">
                 </div>
             </div>
 

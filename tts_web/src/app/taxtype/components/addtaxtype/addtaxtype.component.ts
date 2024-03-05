@@ -36,7 +36,7 @@ export class AddtaxtypeComponent implements OnInit {
     this.taxTypeService.addTaxType(taxType).subscribe(
       (response: Taxtype) => {
 
-        this.dialogueBoxService.open(' TaxType created successfully', 'information').then((response) => {
+        this.dialogueBoxService.open(' Tax Type created successfully', 'information').then((response) => {
           if (response) {
             this.location.back(); // Refresh the page
           }
@@ -45,7 +45,7 @@ export class AddtaxtypeComponent implements OnInit {
       },
       (error) => {
         console.log("Failed to get all");
-        this.dialogueBoxService.open('taxtype creation Failed', 'warning');
+        this.dialogueBoxService.open('Tax Type creation Failed', 'warning');
 
       }
     )
