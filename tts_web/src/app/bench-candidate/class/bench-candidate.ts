@@ -12,5 +12,6 @@ export class BenchCandidate {
   email!: string;
   currentDesignation!: string;
   willingToRelocate!: boolean;
+  userActive!:boolean;
   // minBillingRate!: number;
 }

@@ -18,7 +18,7 @@
                         required class="form-control" maxlength="25" #locationType="ngModel">
                     <div *ngIf="locationType.invalid && (locationType.dirty||locationType.touched) "
                         class="text-danger">
-                        portal name is required.
+                        Location type is required.
                     </div>
                 </div>
                 <div class="col-md-5">
@@ -48,6 +48,14 @@
                     </div>
                 </div>
 
+            </div>
+
+            <div class="col-md-2">
+                <label class="label" for="sourcing">Active:</label>
+                <div>
+                    <input type="checkbox" id="locationActive" name="locationActive"
+                        [(ngModel)]="jobLocation.locationActive" class="custom-checkbox form-check-input">
+                </div>
             </div>
 
             <div>

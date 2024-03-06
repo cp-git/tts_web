@@ -6,5 +6,6 @@ export interface Status {
     companyId: number;
     actualStartDate: boolean;
     actualEndDate: boolean;
-    finalStatus: boolean
+    finalStatus: boolean;
+    statusActive:boolean;
 }

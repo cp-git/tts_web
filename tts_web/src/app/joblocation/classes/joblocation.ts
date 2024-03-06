@@ -5,4 +5,5 @@ export class Joblocation {
     companyId!: number;
     forBench!: boolean;
     forSourcing!: boolean;
+    locationActive!:boolean;
 }

@@ -16,6 +16,10 @@ export class CreateBenchCandidateComponent {
   allTaxTypes: Taxtype[] = [];
   allVisas: Visa[] = [];
 
+  filteredVisas: Visa[] = [];
+
+  filteredTaxTypes: Taxtype[] = [];
+
   benchCandidate: BenchCandidate = {} as BenchCandidate;
   todayDate: string;
 
@@ -50,6 +54,17 @@ export class CreateBenchCandidateComponent {
     this.taxTypeService
       .getAllTaxTypeByCompanyId(candidateId)
       .subscribe((response) => {
+
+        for(let v=0;v<=response.length;v++){
+          //console.log(response[v]);
+
+          if(response[v].taxActive==true){
+            console.log(response[v]);
+            this.filteredTaxTypes.push(response[v])
+            
+          }
+          
+        }
         this.allTaxTypes = response;
       });
   }
@@ -59,6 +74,18 @@ export class CreateBenchCandidateComponent {
     this.visaService
       .getAllVisasByCompanyId(candidateId)
       .subscribe((response) => {
+       // console.log(response);
+        for(let v=0;v<=response.length;v++){
+          //console.log(response[v]);
+
+          if(response[v].visaActive==true){
+            console.log(response[v]);
+            this.filteredVisas.push(response[v])
+            
+          }
+          
+        }
+        
         this.allVisas = response;
       });
   }

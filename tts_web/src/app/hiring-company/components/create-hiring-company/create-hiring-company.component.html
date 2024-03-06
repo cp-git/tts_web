@@ -34,7 +34,7 @@
                     <select class="form-control form-select" name="jobLocationId" id="jobLocationId"
                         [(ngModel)]="hiringCompany.jobMode" [required]="true">
                         <option value="undefined" disabled>Select Option</option>
-                        <ng-container *ngFor="let location of allJobLocations">
+                        <ng-container *ngFor="let location of filteredLocations">
                             <option value="{{location.locationId}}">{{location.locationType}}</option>
                         </ng-container>
                     </select>
@@ -88,7 +88,7 @@
                     <select class="form-control form-select" name="jobSubmissionPortalId" id="jobPortalId"
                         [(ngModel)]="hiringCompany.jobSubmissionMethod" (change)="onChangeSubmissionMethod()">
                         <option value="undefined">Select Option</option>
-                        <ng-container *ngFor="let portal of allJobPortals">
+                        <ng-container *ngFor="let portal of filteredJobPortals">
                             <option value="{{portal.portalId}}">{{portal.portalName}}</option>
                         </ng-container>
                     </select>
@@ -113,6 +113,18 @@
                     <div *ngIf="jobDescription.invalid  && (jobDescription.dirty||jobDescription.touched)"
                         class="text-danger">
                         Job description is required.</div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-check-label " for="candidatePlace"><strong>Active</strong></label>
+                    <div class="row" style="border: 1px groove grey;border-radius: 8px;width: 400px;margin-left: 4px;">
+                        <div class="col" style="height: 40px;"><input style="border: 2px groove grey;height: 28px;width: 30px;" type="checkbox" id="userActive" name="userActive"
+                                [(ngModel)]="hiringCompany.userActive"
+                                class="custom-input form-check-input">
+                         
+                        </div>
+                     
+                    </div>
                 </div>
 
             </div>

@@ -16,6 +16,10 @@ export class CreateHiringCompanyComponent implements OnInit {
   allJobLocations: Joblocation[] = [];
   allJobPortals: Jobportal[] = [];
 
+
+  filteredLocations: Joblocation[] = [];
+  filteredJobPortals: Jobportal[] = [];
+
   hiringCompany: HiringCompany = {} as HiringCompany;
   todayDate: string;
 
@@ -52,6 +56,17 @@ export class CreateHiringCompanyComponent implements OnInit {
     this.jobLocationService
       .getAllJobLocationByCompanyId(companyId)
       .subscribe((response) => {
+
+        for(let v=0;v<=response.length;v++){
+          //console.log(response[v]);
+
+          if(response[v].locationActive==true){
+            console.log(response[v]);
+            this.filteredLocations.push(response[v])
+            
+          }
+          
+        }
         this.allJobLocations = response;
         console.log(this.allJobLocations);
       });
@@ -62,6 +77,18 @@ export class CreateHiringCompanyComponent implements OnInit {
     this.jobPortalService
       .getAllJobPortalsByCompanyId(companyId)
       .subscribe((response) => {
+
+        for(let v=0;v<=response.length;v++){
+          //console.log(response[v]);
+
+          if(response[v].jobActive==true){
+            console.log(response[v]);
+            this.filteredJobPortals.push(response[v])
+            
+          }
+          
+        }
+
         this.allJobPortals = response;
         console.log(this.allJobLocations);
       });

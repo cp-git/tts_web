@@ -29,14 +29,14 @@ export class UpdatetaxtypeComponent {
     this.taxTypeService.updateTaxType(taxType.taxTypeId, taxType).subscribe(
       (response: Taxtype) => {
 
-        this.dialogueBoxService.open('taxType updated successfully', 'information').then((response) => {
+        this.dialogueBoxService.open('Tax type updated successfully', 'information').then((response) => {
           if (response) {
             this.location.back(); // Refresh the page
           }
         });
       },
       (error) => {
-        this.dialogueBoxService.open('Failed to update taxType', 'warning');
+        this.dialogueBoxService.open('Failed to update tax type', 'warning');
       }
     )
 

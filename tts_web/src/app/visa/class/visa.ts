@@ -5,4 +5,6 @@ export class Visa {
     companyId!: number;
     forBench!: boolean;
     forSourcing!: boolean;
+    visaActive!:boolean;
+    
 }

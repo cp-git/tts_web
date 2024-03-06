@@ -12,3 +12,7 @@ fieldset {
 .form-control {
   border: 1px solid;
 }
+
+.disabled-option {
+  color: rgb(255, 112, 112);
+}

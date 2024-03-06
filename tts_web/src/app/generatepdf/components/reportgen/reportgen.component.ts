@@ -40,6 +40,8 @@ export class ReportgenComponent implements OnInit {
   allHiringCompany: HiringCompany[] = [];
   internalTask: InternalTask[] = [];
   benchEmp: BenchCandidate[] = [];
+  filteredbenchEmp: BenchCandidate[] = [];
+  filteredHiringCompany: HiringCompany[] = [];
   employeeId: any;
   companyId: any;
   empData: any;
@@ -131,6 +133,18 @@ export class ReportgenComponent implements OnInit {
       .getAllBenchCandidateByCompanyId(this.companyId)
       .subscribe(
         (response) => {
+          //console.log(response);
+
+          for(let k=0;k<response.length;k++){
+          //  console.log(response[k]);
+            if(response[k].userActive==true){
+              //console.log(response[k]);
+              this.filteredbenchEmp.push(response[k]);
+              
+            }
+            
+          }
+          
           this.benchEmp = response;
         },
         (error) => {
@@ -144,6 +158,19 @@ export class ReportgenComponent implements OnInit {
       .getAllHiringCompanyByCompanyId(this.companyId)
       .subscribe(
         (response) => {
+          console.log(response);
+
+          
+          for(let k=0;k<response.length;k++){
+            //  console.log(response[k]);
+              if(response[k].userActive==true){
+                //console.log(response[k]);
+                this.filteredHiringCompany.push(response[k]);
+                
+              }
+              
+            }
+          
           this.allHiringCompany = response;
         },
         (error) => {

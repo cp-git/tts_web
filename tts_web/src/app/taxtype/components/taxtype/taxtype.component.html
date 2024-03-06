@@ -18,8 +18,10 @@
                         <!-- <th>Country ID</th> -->
                         <th>Tax Type Name</th>
                         <th>Tax Type Description</th>
-                        <th>Is For Bench</th>
-                        <th>Is for Sourcing</th>
+                        <th>Bench</th>
+                        <th>Sourcing</th>
+                        <th>Active</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,6 +44,15 @@
                         </td>
 
                         <td>
+                            <span *ngIf="taxtype.taxActive == true" class="fa-solid fa-check-square fa-lg"
+                            style='font-size: 23px;color: green;'></span>
+                         <span *ngIf="!taxtype.taxActive== true"  class="fa-solid fa-square-xmark"
+                            style='font-size: 23px;color: red;'></span> 
+                            
+                        </td>
+
+
+                        <td>
 
                             <!-- Update Button -->
                             <span class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
@@ -50,8 +61,8 @@
                             <!-- Delete Button -->
                             &nbsp;
                             &nbsp;
-                            <span class='fa-solid fa-trash fa-xl' style='font-size:23px;color: red;'
-                                (click)="onDeleteTaxType(taxtype.taxTypeId)"></span>
+                            <!-- <span class='fa-solid fa-trash fa-xl' style='font-size:23px;color: red;'
+                                (click)="onDeleteTaxType(taxtype.taxTypeId)"></span> -->
                         </td>
                     </tr>
                 </tbody>

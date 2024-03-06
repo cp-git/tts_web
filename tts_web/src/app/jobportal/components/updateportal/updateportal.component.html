@@ -49,6 +49,15 @@
             </div>
 
 
+            <div class="col-md-2">
+                <label class="label" for="actualEndDate">Active:</label>
+                <div>
+                    <input type="checkbox" id="jobActive" name="jobActive" [(ngModel)]="portal.jobActive"
+                        class="custom-checkbox form-check-input">
+                </div>
+            </div>
+
+
             <div>
                 <button type="submit" [disabled]="!updatePortal.valid" (click)="updateJobPortal(portal)"
                     class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>

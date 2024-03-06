@@ -13,4 +13,5 @@ export class HiringCompany {
   portalName!: string;
   companyId!: number;
   jobDescription!: string;
+  userActive!:boolean
 }

@@ -27,6 +27,7 @@
                         <th>ActualStartDate</th>
                         <th>ActualEndDate</th>
                         <th>FinalStatus</th>
+                        <th>Active</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -54,6 +55,14 @@
                             <span *ngIf="!status.finalStatus" class="fa-solid fa-square fa-lg"
                                 style='font-size: 23px;color: grey;'></span>
                         </td>
+
+                        <td>
+                            <span *ngIf="status.statusActive == true" class="fa-solid fa-check-square fa-lg"
+                            style='font-size: 23px;color: green;'></span>
+                         <span *ngIf="!status.statusActive == true"  class="fa-solid fa-square-xmark"
+                            style='font-size: 23px;color: red;'></span> 
+                            
+                        </td>
                         <td>
 
                             <!-- Update Button -->
@@ -62,8 +71,8 @@
                             <!-- Delete Button -->
                             &nbsp;
                             &nbsp;
-                            <span (click)="onDeleteStatus(status.statusId)" class='fa-solid fa-trash fa-xl'
-                                style='font-size:23px;color: red;'></span>
+                            <!-- <span (click)="onDeleteStatus(status.statusId)" class='fa-solid fa-trash fa-xl'
+                                style='font-size:23px;color: red;'></span> -->
                         </td>
                     </tr>
                 </tbody>
