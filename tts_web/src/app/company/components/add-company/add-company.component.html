@@ -1,11 +1,22 @@
 <div class="container">
+    <fieldset class="border rounded-3">
+        <legend class="float-none w-auto px-2">Add Company</legend>
+        <form #addUpdateForm="ngForm">
+
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <h2></h2>
+                <span (click)="navigateToCompany()" class="fa-solid fa-circle-arrow-left fa-lg"
+                    style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
+
+            </div>
+            <!-- <div class="container">
     <form #addCompanyData="ngForm">
         <div class="d-flex justify-content-between align-items-center w-100">
             <h2>Add Company</h2>
             <span [routerLink]="['/company']" class="fa-solid fa-circle-arrow-left fa-lg"
                 style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
         </div>
-        <form #addUpdateForm="ngForm" class="form-material">
+        <form #addUpdateForm="ngForm" class="form-material"> -->
             <div class="row">
                 <div class="col-md-4">
                     <label class="label" for="companyCountryId">Country:<span class="required-asterisk">*</span></label>
@@ -99,6 +110,6 @@
                     class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>
             </div>
         </form>
-    </form>
+    </fieldset>
 </div>
 <app-footer></app-footer>

@@ -103,7 +103,7 @@ export class AddCompanyComponent implements OnInit {
     }
   }
 
-   limitZipCodeLength(event: any) {
+  limitZipCodeLength(event: any) {
     const input = event.target;
     const maxLength = 10; // desired maximum length
 
@@ -119,5 +119,9 @@ export class AddCompanyComponent implements OnInit {
     if (input.value.length > maxLength) {
       input.value = input.value.slice(0, maxLength); // Truncate input if it exceeds the limit
     }
+  }
+
+  navigateToCompany() {
+    this.route.navigate(['/company']);
   }
 }

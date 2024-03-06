@@ -17,7 +17,10 @@ export class AddCountryComponent {
 
   country!: Country; // The current country object to be added
 
-  constructor(private location: Location, private countryService: CountryService, private router: Router, private dialogueBoxService: DialogueBoxService) {
+  constructor(private location: Location,
+    private countryService: CountryService,
+    private router: Router,
+    private dialogueBoxService: DialogueBoxService) {
     this.country = new Country(); // Initialize an empty country object for adding a new country
   }
 
@@ -58,5 +61,8 @@ export class AddCountryComponent {
     );
   }
 
+  navigateToCountry() {
+    this.router.navigate(['/country']);
+  }
 
 }

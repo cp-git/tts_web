@@ -55,4 +55,8 @@ export class UpdateCountryComponent {
   }
 
 
+  navigateToCountry() {
+    this.router.navigate(['/country']);
+  }
+
 }
