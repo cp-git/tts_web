@@ -1,33 +1,45 @@
 <div class="container">
+    <fieldset class="border rounded-3">
+        <legend class="float-none w-auto px-2">Update Country</legend>
+        <form #addUpdateForm="ngForm">
+
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <h2></h2>
+                <span (click)="navigateToCountry()" class="fa-solid fa-circle-arrow-left fa-lg"
+                    style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
+
+            </div>
+            <!-- <div class="container">
 
     <div class="d-flex justify-content-between align-items-center w-100">
         <h2>Update Country</h2>
         <span [routerLink]="['/country']" class="fa-solid fa-circle-arrow-left fa-lg"
             style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
     </div>
-    <form #addUpdateForm="ngForm" class="form-material">
-        <div class="row">
-            <div class="col-md-4">
-                <label class="label" for="countryName">Name:</label>
-                <input type="text" id="countryName" name="countryName" [(ngModel)]="country.countryName" required
-                    class="form-control" maxlength="50" required #countryNameField="ngModel">
-                <div *ngIf="countryNameField.invalid && (countryNameField.dirty||countryNameField.touched)"
-                    class="text-danger">Country Name is
-                    required.</div>
+    <form #addUpdateForm="ngForm" class="form-material"> -->
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label" for="countryName">Name:</label>
+                    <input type="text" id="countryName" name="countryName" [(ngModel)]="country.countryName" required
+                        class="form-control" maxlength="50" required #countryNameField="ngModel">
+                    <div *ngIf="countryNameField.invalid && (countryNameField.dirty||countryNameField.touched)"
+                        class="text-danger">Country Name is
+                        required.</div>
+                </div>
+                <div class="col-md-4">
+                    <label class="label" for="countryCode">Code:</label>
+                    <input type="number" id="countryCode" name="countryCode" [(ngModel)]="country.countryCode" required
+                        class="form-control" [disabled]=true>
+                </div>
+
             </div>
-            <div class="col-md-4">
-                <label class="label" for="countryCode">Code:</label>
-                <input type="number" id="countryCode" name="countryCode" [(ngModel)]="country.countryCode" required
-                    class="form-control" [disabled]=true>
+
+
+            <div>
+                <button type="button" [disabled]="!addUpdateForm.valid" class="btn btn-primary mt-3"
+                    (click)="updateCountry(country)">Update</button>
             </div>
-
-        </div>
-
-
-        <div>
-            <button type="button" [disabled]="!addUpdateForm.valid" class="btn btn-primary mt-3"
-                (click)="updateCountry(country)">Update</button>
-        </div>
-    </form>
+        </form>
+    </fieldset>
 </div>
 <app-footer></app-footer>

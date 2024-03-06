@@ -353,7 +353,7 @@
                             <div class="col">
                                 <label for="expectedMaxSalary" class="form-label">Exp max salary ($)<span
                                         class="required-asterisk" *ngIf="!updateScreen">*</span></label>
-                                <input
+                                <input [min]="task.expectedMinSalary"
                                     [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
                                     type="number" class="form-control extra-light-placeholder" id="expectedMaxSalary"
                                     name="expectedMaxSalary" placeholder="Enter expected max salary"

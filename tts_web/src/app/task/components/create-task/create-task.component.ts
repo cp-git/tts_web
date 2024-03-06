@@ -376,6 +376,9 @@ export class CreateTaskComponent implements OnInit {
   }
 
   getHiringCompanyDetails() {
+    this.filterdHiringCompany = [];
+    this.allHiringCompany = [];
+
     if (
       this.task.taskParent == 0 &&
       (this.task.taskId == undefined || this.task.taskId == 0)
