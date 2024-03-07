@@ -26,7 +26,7 @@
                         required.</div>
                 </div>
                 <div class="col-md-4">
-                    <label for="jobLocationId" class="label">Job Mode</label><br>
+                    <label for="jobLocationId" class="label">Job Mode:</label><br>
                     <select class="form-control form-select" name="jobLocationId" id="jobLocationId"
                         [(ngModel)]="hiringCompany.jobMode" [required]="true">
                         <option value="undefined" disabled>Select Option</option>
@@ -81,7 +81,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label for="jobSubmissionPortalId" class="label">Job Submission method</label><br>
+                    <label for="jobSubmissionPortalId" class="label">Job Submission method:</label><br>
                     <select class="form-control form-select" name="jobSubmissionPortalId" id="jobPortalId"
                         [(ngModel)]="hiringCompany.jobSubmissionMethod" [required]="true"
                         (change)="onChangeSubmissionMethod()">
@@ -94,7 +94,7 @@
                 </div>
                 <div class="col-md-4"
                     *ngIf="selectedJobSubmissionMethod?.portalName=='Other' || this.selectedJobSubmissionMethod?.portalName=='other' ">
-                    <label for="portalName" class="label">Other Method</label><br>
+                    <label for="portalName" class="label">Other Method:</label><br>
                     <input type="text" class="form-control extra-light-placeholder" id="portalName" name="portalName"
                         placeholder="Submission method" [(ngModel)]="hiringCompany.portalName" [required]="true"
                         maxlength="100" #portalName="ngModel">
@@ -115,7 +115,7 @@
 
 
                 <div class="col-md-4">
-                    <label class="form-check-label " for="candidatePlace"><strong>Active</strong></label>
+                    <label class="form-check-label " for="candidatePlace"><strong>Active:</strong></label>
                     <div class="row" style="border: 1px groove grey;border-radius: 8px;width: 400px;margin-left: 4px;">
                         <div class="col" style="height: 40px;"><input
                                 style="border: 2px groove grey;height: 28px;width: 30px;" type="checkbox"
