@@ -803,48 +803,62 @@
                 </fieldset>
 
                 <div class="modal-footer mt-3">
-                    <!-- <ng-container *ngIf="parentTaskStatus && parentTaskStatus?.finalStatus == true">
+                    <div class="row">
+                        <div class="text-center mx-auto">
+                            <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+                                Task created/updated successfully!
+                            </div>
+                            <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+                                Operation failed. Please update sub-task(s) status to Done/Cancel.
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <!-- Add loading spinner here -->
+
+                        <!-- <ng-container *ngIf="parentTaskStatus && parentTaskStatus?.finalStatus == true">
                                         <label style="color: red;">* Parent Task's status is final status, (Not allowed to create sub
                                             task)</label>
                                    </ng-container> -->
-                    <!-- Move the success message here and apply centering classes -->
-                    <div class="text-center mx-auto">
-                        <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
-                            Task created/updated successfully!
+                        <!-- Move the success message here and apply centering classes -->
+
+
+                        <!-- Move the "Save" and "Close" buttons to the right -->
+                        <div class="col">
+                            <div *ngIf="isLoading">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+
+                            <button
+                                [disabled]="((selectedFile && !isValidFile) || !addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true))"
+                                *ngIf="(!isLoading && updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo || employeeData.showAllTasks))"
+                                type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
+
+                            <ng-container
+                                *ngIf="(!employeeData.showAllTasks && updateScreen && !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo))">
+                                <label style="color: red;">* Update only allowed to Creator/ Assignee / Super
+                                    employee</label>
+                            </ng-container>
+                            <!-- <ng-container *ngIf="parentTaskStatus && parentTaskStatus?.finalStatus == false"> -->
+                            <button
+                                [disabled]="(selectedFile && !isValidFile) || !addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true)"
+                                *ngIf="!isLoading && !updateScreen" type="submit" class="btn btn-primary"
+                                (click)="onClickSave(task)">Save</button>
+                            <!-- </ng-container> -->
                         </div>
-                        <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
-                            Operation failed. Please update sub-task(s) status to Done/Cancel.
-                        </div>
-                    </div>
+                        <div class="col">
 
-                    <!-- Add loading spinner here -->
-                    <div *ngIf="isLoading">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-
-                    <!-- Move the "Save" and "Close" buttons to the right -->
-                    <button
-                        [disabled]="((selectedFile && !isValidFile) || !addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true))"
-                        *ngIf="(!isLoading && updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo || employeeData.showAllTasks))"
-                        type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
-
-                    <ng-container
-                        *ngIf="(!employeeData.showAllTasks && updateScreen && !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo))">
-                        <label style="color: red;">* Update only allowed to Creator/ Assignee / Super employee</label>
-                    </ng-container>
-
-                    <!-- <ng-container *ngIf="parentTaskStatus && parentTaskStatus?.finalStatus == false"> -->
-                    <button
-                        [disabled]="(selectedFile && !isValidFile) || !addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true)"
-                        *ngIf="!isLoading && !updateScreen" type="submit" class="btn btn-primary"
-                        (click)="onClickSave(task)">Save</button>
-                    <!-- </ng-container> -->
-                    <!-- <button type="button" class="btn btn-secondary" (click)="closeModal()"
+                            <!-- <button type="button" class="btn btn-secondary" (click)="closeModal()"
                         id="closeButton">Close</button> -->
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close"
-                        (click)="closeModal(task, addTaskForm)">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close"
+                                (click)="closeModal(task, addTaskForm)">Close</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
