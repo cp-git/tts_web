@@ -1,0 +1,47 @@
+.center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    height: 90vh;
+    /* Adjust as needed to center vertically */
+}
+
+.change-history-heading {
+    background-color: blue;
+    /* Change to the desired background color */
+    color: white;
+    /* Change to the desired text color */
+    padding: 10px 20px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.center-table {
+    width: 80%;
+    /* Adjust the width as needed */
+}
+
+.center-button {
+    text-align: center;
+    margin-top: 20px;
+    /* Adjust the margin as needed */
+}
+
+.close-button {
+    border-radius: 15px;
+    /* Apply border-radius */
+    background-color: red;
+    /* Change color to red */
+    color: white;
+    /* Change text color to white */
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.close-button:hover {
+    background-color: #d9534f;
+    /* Change color on hover */
+}

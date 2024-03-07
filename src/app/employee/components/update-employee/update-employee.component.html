@@ -1,0 +1,89 @@
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center w-100">
+        <h2>Update Employee</h2>
+        <span [routerLink]="['/employee']" class="fa-solid fa-circle-arrow-left fa-lg"
+            style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
+    </div>
+    <form #addUpdateForm="ngForm" class="form-material">
+        <div class="row">
+            <!-- First Name -->
+            <div class="col-md-4">
+                <label for="firstName"><strong>First Name:</strong></label>
+                <input type="text" id="firstName" name="firstName" [(ngModel)]="employee.firstName" required
+                    class="form-control" [disabled]=true>
+            </div>
+            <!-- Last Name -->
+            <div class="col-md-4">
+                <label for="lastName"><strong>Last Name:</strong></label>
+                <input type="text" id="lastName" name="lastName" [(ngModel)]="employee.lastName" required
+                    class="form-control" [disabled]=true>
+            </div>
+            <!-- Dropdown to select the country -->
+            <div class="col-md-4">
+                <label class="label" for="countryId"><strong>Country:</strong></label>
+                <select id="countryId" name="countryId" [(ngModel)]="employee.countryId" required class="form-control"
+                    [disabled]="isAdmin">
+                    <option value="undefined" selected>Select a country</option>
+                    <!-- Loop through the 'countries' array and display each country as an option -->
+                    <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}
+                    </option>
+                </select>
+            </div>
+
+            <!-- Dropdown to select the company -->
+            <div class="col-md-4">
+                <label class="label" for="companyId"><strong>Company:</strong></label>
+                <select id="companyId" name="companyId" [(ngModel)]="employee.companyId" required class="form-control"
+                    [disabled]="isAdmin">
+                    <option value="undefined" selected>Select a company</option>
+                    <!-- Loop through the 'companies' array and display each company as an option -->
+                    <option *ngFor="let company of companies | advFilter:'companyCountryId':employee.countryId"
+                        [value]="company.companyId">
+                        {{ company.companyName }}</option>
+                </select>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="col-md-4">
+                <label for="birthDate"><strong>DOB:</strong></label>
+                <input type="date" id="birthDate" name="birthDate" [ngModel]="employee.birthDate | date:'yyyy-MM-dd'"
+                    required class="form-control" max="{{ getMaxDate() }}">
+            </div>
+            <!-- Employee Email -->
+            <div class="col-md-4">
+                <label for="employeeEmail"><strong>Email:</strong></label>
+                <input type="email" id="employeeEmail" name="employeeEmail" [(ngModel)]="employee.employeeEmail"
+                    required pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label class="label" for="photoFilename"><strong>Profile:</strong></label>
+                <input type="file" id="photoFilename" name="photoFilename" (change)="onFileSelected($event)"
+                    class="form-control" ngModel>
+            </div>
+
+
+            <div class="col-md-4">
+                <label class="form-check-label" for="isadmin"><strong>Is Admin:</strong></label>
+
+                <input type="checkbox" id="isadmin" name="isadmin" [(ngModel)]="employee.admin"
+                    class="custom-checkbox form-check-input">
+            </div>
+            <div>
+                <img *ngIf="!selectedFile" src="{{employeeURL}}/{{employee.employeeId}}">
+
+                <img *ngIf="selectedFile" [src]="selectedFile ? selectedFileURL : ''" id="selectedProfilePic">
+            </div>
+        </div>
+
+
+        <!-- <td>
+            <input type="checkbox" [checked]="employeeData.admin" class="larger-checkbox">
+        </td> -->
+        <!-- Submit Button -->
+        <div>
+            <button type="submit" [disabled]="!addUpdateForm.valid||!addUpdateForm.dirty"
+                (click)="updateEmployeeByEmployeeId(employee)" class="btn btn-primary mt-3">Submit</button>
+        </div>
+    </form>
+</div>
