@@ -1,0 +1,67 @@
+<div class="container">
+    <fieldset class="border rounded-3">
+        <legend class="float-none w-auto px-2">Add Visa</legend>
+        <form #addVisa="ngForm">
+
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <h2></h2>
+                <span (click)="navigateToPortal()" class="fa-solid fa-circle-arrow-left fa-lg"
+                    style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
+
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="label" for="statusCode">Visa Type:<span class="required-asterisk">*</span></label>
+                    <input type="text" id="statusCode" name="statusCode" [(ngModel)]="visa.visaType" required
+                        class="form-control" maxlength="25" #visaName="ngModel">
+                    <div *ngIf="visaName.invalid && (visaName.dirty||visaName.touched) " class="text-danger">
+                        visa type is required.
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <label class="label" for="statusDescription">Visa Description:<span
+                            class="required-asterisk">*</span></label>
+
+                    <input type="text" id="visaDescription" name="visaDescription" [(ngModel)]="visa.visaDescription"
+                        required class="form-control" maxlength="255" #visaDescription="ngModel">
+                    <div *ngIf="visaDescription.invalid && (visaDescription.dirty||visaDescription.touched)"
+                        class="text-danger">
+                        Description is required.
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="label" for="forBench">Is for bench?</label>
+                    <div>
+                        <input type="checkbox" id="bench" name="bench" [(ngModel)]="visa.forBench"
+                            class="custom-checkbox form-check-input">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="label" for="forSourcing">Is for sourcing ?</label>
+                    <div>
+                        <input type="checkbox" id="sourcing" name="sourcing" [(ngModel)]="visa.forSourcing"
+                            class="custom-checkbox form-check-input">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-2">
+                <label class="label" for="actualEndDate">Active:</label>
+                <div>
+                    <input type="checkbox" id="visaActive" name="visaActive" [(ngModel)]="visa.visaActive"
+                        class="custom-checkbox form-check-input">
+                </div>
+            </div>
+
+            
+
+            <div>
+                <button type="submit" [disabled]="!addVisa.valid" (click)="createVisa(visa)"
+                    class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+<app-footer></app-footer>

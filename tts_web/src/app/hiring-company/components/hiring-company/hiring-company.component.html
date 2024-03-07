@@ -1,0 +1,70 @@
+<app-header></app-header>
+<div class="container">
+    <!-- Add button at the top right corner -->
+
+    <fieldset class="border rounded-3">
+        <legend class="float-none w-auto px-2">Hiring Company Details</legend>
+
+        <div class="d-flex justify-content-end align-items-center w-100">
+            <span (click)="navigateToCreateHiringCompany()" class="fa-solid fa-circle-plus"
+                style='font-size:30px;color:  rgb(33, 176, 40); padding-bottom: 1%;'></span>
+
+            <!-- <span [routerLink]="['/adminDash']" class="fa-solid fa-circle-arrow-left fa-lg"
+            style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer; margin-top: 10px;"></span> -->
+        </div>
+
+        <!-- Table to display the list of hiringCompanys -->
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <!-- Table header row -->
+                    <tr>
+                        <!-- Column headers -->
+                        <th>Company Name</th>
+                        <th>Job Title</th>
+                        <th>Experience Required</th>
+                        <th>Rate</th>
+                        <th>Active</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through each filtered hiringCompany in the 'hiringCompanys' array and display their data -->
+                    <tr *ngFor="let hiringCompany of allHiringCompany">
+                        <!-- Display hiringCompany data in each table cell -->
+
+                        <td>{{ hiringCompany.hiringCompanyName }}</td>
+                        <td>{{ hiringCompany.jobTitle }}</td>
+                        <td>{{ hiringCompany.experienceRequired }}</td>
+                        <td>{{ hiringCompany.rate }}</td>
+                        <td>
+                            <span *ngIf="hiringCompany.userActive == true" class="fa-solid fa-check-square fa-lg"
+                            style='font-size: 23px;color: green;'></span>
+                         <span *ngIf="!hiringCompany.userActive == true"  class="fa-solid fa-square-xmark"
+                            style='font-size: 23px;color: red;'></span> 
+                            
+                        </td>
+                        <td>
+                            <!-- Update Button -->
+                            <span (click)="navigateToUpdateHiringCompany(hiringCompany)"
+                                class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
+                                style='font-size:23px;color: rgb(64, 109, 234);'></span>
+
+                            <!-- Delete Button -->
+                            &nbsp;
+                            &nbsp;
+                            <!-- <span (click)="deleteHiringCompany(hiringCompany)" class='fa-solid fa-trash fa-xl'
+                                style='font-size:23px;color: red;'>
+                            </span> -->
+                        </td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+</div>
+
+
+<app-footer></app-footer>

@@ -1,0 +1,16 @@
+
+export class Employee {
+    employeeId!: number;
+
+    countryId!: number;
+    companyId!: number;
+    firstName!: string;
+    lastName!: string;
+    birthDate!: Date;
+    employeeEmail!: string;
+    username!: string;
+    admin!: boolean;
+    showAllTasks!: boolean;
+    onBench!: boolean;
+}
+

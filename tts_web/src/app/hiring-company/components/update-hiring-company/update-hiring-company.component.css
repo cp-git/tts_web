@@ -1,0 +1,25 @@
+.label {
+  font-weight: bold;
+}
+
+fieldset {
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  border: 2px solid black !important;
+}
+
+.form-control {
+  border: 2px solid black;
+
+}
+
+.custom-checkbox {
+  border: 1px solid black;
+  margin-left: 10px;
+
+}
+
+.disabled-option {
+  color: rgb(255, 112, 112);
+}

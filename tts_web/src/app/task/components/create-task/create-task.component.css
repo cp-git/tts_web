@@ -1,0 +1,140 @@
+.form-label {
+  font-weight: bold;
+}
+
+.required-asterisk {
+  color: red;
+}
+
+::placeholder {
+  color: #ccc;
+  /* Use a nearly white or very light gray color */
+}
+
+.form-control {
+  border: 1px solid black;
+}
+
+.form-control[type="file"] {
+  border: 1px solid black;
+}
+
+.form-control.select {
+  border: 1px solid black;
+}
+
+/* CSS for background color of fields that are disabled  */
+/* .form-control[disabled] {
+    background-color: yellow;
+
+} */
+
+.borderclass {
+  border: 3px solid orangered;
+}
+
+.br-3 {
+  border-right: 3px solid orangered;
+  /* border-radius: 25px; */
+}
+
+.bl-3 {
+  border-left: 3px solid orangered;
+  /* border-radius: 25px; */
+}
+
+.bt-3 {
+  border-top: 3px solid orangered;
+  /* border-radius: 25px; */
+}
+
+.bb-3 {
+  border-bottom: 3px solid orangered;
+  /* border-radius: 25px; */
+}
+
+.selectedPlacement {
+  /* font-weight: bold; */
+  color: blue;
+}
+
+fieldset {
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  border: 2px solid black !important;
+}
+
+legend {
+  font-size: large;
+}
+
+/* .modal-xl{
+    max-width: 1350px !important;
+} 
+[ngClass]="{'modal-lg':task.taskParent==0, 'modal-xl':task.taskParent>0}"
+.modal-lg{
+    max-width: 1000px !important;
+}  */
+
+.disablePanel {
+  pointer-events: none;
+}
+
+.custom-checkbox {
+  border: solid 1px;
+  /* Increase the size of the checkbox */
+  transform: scale(1.5);
+  margin-left: 0.5%;
+  margin-top: 5%;
+  margin-bottom: 10px;
+  /* Add some space between the checkbox and the label */
+  /* Add any other styling you want here */
+}
+
+.custom-input {
+  border: solid 1px;
+  transform: scale(1.2);
+  margin-top: 10%;
+}
+
+.custom-input-radio2 {
+  border: solid 1px;
+  transform: scale(1.2);
+  /* margin-top: 5%; */
+}
+
+.custom-input-label {
+  margin-top: 4%;
+}
+
+.disabled-option {
+  color: rgb(255, 112, 112);
+}
+
+/* class is used for adding background color dynamically for sourcing candidate  */
+/* .colorSourcingCandidate {
+  background-color: rgba(154, 255, 159, 0.4);
+} */
+
+/* class is used for adding background color dynamically for bench candidate  */
+/* .colorBenchCandidate {
+  background-color: rgba(184, 129, 255, 0.3);
+} */
+
+.candidateType {
+  background-color: white;
+  border-radius: 25px;
+  border: 1px solid black;
+}
+
+/* .btn {
+  border-radius: 25px;
+} */
+
+/* legend {
+  background-color: white;
+  border-radius: 25px;
+  border: 1px solid black;
+  background-color: lightskyblue;
+} */

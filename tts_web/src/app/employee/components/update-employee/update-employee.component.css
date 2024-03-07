@@ -1,0 +1,34 @@
+.custom-checkbox {
+  /* Increase the size of the checkbox */
+  transform: scale(1.9);
+  /* margin-left: -65px; */
+  margin-left: 2%;
+  margin-top: 2%;
+  /* Add some space between the checkbox and the label */
+  /* Add any other styling you want here */
+}
+
+img {
+  margin-top: 20px;
+  width: 300px;
+  height: 200px;
+  object-fit: contain;
+}
+
+fieldset {
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  border: 2px solid black !important;
+}
+
+.form-control {
+  border: 2px solid black;
+
+}
+
+.custom-checkbox {
+  border: 1px solid black;
+  margin-left: 10px;
+
+}

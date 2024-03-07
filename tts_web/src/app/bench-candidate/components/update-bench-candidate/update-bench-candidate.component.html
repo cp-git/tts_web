@@ -1,0 +1,153 @@
+<div class="container">
+    <fieldset class="border rounded-3">
+        <legend class="float-none w-auto px-2">Update Bench Candidate</legend>
+        <form #addUpdateForm="ngForm">
+
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <h2></h2>
+                <span [routerLink]="['/benchcand']" class="fa-solid fa-circle-arrow-left fa-lg"
+                    style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
+
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="label" for="benchCandidateName">Candidate Name:</label>
+                    <input type="text" id="benchCandidateName" name="benchCandidateName"
+                        [(ngModel)]="benchCandidate.benchCandidateName" class="form-control" required
+                        #benchCandidateName="ngModel">
+                    <div *ngIf="benchCandidateName.invalid  && (benchCandidateName.dirty||benchCandidateName.touched) "
+                        class="text-danger">Bench candidate name is
+                        required.</div>
+                </div>
+                <div class="col-md-4">
+                    <label for="visaTypeId" class="label">Visa Type:</label><br>
+                    <select class="form-control form-select" name="visaTypeId" id="jobPortalId"
+                        [(ngModel)]="benchCandidate.visaTypeId" [required]="true">
+                        <option value="undefined" disabled>Select Option</option>
+                        <ng-container *ngFor="let visa of allVisas">
+                            <option value="{{visa.visaId}}" [disabled]="!visa.visaActive"
+                                [ngClass]="{'disabled-option': !visa.visaActive}">{{visa.visaType}} </option>
+                        </ng-container>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="taxTypeId" class="label">Tax Type:</label><br>
+                    <select class="form-control form-select" name="taxTypeId" id="taxTypeId" name="taxTypeId"
+                        [(ngModel)]="benchCandidate.taxTypeId" [required]="true">
+                        <option value="undefined" disabled>Select Option</option>
+                        <ng-container *ngFor="let taxType of allTaxTypes">
+                            <option *ngIf="taxType.forBench" value="{{taxType.taxTypeId}}"
+                                [disabled]="!taxType.taxActive" [ngClass]="{'disabled-option': !taxType.taxActive}">
+                                {{taxType.taxTypeName}}</option>
+                        </ng-container>
+
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="label" for="experience">Experience:</label>
+                    <input type="number" id="experience" name="experience" [(ngModel)]="benchCandidate.experience"
+                        class="form-control" required #experience="ngModel">
+                    <div *ngIf="experience.invalid  && (experience.dirty||experience.touched)" class="text-danger">
+                        Experience is required.</div>
+                </div>
+                <div class="col-md-4">
+                    <label for="currentDesignation" class="label">Current Designation</label>
+                    <input type="currentDesignation" class="form-control extra-light-placeholder"
+                        id="currentDesignation" name="currentDesignation"
+                        [(ngModel)]="benchCandidate.currentDesignation" #currentDesignation="ngModel">
+                    <div *ngIf="currentDesignation.invalid && (currentDesignation.dirty||currentDesignation.touched) "
+                        class="text-danger">
+                        Enter correct current designation.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="email" class="label">Email</label>
+                    <input type="email" pattern="[a-z0-9.]+@[a-z]+\.[a-z]{2,3}"
+                        class="form-control extra-light-placeholder" id="email" name="email"
+                        [(ngModel)]="benchCandidate.email" maxlength="100" #email="ngModel">
+                    <div *ngIf="email.invalid && (email.dirty||email.touched) " class="text-danger">
+                        Enter correct email.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="label" for="address">Address:</label>
+                    <input type="text" id="address" name="address" [(ngModel)]="benchCandidate.address"
+                        class="form-control" #address="ngModel">
+
+                </div>
+                <div class="col-md-4">
+                    <label class="label" for="city">City:</label>
+                    <input type="text" id="city" name="city" [(ngModel)]="benchCandidate.city" class="form-control"
+                        required #city="ngModel">
+                    <div *ngIf="city.invalid  && (city.dirty||city.touched)" class="text-danger">
+                        City is required.</div>
+                </div>
+                <div class="col-md-4">
+                    <label class="label" for="state">State:</label>
+                    <input type="text" id="state" name="state" [(ngModel)]="benchCandidate.state" class="form-control"
+                        required #state="ngModel">
+                    <div *ngIf="state.invalid  && (state.dirty||state.touched)" class="text-danger">
+                        State is required.</div>
+                </div>
+                <div class="col-md-4">
+                    <label class="label" for="contactNo">Contact No:</label>
+                    <input type="number" id="contactNo" name="contactNo" [(ngModel)]="benchCandidate.contactNo"
+                        class="form-control" #experience="ngModel">
+
+                </div>
+                <!-- <div class="col-md-4">
+                <label class="label" for="minBillingRate">Min Billing Rate:</label>
+                <input type="number" id="minBillingRate" name="minBillingRate"
+                    [(ngModel)]="benchCandidate.minBillingRate" class="form-control" required #experience="ngModel">
+
+            </div> -->
+                <div class="col-md-4">
+                    <label class="form-check-label " for="isWillingToRelocate"><strong>Willing to
+                            relocate?</strong></label>
+                    <div class="form-control">
+                        <div class="row">
+                            <div class="col">
+                                <input type="radio" id="willingToRelocate" name="isWillingToRelocate"
+                                    [(ngModel)]="benchCandidate.willingToRelocate" [value]="true"
+                                    class="custom-input form-check-input">
+                                <label class="custom-input-label" for="willingToRelocate">&nbsp;Yes</label><br>
+                            </div>
+                            <div class="col">
+                                <input type="radio" id="notWillingToRelocate" name="isWillingToRelocate"
+                                    [(ngModel)]="benchCandidate.willingToRelocate" [value]="false"
+                                    class="custom-input form-check-input">
+                                <label class="custom-input-label" for="notWillingToRelocate">&nbsp;No</label><br>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <label class="form-check-label " for="candidatePlaced"><strong>Active:</strong></label>
+                    <div class="form-control">
+                        <div class="row">
+                            <div class="col"><input style="height: 25px;width: 25px;margin-bottom: 2px;" type="checkbox"
+                                    id="userActive" name="userActive" [(ngModel)]="benchCandidate.userActive"
+                                    class="custom-input form-check-input">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div>
+                    <button type="submit" [disabled]="!addUpdateForm.valid"
+                        (click)="updateBenchCandidate(benchCandidate)" class="btn btn-primary mt-3"
+                        style="border-radius: 50px;">Submit</button>
+                </div>
+
+            </div>
+        </form>
+    </fieldset>
+</div>
+<app-footer></app-footer>

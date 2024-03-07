@@ -1,0 +1,254 @@
+<fieldset class="border rounded-3">
+    <legend class="float-none w-auto px-2">Task Details</legend>
+
+    <!-- task details  -->
+    <div class="row">
+        <!-- code for parent task dropdown -->
+        <ng-container *ngIf="false">
+            <div class="col">
+
+                <label for="parentTaskId" class="form-label">Parent Task</label><br>
+                <select class="form-control form-select" name="parentTaskId" id="parentTaskId" name="parentTaskId"
+                    [(ngModel)]="task.taskParent" [required]="true"
+                    [disabled]="updateScreen || (backupTask.taskParent>=0)">
+                    <!-- <option *ngIf="!updateScreen" value="undefined" disabled>Select Option</option> -->
+                    <option *ngIf="!updateScreen && !(backupTask.taskParent>0)" value="0">Create As
+                        Parent
+                    </option>
+                    <!-- <ng-container *ngFor="let parentTaskObject of parentTaskList"> -->
+                    <!-- <option *ngIf="updateScreen" value="0">Parent Task</option> -->
+                    <option
+                        *ngIf="!(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) && parentTask.taskName!=undefined"
+                        value="{{parentTask.taskId}}">{{parentTask.taskName}}</option>
+                    <!-- </ng-container> -->
+
+                    <!-- <ng-container *ngIf="parentTask.childTask">
+                    <ng-container *ngFor="let childTask of parentTask.childTask">
+                        <option value="{{childTask.taskId}}">{{childTask.taskName}}</option>
+
+                    </ng-container>
+                </ng-container> -->
+                </select>
+
+            </div>
+        </ng-container>
+
+        <!-- task name -->
+        <div class="col">
+
+            <label for="taskName" class="form-label">Task Name<span class="required-asterisk"
+                    *ngIf="!updateScreen">*</span></label>
+            <input
+                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                type="text" class="form-control extra-light-placeholder" id="taskName" name="taskName"
+                placeholder="Enter task name" [(ngModel)]="task.taskName" [required]="true" maxlength="100"
+                #taskNameField="ngModel">
+            <div *ngIf="taskNameField.invalid && (taskNameField.dirty||taskNameField.touched) " class="text-danger">
+                Task Name is required.
+            </div>
+        </div>
+
+        <div class="col">
+            <label for="taskDescription" class="form-label">Task Description<span class="required-asterisk"
+                    *ngIf="!updateScreen">*</span></label>
+            <input
+                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                class="form-control" id="taskDescription" name="taskDescription" [(ngModel)]="task.taskDescription"
+                placeholder="Enter task description" [required]="true" maxlength="255" #taskDescriptionField="ngModel">
+            <div *ngIf="taskDescriptionField.invalid && (taskDescriptionField.dirty||taskDescriptionField.touched) "
+                class="text-danger">
+                Task Description is required.
+            </div>
+        </div>
+    </div>
+
+    <!-- employee and status  -->
+    <div class="row">
+        <div class="col">
+            <label for="taskCreatedBy" class="form-label">Created By</label><br>
+            <select class="form-control form-select" name="taskCreatedBy" id="taskCreatedBy" name="taskCreatedBy"
+                [(ngModel)]="task.taskCreatedBy" [required]="true" disabled>
+                <option value="undefined" disabled>Select Option</option>
+                <!-- <option *ngIf="!updateScreen" value="{{employeeId}}" selected="true">Self</option> -->
+                <ng-container>
+                    <ng-container *ngFor="let employee of allEmployees">
+                        <option value="{{employee.employeeId}}">{{employee.firstName}}
+                            {{employee.lastName}}
+                        </option>
+                    </ng-container>
+                </ng-container>
+
+            </select>
+        </div>
+        <div class="col">
+            <label for="taskAssignedTo" class="form-label">Assigned To</label><br>
+            <select
+                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo) || parentTaskStatus?.finalStatus == true"
+                class="form-control form-select" name="taskAssignedTo" id="taskAssignedTo" name="taskAssignedTo"
+                [(ngModel)]="task.taskAssignedTo" [required]="true">
+                <option value="undefined" disabled>Select Option</option>
+                <option value="{{employeeId}}" selected="true">Self</option>
+                <ng-container *ngFor="let employee of allEmployees">
+                    <option *ngIf="employeeId!=employee.employeeId" value="{{employee.employeeId}}">
+                        {{employee.firstName}} {{employee.lastName}}</option>
+                </ng-container>
+            </select>
+        </div>
+
+        <div class="col">
+            <label for="taskStatus" class="form-label">Status</label><br>
+            <select
+                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)  || parentTaskStatus?.finalStatus == true"
+                class="form-control form-select" name="taskStatus" id="taskStatus" name="taskStatus"
+                [(ngModel)]="task.taskStatus" [required]="true" (change)="onChangeStatus(task.taskStatus, task)">
+                <option value="undefined" disabled>Select Option</option>
+                <ng-container *ngFor="let status of allStatus">
+                    <ng-container *ngIf="updateScreen">
+                        <option value="{{status.statusId}}">{{status.statusCode |titlecase}}
+                        </option>
+                    </ng-container>
+                    <ng-container
+                        *ngIf="!updateScreen && (!(status?.actualEndDate===true && status?.actualStartDate===true && status.finalStatus===true))">
+                        <option value="{{status.statusId}}">{{status.statusCode |titlecase}}
+                        </option>
+                    </ng-container>
+                </ng-container>
+            </select>
+
+        </div>
+    </div>
+
+    <!-- dates  -->
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="startDate" class="form-label">Start date<span class="required-asterisk"
+                    *ngIf="!updateScreen">*</span></label>
+            <ng-container *ngIf="!updateScreen">
+                <ng-container
+                    *ngIf="(currentTaskStatus?.actualEndDate===false && currentTaskStatus?.actualStartDate===true)">
+                    <input [disabled]="true" type="date" class="form-control" id="startDate" name="startDate"
+                        [(ngModel)]="todayForPlannedStartDate" [required]="true" #startDateField="ngModel"
+                        onkeydown="return false">
+                </ng-container>
+
+                <ng-container
+                    *ngIf="!(currentTaskStatus?.actualEndDate===false && currentTaskStatus?.actualStartDate===true)">
+                    <input
+                        [disabled]="(currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)"
+                        type="date" class="form-control" id="startDate" name="startDate"
+                        [(ngModel)]="task.taskStartDate" [required]="true" [min]="todayDate" #startDateField="ngModel"
+                        [disabled]="parentTaskStatus && parentTaskStatus?.finalStatus == true" onkeydown="return false">
+                    <div *ngIf="startDateField.invalid && (startDateField.dirty||startDateField.touched)"
+                        class="text-danger">
+                        Start Date is required.
+                    </div>
+                </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="updateScreen">
+                <input [disabled]="true" type="date" class="form-control " id="startDate" name="startDate"
+                    [(ngModel)]="task.taskStartDate" [required]="true" [min]="todayDate" #startDateField="ngModel"
+                    onkeydown="return false">
+                <div *ngIf="startDateField.invalid && (startDateField.dirty||startDateField.touched)"
+                    class="text-danger">
+                    Start Date is required.
+                </div>
+            </ng-container>
+        </div>
+        <div class="col-sm-3">
+            <label for="endDate" class="form-label">End date<span class="required-asterisk"
+                    *ngIf="!updateScreen">*</span></label>
+            <ng-container *ngIf="!updateScreen">
+                <input type="date" class="form-control" id="endDate" name="endDate" [min]="task.taskStartDate"
+                    [(ngModel)]="task.taskEndDate" [required]="true" [min]="todayForPlannedStartDate"
+                    [disabled]="task.taskStartDate==null || updateScreen || (currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)"
+                    #endDateField="ngModel" onkeydown="return false">
+
+                <div *ngIf="endDateField.invalid " class="text-danger">
+                    End Date is required.
+                </div>
+            </ng-container>
+            <ng-container *ngIf="updateScreen">
+                <input [disabled]="true" type="date" class="form-control" id="endDate" name="endDate"
+                    [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate" [required]="true" #endDateField="ngModel"
+                    onkeydown="return false">
+
+                <div *ngIf="endDateField.invalid " class="text-danger">
+                    End Date is required.
+                </div>
+            </ng-container>
+        </div>
+
+
+
+        <div class="col-sm-3">
+            <label for="actualStartDate" class="form-label">Actual Start date</label>
+
+            <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
+                [min]="task.taskStartDate" [(ngModel)]="todayForStartDate"
+                [required]="updateScreen && (currentTaskStatus?.actualEndDate===false && currentTaskStatus?.actualStartDate===true)"
+                disabled>
+        </div>
+
+        <div class="col-sm-3">
+            <label for="actualEndDate" class="form-label">Actual End date</label>
+            <input type="date" class="form-control" id="actualEndDate" name="actualEndDate"
+                [(ngModel)]="todayForEndDate" [min]="task.taskActualStartDate"
+                [required]="updateScreen && (currentTaskStatus?.actualEndDate===true && currentTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)"
+                disabled>
+        </div>
+
+    </div>
+
+    <!-- // comment  -->
+    <div class="row">
+        <!-- comment -->
+        <div class="col">
+            <label for="taskReason" class="form-label">Recruiters Comment<span
+                    class="required-asterisk">*</span></label>
+            <textarea
+                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)  || parentTaskStatus?.finalStatus == true"
+                class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
+                placeholder="Enter comment" [required]="true" #taskReasonField="ngModel"></textarea>
+
+            <div *ngIf="taskReasonField.invalid && (taskReasonField.dirty||taskReasonField.touched)"
+                class="text-danger">
+                Reason is required.
+            </div>
+        </div>
+
+    </div>
+</fieldset>
+
+<!-- file and attachements  -->
+<fieldset class="border rounded-3">
+    <legend class="float-none w-auto px-2">Attachments</legend>
+    <div class="row">
+        <!-- upload file  -->
+        <div class="col">
+            <label class="form-label" for="uploadFile">Upload File</label>
+            <input
+                [disabled]="(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && currentTaskStatus.finalStatus===true)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                type="file" id="uploadFile" name="uploadFile" (change)="onFileSelected($event)" class="form-control"
+                [required]="true" [disabled]="parentTaskStatus && parentTaskStatus?.finalStatus == true">
+        </div>
+    </div>
+
+    <!-- Attachments -->
+    <div class="row">
+        <div class="col-md-4">
+            <label class="form-label" for="attachment">Attachments</label>
+            <ul>
+                <li *ngFor="let file of fileNames">
+                    <ng-container
+                        *ngIf="employeeId == backupTask.taskCreatedBy || employeeId == backupTask.taskAssignedTo; else disabledLink">
+                        <a href="javascript:void(0)" (click)="downloadFile(file)">{{ file }}</a>
+                    </ng-container>
+                    <ng-template #disabledLink>
+                        <span>{{ file }}</span>
+                    </ng-template>
+                </li>
+            </ul>
+        </div>
+    </div>
+</fieldset>

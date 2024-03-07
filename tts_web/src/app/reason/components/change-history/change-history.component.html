@@ -1,0 +1,84 @@
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container-fluid">
+        <div style="display: flex; align-items: center;">
+            <!-- Container for logo and name with margin-left -->
+            <div style="display: flex; align-items: center; ">
+                <!-- Display the company's photo -->
+                <img src="{{displayCompanyLogo}}/{{companyId}}"
+                    style="width: 100px; height: 60px; border: 2px solid; border-radius: 15px;">
+                <!-- <label class="company" for="company" style="color: wheat; margin-left: 10px;">
+                    {{ company.companyName }}
+                </label> -->
+            </div>
+        </div>
+
+        <!-- Centered text for "TaskDashboard" -->
+        <div style="flex-grow: 1; text-align: center;">
+            <h1 style="color: white; margin: 0;">Task History</h1>
+        </div>
+
+        <div style="display: flex; align-items: center; margin-right: 40px;">
+            <label class="name" for="name" style="color: wheat; margin-left: 10px;">
+                {{loggedInUserData.firstName}}
+            </label>
+            <img src="{{displayEmployeeLogo}}/{{loggedInUserData.employeeId}} "
+                style="width: 60px; height: 60px; border: 2px solid; border-radius: 15px; margin-left: 15px;">
+
+        </div>
+
+        <div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <span (click)="logout()" class="navbar-text fa-solid fa-power-off"></span>
+        </div>
+    </div>
+</nav>
+<hr>
+<hr>
+<hr>
+
+<div class="container">
+    <fieldset class="border rounded-3">
+        <legend class="float-none w-auto px-2">Change History</legend>
+        <!-- Add button at the top right corner -->
+        <div class="d-flex justify-content-end align-items-center closebutton">
+            <span (click)="close()" class="fa-solid fa-circle-left"
+                style='font-size:30px;color:blue; padding-bottom: 1%;'></span>
+        </div>
+
+        <div class="table-container">
+            <!-- Table to display change history data -->
+            <table class="table table-striped">
+                <thead>
+                    <!-- Table header row -->
+                    <tr>
+                        <th>Employee</th>
+                        <th>Change Date & Time</th>
+                        <th>Assigned To</th>
+                        <th>Status</th>
+                        <th class="col-md-5">Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through each reason and display corresponding data -->
+                    <tr *ngFor="let reason of reasons">
+                        <!-- Display employee name using getEmployeeNameById method -->
+                        <td>{{ getEmployeeNameById(reason.employeeId) }}</td>
+                        <!-- Display change date using date pipe -->
+                        <td>{{ reason.chgDateTime | date:'MM-dd-yyyy H:m' }}</td>
+                        <!-- Display assigned-to employee name using getEmployeeNameById method -->
+                        <td>{{ getEmployeeNameById(reason.assignedTo) }}</td>
+                        <!-- Display status name using getStatusNameById method -->
+                        <td>{{ getStatusNameById(reason.statusId) | titlecase}}</td>
+                        <!-- Display reason text -->
+                        <td>{{ reason.reasonText }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+
+
+</div>

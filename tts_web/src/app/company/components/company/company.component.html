@@ -1,0 +1,63 @@
+<app-header></app-header>
+<div class="container">
+
+    <fieldset class="border rounded-3">
+        <legend class="float-none w-auto px-2">All Companies</legend>
+
+        <div class="d-flex justify-content-end align-items-center w-100">
+            <span (click)="RedirectToAdd()" class="fa-solid fa-circle-plus"
+                style='font-size:30px;color:rgb(33, 176, 40); padding-bottom: 1%;'></span>
+
+            <!-- <span [routerLink]="['/adminDash']" class="fa-solid fa-circle-arrow-left fa-lg"
+            style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer; margin-top: 10px;"></span> -->
+        </div>
+        <!-- Add button at the top right corner -->
+
+
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+
+                        <th>Company Code</th>
+                        <th>Company Name</th>
+                        <th>Contact Email</th>
+                        <th>Contact Phone</th>
+                        <th>Country Name</th>
+                        <!-- <th>Address</th>
+                    <th>ZIP</th> -->
+                        <th>Actions</th> <!-- New column for update and delete buttons -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let company of companies">
+
+                        <td>{{ company.companyCode }}</td>
+                        <td>{{ company.companyName }}</td>
+                        <td>{{ company.companyContactEmail }}</td>
+                        <td>{{ company.companyContactPhone }}</td>
+                        <td>{{ getCountryNameById(company.companyCountryId) }}</td>
+                        <!-- <td>{{ company.companyAddress }}</td>
+                    <td>{{ company.companyZip }}</td> -->
+                        <!-- <td>{{ company.companyCountryId }}</td> -->
+
+
+                        <td>
+                            <!-- Update Button -->
+                            <span (click)="redirectToUpdate(company)"
+                                class="fa-solid fa-circle-down fa-rotate-180 fa-xl"
+                                style='font-size:23px;color: rgb(64, 109, 234);'></span>
+                            <!-- Delete Button -->
+                            &nbsp;
+                            &nbsp;
+                            <span (click)="deleteCompany(company.companyCode)" class='fa-solid fa-trash fa-xl'
+                                style='font-size:23px;color: red;'></span>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,81 @@
+.blue-label {
+    color: blue;
+}
+
+.table-container {
+    margin-top: 20px;
+
+    max-height: 450px;
+    /* Adjust the height as needed */
+    overflow-y: auto;
+
+    border: 1px solid black;
+    /* You can customize the border style and color here */
+    padding: 0% 1% 1% 1%;
+    /* top right botton left */
+
+    /* Add some padding to create space between the border and content */
+    border-radius: 5px;
+    /* Optionally, add rounded corners */
+}
+
+.table-container thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+/* Hide the default scroll bar */
+.table-container::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 0.25em;
+}
+
+.larger-checkbox {
+    transform: scale(2.0);
+    /* Increase the size as needed */
+}
+
+
+/* CSS for circular image */
+.circle-image {
+    width: 40px;
+    /* Set the width and height to control the size of the circle */
+    height: 40px;
+    border-radius: 50%;
+    /* Make it circular by setting border-radius to 50% */
+    overflow: hidden;
+    background-size: cover;
+    /* Hide overflowing parts of the image */
+}
+
+.circle-image img {
+    width: 100%;
+    /* Make sure the image fills the circular container */
+    height: auto;
+    object-fit: cover;
+    /* Automatically adjust the height to maintain aspect ratio */
+}
+
+/* for fieldset */
+fieldset {
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    border: 2px solid black !important;
+
+}
+
+.p-5 {
+    padding: 1rem !important;
+}
+
+/* end - for fieldset */
