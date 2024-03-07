@@ -78,7 +78,8 @@
                     <div *ngIf="rate.invalid  && (rate.dirty||rate.touched)" class="text-danger">Rate is required.</div>
                 </div>
                 <div class="col-md-4">
-                    <label for="datePosted" class="label">Job Fulfilment Date:</label>
+                    <label for="datePosted" class="label">Job Fulfilment Date:<span
+                            class="required-asterisk">*</span></label>
                     <input type="date" class="form-control" id="datePosted" name="datePosted" [min]="todayDate"
                         [(ngModel)]="hiringCompany.jobFulfillmentDate" onkeydown="return false" [required]="true">
                 </div>
