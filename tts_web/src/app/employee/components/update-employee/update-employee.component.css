@@ -23,5 +23,12 @@ fieldset {
 }
 
 .form-control {
-  border: 1px solid;
+  border: 2px solid black;
+
+}
+
+.custom-checkbox {
+  border: 1px solid black;
+  margin-left: 10px;
+
 }
