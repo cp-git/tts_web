@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col border-around">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <b> Created By:</b>
+            </div>
+            <div class="col form-check">
+                <input class="form-check-input radio-border" type="radio" name="createdBy" id="createdByAll" [value]="0"
+                    (change)="selectedCreatedBy = 0; onChangeFilterTask()" [checked]="selectedCreatedBy == 0">
+                <label class="form-check-label" for="createdByAll">
+                    All
+                </label>
+            </div>
+            <div class="col form-check">
+                <input class="form-check-input radio-border" type="radio" name="createdBy" id="createdByMe"
+                    [value]="employeeId" (change)="selectedCreatedBy = employeeId; onChangeFilterTask()"
+                    [checked]="selectedCreatedBy == employeeId">
+                <label class="form-check-label" for="createdByMe">
+                    Me
+                </label>
+            </div>
+        </div>
+    </div>
+    <!-- Assigned To section -->
+    <div class="col border-around">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <b> Assigned To:</b>
+            </div>
+            <div class="col form-check">
+                <!-- Radio buttons and labels for "Assigned To" -->
+                <input class="form-check-input radio-border" type="radio" name="assignedTo" id="assignedToAll"
+                    [value]="0" (change)="selectedAssignedTo = 0; onChangeFilterTask()"
+                    [checked]="selectedAssignedTo == 0">
+                <label class="form-check-label" for="assignedToAll">
+                    All
+                </label>
+            </div>
+            <div class="col form-check">
+                <input class="form-check-input radio-border" type="radio" name="assignedTo" id="assignedToMe"
+                    [value]="employeeId" (change)="selectedAssignedTo = employeeId; onChangeFilterTask()"
+                    [checked]="selectedAssignedTo == employeeId">
+                <label class="form-check-label" for="assignedToMe">
+                    Me
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="col border-around">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <b> Task :</b>
+            </div>
+            <div class="col">
+                <!-- Use the ng-multiselect-dropdown component for multi-select -->
+                <ng-multiselect-dropdown [placeholder]="'Select Statuses'" [data]="statusOptions"
+                    [(ngModel)]="selectedStatuses" [settings]="dropdownSettings" (onSelect)="onChangeFilterTask()"
+                    (onDeSelect)="onChangeFilterTask()" (onSelectAll)="onChangeFilterTask()"
+                    (onDeSelectAll)="onChangeFilterTask()">
+                </ng-multiselect-dropdown>
+            </div>
+        </div>
+    </div>
+
+    <!-- {{selectedStatuses|json}} -->

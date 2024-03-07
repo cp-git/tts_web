@@ -1,0 +1,34 @@
+<div class="container">
+    <form #updateStatusData="ngForm">
+        <div class="d-flex justify-content-between align-items-center w-100">
+            <h2>Update Status</h2>
+            <span [routerLink]="['/status']" class="fa-solid fa-circle-arrow-left fa-lg"
+                style="font-size: 30px; color: rgb(20, 18, 18); cursor: pointer;"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="label" for="statusCode">Status Code:</label>
+                <input type="text" id="statusCode" name="statusCode" [(ngModel)]="status.statusCode" required
+                    class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label class="label" for="statusDescription">Description:</label>
+                <input type="text" id="statusDescription" name="statusDescription"
+                    [(ngModel)]="status.statusDescription" required class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label class="label" for="statusOrder">Status Order:</label>
+                <input type="text" id="statusOrder" name="statusOrder" [(ngModel)]="status.statusOrder" required
+                    class="form-control">
+            </div>
+
+        </div>
+
+
+        <div>
+            <button type="button" [disabled]="!updateStatusData.valid" class="btn btn-primary mt-3"
+                (click)="onSaveStatus(status)">Update</button>
+        </div>
+    </form>
+</div>
+<app-footer></app-footer>

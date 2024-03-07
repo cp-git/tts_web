@@ -1,0 +1,232 @@
+<!-- Modal -->
+<div #createTaskModal class="modal fade" id="createTask{{modalId}}" tabindex="-1" aria-labelledby="createTaskLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 *ngIf="!updateScreen" class="modal-title fs-5" id="createTaskLabel">Create Task</h1>
+                <h1 *ngIf="updateScreen" class="modal-title fs-5" id="createTaskLabel">Update Task</h1>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+                <!-- {{task|json}} -->
+                <ng-container *ngTemplateOutlet="taskForm;"></ng-container>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Form  -->
+<ng-template #taskForm>
+    <!-- {{task|json}} -->
+    <form #addTaskForm="ngForm">
+        <div class="row" border-color="black">
+            <div class="col">
+                <label for="parentTaskId" class="form-label">Parent Task</label><br>
+
+                <select class="form-control" name="parentTaskId" id="parentTaskId" name="parentTaskId"
+                    [(ngModel)]="task.taskParent" [required]="true" [disabled]="updateScreen">
+                    <option *ngIf="!updateScreen" value="undefined" disabled>Select Option</option>
+                    <option *ngIf="!updateScreen" value="0">Create As Parent</option>
+                    <!-- <ng-container *ngFor="let parentTaskObject of parentTaskList"> -->
+
+                    <option
+                        *ngIf="!(parentTask.taskStatus == statusEnum.DONE || parentTask.taskStatus == statusEnum.CANCELLED)"
+                        value="{{parentTask.taskId}}">{{parentTask.taskName}}</option>
+                    <!-- </ng-container> -->
+
+                    <!-- <ng-container *ngIf="parentTask.childTask">
+                        <ng-container *ngFor="let childTask of parentTask.childTask">
+                            <option value="{{childTask.taskId}}">{{childTask.taskName}}</option>
+
+                        </ng-container>
+                    </ng-container> -->
+                </select>
+
+            </div>
+            <div class="col">
+                <label for="taskName" class="form-label">Task Name<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label>
+                <input
+                    [disabled]="(task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    type="text" class="form-control extra-light-placeholder" id="taskName" name="taskName"
+                    placeholder="Enter task name" [(ngModel)]="task.taskName" [required]="true">
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="taskDescription" class="form-label">Task
+                    Description<span class="required-asterisk" *ngIf="!updateScreen">*</span></label>
+                <textarea
+                    [disabled]="(task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    class="form-control" id="taskDescription" name="taskDescription" [(ngModel)]="task.taskDescription"
+                    placeholder="Enter task description" [required]="true"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <label for="taskCreatedBy" class="form-label">Created By</label><br>
+                <select class="form-control" name="taskCreatedBy" id="taskCreatedBy" name="taskCreatedBy"
+                    [(ngModel)]="task.taskCreatedBy" [required]="true" disabled>
+                    <option value="undefined" disabled>Select Option</option>
+                    <option *ngIf="!updateScreen" value="{{employeeId}}" selected="true">Self</option>
+                    <ng-container *ngIf="updateScreen">
+                        <ng-container *ngFor="let employee of allEmployees">
+                            <option value="{{employee.employeeId}}">{{employee.firstName}} {{employee.lastName}}
+                            </option>
+                        </ng-container>
+                    </ng-container>
+
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="taskAssignedTo" class="form-label">Assigned To</label><br>
+                <select
+                    [disabled]="(task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    class="form-control" name="taskAssignedTo" id="taskAssignedTo" name="taskAssignedTo"
+                    [(ngModel)]="task.taskAssignedTo" [required]="true">
+                    <option value="undefined" disabled>Select Option</option>
+                    <option value="{{employeeId}}" selected="true">Self</option>
+                    <ng-container *ngFor="let employee of companyEmployees">
+                        <option *ngIf="employeeId!=employee.employeeId" value="{{employee.employeeId}}">
+                            {{employee.firstName}} {{employee.lastName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+
+            <div class="col-sm-3">
+                <label for="taskStatus" class="form-label">Status</label><br>
+                <select
+                    [disabled]="(task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED) || !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    class="form-control" name="taskStatus" id="taskStatus" name="taskStatus"
+                    [(ngModel)]="task.taskStatus" [required]="true" (change)="onChangeStatus(task.taskStatus, task)">
+                    <option value="undefined" disabled>Select Option</option>
+                    <ng-container *ngFor="let status of allStatus">
+                        <option value="{{status.statusId}}">{{status.statusCode |titlecase}}
+                        </option>
+                    </ng-container>
+                </select>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="startDate" class="form-label">Start date<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label>
+                <input [disabled]="task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
+                    type="date" class="form-control " id="startDate" name="startDate" [(ngModel)]="task.taskStartDate"
+                    [required]="true" [disabled]="updateScreen" [min]="currentDate">
+            </div>
+            <div class="col-sm-3">
+                <label for="endDate" class="form-label">End date<span class="required-asterisk"
+                        *ngIf="!updateScreen">*</span></label>
+                <input [disabled]="task.taskStatus === statusEnum.CANCELLED" type="date" class="form-control"
+                    id="endDate" name="endDate" [min]="task.taskStartDate" [(ngModel)]="task.taskEndDate"
+                    [required]="true"
+                    [disabled]="task.taskStartDate==null || updateScreen || task.taskStatus == statusEnum.DONE">
+            </div>
+
+            <div class="col-sm-3">
+                <label for="actualStartDate" class="form-label">Actual Start date</label>
+
+                <input type="date" class="form-control" id="actualStartDate" name="actualStartDate"
+                    [min]="task.taskStartDate" [(ngModel)]="todayForStartDate"
+                    [required]="updateScreen && task.taskStatus == statusEnum.INPROGRESS" disabled>
+            </div>
+
+            <div class="col-sm-3">
+                <label for="actualEndDate" class="form-label">Actual End date</label>
+                <input type="date" class="form-control" id="actualEndDate" name="actualEndDate"
+                    [(ngModel)]="todayForEndDate" [min]="task.taskActualStartDate"
+                    [required]="updateScreen && task.taskStatus == statusEnum.DONE" disabled>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="taskReason" class="form-label">Reason<span class="required-asterisk">*</span></label>
+                <textarea
+                    [disabled]="(task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    class="form-control" id="taskReason" name="taskReason" [(ngModel)]="task.reason"
+                    placeholder="Enter reason" [required]="updateScreen"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="form-label" for="uploadFile">Upload File</label>
+                <input
+                    [disabled]="(task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED)|| !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                    type="file" id="uploadFile" name="uploadFile" (change)="onFileSelected($event)" class="form-control"
+                    [required]="true">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="form-label" for="attachment">Attachments</label>
+                <ul>
+                    <li *ngFor="let file of fileNames">
+                        <ng-container
+                            *ngIf="employeeId == backupTask.taskCreatedBy || employeeId == backupTask.taskAssignedTo; else disabledLink">
+                            <a href="javascript:void(0)" (click)="downloadFile(file)">{{ file }}</a>
+                        </ng-container>
+                        <ng-template #disabledLink>
+                            <span>{{ file }}</span>
+                        </ng-template>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer mt-3">
+            <!-- Move the success message here and apply centering classes -->
+            <div class="text-center mx-auto">
+                <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+                    Task created/updated successfully!
+                </div>
+                <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+                    Operation failed. Please update sub-task(s) status to Done/Cancel.
+                </div>
+            </div>
+
+            <!-- Add loading spinner here -->
+            <div *ngIf="isLoading">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Move the "Save" and "Close" buttons to the right -->
+            <button
+                [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
+                *ngIf="!isLoading && updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)"
+                type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
+
+            <ng-container
+                *ngIf="updateScreen && !(employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo)">
+                <label style="color: red;">* Update only allowed to Creator/ Assignee</label>
+            </ng-container>
+
+            <button
+                [disabled]="!addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||task.taskStatus === statusEnum.DONE||task.taskStatus === statusEnum.CANCELLED"
+                *ngIf="!isLoading && !updateScreen" type="submit" class="btn btn-primary"
+                (click)="onClickSave(task)">Save</button>
+            <button type="button" class="btn btn-secondary" (click)="closeModal()" id="closeButton">Close</button>
+            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close"
+                (click)="closeModal()">Close</button> -->
+        </div>
+
+
+
+    </form>
+</ng-template>
+
+<!-- {{parentTaskList|json}} -->
+<!-- {{parentTask.taskName|json}} -->
+<!-- {{allStatus|json}} -->
