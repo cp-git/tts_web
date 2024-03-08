@@ -14,6 +14,7 @@ export class AddjoblocationComponent implements OnInit {
 
   jobLocation!: Joblocation;
   companyId: any;
+  isSubmited: boolean = false;
   constructor(
     private jobLocationSercvice: JoblocationService,
     private location: Location,
@@ -34,7 +35,7 @@ export class AddjoblocationComponent implements OnInit {
     // alert(JSON.stringify(location))
     this.jobLocationSercvice.addJobLocation(location).subscribe(
       (response: Joblocation) => {
-
+        this.isSubmited = true;
         this.dialogueBoxService.open(' job location created successfully', 'information').then((response) => {
           if (response) {
             this.location.back(); // Refresh the page

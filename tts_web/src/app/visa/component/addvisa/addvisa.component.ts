@@ -14,6 +14,7 @@ export class AddvisaComponent {
 
   visa!: Visa;
   companyId: any;
+  isSubmited: boolean = false;
   constructor(
     private visaService: VisaService,
     private location: Location,
@@ -34,7 +35,7 @@ export class AddvisaComponent {
     // alert(JSON.stringify(visa))
     this.visaService.addVisa(visa).subscribe(
       (response: Visa) => {
-
+        this.isSubmited = true;
         this.dialogueBoxService.open(' Visa created successfully', 'information').then((response) => {
           if (response) {
             this.location.back(); // Refresh the page

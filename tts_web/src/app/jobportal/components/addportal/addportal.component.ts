@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class AddportalComponent implements OnInit {
 
-
+  isSubmited: boolean = false;
   portal!: Jobportal;
   companyId: any;
   constructor(
@@ -35,7 +35,7 @@ export class AddportalComponent implements OnInit {
     // alert(JSON.stringify(portal))
     this.jobPortalService.addJobPortal(portal).subscribe(
       (response: Jobportal) => {
-
+        this.isSubmited = true;
         this.dialogueBoxService.open(' job portal created successfully', 'information').then((response) => {
           if (response) {
             this.location.back(); // Refresh the page

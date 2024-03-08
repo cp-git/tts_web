@@ -134,8 +134,9 @@
 
             </div>
             <div>
-                <button type="submit" [disabled]="!addUpdateForm.valid" (click)="addHiringCompany(hiringCompany)"
-                    class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>
+                <button type="submit" [disabled]="!addUpdateForm.valid || isSubmited"
+                    (click)="addHiringCompany(hiringCompany)" class="btn btn-primary mt-3"
+                    style="border-radius: 50px;">Submit</button>
             </div>
         </form>
     </fieldset>

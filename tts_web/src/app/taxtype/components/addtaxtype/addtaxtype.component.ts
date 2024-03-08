@@ -15,6 +15,7 @@ export class AddtaxtypeComponent implements OnInit {
 
   taxType!: Taxtype;
   companyId: any;
+  isSubmited: boolean = false;
   constructor(
     private taxTypeService: TextypeService,
     private location: Location,
@@ -35,7 +36,7 @@ export class AddtaxtypeComponent implements OnInit {
     // alert(JSON.stringify(taxType))
     this.taxTypeService.addTaxType(taxType).subscribe(
       (response: Taxtype) => {
-
+        this.isSubmited = true;
         this.dialogueBoxService.open(' Tax Type created successfully', 'information').then((response) => {
           if (response) {
             this.location.back(); // Refresh the page

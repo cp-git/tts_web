@@ -25,7 +25,7 @@ export class CreateBenchCandidateComponent {
 
   companyId: any;
   employeeId: any;
-
+  isSubmited: boolean = false;
   constructor(
     private benchCandidateService: BenchCandidateService,
     private dialogueBoxService: DialogueBoxService,
@@ -55,15 +55,15 @@ export class CreateBenchCandidateComponent {
       .getAllTaxTypeByCompanyId(candidateId)
       .subscribe((response) => {
 
-        for(let v=0;v<=response.length;v++){
+        for (let v = 0; v <= response.length; v++) {
           //console.log(response[v]);
 
-          if(response[v].taxActive==true){
+          if (response[v].taxActive == true) {
             console.log(response[v]);
             this.filteredTaxTypes.push(response[v])
-            
+
           }
-          
+
         }
         this.allTaxTypes = response;
       });
@@ -74,18 +74,18 @@ export class CreateBenchCandidateComponent {
     this.visaService
       .getAllVisasByCompanyId(candidateId)
       .subscribe((response) => {
-       // console.log(response);
-        for(let v=0;v<=response.length;v++){
+        // console.log(response);
+        for (let v = 0; v <= response.length; v++) {
           //console.log(response[v]);
 
-          if(response[v].visaActive==true){
+          if (response[v].visaActive == true) {
             console.log(response[v]);
             this.filteredVisas.push(response[v])
-            
+
           }
-          
+
         }
-        
+
         this.allVisas = response;
       });
   }
@@ -94,6 +94,7 @@ export class CreateBenchCandidateComponent {
   addBenchCandidate(benchCandidate: BenchCandidate) {
     this.benchCandidateService.addBenchCandidate(benchCandidate).subscribe(
       (data) => {
+        this.isSubmited = true;
         console.log('Bench candidate added successfully:', data);
         this.dialogueBoxService
           .open('Bench candidate added successfully', 'information')

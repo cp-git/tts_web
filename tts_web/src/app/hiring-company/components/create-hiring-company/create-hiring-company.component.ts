@@ -16,7 +16,7 @@ export class CreateHiringCompanyComponent implements OnInit {
   allJobLocations: Joblocation[] = [];
   allJobPortals: Jobportal[] = [];
 
-
+  isSubmited: boolean = false;
   filteredLocations: Joblocation[] = [];
   filteredJobPortals: Jobportal[] = [];
 
@@ -57,15 +57,15 @@ export class CreateHiringCompanyComponent implements OnInit {
       .getAllJobLocationByCompanyId(companyId)
       .subscribe((response) => {
 
-        for(let v=0;v<=response.length;v++){
+        for (let v = 0; v <= response.length; v++) {
           //console.log(response[v]);
 
-          if(response[v].locationActive==true){
+          if (response[v].locationActive == true) {
             console.log(response[v]);
             this.filteredLocations.push(response[v])
-            
+
           }
-          
+
         }
         this.allJobLocations = response;
         console.log(this.allJobLocations);
@@ -78,15 +78,15 @@ export class CreateHiringCompanyComponent implements OnInit {
       .getAllJobPortalsByCompanyId(companyId)
       .subscribe((response) => {
 
-        for(let v=0;v<=response.length;v++){
+        for (let v = 0; v <= response.length; v++) {
           //console.log(response[v]);
 
-          if(response[v].jobActive==true){
+          if (response[v].jobActive == true) {
             console.log(response[v]);
             this.filteredJobPortals.push(response[v])
-            
+
           }
-          
+
         }
 
         this.allJobPortals = response;
@@ -98,11 +98,13 @@ export class CreateHiringCompanyComponent implements OnInit {
   addHiringCompany(hiringCompany: HiringCompany) {
     this.hiringCompanyService.addHiringCompany(hiringCompany).subscribe(
       (data) => {
+        this.isSubmited = true;
         console.log('Hiring company added successfully:', data);
         this.dialogueBoxService
           .open('Hiring company added successfully', 'information')
           .then((response) => {
             if (response) {
+
               this.location.back(); // Refresh the page
             }
           });

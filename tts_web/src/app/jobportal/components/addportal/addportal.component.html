@@ -56,7 +56,7 @@
             </div>
 
             <div>
-                <button type="submit" [disabled]="!addPort.valid" (click)="addJobPortal(portal)"
+                <button type="submit" [disabled]="!addPort.valid || isSubmited" (click)="addJobPortal(portal)"
                     class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>
             </div>
         </form>

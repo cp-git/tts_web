@@ -56,10 +56,10 @@
                 </div>
             </div>
 
-            
+
 
             <div>
-                <button type="submit" [disabled]="!addPort.valid" (click)="addTaxType(taxType)"
+                <button type="submit" [disabled]="!addPort.valid || isSubmited" (click)="addTaxType(taxType)"
                     class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>
             </div>
         </form>
