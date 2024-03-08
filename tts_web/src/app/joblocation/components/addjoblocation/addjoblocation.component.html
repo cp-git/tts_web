@@ -58,8 +58,9 @@
             </div>
 
             <div>
-                <button type="submit" [disabled]="!addLocation.valid" (click)="addJobLocation(jobLocation)"
-                    class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>
+                <button type="submit" [disabled]="!addLocation.valid || isSubmited"
+                    (click)="addJobLocation(jobLocation)" class="btn btn-primary mt-3"
+                    style="border-radius: 50px;">Submit</button>
             </div>
         </form>
     </fieldset>

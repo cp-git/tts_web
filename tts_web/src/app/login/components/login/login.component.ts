@@ -59,7 +59,9 @@ export class LoginComponent implements OnInit {
           // Check the response from the API
           this.userData = response;
           // alert(this.userData);
-          this.employeeId = sessionStorage.setItem("employeeId", JSON.stringify(this.userData.employeeId));
+          if (this.userData != null) {
+            this.employeeId = sessionStorage.setItem("employeeId", JSON.stringify(this.userData.employeeId));
+          }
           if (this.userData) {
             if (this.userData.forgotPassword) {
               this.route.navigate(['/changePass']);

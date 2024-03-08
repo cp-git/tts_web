@@ -140,8 +140,9 @@
                 </div>
 
                 <div>
-                    <button type="submit" [disabled]="!addUpdateForm.valid" (click)="addBenchCandidate(benchCandidate)"
-                        class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>
+                    <button type="submit" [disabled]="!addUpdateForm.valid || isSubmited"
+                        (click)="addBenchCandidate(benchCandidate)" class="btn btn-primary mt-3"
+                        style="border-radius: 50px;">Submit</button>
                 </div>
             </div>
         </form>

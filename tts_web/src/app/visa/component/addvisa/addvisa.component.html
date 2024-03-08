@@ -54,10 +54,10 @@
                 </div>
             </div>
 
-            
+
 
             <div>
-                <button type="submit" [disabled]="!addVisa.valid" (click)="createVisa(visa)"
+                <button type="submit" [disabled]="!addVisa.valid || isSubmited" (click)="createVisa(visa)"
                     class="btn btn-primary mt-3" style="border-radius: 50px;">Submit</button>
             </div>
         </form>
