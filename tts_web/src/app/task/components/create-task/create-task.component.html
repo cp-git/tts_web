@@ -809,7 +809,8 @@
                                 Task created/updated successfully!
                             </div>
                             <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
-                                Operation failed. Please update sub-task(s) status to Done/Cancel.
+                                <!-- Operation failed. Please update sub-task(s) status to Done/Cancel. -->
+                                {{errorMessage}}
                             </div>
                         </div>
 
@@ -835,7 +836,7 @@
                             </div>
 
                             <button
-                                [disabled]="((selectedFile && !isValidFile) || !addTaskForm.valid || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true))"
+                                [disabled]="((selectedFile && !isValidFile) || !addTaskForm.valid  || isLoading || showSuccessMessage||showErrorMessage||(actualTaskStatus?.actualEndDate===true && actualTaskStatus?.actualStartDate===true && actualTaskStatus.finalStatus===true))"
                                 *ngIf="(!isLoading && updateScreen && (employeeId==backupTask.taskCreatedBy || employeeId ==backupTask.taskAssignedTo || employeeData.showAllTasks))"
                                 type="submit" class="btn btn-primary" (click)="onClickUpdate(task)">Update</button>
 

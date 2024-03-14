@@ -116,7 +116,7 @@ export class CreateTaskComponent implements OnInit {
     private employeeService: EmployeeService,
     private hiringCompanyService: HiringCompanyService,
     private benchCandidateService: BenchCandidateService
-  ) { }
+  ) {}
   ngOnInit(): void {
     this.taskName = this.parentTask.taskName;
     //console.log(this.taskName);
@@ -393,9 +393,7 @@ export class CreateTaskComponent implements OnInit {
             if (response[k].userActive != false) {
               console.log(response[k]);
               this.filterdHiringCompany.push(response[k]);
-
             }
-
           }
           this.allHiringCompany = response;
           console.log(this.allHiringCompany);
@@ -427,16 +425,13 @@ export class CreateTaskComponent implements OnInit {
       this.benchCandidateService
         .getAllBenchCandidateByCompanyId(this.companyId)
         .subscribe((response) => {
-
           console.log(response);
           for (let e = 0; e <= response.length; e++) {
             // console.log(response[e].candidatePlaced);
             if (response[e].userActive == true) {
               console.log(response[e]);
               this.filteredBenchCandidateDetails.push(response[e]);
-
             }
-
           }
           this.allBenchCandidateDetails = response;
           console.log(this.allBenchCandidateDetails);
@@ -485,6 +480,7 @@ export class CreateTaskComponent implements OnInit {
     );
   }
 
+  errorMessage: any = '';
   // for adding task and reason
   onClickSave(task: Task) {
     console.log(task);
@@ -512,8 +508,11 @@ export class CreateTaskComponent implements OnInit {
       .subscribe(
         (response) => {
           this.showSuccessMessage = true;
+          console.log(response);
+
           this.taskObject = response;
-          this.task.taskId = response.taskId;
+          this.task = response;
+          task = response;
           // alert("Task created successfully");
           // this.dialogueBoxService.open('task created successfully', 'information')
           // for closing modal after creating task
@@ -528,10 +527,16 @@ export class CreateTaskComponent implements OnInit {
           // convey to parent for creating task
           //this.afterCreateTask.emit();
           //this.afterCreateTask.emit();
+          this.getFilesByTaskId(task.taskId);
         },
         (error) => {
           this.showErrorMessage = true;
           //console.log("Faild to create task!");
+          console.error(error);
+          const errorMessage =
+            error && error.error ? error.error : 'Failed to Delete.';
+          // this.dialogueBoxService.open(errorMessage, 'warning');
+          this.errorMessage = errorMessage;
         }
       )
       .add(() => {
@@ -582,10 +587,16 @@ export class CreateTaskComponent implements OnInit {
 
           // // convey to parent for updating task
           // this.afterCreateTask.emit();
+          this.getFilesByTaskId(task.taskId);
         },
         (error) => {
           this.showErrorMessage = true;
           //console.log("Faild to create task!");
+          console.error(error);
+          const errorMessage =
+            error && error.error ? error.error : 'Failed to Delete.';
+          // this.dialogueBoxService.open(errorMessage, 'warning');
+          this.errorMessage = errorMessage;
         }
       )
       .add(() => {
@@ -782,6 +793,8 @@ export class CreateTaskComponent implements OnInit {
     if (!this.isValidFileName(this.selectedFile)) {
       this.isValidFile = false;
     }
+    this.showSuccessMessage = false;
+    this.showErrorMessage = false;
   }
 
   // function to check file name is valid or not (file name should only contain alphabets, numerics, underscore and spaces)
