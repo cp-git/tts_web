@@ -98,7 +98,7 @@ export class CreateTaskComponent implements OnInit {
 
   hiringCompany: HiringCompany = new HiringCompany();
 
-  selectedFile!: File; // actual selected file which we are storing in directory
+  selectedFile!: File | null; // actual selected file which we are storing in directory
   fileSelected: any; // temporary object for ngModel (required for validation)
   isValidFile: boolean = true; // for checking file name is valid or not
 
@@ -152,6 +152,7 @@ export class CreateTaskComponent implements OnInit {
     this.showSuccessMessage = false;
     this.showErrorMessage = false;
     this.fileNames = [];
+    this.selectedFile = null;
     // this.addTaskForm.resetForm;
   }
   // function called when user type data for Candidate name
@@ -489,7 +490,7 @@ export class CreateTaskComponent implements OnInit {
     task.employeeId = this.employeeId; // assigning employee id to object
 
     const formData = new FormData(); // creating form data to send in header
-    if (this.selectedFile) {
+    if (this.selectedFile && this.selectedFile != null) {
       formData.append(
         'file',
         this.selectedFile,
@@ -534,7 +535,7 @@ export class CreateTaskComponent implements OnInit {
           //console.log("Faild to create task!");
           console.error(error);
           const errorMessage =
-            error && error.error ? error.error : 'Failed to Delete.';
+            error && error.error ? error.error : 'Failed to add task.';
           // this.dialogueBoxService.open(errorMessage, 'warning');
           this.errorMessage = errorMessage;
         }
@@ -551,7 +552,7 @@ export class CreateTaskComponent implements OnInit {
     task.employeeId = this.employeeId; // assigning employee id to object
 
     const formData = new FormData(); // creating form data to send in header
-    if (this.selectedFile) {
+    if (this.selectedFile && this.selectedFile != null) {
       formData.append(
         'file',
         this.selectedFile,
@@ -594,7 +595,7 @@ export class CreateTaskComponent implements OnInit {
           //console.log("Faild to create task!");
           console.error(error);
           const errorMessage =
-            error && error.error ? error.error : 'Failed to Delete.';
+            error && error.error ? error.error : 'Failed to update task.';
           // this.dialogueBoxService.open(errorMessage, 'warning');
           this.errorMessage = errorMessage;
         }
@@ -790,7 +791,11 @@ export class CreateTaskComponent implements OnInit {
     this.isValidFile = true;
 
     // validating file name is valid or not
-    if (!this.isValidFileName(this.selectedFile)) {
+    if (
+      this.selectedFile &&
+      this.selectedFile != null &&
+      !this.isValidFileName(this.selectedFile)
+    ) {
       this.isValidFile = false;
     }
     this.showSuccessMessage = false;
